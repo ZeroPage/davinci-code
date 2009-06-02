@@ -6,7 +6,7 @@ public class Server extends Network
 		//ip는 상속되는  코드와의 호환을 위해. 의미없음.
 		// TODO Auto-generated method stub
 	}
-	public void SendMsg(String msg)
+	public void SendChatMsg(String msg)
 	{
 		// TODO Auto-generated method stub
 	}
@@ -15,5 +15,4 @@ public class Server extends Network
 		// TODO Auto-generated method stub
 		
 	}
-	
 }

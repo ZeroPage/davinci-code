@@ -27,7 +27,7 @@ public class DavichiGUI extends JFrame
 	{
 		DavichiGUI aa = new DavichiGUI();
 		aa.setVisible(true);
-		some = aa;	
+		some = aa;
 	}
 	public DavichiGUI() 
 	{

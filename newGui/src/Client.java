@@ -21,7 +21,7 @@ public class Client extends Network
 			e.printStackTrace();
 		}
 	}
-	public void SendMsg(String msg)
+	public void SendChatMsg(String msg)
 	{
 		// TODO Auto-generated method stub
 	}
