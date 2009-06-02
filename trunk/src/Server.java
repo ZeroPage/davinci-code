@@ -9,7 +9,7 @@ public class Server extends Thread {
 	private PrintWriter[] outData;
 	private SLisener[] inData;
 	private DabichiGUI GUI;
-
+	private String myName;
 	
 	Server(int port) throws IOException {
 		server = new ServerSocket(port, 3); //3명까지만 접속 가능
@@ -29,6 +29,12 @@ public class Server extends Thread {
 	{
 		GUI = gui;
 	}
+	public void setOutData() throws IOException {
+		outData[clientNum] = new PrintWriter(clients[clientNum].getOutputStream(), true);
+	}
+	public void setMyName(String name) {
+		this.myName = name;
+	}
 	public void readClient() throws IOException {
 		clients[clientNum] = server.accept();
 		inData[clientNum] = new SLisener(clients[clientNum], this);
@@ -37,14 +43,10 @@ public class Server extends Thread {
 		inData[clientNum].start();
 		clientNum++;
 	}
-	public void setOutData() throws IOException {
-		outData[clientNum] = new PrintWriter(clients[clientNum].getOutputStream(), true);
-	}
 	public void sendData(String data) {
 		for(int i=0; i<clientNum; i++)
-			outData[i].println(data);
+			outData[i].println(myName + " : " + data);
 	}
-	
 	public void run() {
 		while(true) {
 			try {

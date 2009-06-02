@@ -14,14 +14,6 @@ public class Lisener extends Thread {
 		setConnection(com);
 		setInMessage();
 	}
-	public void setGUI(DabichiGUI gui)
-	{
-		GUI = gui;
-	}
-	public DabichiGUI getGUI()
-	{
-		return GUI;
-	}
 	public void setConnection(Socket connection) 
 	{
 		this.connection = connection;
@@ -30,11 +22,19 @@ public class Lisener extends Thread {
 	{
 		return connection;
 	}
+	public BufferedReader getInMessage() {
+		return inMessage;
+	}
 	public void setInMessage() throws IOException {
 		inMessage = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 	}
-	public BufferedReader getInMessage() {
-		return inMessage;
+	public void setGUI(DabichiGUI gui)
+	{
+		GUI = gui;
+	}
+	public DabichiGUI getGUI()
+	{
+		return GUI;
 	}
 	public String readInMessage() {
 		try {
@@ -49,9 +49,9 @@ public class Lisener extends Thread {
 		String temp = "";
 		while(true) {
 			if(!connection.isConnected() || temp.equals("exit")) {
-				inMessage.close();
-				connection.close();
-				System.out.println(temp);
+				close();
+				GUI.ChatLisener("접속이 종료되었습니다.");
+				//System.out.println(temp);
 				return;
 			}
 			temp = readInMessage();
@@ -60,7 +60,10 @@ public class Lisener extends Thread {
 				GUI.ChatLisener(temp);
 		}
 	}
-
+	public void close() throws IOException {
+		inMessage.close();
+		connection.close();
+	}
 	public void run() {
 		try {
 			printMessage();

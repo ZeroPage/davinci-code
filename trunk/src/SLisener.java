@@ -9,13 +9,17 @@ public class SLisener extends Lisener {
 		setInMessage();
 		this.server = server;
 	}
+	public void close() throws IOException {
+		getInMessage().close();
+		getConnection().close();
+	}
 	public void printMessage() throws IOException {
 		String temp = "";
 		while(true) {
 			if(!getConnection().isConnected() || temp.equals("exit")) {
-				getInMessage().close();
-				getConnection().close();
-				System.out.println(temp);
+				close();
+				getGUI().ChatLisener("접속이 종료되었습니다.");
+				//System.out.println(temp);
 				return;
 			}
 			temp = readInMessage();
