@@ -22,6 +22,10 @@ public class Server extends Network
 		wait = new WaitingClient();
 	}
 
+	public void setMyName(String myName)
+	{
+		this.myName = myName;
+	}
 	public void Connect(String ip)
 	{
 		//ip는 상속되는  코드와의 호환을 위해. 의미없음.

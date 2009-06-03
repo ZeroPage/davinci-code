@@ -1,16 +1,36 @@
-import java.io.IOException;
-import java.net.Socket;
-import java.net.UnknownHostException;
 
+import java.io.*;
+import java.net.*;
 
 public class Client extends Network
 {
-	Socket m_Sorcket;
+	Socket server;
+	PrintWriter outMsg;
+	Listener listen;
+
+	String myName;
+
+	public void setMyName(String myName)
+	{
+		this.myName = myName;
+	}
+	public void setOutMsg() throws IOException
+	{
+		outMsg = new PrintWriter(server.getOutputStream(), true);
+	}
+	public void setListen() throws IOException
+	{
+		listen = new Listener();
+		listen.setInMsg();
+		listen.run();
+	}
 	public void Connect(String ip)
 	{
 		try
 		{
-			m_Sorcket = new Socket(ip, 10000);
+			server = new Socket(ip, 10000);
+			setOutMsg();
+			setListen();
 		} catch (UnknownHostException e)
 		{
 			// TODO Auto-generated catch block
@@ -23,10 +43,44 @@ public class Client extends Network
 	}
 	public void SendChatMsg(String msg)
 	{
-		// TODO Auto-generated method stub
+		outMsg.println(myName + " : " + msg);
+
 	}
 	public void Close()
 	{
-		// TODO Auto-generated method stub
+		SendChatMsg(myName + "님이 연결을 종료하셨습니다.");
+		try
+		{
+			listen.close();
+		} catch (IOException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	class Listener extends Thread
+	{
+		BufferedReader inMsg;
+
+		public void setInMsg() throws IOException {
+			inMsg = new BufferedReader(new InputStreamReader(server.getInputStream()));
+		}
+
+		public void close() throws IOException {
+			inMsg.close();
+			server.close();
+		}
+
+		public void run() {
+			while(server.isConnected())
+			{
+				try {
+					m_Taget.AddChatString(inMsg.readLine());
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
 	}
 }

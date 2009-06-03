@@ -1,5 +1,3 @@
-import java.io.IOException;
-
 
 abstract public class Network
 {
