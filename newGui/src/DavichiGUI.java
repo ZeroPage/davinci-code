@@ -131,6 +131,7 @@ public class DavichiGUI extends JFrame
 					JTF_ChatInput.setText("");
 					JTF_ChatInput.requestFocus();
 					
+					
 				}
 				if(event.getSource() == JB_ChatClear)
 				{
