@@ -7,7 +7,7 @@ public class Client extends Network
 	Socket server;
 	PrintWriter outMsg;
 	Listener listen;
-
+	
 	public void setOutMsg() throws IOException
 	{
 		outMsg = new PrintWriter(server.getOutputStream(), true);
@@ -16,7 +16,7 @@ public class Client extends Network
 	{
 		listen = new Listener();
 		listen.setInMsg();
-		listen.run();
+		listen.start();
 	}
 	public void Connect(String ip)
 	{
@@ -62,18 +62,17 @@ public class Client extends Network
 
 		public void close() throws IOException {
 			inMsg.close();
-			server.close();
 		}
 
-		public void run() {
+		public void run()
+		{
 			while(server.isConnected())
-			{
-				try {
-					m_Taget.AddChatString(inMsg.readLine());
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+			{	try {
+				m_Taget.AddChatString(inMsg.readLine());
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			}
 		}
 	}

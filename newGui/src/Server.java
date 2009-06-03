@@ -42,6 +42,7 @@ public class Server extends Network
 	{
 		for(int i=0; i<clientNum; i++)
 			outData[i].println(m_Name + " : " + msg);
+		m_Taget.AddChatString(msg);
 	}
 	public void Close()
 	{
