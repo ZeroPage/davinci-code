@@ -137,7 +137,7 @@ public class DavichiGUI extends JFrame
 				}
 				if(event.getSource() == JB_NewGame);
 				{
-					//새게임 시작
+					//새게임 시작				
 				}
 				if(event.getSource() == JB_Exit)
 				{
