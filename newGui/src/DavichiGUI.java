@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.net.URL;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -154,11 +155,12 @@ public class DavichiGUI extends JFrame
 			JPanel JPanel_Main;
 			JPanel [] JPanel_Player;
 			
+			
 			public GameWindow(JPanel main)
 			{
 				JPanel_Main = new JPanel()
 				{
-					ImageIcon BG = new ImageIcon(".\\img\\board2.jpg");
+					ImageIcon BG = new ImageIcon(DavichiGUI.class.getResource("board2.jpg"));
 					public void paint(Graphics g)
 					{
 						g.drawImage(BG.getImage(), 0, 0, BG.getIconWidth(), BG.getIconHeight(), null);
@@ -179,17 +181,10 @@ public class DavichiGUI extends JFrame
 				JPanel_Main.add(BorderLayout.SOUTH, JPanel_Player[2]);
 				JPanel_Main.add(BorderLayout.WEST, JPanel_Player[3]);
 				
-				JStyleButton temp = new JStyleButton(new ImageIcon(".\\img\\1.gif"));
+				JStyleButton temp = new JStyleButton(new ImageIcon(DavichiGUI.class.getResource("1.gif")));
 				JPanel_Player[2].add(temp);
 				
 				main.add(JPanel_Main);
-			}
-			public class PlayerPanel
-			{
-				public PlayerPanel()
-				{
-					// TODO Auto-generated constructor stub
-				}
 			}
 		}
 		public void AddChatString(String msg)
