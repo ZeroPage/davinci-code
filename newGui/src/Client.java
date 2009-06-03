@@ -6,7 +6,7 @@ import java.net.UnknownHostException;
 public class Client extends Network
 {
 	Socket m_Sorcket;
-	public void Connet(String ip)
+	public void Connect(String ip)
 	{
 		try
 		{
