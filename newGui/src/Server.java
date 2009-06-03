@@ -12,12 +12,13 @@ public class Server extends Network
 
 	int portNum;
 	int maxClient;
-	int clientNum =0;
+	int clientNum;
 
 	public Server()
 	{
 		portNum = 10000;
 		maxClient = 3;
+		clientNum= 0;
 		wait = new WaitingClient();
 	}
 
@@ -42,7 +43,7 @@ public class Server extends Network
 	public void Close()
 	{
 		// TODO Auto-generated method stub
-		wait.stop();
+		//wait.stop();
 		for(int i=0; i<clientNum; i++)
 			outData[i].close();
 	}
@@ -83,7 +84,7 @@ public class Server extends Network
 		}
 		public void close() throws IOException
 		{
-			stop();
+			//stop();
 			inMsg.close();
 			client.close();
 		}
