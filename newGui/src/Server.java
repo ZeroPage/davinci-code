@@ -61,6 +61,7 @@ public class Server extends Network
 					clients[clientNum] = server.accept();
 					inData[clientNum] = new ServerListener();
 					inData[clientNum].setClient(clients[clientNum]);
+					inData[clientNum].setInMsg();
 					outData[clientNum] = new PrintWriter(clients[clientNum].getOutputStream(), true);
 					inData[clientNum].start();
 					clientNum++;
@@ -81,7 +82,7 @@ public class Server extends Network
 		{
 			this.client = client;
 		}
-		public void setinMsg() throws IOException
+		public void setInMsg() throws IOException
 		{
 			inMsg = new BufferedReader(new InputStreamReader(client.getInputStream()));
 		}
