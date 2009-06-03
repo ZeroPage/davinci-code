@@ -72,6 +72,7 @@ public class DavichiGUI extends JFrame
 			JButton JB_NewGame;
 			JButton JB_Exit;
 			JButton JB_ChatClear;
+			Network m_Network;
 			
 			public ChatWindow(JPanel main)
 			{
@@ -137,11 +138,19 @@ public class DavichiGUI extends JFrame
 				}
 				if(event.getSource() == JB_NewGame);
 				{
-					//새게임 시작				
+					//새게임 시작
+					m_Network = new Server();
+					m_Network.setM_Taget(RW);
+					m_Network.setM_Name("server");
+					m_Network.Connect("1");
 				}
 				if(event.getSource() == JB_Exit)
 				{
-					//종료코드	
+					//종료코드
+					m_Network = new Client();
+					m_Network.setM_Taget(RW);
+					m_Network.setM_Name("client");
+					m_Network.Connect(JOptionPane.showInputDialog("put ip"));
 				}
 			}
 			public void StringAdd(String msg)
