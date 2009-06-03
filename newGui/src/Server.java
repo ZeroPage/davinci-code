@@ -19,6 +19,9 @@ public class Server extends Network
 		portNum = 10000;
 		maxClient = 3;
 		clientNum= 0;
+		clients = new Socket[maxClient];
+		outData = new PrintWriter[maxClient];
+		inData = new ServerListener[maxClient];
 		wait = new WaitingClient();
 	}
 
