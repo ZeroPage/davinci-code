@@ -143,6 +143,7 @@ public class DavichiGUI extends JFrame
 					m_Network.setM_Taget(RW);
 					m_Network.setM_Name("server");
 					m_Network.Connect("1");
+					JOptionPane.showMessageDialog(null, "서버입니다.");
 				}
 				if(event.getSource() == JB_Exit)
 				{

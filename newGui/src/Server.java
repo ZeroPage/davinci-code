@@ -12,7 +12,7 @@ public class Server extends Network
 
 	int portNum;
 	int maxClient;
-	int clientNum;
+	int clientNum =0;
 
 	public Server()
 	{
