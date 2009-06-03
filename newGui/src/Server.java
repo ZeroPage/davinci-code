@@ -42,7 +42,9 @@ public class Server extends Network
 	public void Close()
 	{
 		// TODO Auto-generated method stub
-
+		wait.stop();
+		for(int i=0; i<clientNum; i++)
+			outData[i].close();
 	}
 	class WaitingClient extends Thread
 	{
@@ -78,6 +80,12 @@ public class Server extends Network
 		public void setinMsg() throws IOException
 		{
 			inMsg = new BufferedReader(new InputStreamReader(client.getInputStream()));
+		}
+		public void close() throws IOException
+		{
+			stop();
+			inMsg.close();
+			client.close();
 		}
 		public void run()
 		{
