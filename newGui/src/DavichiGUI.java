@@ -155,7 +155,9 @@ public class DavichiGUI extends JFrame
 			JPanel JPanel_Main;
 			JPanel [] JPanel_Player;
 			
-			
+			ImageIcon [] ImageCardBlack = new ImageIcon[13];
+			ImageIcon [] ImageCardWhite = new ImageIcon[13];
+			                     
 			public GameWindow(JPanel main)
 			{
 				JPanel_Main = new JPanel()
