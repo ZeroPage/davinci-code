@@ -127,8 +127,10 @@ public class DavichiGUI extends JFrame
 				if(event.getSource() == JB_Send || event.getSource() == JTF_ChatInput)
 				{
 					//텍스트 전송
+					m_Network.SendChatMsg(JTF_ChatInput.getText());
 					JTF_ChatInput.setText("");
 					JTF_ChatInput.requestFocus();
+					
 				}
 				if(event.getSource() == JB_ChatClear)
 				{
