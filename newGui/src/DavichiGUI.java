@@ -136,7 +136,7 @@ public class DavichiGUI extends JFrame
 					JTA_Chat.setText("");
 					JTF_ChatInput.requestFocus();
 				}
-				if(event.getSource() == JB_NewGame);
+				if(event.getSource() == JB_NewGame)
 				{
 					//새게임 시작
 					m_Network = new Server();
