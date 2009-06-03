@@ -8,12 +8,6 @@ public class Client extends Network
 	PrintWriter outMsg;
 	Listener listen;
 
-	String myName;
-
-	public void setMyName(String myName)
-	{
-		this.myName = myName;
-	}
 	public void setOutMsg() throws IOException
 	{
 		outMsg = new PrintWriter(server.getOutputStream(), true);
