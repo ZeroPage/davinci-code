@@ -37,12 +37,12 @@ public class Client extends Network
 	}
 	public void SendChatMsg(String msg)
 	{
-		outMsg.println(myName + " : " + msg);
+		outMsg.println(m_Name + " : " + msg);
 
 	}
 	public void Close()
 	{
-		SendChatMsg(myName + "님이 연결을 종료하셨습니다.");
+		SendChatMsg(m_Name + "님이 연결을 종료하셨습니다.");
 		try
 		{
 			listen.close();

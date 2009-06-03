@@ -37,7 +37,7 @@ public class Server extends Network
 	public void SendChatMsg(String msg)
 	{
 		for(int i=0; i<clientNum; i++)
-			outData[i].println(myName + " : " + msg);
+			outData[i].println(m_Name + " : " + msg);
 	}
 	public void Close()
 	{
