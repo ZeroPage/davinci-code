@@ -2,10 +2,12 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Label;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.net.URL;
@@ -43,7 +45,7 @@ public class DavichiGUI extends JFrame
 	}
 	public void InitalGUI()
 	{
-		this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+		//this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		this.setSize(1000, 600);//크기 설정.
 		this.setResizable(false);
 		
@@ -51,9 +53,9 @@ public class DavichiGUI extends JFrame
 		//로비화면 띄우기* -> lobbywindow 클래스 생성
 		//게임화면 띄우기 -> Roomwindow 클래스 생성
 		RW = new RoomWindow((JPanel)this.getContentPane());
-		this.addWindowListener(RW);
+		this.addWindowListener(new MainWindowListener());
 	}
-	class RoomWindow extends mWindow implements WindowListener
+	class RoomWindow extends mWindow
 	{
 		JPanel JPanel_Room = null;
 		ChatWindow CW = null;
@@ -200,56 +202,29 @@ public class DavichiGUI extends JFrame
 		{
 			CW.StringAdd(msg);
 		}
-		@Override
-		public void windowActivated(WindowEvent e)
-		{
-			// TODO Auto-generated method stub
-			
-		}
-		@Override
-		public void windowClosed(WindowEvent e)
-		{
-			// TODO Auto-generated method stub
-			
-		}
-		@Override
-		public void windowClosing(WindowEvent e)
-		{
-			// TODO Auto-generated method stub
-			NC.Close();
-			JOptionPane.showMessageDialog(null, "정말종료?");
-			
-		}
-		@Override
-		public void windowDeactivated(WindowEvent e)
-		{
-			// TODO Auto-generated method stub
-			
-		}
-		@Override
-		public void windowDeiconified(WindowEvent e)
-		{
-			// TODO Auto-generated method stub
-			
-		}
-		@Override
-		public void windowIconified(WindowEvent e)
-		{
-			// TODO Auto-generated method stub
-			
-		}
-		@Override
-		public void windowOpened(WindowEvent e)
-		{
-			// TODO Auto-generated method stub
-			
-		}
 	}
 	class LobbyWindow extends mWindow
 	{
 		public void AddChatString(String msg)
 		{
 			// TODO Auto-generated method stub
+		}
+	}
+	class MainWindowListener extends WindowAdapter
+	{
+		public void windowClosing(WindowEvent e)
+		{
+			if(JOptionPane.showConfirmDialog(null, "정말종료?","종료확인",JOptionPane.YES_NO_OPTION) == 0)
+			{
+				e.getWindow().setVisible(false); // Frame을 화면에서 보이지 않도록 한다.
+			    e.getWindow().dispose(); // 메모리에서 제거한다.
+			    System.exit(0); // 프로그램을 종료한다.
+			}
+			else
+			{
+				//종료 막는 코드
+				return;
+			}
 		}
 	}
 	class ConnetDlg extends JDialog implements ActionListener, ItemListener
@@ -324,8 +299,7 @@ public class DavichiGUI extends JFrame
 					TagetNetwork.setM_Taget(TagetChat);
 					TagetNetwork.Connect(JTF_IPAdress.getText());
 					TagetChat.setNetwork(TagetNetwork);
-					TagetNetwork.SendChatMsg("서버 개설완료");
-					JOptionPane.showMessageDialog(null, "서버가 개설되었습니다.","알림", 3);
+					TagetChat.AddChatString("서버가 개설되었습니다.");
 				}
 				else
 				{
@@ -335,13 +309,14 @@ public class DavichiGUI extends JFrame
 					TagetNetwork.setM_Taget(TagetChat);
 					TagetNetwork.Connect(JTF_IPAdress.getText());
 					TagetChat.setNetwork(TagetNetwork);
-					JOptionPane.showMessageDialog(null, "접속이 완료되었습니다.","알림", 3);
+					TagetNetwork.SendChatMsg("접속하였습니다.");
 				}
 				this.setVisible(false);
 			}
 			if(event.getSource() == JB_Cancel)
 			{
-				this.setVisible(false);
+				//this.setVisible(false);
+				JOptionPane.showMessageDialog(null, "접속을 하셔야만 합니다.");
 			}
 		}
 		public void itemStateChanged(ItemEvent event)
