@@ -45,7 +45,7 @@ public class DavichiGUI extends JFrame
 	}
 	public void InitalGUI()
 	{
-		//this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+		this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 		this.setSize(1000, 600);//크기 설정.
 		this.setResizable(false);
 		
@@ -214,7 +214,7 @@ public class DavichiGUI extends JFrame
 	{
 		public void windowClosing(WindowEvent e)
 		{
-			if(JOptionPane.showConfirmDialog(null, "정말종료?","종료확인",JOptionPane.YES_NO_OPTION) == 0)
+			if(JOptionPane.showConfirmDialog(null, "정말종료하시겠습니까?","종료확인",JOptionPane.YES_NO_OPTION) == 0)
 			{
 				e.getWindow().setVisible(false); // Frame을 화면에서 보이지 않도록 한다.
 			    e.getWindow().dispose(); // 메모리에서 제거한다.
