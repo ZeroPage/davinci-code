@@ -40,8 +40,9 @@ public class Server extends Network
 	}
 	public void SendChatMsg(String msg)
 	{
-		for(int i=0; i<clientNum; i++)
-			outData[i].println(m_Name + " : " + msg);
+		for(int i=0; i<maxClient; i++)
+			if(!clients[i].isClosed())
+				outData[i].println(m_Name + " : " + msg);
 		m_Taget.AddChatString(m_Name + " : " + msg);
 	}
 	public void Close()
@@ -59,13 +60,19 @@ public class Server extends Network
 			{
 				try
 				{
-					clients[clientNum] = server.accept();
-					inData[clientNum] = new ServerListener();
-					inData[clientNum].setClient(clients[clientNum]);
-					inData[clientNum].setInMsg();
-					outData[clientNum] = new PrintWriter(clients[clientNum].getOutputStream(), true);
-					inData[clientNum].start();
-					clientNum++;
+					for(int i=0; i<maxClient; i++)
+					{
+						if(clients[i].isClosed())
+						{
+							clients[i] = server.accept();
+							inData[i] = new ServerListener();
+							inData[i].setClient(clients[i]);
+							inData[i].setInMsg();
+							outData[i] = new PrintWriter(clients[i].getOutputStream(), true);
+							inData[i].start();
+							clientNum++;
+						}
+					}
 				} catch (IOException e)
 				{
 					// TODO Auto-generated catch block
@@ -101,6 +108,7 @@ public class Server extends Network
 				try
 				{
 					inString = inMsg.readLine();
+					//입력 데이터 조건필요.
 					m_Taget.AddChatString(inString);
 					SendChatMsg(inString);
 				} catch (IOException e)

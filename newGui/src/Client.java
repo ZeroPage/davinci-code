@@ -68,6 +68,7 @@ public class Client extends Network
 		{
 			while(server.isConnected())
 			{	try {
+				//입력 데이터 조건 필요. 
 				m_Taget.AddChatString(inMsg.readLine());
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
