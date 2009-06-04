@@ -20,6 +20,8 @@ public class Server extends Network
 		maxClient = 3;
 		clientNum= 0;
 		clients = new Socket[maxClient];
+		for(int i=0; i< clients.length; i++)
+			clients[i] = new Socket();
 		outData = new PrintWriter[maxClient];
 		inData = new ServerListener[maxClient];
 		wait = new WaitingClient();
