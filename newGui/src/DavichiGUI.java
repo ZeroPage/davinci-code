@@ -77,7 +77,6 @@ public class DavichiGUI extends JFrame
 			JButton JB_NewGame;
 			JButton JB_Exit;
 			JButton JB_ChatClear;
-			Network m_Network;
 			
 			public ChatWindow(JPanel main)
 			{
@@ -132,7 +131,7 @@ public class DavichiGUI extends JFrame
 				if(event.getSource() == JB_Send || event.getSource() == JTF_ChatInput)
 				{
 					//텍스트 전송
-					m_Network.SendChatMsg(JTF_ChatInput.getText());
+					NC.SendChatMsg(JTF_ChatInput.getText());
 					JTF_ChatInput.setText("");
 					JTF_ChatInput.requestFocus();					
 				}
@@ -145,19 +144,10 @@ public class DavichiGUI extends JFrame
 				if(event.getSource() == JB_NewGame)
 				{
 					//새게임 시작
-					m_Network = new Server();
-					m_Network.setM_Taget(RW);
-					m_Network.setM_Name("server");
-					m_Network.Connect("1");
-					JOptionPane.showMessageDialog(null, "서버입니다.");
 				}
 				if(event.getSource() == JB_Exit)
 				{
 					//종료코드
-					m_Network = new Client();
-					m_Network.setM_Taget(RW);
-					m_Network.setM_Name("client");
-					m_Network.Connect(JOptionPane.showInputDialog("put ip"));
 				}
 			}
 			public void StringAdd(String msg)
@@ -267,12 +257,13 @@ public class DavichiGUI extends JFrame
 		JButton JB_Cancel;
 		JCheckBox JCB_Server;
 		mWindow TagetChat;
-		Network tagetNetwork;
+		Network TagetNetwork;
 		
 		public ConnetDlg(mWindow chat)
 		{
 			super(some, "접속창", true);
 			TagetChat = chat; 
+			//TagetNetwork = Taget;
 			setSize(350, 200);
 			setResizable(false);
 			this.getContentPane().setLayout(null);
@@ -325,22 +316,22 @@ public class DavichiGUI extends JFrame
 				if(JCB_Server.isSelected())
 				{
 					//서버
-					tagetNetwork = new Server();
-					tagetNetwork.setM_Name(JTF_Nick.getText());
-					tagetNetwork.setM_Taget(TagetChat);
-					tagetNetwork.Connect(JTF_IPAdress.getText());
-					TagetChat.setNetwork(tagetNetwork);
-					tagetNetwork.SendChatMsg("서버 개설완료");
+					TagetNetwork = new Server();
+					TagetNetwork.setM_Name(JTF_Nick.getText());
+					TagetNetwork.setM_Taget(TagetChat);
+					TagetNetwork.Connect(JTF_IPAdress.getText());
+					TagetChat.setNetwork(TagetNetwork);
+					TagetNetwork.SendChatMsg("서버 개설완료");
 					JOptionPane.showMessageDialog(null, "서버가 개설되었습니다.","알림", 3);
 				}
 				else
 				{
 					//클라
-					tagetNetwork = new Client();
-					tagetNetwork.setM_Name(JTF_Nick.getText());
-					tagetNetwork.setM_Taget(TagetChat);
-					tagetNetwork.Connect(JTF_IPAdress.getText());
-					TagetChat.setNetwork(tagetNetwork);
+					TagetNetwork = new Client();
+					TagetNetwork.setM_Name(JTF_Nick.getText());
+					TagetNetwork.setM_Taget(TagetChat);
+					TagetNetwork.Connect(JTF_IPAdress.getText());
+					TagetChat.setNetwork(TagetNetwork);
 					JOptionPane.showMessageDialog(null, "접속이 완료되었습니다.","알림", 3);
 				}
 				this.setVisible(false);
