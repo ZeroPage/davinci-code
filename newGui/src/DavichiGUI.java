@@ -61,7 +61,7 @@ public class DavichiGUI extends JFrame
 			JPanel_Room.setLayout(new BorderLayout());
 			CW = new ChatWindow(JPanel_Room);
 			GW = new GameWindow(JPanel_Room);
-			ConnetDlg CD = new ConnetDlg(new ptr(NC),this);
+			//ConnetDlg CD = new ConnetDlg(new ptr(NC),this);
 			
 			main.add(BorderLayout.CENTER, JPanel_Room);
 		}
