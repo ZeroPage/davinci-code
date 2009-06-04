@@ -43,9 +43,11 @@ public class Server extends Network
 	public void SendChatMsg(String msg)
 	{
 		for(int i=0; i<maxClient; i++)
-			if(!clients[i].isClosed())
-				outData[i].println(m_Name + " : " + msg);
-		m_Taget.AddChatString(m_Name + " : " + msg);
+		{
+			if(clients[i].isConnected())
+				outData[i].println(msg);
+		}
+		m_Taget.AddChatString(msg);
 	}
 	public void Close()
 	{
@@ -64,7 +66,7 @@ public class Server extends Network
 				{
 					for(int i=0; i<maxClient; i++)
 					{
-						if(clients[i].isClosed())
+						if(!clients[i].isConnected())
 						{
 							clients[i] = server.accept();
 							inData[i] = new ServerListener();
