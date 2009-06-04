@@ -52,9 +52,20 @@ public class Server extends Network
 	public void Close()
 	{
 		// TODO Auto-generated method stub
-		//wait.stop();
+		wait.stop();
 		for(int i=0; i<clientNum; i++)
+		{
+			inData[i].stop();
 			outData[i].close();
+			try
+			{
+				clients[i].close();
+			} catch (IOException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 	class WaitingClient extends Thread
 	{
