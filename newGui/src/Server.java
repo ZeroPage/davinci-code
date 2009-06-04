@@ -42,12 +42,8 @@ public class Server extends Network
 	}
 	public void SendChatMsg(String msg)
 	{
-		for(int i=0; i<maxClient; i++)
-		{
-			if(clients[i].isConnected())
-				outData[i].println(msg);
-		}
-		m_Taget.AddChatString(msg);
+		BroadCasting(m_Name + " : " + msg);
+		m_Taget.AddChatString(m_Name + " : " + msg);
 	}
 	public void Close()
 	{
@@ -55,16 +51,27 @@ public class Server extends Network
 		wait.stop();
 		for(int i=0; i<clientNum; i++)
 		{
-			inData[i].stop();
-			outData[i].close();
-			try
+			if(clients[i].isConnected())
 			{
-				clients[i].close();
-			} catch (IOException e)
-			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				inData[i].stop();
+				outData[i].close();
+				try
+				{
+					clients[i].close();
+				} catch (IOException e)
+				{
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
+		}
+	}
+	public void BroadCasting(String msg)
+	{
+		for(int i=0; i<maxClient; i++)
+		{
+			if(clients[i].isConnected())
+				outData[i].println(msg);
 		}
 	}
 	class WaitingClient extends Thread
@@ -125,7 +132,7 @@ public class Server extends Network
 					inString = inMsg.readLine();
 					//입력 데이터 조건필요.
 					m_Taget.AddChatString(inString);
-					SendChatMsg(inString);
+					BroadCasting(inString);
 				} catch (IOException e)
 				{
 					// TODO Auto-generated catch block
