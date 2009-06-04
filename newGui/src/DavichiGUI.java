@@ -6,6 +6,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.net.URL;
 
 import javax.swing.ImageIcon;
@@ -20,6 +22,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
+
+import sun.awt.WindowClosingListener;
 
 public class DavichiGUI extends JFrame
 {
@@ -42,18 +46,17 @@ public class DavichiGUI extends JFrame
 		this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		this.setSize(1000, 600);//크기 설정.
 		this.setResizable(false);
-		
+		this.addWindowListener(RW);
 		//화면 띄우기
 		//로비화면 띄우기* -> lobbywindow 클래스 생성
 		//게임화면 띄우기 -> Roomwindow 클래스 생성
 		RW = new RoomWindow((JPanel)this.getContentPane());
 	}
-	class RoomWindow extends mWindow
+	class RoomWindow extends mWindow implements WindowListener
 	{
 		JPanel JPanel_Room = null;
 		ChatWindow CW = null;
 		GameWindow GW = null;
-		Network NC = null;
 		
 		public RoomWindow(JPanel main)
 		{			
@@ -61,7 +64,7 @@ public class DavichiGUI extends JFrame
 			JPanel_Room.setLayout(new BorderLayout());
 			CW = new ChatWindow(JPanel_Room);
 			GW = new GameWindow(JPanel_Room);
-			//ConnetDlg CD = new ConnetDlg(new ptr(NC),this);
+			ConnetDlg CD = new ConnetDlg(this);
 			
 			main.add(BorderLayout.CENTER, JPanel_Room);
 		}
@@ -206,6 +209,48 @@ public class DavichiGUI extends JFrame
 		{
 			CW.StringAdd(msg);
 		}
+		@Override
+		public void windowActivated(WindowEvent e)
+		{
+			// TODO Auto-generated method stub
+			
+		}
+		@Override
+		public void windowClosed(WindowEvent e)
+		{
+			// TODO Auto-generated method stub
+			NC.Close();
+		}
+		@Override
+		public void windowClosing(WindowEvent e)
+		{
+			// TODO Auto-generated method stub
+			
+		}
+		@Override
+		public void windowDeactivated(WindowEvent e)
+		{
+			// TODO Auto-generated method stub
+			
+		}
+		@Override
+		public void windowDeiconified(WindowEvent e)
+		{
+			// TODO Auto-generated method stub
+			
+		}
+		@Override
+		public void windowIconified(WindowEvent e)
+		{
+			// TODO Auto-generated method stub
+			
+		}
+		@Override
+		public void windowOpened(WindowEvent e)
+		{
+			// TODO Auto-generated method stub
+			
+		}
 	}
 	class LobbyWindow extends mWindow
 	{
@@ -222,13 +267,11 @@ public class DavichiGUI extends JFrame
 		JButton JB_Cancel;
 		JCheckBox JCB_Server;
 		mWindow TagetChat;
-		ptr tagetNetwork;
+		Network tagetNetwork;
 		
-		public ConnetDlg(ptr Taget, mWindow chat)
+		public ConnetDlg(mWindow chat)
 		{
-			
 			super(some, "접속창", true);
-			tagetNetwork = Taget;
 			TagetChat = chat; 
 			setSize(350, 200);
 			setResizable(false);
@@ -282,20 +325,22 @@ public class DavichiGUI extends JFrame
 				if(JCB_Server.isSelected())
 				{
 					//서버
-					tagetNetwork.p = new Server();
-					((Network) tagetNetwork.p).setM_Name(JTF_Nick.getText());
-					((Network) tagetNetwork.p).setM_Taget(TagetChat);
-					((Network) tagetNetwork.p).Connect(JTF_IPAdress.getText());
-					
+					tagetNetwork = new Server();
+					tagetNetwork.setM_Name(JTF_Nick.getText());
+					tagetNetwork.setM_Taget(TagetChat);
+					tagetNetwork.Connect(JTF_IPAdress.getText());
+					TagetChat.setNetwork(tagetNetwork);
+					tagetNetwork.SendChatMsg("서버 개설완료");
 					JOptionPane.showMessageDialog(null, "서버가 개설되었습니다.","알림", 3);
 				}
 				else
 				{
 					//클라
-					tagetNetwork.p = new Client();
-					((Network) tagetNetwork.p).setM_Name(JTF_Nick.getText());
-					((Network) tagetNetwork.p).setM_Taget(TagetChat);
-					((Network) tagetNetwork.p).Connect(JTF_IPAdress.getText());
+					tagetNetwork = new Client();
+					tagetNetwork.setM_Name(JTF_Nick.getText());
+					tagetNetwork.setM_Taget(TagetChat);
+					tagetNetwork.Connect(JTF_IPAdress.getText());
+					TagetChat.setNetwork(tagetNetwork);
 					JOptionPane.showMessageDialog(null, "접속이 완료되었습니다.","알림", 3);
 				}
 				this.setVisible(false);
@@ -320,12 +365,5 @@ public class DavichiGUI extends JFrame
 			}
 		}	
 	}
-	class ptr
-	{
-		public Object p;
-		public ptr(Object taget)
-		{
-			p = taget;
-		}
-	}
+	
 }
