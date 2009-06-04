@@ -244,6 +244,15 @@ public class DavichiGUI extends JFrame
 			//TagetNetwork = Taget;
 			setSize(350, 200);
 			setResizable(false);
+			this.addWindowListener(new WindowAdapter()
+			{
+				public void windowClosing(WindowEvent e)
+				{
+				// TODO Auto-generated method stub
+				super.windowClosing(e);
+				System.exit(0);
+				}	
+			});
 			this.getContentPane().setLayout(null);
 			
 			JLabel temp = new JLabel("´Ð³×ÀÓ");
@@ -334,5 +343,4 @@ public class DavichiGUI extends JFrame
 			}
 		}	
 	}
-	
 }
