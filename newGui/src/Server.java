@@ -42,7 +42,7 @@ public class Server extends Network
 	{
 		for(int i=0; i<clientNum; i++)
 			outData[i].println(m_Name + " : " + msg);
-		m_Taget.AddChatString(msg);
+		m_Taget.AddChatString(m_Name + " : " + msg);
 	}
 	public void Close()
 	{
@@ -95,11 +95,14 @@ public class Server extends Network
 		}
 		public void run()
 		{
+			String inString;
 			while(client.isConnected())
 			{
 				try
 				{
-					m_Taget.AddChatString(inMsg.readLine());
+					inString = inMsg.readLine();
+					m_Taget.AddChatString(inString);
+					SendChatMsg(inString);
 				} catch (IOException e)
 				{
 					// TODO Auto-generated catch block
