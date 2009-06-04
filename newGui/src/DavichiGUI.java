@@ -46,11 +46,12 @@ public class DavichiGUI extends JFrame
 		this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		this.setSize(1000, 600);//크기 설정.
 		this.setResizable(false);
-		this.addWindowListener(RW);
+		
 		//화면 띄우기
 		//로비화면 띄우기* -> lobbywindow 클래스 생성
 		//게임화면 띄우기 -> Roomwindow 클래스 생성
 		RW = new RoomWindow((JPanel)this.getContentPane());
+		this.addWindowListener(RW);
 	}
 	class RoomWindow extends mWindow implements WindowListener
 	{
@@ -209,12 +210,14 @@ public class DavichiGUI extends JFrame
 		public void windowClosed(WindowEvent e)
 		{
 			// TODO Auto-generated method stub
-			NC.Close();
+			
 		}
 		@Override
 		public void windowClosing(WindowEvent e)
 		{
 			// TODO Auto-generated method stub
+			NC.Close();
+			JOptionPane.showMessageDialog(null, "정말종료?");
 			
 		}
 		@Override
