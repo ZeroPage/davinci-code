@@ -1,7 +1,6 @@
 import java.io.*;
 import java.net.*;
 
-
 public class Server extends Network
 {
 	ClientData[] clients;
@@ -85,7 +84,6 @@ public class Server extends Network
 		Socket connect;
 		ObjectOutputStream outOb;
 		ObServerListener inOb;
-
 		public ClientData()
 		{
 			connect = new Socket();
@@ -186,8 +184,6 @@ public class Server extends Network
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				//입력 데이터 조건필요.
-
 			}
 		}
 	}
