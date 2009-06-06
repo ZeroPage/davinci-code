@@ -379,25 +379,4 @@ public class DavichiGUI extends JFrame
 			}
 		}	
 	}
-	class OptionDialog extends JDialog
-	{
-		JTextField JTF_Gameport;
-		JTextField JTF_Chatport;
-		
-		public OptionDialog()
-		{
-			super(some, "¿É¼Ç", true);
-			setSize(350, 200);
-			setLocation(getRootPane().getSize().width/2, getRootPane().getSize().height/2);
-			setResizable(false);
-			
-			JTF_Chatport = new JTextField();
-			JTF_Chatport.setBounds(100, 0, 100, 30);
-			this.getContentPane().add(JTF_Chatport);
-			
-			JTF_Gameport = new JTextField();
-			JTF_Gameport.setBounds(100, 30, 100, 30);
-			this.getContentPane().add(JTF_Gameport);
-		}
-	}
 }
