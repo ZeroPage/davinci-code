@@ -6,8 +6,7 @@ public class Server extends Network
 	ClientData[] clients;
 	WaitingClient wait;
 
-	int maxClient;
-	int clientNum;
+	int maxClient, clientNum;
 
 	public Server()
 	{
@@ -185,6 +184,7 @@ public class Server extends Network
 					e.printStackTrace();
 				}
 			}
+			clientNum--;
 		}
 	}
 }

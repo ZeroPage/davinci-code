@@ -183,7 +183,6 @@ public class DavichiGUI extends JFrame
 					}
 				};
 				JPanel_Main.setLayout(new BorderLayout());
-				
 				JPanel_Player = new JPanel[4];
 				for(int i = 0; i < 4; i++)
 				{
@@ -199,8 +198,9 @@ public class DavichiGUI extends JFrame
 				JStyleButton temp = new JStyleButton(card1);//기본이미지
 				ImageIcon cards1 = new ImageIcon(DavichiGUI.class.getResource("black_1.gif"));
 				temp.setRolloverIcon(cards1);//마우스를 올렸을때 이미지
-				JPanel_Player[2].add(temp);
-				
+				JPanel_Player[2].add(temp);	
+				JPanel_Player[2].notify();
+
 				ImageIcon dia = new ImageIcon(DavichiGUI.class.getResource("dialog.gif"));//대화창 띄우기
 				JPanel_Player[0].add(new JLabel(dia));
 				main.add(JPanel_Main);
