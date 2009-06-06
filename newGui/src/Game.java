@@ -6,11 +6,6 @@ public class Game {
 	private Network connection;
 	private GameWindow m_Taget;
 
-	Game() {
-		setPlayers(1);
-		setBlocks();
-		mixBlocks(blocks);
-	}
 	Game(Network connection, GameWindow Taget, int n) {
 		this.connection = connection;
 		this.m_Taget = Taget;
@@ -173,10 +168,13 @@ public class Game {
 		}
 		public void selectBlock()
 		{
-			
+			m_Taget.setEnable(true);
 		}
-		public void getBlock(Game DC,int blockNum) {
-			hand.add(DC.getBlocks().get(blockNum));
+		public void getBlock(int blockNum) {
+			hand.add(blocks.get(blockNum));
+			connection.SendOb(new DataHeader("지울 블록", blocks.get(blockNum)));
+			blocks.remove(blockNum);
+			m_Taget.setEnable(true);
 			
 			/*if(DC.getBlocks().get(blockNum).getNum()==-1)
 			{
@@ -215,11 +213,14 @@ public class Game {
 				*/
 				//sortBlock(getHand(), 0, hand.size()-1);
 		}
-		public void askBlock(int turnPlayernum) {		
-			int selectedPlayer;//다 중간 변수받음
-			int selectedBlock;
-			int selectedNum;
-			if(players.get(selectedPlayer).checkBlock(selectedBlock, selectedNum)==true)
+		public void askBlock(int selectedPlayer, int selectedBlock, int selectedNum) {		
+			int[] temp = new int[3];
+			temp[0] = selectedPlayer;
+			temp[1] = selectedBlock;
+			temp[2] = selectedNum;
+			connection.SendOb(new DataHeader("ask-int[]",temp));
+			
+			/*if(players.get(selectedPlayer).checkBlock(selectedBlock, selectedNum)==true)
 			{
 				boolean again;//다시 추리할지여부
 				if(again==true)
@@ -229,12 +230,12 @@ public class Game {
 			{
 				int num;//오픈할 패의 인덱스.플레이어가 선택
 				players.get(turnPlayernum).getHand().get(num).setOpen(true);
-			}
-
+			}*/
 		}
 		public boolean checkBlock(int selectedBlock, int num) {
 			if(hand.get(selectedBlock).getNum() == num) {
 				hand.get(selectedBlock).setOpen(true);
+				connection.SendOb(new DataHeader("askOX-boolean", Boolean.valueOf(true)));
 				isPlay();
 				return true;
 			}
@@ -246,6 +247,7 @@ public class Game {
 				if(tb.getOpen() == false)
 					return;
 			}
+			connection.SendOb(new DataHeader("dead", Boolean.valueOf(false)));
 			setPlay(false);
 		}
 		public void swapBlock(ArrayList<Block> blocks, int n1, int n2) {
