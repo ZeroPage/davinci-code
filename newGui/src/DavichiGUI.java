@@ -162,50 +162,6 @@ public class DavichiGUI extends JFrame
 				JTA_Chat.setCaretPosition(JTA_Chat.getDocument().getLength());
 			}
 		}
-		class GameWindow
-		{
-			JPanel JPanel_Main;
-			JPanel [] JPanel_Player;
-			
-			ImageIcon [] ImageCardBlack = new ImageIcon[13];
-			ImageIcon [] ImageCardWhite = new ImageIcon[13];
-			                     
-			public GameWindow(JPanel main)
-			{
-				JPanel_Main = new JPanel()
-				{
-					ImageIcon BG = new ImageIcon(DavichiGUI.class.getResource("board2.jpg"));
-					public void paint(Graphics g)
-					{
-						g.drawImage(BG.getImage(), 0, 0, BG.getIconWidth(), BG.getIconHeight(), null);
-						this.setOpaque(false);
-						super.paint(g);
-					}
-				};
-				JPanel_Main.setLayout(new BorderLayout());
-				JPanel_Player = new JPanel[4];
-				for(int i = 0; i < 4; i++)
-				{
-					JPanel_Player[i] = new JPanel();
-					JPanel_Player[i].setOpaque(false);
-				}
-				JPanel_Main.add(BorderLayout.NORTH, JPanel_Player[0]);
-				JPanel_Main.add(BorderLayout.EAST, JPanel_Player[1]);
-				JPanel_Main.add(BorderLayout.SOUTH, JPanel_Player[2]);
-				JPanel_Main.add(BorderLayout.WEST, JPanel_Player[3]);
-				
-				ImageIcon card1 = new ImageIcon(DavichiGUI.class.getResource("b1.gif"));
-				JStyleButton temp = new JStyleButton(card1);//기본이미지
-				ImageIcon cards1 = new ImageIcon(DavichiGUI.class.getResource("black_1.gif"));
-				temp.setRolloverIcon(cards1);//마우스를 올렸을때 이미지
-				JPanel_Player[2].add(temp);	
-				JPanel_Player[2].notify();
-
-				ImageIcon dia = new ImageIcon(DavichiGUI.class.getResource("dialog.gif"));//대화창 띄우기
-				JPanel_Player[0].add(new JLabel(dia));
-				main.add(JPanel_Main);
-			}
-		}
 		public void AddChatString(String msg)
 		{
 			CW.StringAdd(msg);
