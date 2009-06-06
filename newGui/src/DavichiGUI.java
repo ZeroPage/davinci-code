@@ -329,7 +329,7 @@ public class DavichiGUI extends JFrame
 	class AskDlg extends JDialog implements ActionListener
 	{
 		JButton [] JB_Num = new JButton[13];
-		
+		int Num;
 		public AskDlg()
 		{
 			super(some, "숫자를 선택하세요",true);
@@ -341,8 +341,6 @@ public class DavichiGUI extends JFrame
 			{
 				public void windowClosing(WindowEvent e)
 				{
-				super.windowClosing(e);
-				System.exit(0);
 				}	
 			});
 			
@@ -361,9 +359,14 @@ public class DavichiGUI extends JFrame
 			{
 				if(e.getSource() == JB_Num[i])
 				{
-					
+					Num = i;
+					break;
 				}
 			}
+		}
+		public int getNum()
+		{
+			return Num;
 		}
 	}
 }
