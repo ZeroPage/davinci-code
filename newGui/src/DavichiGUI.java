@@ -214,7 +214,6 @@ public class DavichiGUI extends JFrame
 			{
 				public void windowClosing(WindowEvent e)
 				{
-				// TODO Auto-generated method stub
 				super.windowClosing(e);
 				System.exit(0);
 				}	
@@ -329,6 +328,8 @@ public class DavichiGUI extends JFrame
 	}
 	class AskDlg extends JDialog implements ActionListener
 	{
+		JButton [] JB_Num = new JButton[13];
+		
 		public AskDlg()
 		{
 			super(some, "숫자를 선택하세요",true);
@@ -340,16 +341,29 @@ public class DavichiGUI extends JFrame
 			{
 				public void windowClosing(WindowEvent e)
 				{
-				// TODO Auto-generated method stub
 				super.windowClosing(e);
 				System.exit(0);
 				}	
 			});
+			
+			for(int i = 0; i < 13; i++)
+			{
+				JB_Num[i] = new JButton(""+ i);
+				JB_Num[i].addActionListener(this);
+				this.getContentPane().add(JB_Num[i]);
+			}
+			
 			this.setVisible(true);
 		}
 		public void actionPerformed(ActionEvent e)
 		{
-			
+			for(int i = 0; i <13; i++)
+			{
+				if(e.getSource() == JB_Num[i])
+				{
+					
+				}
+			}
 		}
 	}
 }
