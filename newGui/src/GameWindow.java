@@ -7,8 +7,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-
-
 class GameWindow
 {
 	JPanel JPanel_Main;
@@ -19,6 +17,8 @@ class GameWindow
 	ImageIcon [] ImageCardWhite = new ImageIcon[13];
 	ImageIcon [] ImageCardBlackRollover = new ImageIcon[13];
 	ImageIcon [] ImageCardWhiteRollover = new ImageIcon[13];
+	
+	GameProcess Proess;
 	
 	public GameWindow(JPanel main)
 	{
@@ -39,6 +39,7 @@ class GameWindow
 			players[i] = new PlayerWindow(i);
 		}
 		main.add(JPanel_Main);
+		Proess = new GameProcess(this);
 	}
 	public void setEnable(boolean state)
 	{
