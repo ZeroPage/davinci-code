@@ -18,7 +18,7 @@ class GameWindow
 	ImageIcon [] ImageCardBlackRollover = new ImageIcon[13];
 	ImageIcon [] ImageCardWhiteRollover = new ImageIcon[13];
 	
-	GameProcess Proess;
+	GameProcess Process;
 	
 	public GameWindow(JPanel main)
 	{
@@ -39,7 +39,7 @@ class GameWindow
 			players[i] = new PlayerWindow(i);
 		}
 		main.add(JPanel_Main);
-		GameProcess Process = new GameProcess(this);
+		Process = new GameProcess(this);
 	}
 	public void setEnable(boolean state)
 	{
@@ -102,4 +102,5 @@ class GameWindow
 			}
 		}
 	}
+	
 }

@@ -67,8 +67,8 @@ public class DavichiGUI extends JFrame
 			JPanel_Room.setLayout(new BorderLayout());
 			CW = new ChatWindow(JPanel_Room);
 			GW = new GameWindow(JPanel_Room);
+			GW.Process.setConnection(NC);
 			ConnetDlg CD = new ConnetDlg(this);
-			
 			main.add(BorderLayout.CENTER, JPanel_Room);
 		}
 		class ChatWindow implements ActionListener
