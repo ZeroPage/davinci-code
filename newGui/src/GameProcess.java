@@ -56,6 +56,7 @@ public class GameProcess
 	public void Start() {		
 		connection.SendOb(Integer.valueOf(getPlayerNum()));
 		DC = new Game(getConnection(), getM_Taget(), getPlayerNum());
+		connection.SendOb(new DataHeader("firstBlocks-arrayList",DC.getBlocks()));
 	}
 
 	public void report() {
