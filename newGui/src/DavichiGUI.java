@@ -242,6 +242,8 @@ public class DavichiGUI extends JFrame
 		JButton JB_Connect;
 		JButton JB_Cancel;
 		JCheckBox JCB_Server;
+		JTextField JTF_Gameport;
+		JTextField JTF_Chatport;
 		mWindow TagetChat;
 		Network TagetNetwork;
 		
@@ -293,13 +295,33 @@ public class DavichiGUI extends JFrame
 			JTF_IPAdress.addActionListener(this);
 			this.getContentPane().add(JTF_IPAdress);
 			
+			temp = new JLabel("Chat Port");
+			temp.setBounds(0, 90, 100, 30);
+			temp.setHorizontalAlignment(JLabel.CENTER);
+			this.getContentPane().add(temp);
+			
+			JTF_Chatport = new JTextField();
+			JTF_Chatport.setBounds(100, 90, 50, 30);
+			JTF_Chatport.setText("10000");
+			this.getContentPane().add(JTF_Chatport);
+			
+			temp = new JLabel("Game Port");
+			temp.setBounds(150, 90, 100, 30);
+			temp.setHorizontalAlignment(JLabel.CENTER);
+			this.getContentPane().add(temp);
+			
+			JTF_Gameport = new JTextField();
+			JTF_Gameport.setBounds(250, 90, 50, 30);
+			JTF_Gameport.setText("10001");
+			this.getContentPane().add(JTF_Gameport);
+			
 			JB_Connect = new JButton("접속");
-			JB_Connect.setBounds(50 , 100, 100, 30);
+			JB_Connect.setBounds(50 , 130, 100, 30);
 			JB_Connect.addActionListener(this);
 			this.getContentPane().add(JB_Connect);
 			
 			JB_Cancel = new JButton("취소");
-			JB_Cancel.setBounds(200, 100, 100, 30);
+			JB_Cancel.setBounds(200, 130, 100, 30);
 			JB_Cancel.addActionListener(this);
 			this.getContentPane().add(JB_Cancel);
 			
@@ -307,6 +329,11 @@ public class DavichiGUI extends JFrame
 		}
 		public void actionPerformed(ActionEvent event)
 		{
+			if(JTF_Nick.getText().length() == 0)
+			{
+				JOptionPane.showMessageDialog(null, "닉네임을 입력하세요.", "알림", JOptionPane.ERROR_MESSAGE);
+				return;
+			}
 			if(event.getSource() == JB_Connect || event.getSource() == JTF_IPAdress)
 			{
 				if(JCB_Server.isSelected())
@@ -354,14 +381,23 @@ public class DavichiGUI extends JFrame
 	}
 	class OptionDialog extends JDialog
 	{
+		JTextField JTF_Gameport;
+		JTextField JTF_Chatport;
+		
 		public OptionDialog()
 		{
-			super(some, "접속창", true);
+			super(some, "옵션", true);
 			setSize(350, 200);
 			setLocation(getRootPane().getSize().width/2, getRootPane().getSize().height/2);
 			setResizable(false);
 			
+			JTF_Chatport = new JTextField();
+			JTF_Chatport.setBounds(100, 0, 100, 30);
+			this.getContentPane().add(JTF_Chatport);
 			
+			JTF_Gameport = new JTextField();
+			JTF_Gameport.setBounds(100, 30, 100, 30);
+			this.getContentPane().add(JTF_Gameport);
 		}
 	}
 }
