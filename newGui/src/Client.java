@@ -4,14 +4,19 @@ import java.net.*;
 
 public class Client extends Network
 {
-	Socket server;
+	Socket server, Observer;
 	PrintWriter outMsg;
-	//ObjectOutputStream outOb;
+	ObjectOutputStream outOb;
 	Listener listen;
+	ObListener Oblisten;
 	
 	public void setOutMsg() throws IOException
 	{
 		outMsg = new PrintWriter(server.getOutputStream(), true);
+	}
+	public void setOutOb() throws IOException
+	{
+		outOb = new ObjectOutputStream(Observer.getOutputStream());
 	}
 	public void setListen() throws IOException
 	{
@@ -19,13 +24,22 @@ public class Client extends Network
 		listen.setInMsg();
 		listen.start();
 	}
+	public void setOblisten() throws IOException
+	{
+		Oblisten = new ObListener();
+		Oblisten.setInOb();
+		Oblisten.start();
+	}
 	public void Connect(String ip)
 	{
 		try
 		{
-			server = new Socket(ip, 10000);
+			server = new Socket(ip, portNum);
+			Observer = new Socket(ip, portNum);
 			setOutMsg();
+			setOutOb();
 			setListen();
+			setOblisten();
 		} catch (UnknownHostException e)
 		{
 			// TODO Auto-generated catch block
@@ -44,6 +58,17 @@ public class Client extends Network
 	{
 		outMsg.println(data);
 	}
+	public void SendOb(int sel, Object ob)
+	{
+		try
+		{
+			outOb.writeObject(ob);
+		} catch (IOException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	public void Close()
 	{
 		SendChatMsg(m_Name + "님이 연결을 종료하셨습니다.");
@@ -52,6 +77,8 @@ public class Client extends Network
 			listen.close();
 			outMsg.close();
 			server.close();
+			Oblisten.close();
+			outOb.close();
 		} catch (IOException e)
 		{
 			// TODO Auto-generated catch block
@@ -80,6 +107,38 @@ public class Client extends Network
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			}
+		}
+	}
+	class ObListener extends Thread
+	{
+		ObjectInputStream inOb;
+
+		public void setInOb() throws IOException {
+			inOb = new ObjectInputStream(server.getInputStream());
+		}
+		public void close() throws IOException {
+			inOb.close();
+		}
+
+		public void run()
+		{
+			Object temp = null;
+			while(server.isConnected())
+			{
+				//입력 데이터 조건 필요. 
+				try
+				{
+					temp = inOb.readObject();
+				} catch (IOException e)
+				{
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (ClassNotFoundException e)
+				{
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		}
 	}
