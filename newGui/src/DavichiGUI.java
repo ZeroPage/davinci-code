@@ -332,10 +332,20 @@ public class DavichiGUI extends JFrame
 		public AskDlg()
 		{
 			super(some, "숫자를 선택하세요",true);
-			this.setSize(300,400)
+			this.setSize(300,400);
 			this.setLayout(new BorderLayout(5,3));
+			this.setLocation(getRootPane().getSize().width/2, getRootPane().getSize().height/2);
+			this.setResizable(false);
+			this.addWindowListener(new WindowAdapter()
+			{
+				public void windowClosing(WindowEvent e)
+				{
+				// TODO Auto-generated method stub
+				super.windowClosing(e);
+				System.exit(0);
+				}	
+			});
 			this.setVisible(true);
-			
 		}
 		public void actionPerformed(ActionEvent e)
 		{
