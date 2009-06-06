@@ -33,7 +33,11 @@ public class Game {
 			blocks.add(b[i]);
 		}
 	}
-
+	public void setBlocks(ArrayList<Block> tb)
+	{
+		for(int i=0;i<tb.size();i++)
+			blocks.add(tb.get(i));
+	}
 	public ArrayList<Player> getPlayers() {
 		return players;
 	}
@@ -57,7 +61,7 @@ public class Game {
 			n2 = (int)(Math.random()*26);
 		}
 	}
-	
+
 	public void printBlocks(ArrayList<Block> blocks) {		
 		for(int i=0; i<blocks.size(); i++) {
 			Block tb = blocks.get(i);
@@ -115,7 +119,7 @@ public class Game {
 		}
 		return alive<1;
 	}
-	
+
 	public class Player {
 		private ArrayList<Block> hand;//자신이 가진 블록을 저장하는 배열
 		private boolean play;//플레이여부를 결정
@@ -128,7 +132,7 @@ public class Game {
 			play = true;
 		}
 		public void setHand(Block n) {
-			
+
 		}
 		public void setPlay(boolean n) {
 			play = n;
@@ -175,7 +179,7 @@ public class Game {
 			connection.SendOb(new DataHeader("get-block", blocks.get(blockNum)));
 			blocks.remove(blockNum);
 			m_Taget.setEnable(true);
-			
+
 			/*if(DC.getBlocks().get(blockNum).getNum()==-1)
 			{
 				if(DC.getBlocks().get(blockNum).getColor()==0)
@@ -210,8 +214,8 @@ public class Game {
 					}
 				}
 			}
-				*/
-				//sortBlock(getHand(), 0, hand.size()-1);
+			 */
+			//sortBlock(getHand(), 0, hand.size()-1);
 		}
 		public void askBlock(int selectedPlayer, int selectedBlock, int selectedNum) {		
 			int[] temp = new int[3];
@@ -219,7 +223,7 @@ public class Game {
 			temp[1] = selectedBlock;
 			temp[2] = selectedNum;
 			connection.SendOb(new DataHeader("ask-int[]",temp));
-			
+
 			/*if(players.get(selectedPlayer).checkBlock(selectedBlock, selectedNum)==true)
 			{
 				boolean again;//다시 추리할지여부
