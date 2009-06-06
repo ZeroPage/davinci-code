@@ -5,6 +5,14 @@ public class DataHeader implements Serializable
 	String headData = "";
 	Object data = null;
 
+	public DataHeader()
+	{
+	}
+	public DataHeader(String header, Object data)
+	{
+		headData = header;
+		this.data = data;
+	}
 	public void setHeadData(String headData)
 	{
 		this.headData = headData;
