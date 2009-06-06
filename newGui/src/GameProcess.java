@@ -36,6 +36,14 @@ public class GameProcess
 	{
 		return m_Taget;
 	}
+	public void setDC(Game dc)
+	{
+		DC = dc;
+	}
+	public Game getDC()
+	{
+		return DC;
+	}
 	public void Start() {		
 		connection.SendOb(Integer.valueOf(getPlayerNum()));
 		DC = new Game(getConnection(), getM_Taget(), getPlayerNum());
