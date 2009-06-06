@@ -172,7 +172,7 @@ public class Game {
 		}
 		public void getBlock(int blockNum) {
 			hand.add(blocks.get(blockNum));
-			connection.SendOb(new DataHeader("지울 블록", blocks.get(blockNum)));
+			connection.SendOb(new DataHeader("getfromfloor", blocks.get(blockNum)));
 			blocks.remove(blockNum);
 			m_Taget.setEnable(true);
 			
