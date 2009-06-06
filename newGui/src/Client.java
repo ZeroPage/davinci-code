@@ -1,30 +1,19 @@
 
+
 import java.io.*;
 import java.net.*;
 
 public class Client extends Network
 {
-	Socket server, Observer;
-	PrintWriter outMsg;
+	Socket connection;
 	ObjectOutputStream outOb;
-	Listener listen;
 	ObListener Oblisten;
-	
-	public void setOutMsg() throws IOException
-	{
-		outMsg = new PrintWriter(server.getOutputStream(), true);
-	}
+
 	public void setOutOb() throws IOException
 	{
-		outOb = new ObjectOutputStream(Observer.getOutputStream());
+		outOb = new ObjectOutputStream(connection.getOutputStream());
 	}
 	public void setListen() throws IOException
-	{
-		listen = new Listener();
-		listen.setInMsg();
-		listen.start();
-	}
-	public void setOblisten() throws IOException
 	{
 		Oblisten = new ObListener();
 		Oblisten.setInOb();
@@ -34,12 +23,9 @@ public class Client extends Network
 	{
 		try
 		{
-			server = new Socket(ip, portNum);
-			Observer = new Socket(ip, portNum2);
-			setOutMsg();
+			connection = new Socket(ip, 10000);
 			setOutOb();
 			setListen();
-			setOblisten();
 		} catch (UnknownHostException e)
 		{
 			// TODO Auto-generated catch block
@@ -52,11 +38,10 @@ public class Client extends Network
 	}
 	public void SendChatMsg(String msg)
 	{
-		SendData(m_Name + " : " + msg);
-	}
-	public void SendData(String data)
-	{
-		outMsg.println(data);
+		DataHeader temp = new DataHeader();
+		temp.setHeadData("chat");
+		temp.setData(m_Name + " : " + msg);
+		SendOb(0, temp);
 	}
 	public void SendOb(int sel, Object ob)
 	{
@@ -71,65 +56,42 @@ public class Client extends Network
 	}
 	public void Close()
 	{
-		SendChatMsg(m_Name + "님이 연결을 종료하셨습니다.");
 		try
 		{
-			listen.close();
-			outMsg.close();
-			server.close();
 			Oblisten.close();
 			outOb.close();
+			connection.close();
 		} catch (IOException e)
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	class Listener extends Thread
-	{
-		BufferedReader inMsg;
-
-		public void setInMsg() throws IOException {
-			inMsg = new BufferedReader(new InputStreamReader(server.getInputStream()));
-		}
-
-		public void close() throws IOException {
-			inMsg.close();
-		}
-
-		public void run()
-		{
-			while(server.isConnected())
-			{	try {
-				//입력 데이터 조건 필요. 
-				m_Taget.AddChatString(inMsg.readLine());
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			}
-		}
-	}
+	
 	class ObListener extends Thread
 	{
 		ObjectInputStream inOb;
 
 		public void setInOb() throws IOException {
-			inOb = new ObjectInputStream(Observer.getInputStream());
+			inOb = new ObjectInputStream(connection.getInputStream());
 		}
 		public void close() throws IOException {
 			inOb.close();
 		}
-
+		public void dataEvent(DataHeader data)
+		{
+			if(data.getHeadData().equals("chat"))
+				m_Taget.AddChatString((String)data.getData());
+		}
 		public void run()
 		{
-			Object temp = null;
-			while(Observer.isConnected())
+			while(connection.isConnected())
 			{
 				//입력 데이터 조건 필요. 
 				try
 				{
-					temp = inOb.readObject();
+					dataEvent((DataHeader)inOb.readObject());
+					
 				} catch (IOException e)
 				{
 					// TODO Auto-generated catch block

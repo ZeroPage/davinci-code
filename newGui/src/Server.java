@@ -1,12 +1,14 @@
 import java.io.*;
 import java.net.*;
 
+
 public class Server extends Network
 {
 	ClientData[] clients;
 	WaitingClient wait;
 
-	int maxClient, clientNum;
+	int maxClient;
+	int clientNum;
 
 	public Server()
 	{
@@ -22,16 +24,20 @@ public class Server extends Network
 	{
 		//ip는 상속되는  코드와의 호환을 위해. 의미없음.
 		//이 클래스는 서버 이므로 접속을 하지 않고 서버를 생성.
-		wait.setServer(portNum, portNum2, maxClient);
+		wait.setObServer(portNum, maxClient);
 		wait.start();
 	}
 	public void SendChatMsg(String msg)
 	{
-		BroadCasting(m_Name + " : " + msg);
+		DataHeader temp = new DataHeader();
+		temp.setHeadData("chat");
+		temp.setData(m_Name + " : " + msg);
+		BroadCasting(temp);
 		m_Taget.AddChatString(m_Name + " : " + msg);
 	}
 	public void SendOb(int sel, Object ob)
 	{
+		// TODO Auto-generated method stub
 		try
 		{
 			clients[sel].SendOb(ob);
@@ -59,20 +65,25 @@ public class Server extends Network
 			}
 		}
 	}
-	public void BroadCasting(String msg)
+	public void BroadCasting(Object ob)
 	{
 		for(int i=0; i<maxClient; i++)
 		{
 			if(clients[i].getConnect().isConnected())
-				clients[i].SendData(msg);
+				try
+			{
+					clients[i].SendOb(ob);
+			} catch (IOException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 	class ClientData
 	{
-		Socket connect, Obconnect;
-		PrintWriter outPort;
+		Socket connect;
 		ObjectOutputStream outOb;
-		ServerListener inPort;
 		ObServerListener inOb;
 
 		public ClientData()
@@ -82,28 +93,13 @@ public class Server extends Network
 		public void setClientData(Socket client) throws IOException
 		{
 			connect = client;
-			outPort = new PrintWriter(connect.getOutputStream(), true);	
-			inPort = new ServerListener(connect);
-			inPort.start();
-		}
-		public void setObClientData(Socket Obclient) throws IOException
-		{
-			Obconnect = Obclient;
-			outOb = new ObjectOutputStream(Obconnect.getOutputStream());
-			inOb = new ObServerListener(Obconnect);
+			outOb = new ObjectOutputStream(connect.getOutputStream());
+			inOb = new ObServerListener(connect);
 			inOb.start();
 		}
 		public Socket getConnect()
 		{
 			return connect;
-		}
-		public Socket getObconnect()
-		{
-			return Obconnect;
-		}
-		public void SendData(String data)
-		{
-			outPort.println(data);
 		}
 		public void SendOb(Object ob) throws IOException
 		{
@@ -111,22 +107,18 @@ public class Server extends Network
 		}
 		public void close() throws IOException
 		{
-			outPort.close();
 			outOb.close();
-			inPort.close();
 			inOb.close();
 		}
 	}
 	class WaitingClient extends Thread
 	{
-		ServerSocket server;
-		ServerSocket Observer;
-		public void setServer(int portNum, int portNum2, int maxClient)
+		ServerSocket ObServer;
+		public void setObServer(int portNum, int maxClient)
 		{
 			try
 			{
-				server = new ServerSocket(portNum, maxClient);
-				Observer = new ServerSocket(portNum2, maxClient);
+				ObServer = new ServerSocket(portNum, maxClient);
 			} catch (IOException e)
 			{
 				// TODO Auto-generated catch block
@@ -143,8 +135,7 @@ public class Server extends Network
 					{
 						try
 						{
-							clients[i].setClientData(server.accept());
-							clients[i].setObClientData(Observer.accept());
+							clients[i].setClientData(ObServer.accept());
 						} catch (IOException e)
 						{
 							// TODO Auto-generated catch block
@@ -152,40 +143,6 @@ public class Server extends Network
 						}
 						clientNum++;
 					}
-				}
-			}
-		}
-	}
-	class ServerListener extends Thread
-	{
-		Socket client;
-		BufferedReader inMsg;
-
-		public ServerListener(Socket client) throws IOException
-		{
-			this.client = client;
-			inMsg = new BufferedReader(new InputStreamReader(client.getInputStream()));
-		}
-		public void close() throws IOException
-		{
-			stop();
-			inMsg.close();
-		}
-		public void run()
-		{
-			String inString;
-			while(client.isConnected())
-			{
-				try
-				{
-					inString = inMsg.readLine();
-					//입력 데이터 조건필요.
-					m_Taget.AddChatString(inString);
-					BroadCasting(inString);
-				} catch (IOException e)
-				{
-					// TODO Auto-generated catch block
-					e.printStackTrace();
 				}
 			}
 		}
@@ -205,15 +162,21 @@ public class Server extends Network
 			stop();
 			inOb.close();
 		}
+		public void dataEvent(DataHeader data)
+		{
+			if(data.getHeadData().equals("chat"))
+			{
+				m_Taget.AddChatString((String)data.getData());
+				BroadCasting(data);
+			}
+		}
 		public void run()
 		{
-			Object ob = null;
 			while(client.isConnected())
 			{
-
 				try
 				{
-					ob = inOb.readObject();
+					dataEvent((DataHeader)inOb.readObject());
 				} catch (IOException e)
 				{
 					// TODO Auto-generated catch block
@@ -223,6 +186,8 @@ public class Server extends Network
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+				//입력 데이터 조건필요.
+
 			}
 		}
 	}
