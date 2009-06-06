@@ -4,26 +4,19 @@ import java.net.*;
 
 public class Server extends Network
 {
-	ServerSocket server;
-	Socket[] clients;
-	PrintWriter[] outData;
-	ServerListener[] inData;
+	ClientData[] clients;
 	WaitingClient wait;
 
-	int portNum;
-	int maxClient;
-	int clientNum;
+	int portNum, maxClient, clientNum;
 
 	public Server()
 	{
 		portNum = 10000;
 		maxClient = 3;
 		clientNum= 0;
-		clients = new Socket[maxClient];
-		for(int i=0; i< clients.length; i++)
-			clients[i] = new Socket();
-		outData = new PrintWriter[maxClient];
-		inData = new ServerListener[maxClient];
+		clients = new ClientData[maxClient];
+		for(int i=0; i<maxClient; i++)
+			clients[i] = new ClientData();
 		wait = new WaitingClient();
 	}
 
@@ -31,30 +24,33 @@ public class Server extends Network
 	{
 		//ip는 상속되는  코드와의 호환을 위해. 의미없음.
 		//이 클래스는 서버 이므로 접속을 하지 않고 서버를 생성.
-		try
-		{
-			server = new ServerSocket(portNum, maxClient);
-			wait.start();
-		} catch (IOException e)
-		{
-			e.printStackTrace();
-		}
+		wait.setServer(portNum, maxClient);
+		wait.start();
 	}
 	public void SendChatMsg(String msg)
 	{
 		BroadCasting(m_Name + " : " + msg);
 		m_Taget.AddChatString(m_Name + " : " + msg);
 	}
-	public void Close()
+	/*public void SendOb(int sel, Object ob)
 	{
 		// TODO Auto-generated method stub
+		try
+		{
+			clients[sel].SendOb(ob);
+		} catch (IOException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}*/
+	public void Close()
+	{
 		wait.stop();
 		for(int i=0; i<clientNum; i++)
 		{
-			if(clients[i].isConnected())
+			if(clients[i].getConnect().isConnected())
 			{
-				inData[i].stop();
-				outData[i].close();
 				try
 				{
 					clients[i].close();
@@ -70,35 +66,80 @@ public class Server extends Network
 	{
 		for(int i=0; i<maxClient; i++)
 		{
-			if(clients[i].isConnected())
-				outData[i].println(msg);
+			if(clients[i].getConnect().isConnected())
+				clients[i].SendData(msg);
+		}
+	}
+	class ClientData
+	{
+		Socket connect;
+		PrintWriter outPort;
+		//ObjectOutputStream outOb;
+		ServerListener inPort;
+
+		public ClientData()
+		{
+			connect = new Socket();
+		}
+		public void setClientData(Socket client) throws IOException
+		{
+			connect = client;
+			outPort = new PrintWriter(connect.getOutputStream(), true);
+			//outOb = new ObjectOutputStream(connect.getOutputStream());
+			inPort = new ServerListener(connect);
+			inPort.start();
+		}
+		public Socket getConnect()
+		{
+			return connect;
+		}
+		public void SendData(String data)
+		{
+			outPort.println(data);
+		}
+/*		public void SendOb(Object ob) throws IOException
+		{
+			outOb.writeObject(ob);
+		}*/
+		public void close() throws IOException
+		{
+			outPort.close();
+			//outOb.close();
+			inPort.close();
 		}
 	}
 	class WaitingClient extends Thread
 	{
+		ServerSocket server;
+		public void setServer(int portNum, int maxClient)
+		{
+			try
+			{
+				server = new ServerSocket(portNum, maxClient);
+			} catch (IOException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		public void run()
 		{
 			while(true)
 			{
-				try
+				for(int i=0; i<maxClient; i++)
 				{
-					for(int i=0; i<maxClient; i++)
+					if(!clients[i].getConnect().isConnected())
 					{
-						if(!clients[i].isConnected())
+						try
 						{
-							clients[i] = server.accept();
-							inData[i] = new ServerListener();
-							inData[i].setClient(clients[i]);
-							inData[i].setInMsg();
-							outData[i] = new PrintWriter(clients[i].getOutputStream(), true);
-							inData[i].start();
-							clientNum++;
+							clients[i].setClientData(server.accept());
+						} catch (IOException e)
+						{
+							// TODO Auto-generated catch block
+							e.printStackTrace();
 						}
+						clientNum++;
 					}
-				} catch (IOException e)
-				{
-					// TODO Auto-generated catch block
-					e.printStackTrace();
 				}
 			}
 		}
@@ -107,20 +148,19 @@ public class Server extends Network
 	{
 		Socket client;
 		BufferedReader inMsg;
+		//ObjectInputStream inOb;
 
-		public void setClient(Socket client)
+		public ServerListener(Socket client) throws IOException
 		{
 			this.client = client;
-		}
-		public void setInMsg() throws IOException
-		{
 			inMsg = new BufferedReader(new InputStreamReader(client.getInputStream()));
+			//inOb = new ObjectInputStream(client.getInputStream());
 		}
 		public void close() throws IOException
 		{
-			//stop();
+			stop();
 			inMsg.close();
-			client.close();
+			//inOb.close();
 		}
 		public void run()
 		{

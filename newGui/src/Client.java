@@ -6,6 +6,7 @@ public class Client extends Network
 {
 	Socket server;
 	PrintWriter outMsg;
+	//ObjectOutputStream outOb;
 	Listener listen;
 	
 	public void setOutMsg() throws IOException
@@ -37,8 +38,11 @@ public class Client extends Network
 	}
 	public void SendChatMsg(String msg)
 	{
-		outMsg.println(m_Name + " : " + msg);
-
+		SendData(m_Name + " : " + msg);
+	}
+	public void SendData(String data)
+	{
+		outMsg.println(data);
 	}
 	public void Close()
 	{
