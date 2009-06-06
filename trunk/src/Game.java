@@ -25,8 +25,14 @@ public class Game {
 		for(int i=0; i<26; i++)
 		{
 			b[i] = new Block(((i<13) ? 0 : 1), i%13);
-			if(i==12||i==25)
+			if(i==12){
 				b[i].setNum(-1);
+				Block blackJoker = b[i];
+			}
+			else if(i==25){
+				b[i].setNum(-1);
+				Block whiteJoker = b[i];
+			}	
 			blocks.add(b[i]);
 		}
 	}
