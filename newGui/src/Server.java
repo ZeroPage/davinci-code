@@ -32,7 +32,6 @@ public class Server extends Network
 	}
 	public void SendOb(int sel, Object ob)
 	{
-		// TODO Auto-generated method stub
 		try
 		{
 			clients[sel].SendOb(ob);
