@@ -56,6 +56,9 @@ public class Game {
 			n2 = (int)(Math.random()*26);
 		}
 	}
+	public boolean askBlock(int playerNum, int selectedBlock, int selectedNum) {		
+		return players.get(playerNum).checkBlock(selectedBlock, selectedNum);
+	}
 	public void printBlocks(ArrayList<Block> blocks) {		
 		for(int i=0; i<blocks.size(); i++) {
 			Block tb = blocks.get(i);

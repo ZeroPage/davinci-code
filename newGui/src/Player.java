@@ -86,19 +86,14 @@ public class Player {
 			*/
 			sortBlock(getHand(), 0, hand.size()-1);
 	}
-	public boolean askBlock(Player tp, Block tb, int selectedNum) {		
-		return tp.checkBlock(tb, selectedNum);
-	}
-	public boolean checkBlock(Block tb, int num) {
-		if(tb.getNum() == num) {
-			openBlock(tb);
+	
+	public boolean checkBlock(int selectedBlock, int num) {
+		if(hand.get(selectedBlock).getNum() == num) {
+			hand.get(selectedBlock).setOpen(true);
 			isPlay();
 			return true;
 		}
 		return false;
-	}
-	public void openBlock(Block selectedBlock) {
-		selectedBlock.setOpen(true);
 	}
 	public void isPlay() {
 		for(int i=0; i<hand.size(); i++) {
