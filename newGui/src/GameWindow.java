@@ -39,7 +39,16 @@ class GameWindow
 			players[i] = new PlayerWindow(i);
 		}
 		main.add(JPanel_Main);
+		JPanel JPanel_Center = new JPanel();
+		JPanel_Center.setOpaque(false);
 		Process = new GameProcess(this);
+		for(int i =0; i < 26; i++)
+		{
+			JButton temp = new JButton(""+i); 
+			JPanel_Center.add(temp);
+		}
+		
+		JPanel_Main.add(JPanel_Center);
 	}
 	public void setEnable(boolean state)
 	{
@@ -75,6 +84,7 @@ class GameWindow
 			}
 			JPanel_Main.add(lo,m_Panel);
 			m_Panel.setOpaque(false);
+			
 		}
 		public void setEnable(boolean state)
 		{
