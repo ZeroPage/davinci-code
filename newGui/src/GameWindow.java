@@ -99,6 +99,7 @@ class GameWindow
 		{
 			for(int i =0; m_Card[i] != null; i++)
 			{
+				
 			}
 		}
 	}
