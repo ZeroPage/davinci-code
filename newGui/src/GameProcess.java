@@ -1,13 +1,11 @@
-import java.util.ArrayList;
-
-import javax.swing.JOptionPane;
-
 
 public class GameProcess
 {
 	int playerNum;
 	Network connection;
 	GameWindow m_Taget;
+	
+	Game DC;
 	
 	public GameProcess(GameWindow Taget)
 	{
@@ -32,9 +30,7 @@ public class GameProcess
 	}
 	public void Start() {		
 		connection.SendOb(Integer.valueOf(getPlayerNum()));
-		
-		Game DC = new Game(getPlayerNum());
-		
+		DC = new Game(getPlayerNum());		
 	}
 
 	public void report() {
