@@ -39,7 +39,7 @@ class GameWindow
 			players[i] = new PlayerWindow(i);
 		}
 		main.add(JPanel_Main);
-		Proess = new GameProcess(this);
+		GameProcess Process = new GameProcess(this);
 	}
 	public void setEnable(boolean state)
 	{
