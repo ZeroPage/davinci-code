@@ -41,9 +41,9 @@ public class Client extends Network
 		DataHeader temp = new DataHeader();
 		temp.setHeadData("chat");
 		temp.setData(m_Name + " : " + msg);
-		SendOb(0, temp);
+		SendOb(temp);
 	}
-	public void SendOb(int sel, Object ob)
+	public void SendOb(Object ob)
 	{
 		try
 		{
@@ -82,6 +82,10 @@ public class Client extends Network
 		{
 			if(data.getHeadData().equals("chat"))
 				m_Taget.AddChatString((String)data.getData());
+			else if(data.getHeadData().equals("game-playerNum"))
+			{
+				m_Game.setPlayerNum(((Integer)data.getData()).intValue());
+			}
 		}
 		public void run()
 		{

@@ -33,17 +33,9 @@ public class Server extends Network
 		BroadCasting(temp);
 		m_Taget.AddChatString(m_Name + " : " + msg);
 	}
-	public void SendOb(int sel, Object ob)
+	public void SendOb(Object ob)
 	{
-		// TODO Auto-generated method stub
-		try
-		{
-			clients[sel].SendOb(ob);
-		} catch (IOException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		BroadCasting(ob);
 	}
 	public void Close()
 	{
@@ -165,6 +157,10 @@ public class Server extends Network
 			{
 				m_Taget.AddChatString((String)data.getData());
 				BroadCasting(data);
+			}
+			else if(data.getHeadData().equals("game-playerNum"))
+			{
+				m_Game.setPlayerNum(((Integer)data.getData()).intValue());
 			}
 		}
 		public void run()
