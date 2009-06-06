@@ -295,7 +295,7 @@ public class DavichiGUI extends JFrame
 			JTF_IPAdress.addActionListener(this);
 			this.getContentPane().add(JTF_IPAdress);
 			
-			temp = new JLabel("Chat Port");
+			temp = new JLabel("Port");
 			temp.setBounds(0, 90, 100, 30);
 			temp.setHorizontalAlignment(JLabel.CENTER);
 			this.getContentPane().add(temp);
@@ -304,16 +304,6 @@ public class DavichiGUI extends JFrame
 			JTF_Chatport.setBounds(100, 90, 50, 30);
 			JTF_Chatport.setText("10000");
 			this.getContentPane().add(JTF_Chatport);
-			
-			temp = new JLabel("Game Port");
-			temp.setBounds(150, 90, 100, 30);
-			temp.setHorizontalAlignment(JLabel.CENTER);
-			this.getContentPane().add(temp);
-			
-			JTF_Gameport = new JTextField();
-			JTF_Gameport.setBounds(250, 90, 50, 30);
-			JTF_Gameport.setText("10001");
-			this.getContentPane().add(JTF_Gameport);
 			
 			JB_Connect = new JButton("접속");
 			JB_Connect.setBounds(50 , 130, 100, 30);
@@ -329,13 +319,14 @@ public class DavichiGUI extends JFrame
 		}
 		public void actionPerformed(ActionEvent event)
 		{
-			if(JTF_Nick.getText().length() == 0)
-			{
-				JOptionPane.showMessageDialog(null, "닉네임을 입력하세요.", "알림", JOptionPane.ERROR_MESSAGE);
-				return;
-			}
+			
 			if(event.getSource() == JB_Connect || event.getSource() == JTF_IPAdress)
 			{
+				if(JTF_Nick.getText().length() == 0)
+				{
+					JOptionPane.showMessageDialog(null, "닉네임을 입력하세요.", "알림", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
 				if(JCB_Server.isSelected())
 				{
 					//서버
@@ -361,7 +352,8 @@ public class DavichiGUI extends JFrame
 			if(event.getSource() == JB_Cancel)
 			{
 				//this.setVisible(false);
-				JOptionPane.showMessageDialog(null, "접속을 하셔야만 합니다.");
+				//JOptionPane.showMessageDialog(null, "접속을 하셔야만 합니다.");
+				System.exit(0);
 			}
 		}
 		public void itemStateChanged(ItemEvent event)
