@@ -7,6 +7,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import DavichiGUI.RoomWindow;
+
 class GameWindow
 {
 	JPanel JPanel_Main;
