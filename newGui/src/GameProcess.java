@@ -7,6 +7,12 @@ public class GameProcess
 {
 	int playerNum;
 	Network connection;
+	GameWindow m_Taget;
+	
+	public GameProcess(GameWindow Taget)
+	{
+		m_Taget = Taget;
+	}
 	
 	public void setPlayerNum(int playerNum)
 	{
