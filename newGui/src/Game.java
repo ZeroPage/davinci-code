@@ -7,10 +7,12 @@ public class Game {
 	Game() {
 		setPlayers(1);
 		setBlocks();
+		mixBlocks(blocks);
 	}
 	Game(int n) {
 		setPlayers(n);
 		setBlocks();
+		mixBlocks(blocks);
 	}
 
 	public void setPlayers(int n) {
@@ -56,23 +58,7 @@ public class Game {
 			n2 = (int)(Math.random()*26);
 		}
 	}
-	public void askBlock(int turnPlayernum) {		
-		int selectedPlayer;//다 중간 변수받음
-		int selectedBlock;
-		int selectedNum;
-		if(players.get(selectedPlayer).checkBlock(selectedBlock, selectedNum)==true)
-		{
-			boolean again;//다시 추리할지여부
-			if(again==true)
-				askBlock(turnPlayernum);
-		}
-		else
-		{
-			int num;//오픈할 패의 인덱스.플레이어가 선택
-			players.get(turnPlayernum).getHand().get(num).setOpen(true);
-		}
-
-	}
+	
 	public void printBlocks(ArrayList<Block> blocks) {		
 		for(int i=0; i<blocks.size(); i++) {
 			Block tb = blocks.get(i);

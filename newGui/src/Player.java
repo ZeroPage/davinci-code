@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 
+import DavichiGUI.RoomWindow.GameWindow;
+
 public class Player {
 	private ArrayList<Block> hand;//자신이 가진 블록을 저장하는 배열
 	private boolean play;//플레이여부를 결정
@@ -50,11 +52,19 @@ public class Player {
 	public boolean getIsjoker() {
 		return isJoker;
 	}
-	public void getBlock(Block tb) {
-		hand.add(tb);
-		/*if(blocks.get(selectedBlock).getNum()==-1)
+	public void selectBlock()
+	{
+		GameWindow.
+	}
+	public void getBlock(Game DC,int blockNum) {
+		hand.add(DC.getBlocks().get(blockNum));
+		
+		/*if(DC.getBlocks().get(blockNum).getNum()==-1)
 		{
-			if(blocks.get(selectedBlock)==blackJoker)
+			if(DC.getBlocks().get(blockNum).getColor()==0)
+				setIsbjoker(true);
+			else
+				setIswjoker(true);
 			int input;//원하는 위치에 클릭.input받음
 			hand.add(input,blocks.get(selectedBlock));
 			blocks.remove(selectedBlock);
@@ -84,9 +94,25 @@ public class Player {
 			}
 		}
 			*/
-			sortBlock(getHand(), 0, hand.size()-1);
+			//sortBlock(getHand(), 0, hand.size()-1);
 	}
-	
+	public void askBlock(int turnPlayernum) {		
+		int selectedPlayer;//다 중간 변수받음
+		int selectedBlock;
+		int selectedNum;
+		if(players.get(selectedPlayer).checkBlock(selectedBlock, selectedNum)==true)
+		{
+			boolean again;//다시 추리할지여부
+			if(again==true)
+				askBlock(turnPlayernum);
+		}
+		else
+		{
+			int num;//오픈할 패의 인덱스.플레이어가 선택
+			players.get(turnPlayernum).getHand().get(num).setOpen(true);
+		}
+
+	}
 	public boolean checkBlock(int selectedBlock, int num) {
 		if(hand.get(selectedBlock).getNum() == num) {
 			hand.get(selectedBlock).setOpen(true);
