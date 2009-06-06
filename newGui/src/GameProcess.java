@@ -31,7 +31,6 @@ public class GameProcess
 		return connection;
 	}
 	public void Start() {		
-		connection.setM_Game(this);
 		connection.SendOb(Integer.valueOf(getPlayerNum()));
 		
 		Game DC = new Game(getPlayerNum());
