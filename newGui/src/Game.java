@@ -3,13 +3,17 @@ import java.util.ArrayList;
 public class Game {
 	private ArrayList<Player> players;
 	private ArrayList<Block> blocks;
+	private Network connection;
+	private GameWindow m_Taget;
 
 	Game() {
 		setPlayers(1);
 		setBlocks();
 		mixBlocks(blocks);
 	}
-	Game(int n) {
+	Game(Network connection, GameWindow Taget, int n) {
+		this.connection = connection;
+		this.m_Taget = Taget;
 		setPlayers(n);
 		setBlocks();
 		mixBlocks(blocks);

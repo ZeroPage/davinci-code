@@ -28,9 +28,17 @@ public class GameProcess
 	{
 		return connection;
 	}
+	public void setM_Taget(GameWindow taget)
+	{
+		m_Taget = taget;
+	}
+	public GameWindow getM_Taget()
+	{
+		return m_Taget;
+	}
 	public void Start() {		
 		connection.SendOb(Integer.valueOf(getPlayerNum()));
-		DC = new Game(getPlayerNum());		
+		DC = new Game(getConnection(), getM_Taget(), getPlayerNum());
 	}
 
 	public void report() {
