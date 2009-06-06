@@ -134,9 +134,12 @@ public class DavichiGUI extends JFrame
 				if(event.getSource() == JB_Send || event.getSource() == JTF_ChatInput)
 				{
 					//텍스트 전송
-					NC.SendChatMsg(JTF_ChatInput.getText());
-					JTF_ChatInput.setText("");
-					JTF_ChatInput.requestFocus();					
+					if(JTF_ChatInput.getText().length() !=0)
+					{	
+						NC.SendChatMsg(JTF_ChatInput.getText());
+						JTF_ChatInput.setText("");
+						JTF_ChatInput.requestFocus();
+					}
 				}
 				if(event.getSource() == JB_ChatClear)
 				{
@@ -192,9 +195,14 @@ public class DavichiGUI extends JFrame
 				JPanel_Main.add(BorderLayout.SOUTH, JPanel_Player[2]);
 				JPanel_Main.add(BorderLayout.WEST, JPanel_Player[3]);
 				
-				JStyleButton temp = new JStyleButton(new ImageIcon(DavichiGUI.class.getResource("1.gif")));
+				ImageIcon card1 = new ImageIcon(DavichiGUI.class.getResource("b1.gif"));
+				JStyleButton temp = new JStyleButton(card1);//기본이미지
+				ImageIcon cards1 = new ImageIcon(DavichiGUI.class.getResource("black_1.gif"));
+				temp.setRolloverIcon(cards1);//마우스를 올렸을때 이미지
 				JPanel_Player[2].add(temp);
 				
+				ImageIcon dia = new ImageIcon(DavichiGUI.class.getResource("dialog.gif"));//대화창 띄우기
+				JPanel_Player[0].add(new JLabel(dia));
 				main.add(JPanel_Main);
 			}
 		}
@@ -243,6 +251,7 @@ public class DavichiGUI extends JFrame
 			TagetChat = chat; 
 			//TagetNetwork = Taget;
 			setSize(350, 200);
+			setLocation(getRootPane().getSize().width/2, getRootPane().getSize().height/2);
 			setResizable(false);
 			this.addWindowListener(new WindowAdapter()
 			{
@@ -342,5 +351,17 @@ public class DavichiGUI extends JFrame
 				}
 			}
 		}	
+	}
+	class OptionDialog extends JDialog
+	{
+		public OptionDialog()
+		{
+			super(some, "접속창", true);
+			setSize(350, 200);
+			setLocation(getRootPane().getSize().width/2, getRootPane().getSize().height/2);
+			setResizable(false);
+			
+			
+		}
 	}
 }
