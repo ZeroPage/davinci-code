@@ -35,7 +35,7 @@ public class Client extends Network
 		try
 		{
 			server = new Socket(ip, portNum);
-			Observer = new Socket(ip, portNum);
+			Observer = new Socket(ip, portNum2);
 			setOutMsg();
 			setOutOb();
 			setListen();
@@ -115,7 +115,7 @@ public class Client extends Network
 		ObjectInputStream inOb;
 
 		public void setInOb() throws IOException {
-			inOb = new ObjectInputStream(server.getInputStream());
+			inOb = new ObjectInputStream(Observer.getInputStream());
 		}
 		public void close() throws IOException {
 			inOb.close();
@@ -124,7 +124,7 @@ public class Client extends Network
 		public void run()
 		{
 			Object temp = null;
-			while(server.isConnected())
+			while(Observer.isConnected())
 			{
 				//입력 데이터 조건 필요. 
 				try

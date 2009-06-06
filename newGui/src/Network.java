@@ -4,7 +4,7 @@ abstract public class Network
 	protected mWindow m_Taget;//채팅 메세지를 받으면 전달할 대상 
 	protected Network m_net;
 	protected String m_Name;
-	protected int portNum, portNum2;
+	protected int portNum = 10000, portNum2 = 10001;
 	public void setPortNum(int portNum)
 	{
 		this.portNum = portNum;
