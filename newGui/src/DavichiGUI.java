@@ -327,4 +327,19 @@ public class DavichiGUI extends JFrame
 			}
 		}	
 	}
+	class AskDlg extends JDialog implements ActionListener
+	{
+		public AskDlg()
+		{
+			super(some, "숫자를 선택하세요",true);
+			this.setSize(300,400)
+			this.setLayout(new BorderLayout(5,3));
+			this.setVisible(true);
+			
+		}
+		public void actionPerformed(ActionEvent e)
+		{
+			
+		}
+	}
 }

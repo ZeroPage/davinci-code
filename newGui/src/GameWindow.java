@@ -39,7 +39,6 @@ class GameWindow
 			players[i] = new PlayerWindow(i);
 		}
 		main.add(JPanel_Main);
-		
 	}
 	public void setEnable(boolean state)
 	{
@@ -73,7 +72,6 @@ class GameWindow
 				default:
 					break;
 			}
-			
 			JPanel_Main.add(lo,m_Panel);
 			m_Panel.setOpaque(false);
 		}
