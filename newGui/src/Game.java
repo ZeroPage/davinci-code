@@ -172,7 +172,7 @@ public class Game {
 		}
 		public void getBlock(int blockNum) {
 			hand.add(blocks.get(blockNum));
-			connection.SendOb(new DataHeader("getfromfloor", blocks.get(blockNum)));
+			connection.SendOb(new DataHeader("get-block", blocks.get(blockNum)));
 			blocks.remove(blockNum);
 			m_Taget.setEnable(true);
 			
@@ -247,7 +247,7 @@ public class Game {
 				if(tb.getOpen() == false)
 					return;
 			}
-			connection.SendOb(new DataHeader("dead", Boolean.valueOf(false)));
+			connection.SendOb(new DataHeader("doa-boolean", Boolean.valueOf(false)));
 			setPlay(false);
 		}
 		public void swapBlock(ArrayList<Block> blocks, int n1, int n2) {
