@@ -1,25 +1,21 @@
+import java.util.ArrayList;
+
+import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
 
 
 public class Player {
 	private int blockNum;//자신이 가진 블록수를 저장
-	private Block[] hand;//자신이 가진 블록을 저장하는 배열
+	private ArrayList<Block> hand;//자신이 가진 블록을 저장하는 배열
 	private boolean play;//플레이여부를 결정
 	
 	Player() {
-		hand = new Block[13];
-		for(int i=0; i<13; i++)
-			hand[i] = new Block();
-		blockNum = 0;
 		play = true;
 	}
 	public void setBlockNum(int n) {
 		blockNum = n;
 	}
 	public void setHand(Block n) {
-		hand[blockNum].setColor(n.getColor());
-		hand[blockNum].setNum(n.getNum());
-		hand[blockNum].setOwn(n.getOwn());
-		blockNum++;
+		
 	}
 	public void setPlay(boolean n) {
 		play = n;
@@ -27,43 +23,45 @@ public class Player {
 	public int getBlockNum() {
 		return blockNum;
 	}
-	public Block[] getHand() {
+	public ArrayList<Block> getHand() {
 		return hand;
 	}
 	public boolean getPlay() {
 		return play;
 	}
 	
-	public void getBlock(Block[] blocks, int selectedBlock) {
-		blocks[selectedBlock].setOwn(true);
-		setHand(blocks[selectedBlock]);
+	public void getBlock(ArrayList<Block> blocks, int selectedBlock) {
+		hand.add(blocks.get(selectedBlock));
+		blocks.remove(selectedBlock);
 		sortBlock(getHand(), getBlockNum());
 	}
-	public boolean askBlock(Player[] players, int selctedPlayer, int selectedBlock, int selectedNum) {		
-		return players[selctedPlayer].checkBlock(selectedBlock, selectedNum);
+	public boolean askBlock(Player tp, Block tb, int selectedNum) {		
+		return tp.checkBlock(tb, selectedNum);
 	}
-	public boolean checkBlock(int selection, int num) {
-		if(hand[selection].getNum() == num) {
-			hand[selection].setOpen(true);
+	public boolean checkBlock(Block tb, int num) {
+		if(tb.getNum() == num) {
+			openBlock(tb);
 			isPlay();
 			return true;
 		}
 		return false;
 	}
-	public void openBlock(int selectedBlock) {
-		hand[selectedBlock].setOpen(true);
+	public void openBlock(Block selectedBlock) {
+		selectedBlock.setOpen(true);
 	}
 	public void isPlay() {
-		for(int i=0; i<blockNum; i++) {
-			if(hand[i].getOpen() == false)
+		for(int i=0; i<hand.size(); i++) {
+			Block tb = hand.get(i);
+			if(tb.getOpen() == false)
 				return;
 		}
 		setPlay(false);
 	}
-	public void swapBlock(Block[] array, int n1, int n2) {
-		Block temp = array[n1];
-		array[n1] = array[n2];
-		array[n2] = temp;
+	public void swapBlock(ArrayList<Block> blocks, int n1, int n2) {
+		Block tb = blocks.get(n1);
+		
+		blocks.set(n1,blocks.get(n2));
+		blocks.set(n2,tb);
 	}
 	public void sortBlock(Block[] array, int length) {
 		for(int i=1; i<length; i++) {

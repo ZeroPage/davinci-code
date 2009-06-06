@@ -1,9 +1,10 @@
-
+import java.util.ArrayList;
 
 public class Game {
 	private int playerNum;
-	private Player[] players;
-	private Block[] blocks;
+	private ArrayList<Player> players;
+	private ArrayList<Block> blocks;
+	
 	Game() {
 		playerNum = 2;
 	}
@@ -11,53 +12,60 @@ public class Game {
 		playerNum = n;
 	}
 	public void setPlayers(int n) {
-		players = new Player[n];
-		
+		Player[] p = new Player[n];
 		for(int i=0; i<n; i++)
-			players[i] = new Player();
+		{
+			p[i] = new Player();
+			players.add(p[i]);
+		}
 	}
 	public void setBlocks() {
-		blocks = new Block[26];
+		Block[] b = new Block[26];
 		
 		for(int i=0; i<26; i++)
-			blocks[i] = new Block(((i<13) ? 0 : 1), i%13);
-		blocks[12].setNum(-1);
-		blocks[25].setNum(-1);
+		{
+			b[i] = new Block(((i<13) ? 0 : 1), i%13);
+			if(i==12||i==25)
+				b[i].setNum(-1);
+			blocks.add(b[i]);
+		}
 	}
 	public int getPlayerNum() {
 		return playerNum;
 	}
-	public Player[] getPlayers() {
+	public ArrayList<Player> getPlayers() {
 		return players;
 	}
-	public Block[] getBlocks() {
+	public ArrayList<Block> getBlocks() {
 		return blocks;
 	}
 	
-	public void swapBlock(Block[] array, int n1, int n2) {
-		Block temp = array[n1];
-		array[n1] = array[n2];
-		array[n2] = temp;
+	public void swapBlock(ArrayList<Block> blocks, int n1, int n2) {
+		Block tb = blocks.get(n1);
+		
+		blocks.set(n1,blocks.get(n2));
+		blocks.set(n2,tb);
 	}
-	public void mixBlocks(Block[] array) {
+	public void mixBlocks(ArrayList<Block> blocks) {
 		int n1 = (int)(Math.random()*26);
 		int n2 = (int)(Math.random()*26);
 		
 		for(int i=0; i<50; i++) {
-			swapBlock(array, n1, n2);
+			swapBlock(blocks, n1, n2);
 			n1 = (int)(Math.random()*26);
 			n2 = (int)(Math.random()*26);
 		}
 	}
-	public void printBlocks(Block[] array) {		
-		for(int i=0; i<array.length; i++) {
-			System.out.print(array[i].getColor() + " ");
-			//if(array[i].getOpen() == true)
-				System.out.print(array[i].getNum() + " ");
+	public void printBlocks(ArrayList<Block> blocks) {		
+		for(int i=0; i<blocks.size(); i++) {
+			Block tb = blocks.get(i);
+			System.out.print(tb.getColor() + " ");
+			//if(blocks[i].getOpen() == true)
+				System.out.print(tb.getNum() + " ");
 			/*else
 				System.out.print("?");*/
-			System.out.print(array[i].getOwn() + " ");
-			System.out.print(array[i].getOpen());
+			System.out.print(tb.getOwn() + " ");
+			System.out.print(tb.getOpen());
 			System.out.print("\t");
 			if(i%5 == 0)
 				System.out.println();
@@ -104,8 +112,9 @@ public class Game {
 	
 	public boolean End() {
 		int alive = 0;
-		for(int i=0; i<playerNum; i++) {
-			if(true == players[i].getPlay())
+		for(int i=0; i<players.size(); i++) {
+			Player tp = players.get(i);
+			if(true == tp.getPlay())
 				alive++;
 		}
 		return alive>1;
