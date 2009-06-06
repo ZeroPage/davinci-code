@@ -19,10 +19,7 @@ public class GameProcess
 	{
 		int input;//인풋
 		P.getBlock(DC.getBlocks().get(input));
-		int playerNum;
-		int selectedBlock;
-		int selectedNum = Integer.parseInt(JOptionPane.showInputDialog("얼마일까?"));
-		DC.askBlock(playerNum, selectedBlock, selectedNum);
+		DC.askBlock(players.indexOf(P));
 		if(DC.End()==true)
 			return;
 		else
