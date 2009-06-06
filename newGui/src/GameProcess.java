@@ -4,6 +4,7 @@ public class GameProcess
 	int playerNum;
 	Network connection;
 	GameWindow m_Taget;
+	int playOrder;
 	
 	Game DC;
 	
@@ -43,6 +44,14 @@ public class GameProcess
 	public Game getDC()
 	{
 		return DC;
+	}
+	public void setPlayOrder(int playOrder)
+	{
+		this.playOrder = playOrder;
+	}
+	public int getPlayOrder()
+	{
+		return playOrder;
 	}
 	public void Start() {		
 		connection.SendOb(Integer.valueOf(getPlayerNum()));
