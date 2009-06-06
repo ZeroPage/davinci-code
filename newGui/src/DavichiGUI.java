@@ -242,8 +242,7 @@ public class DavichiGUI extends JFrame
 		JButton JB_Connect;
 		JButton JB_Cancel;
 		JCheckBox JCB_Server;
-		JTextField JTF_Gameport;
-		JTextField JTF_Chatport;
+		JTextField JTF_Port;
 		mWindow TagetChat;
 		Network TagetNetwork;
 		
@@ -300,10 +299,10 @@ public class DavichiGUI extends JFrame
 			temp.setHorizontalAlignment(JLabel.CENTER);
 			this.getContentPane().add(temp);
 			
-			JTF_Chatport = new JTextField();
-			JTF_Chatport.setBounds(100, 90, 50, 30);
-			JTF_Chatport.setText("10000");
-			this.getContentPane().add(JTF_Chatport);
+			JTF_Port = new JTextField();
+			JTF_Port.setBounds(100, 90, 50, 30);
+			JTF_Port.setText("10000");
+			this.getContentPane().add(JTF_Port);
 			
 			JB_Connect = new JButton("접속");
 			JB_Connect.setBounds(50 , 130, 100, 30);
@@ -334,6 +333,7 @@ public class DavichiGUI extends JFrame
 					TagetNetwork.setM_Name(JTF_Nick.getText());
 					TagetNetwork.setM_Taget(TagetChat);
 					TagetNetwork.Connect(JTF_IPAdress.getText());
+					TagetNetwork.setPortNum(Integer.parseInt(JTF_Port.getText()));
 					TagetChat.setNetwork(TagetNetwork);
 					TagetChat.AddChatString("서버가 개설되었습니다.");
 				}
