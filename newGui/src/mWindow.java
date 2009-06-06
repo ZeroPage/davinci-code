@@ -6,6 +6,10 @@ abstract class mWindow
 	{
 		NC = n;
 	}
+	protected Network getNetwork()
+	{
+		return NC;
+	}
 	
 	public mWindow()
 	{
