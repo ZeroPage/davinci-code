@@ -183,4 +183,8 @@ public class Server extends Network
 			clientNum--;
 		}
 	}
+	public boolean isServer()
+	{
+		return true;
+	}
 }

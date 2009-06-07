@@ -3,12 +3,11 @@ import java.util.ArrayList;
 public class Game {
 	private ArrayList<Player> players;
 	private ArrayList<Block> blocks;
-	private Network connection;
-	private GameWindow m_Taget;
+	private GameProcess module;
 
-	Game(Network connection, GameWindow Taget, int n) {
-		this.connection = connection;
-		this.m_Taget = Taget;
+	Game(GameProcess pro,  int n)
+	{
+		module = pro;
 		setPlayers(n);
 		setBlocks();
 		mixBlocks(blocks);
@@ -172,13 +171,13 @@ public class Game {
 		}
 		public void selectBlock()
 		{
-			m_Taget.setEnable(true);
+			//m_Taget.setEnable(true);
 		}
 		public void getBlock(int blockNum) {
 			hand.add(blocks.get(blockNum));
 			connection.SendOb(new DataHeader("get-block", blocks.get(blockNum)));
 			blocks.remove(blockNum);
-			m_Taget.setEnable(true);
+			//m_Taget.setEnable(true);
 
 			/*if(DC.getBlocks().get(blockNum).getNum()==-1)
 			{

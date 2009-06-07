@@ -131,4 +131,11 @@ public class Client extends Network
 			}
 		}
 	}
+
+	@Override
+	public boolean isServer()
+	{
+		return false;
+	}
+
 }
