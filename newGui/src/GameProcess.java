@@ -74,6 +74,10 @@ public class GameProcess
 		//계속하려면 askblock()을 
 		//턴을 넘기려면 next()를 호출하면 된다.
 	}
+	public void incorrect()
+	{
+		//틀렸을때의 내용이다. 자신의 패를 하나 깐다.
+	}
 	public void Next()
 	{
 		//다음 플레이어에게 턴을 넘겨준다. 게임 윈도우의 모든 입력은 블록 처리 되어 있으므로 자동으로 대기상태가 된다. 
