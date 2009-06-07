@@ -76,8 +76,15 @@ public class Client extends Network
 		public void setInOb() throws IOException {
 			inOb = new ObjectInputStream(connection.getInputStream());
 		}
-		public void close() throws IOException {
-			inOb.close();
+		public void close() {
+			try
+			{
+				inOb.close();
+			} catch (IOException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		public void dataEvent(DataHeader data)
 		{
@@ -97,10 +104,12 @@ public class Client extends Network
 
 				} catch (IOException e)
 				{
+					close();
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				} catch (ClassNotFoundException e)
 				{
+					close();
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
