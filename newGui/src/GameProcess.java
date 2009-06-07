@@ -6,6 +6,7 @@ public class GameProcess
 	//이 클래스에는 알고리즘이 담겨있고 Game과 player그리고 block은 내부 데이터만 담당한다.
 	//따라서 Game과 player, block은 네트워크나 gui를 알필요없이 현재 이객체의 주소값만 알고 있으면 된다.
 	//마찬가지로 그외 다른 클래스도 게임에 접근하고 싶으면 이클래스를 통해서 접근해야 한다.
+	//gui와 game은 동기화이나 network와의 관계는 적지 않았다. network는 혁수가 적당히 적어주길
 	GameWindow m_GUITaget;
 	Network m_NetTaget;
 	int playOrder;
@@ -19,10 +20,11 @@ public class GameProcess
 	}
 	public void Start()
 	{
-		GC = new Game(this, ((Server)m_NetTaget).clientNum);//서버측에서만 인원수를 알수잇다. 우선은 접속한인원수를 게임 참가인원으로 한다.
+		GC = new Game(this, ((Server)m_NetTaget).clientNum);
+		//서버측에서만 인원수를 알수잇다. 우선은 접속한인원수를 게임 참가인원으로 한다.
 		//게임을 시작하는 것은 방장만이 할수 있는것 이것에 대한 조치를 취해야 한다.
 		//Network에 isSever함수를 두고 클라에서는 false를 리턴하게 오버로딩을
-		//서버에서는 true를 리턴도록 오버로딩을 하면 된다.
+		//서버에서는 true를 리턴도록 오버로딩을 하면 된다.(isServer 구현완료.)
 	}
 	public void turn()
 	{
@@ -41,6 +43,7 @@ public class GameProcess
 		//게임 클래스의 moveCenterBlock으로 동작을 넘겨준다.
 		//몇번째 넘인지 알면 그 블럭을 플레이어로 이동시킨다.
 		//블럭을 적당한 위치에 넣은후 그사실을 Gui에 넘겨준다(업데이트 함수를 부른다.)
+		//네트워크에도 그내용을 전송해준다.(가운데에 몇번째 패가 선택되었는지..그게 뭔지..)
 		//Gui에서는 블럭배열을 받은뒤 블럭을 바꾸어 준다.
 		//그다음 상대방에게 블럭을 물어본다. 
 	}
