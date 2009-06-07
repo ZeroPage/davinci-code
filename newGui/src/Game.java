@@ -175,8 +175,9 @@ public class Game {
 		}
 		public void getBlock(int blockNum) {
 			hand.add(blocks.get(blockNum));
-			connection.SendOb(new DataHeader("get-block", blocks.get(blockNum)));
+			module.m_NetTaget.SendOb(new DataHeader("바닥의 블럭을 가져감", blocks.get(blockNum)));
 			blocks.remove(blockNum);
+		}
 			//m_Taget.setEnable(true);
 
 			/*if(DC.getBlocks().get(blockNum).getNum()==-1)
@@ -215,7 +216,7 @@ public class Game {
 			}
 			 */
 			//sortBlock(getHand(), 0, hand.size()-1);
-		}
+
 		public void askBlock(int selectedPlayer, int selectedBlock, int selectedNum) {		
 			int[] temp = new int[3];
 			temp[0] = selectedPlayer;

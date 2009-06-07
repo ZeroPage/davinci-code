@@ -35,9 +35,9 @@ public class GameProcess
 	{
 		//내턴이 왔을때는 일단 하나 골라온다음에 상대방것을 추리하고 맞추면 그걸 까고 아니면
 		//가져온 내것을 깐다.
-		SeleteBlock();
+		selectBlock();
 	}
-	public void SeleteBlock()
+	public void selectBlock()
 	{
 		//패를 고르기 위해서 GUI의 가운데 패를 enable 시킨다.
 		m_GUITaget.CenterEnable(true);
@@ -50,7 +50,9 @@ public class GameProcess
 		//블럭을 적당한 위치에 넣은후 그사실을 Gui에 넘겨준다(업데이트 함수를 부른다.)
 		//네트워크에도 그내용을 전송해준다.(가운데에 몇번째 패가 선택되었는지..그게 뭔지..)
 		//Gui에서는 블럭배열을 받은뒤 블럭을 바꾸어 준다.
-		//그다음 상대방에게 블럭을 물어본다. 
+		//그다음 상대방에게 블럭을 물어본다.
+		GC.getPlayers().get(playOrder).getBlock(indexNum);
+		m_GUITaget.update(playOrder);
 	}
 	public Block[] GetBlocksState(int playerNum)
 	{
