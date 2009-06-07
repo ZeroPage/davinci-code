@@ -47,9 +47,10 @@ public class GameProcess
 		//Gui에서는 블럭배열을 받은뒤 블럭을 바꾸어 준다.
 		//그다음 상대방에게 블럭을 물어본다. 
 	}
-	public Block[] GetBlocksState()
+	public Block[] GetBlocksState(int playerNum)
 	{
 		//enable할때 블럭의 상태를 알아야 이미지를 바꿔줄수 있다.
+		//몇번 플레이어의 블록 배열을 리턴하면 된다.
 		return null;
 	}
 	public void AskBlock()

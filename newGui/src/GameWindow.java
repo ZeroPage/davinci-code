@@ -66,7 +66,7 @@ class GameWindow
 	public void update(int playerNum)
 	{
 		//플레이어 넘버를 받고 그 번호의 플레이어를 즉시 업데이트 한다
-		Block [] state = Process.GetBlocksState();
+		Block [] state = Process.GetBlocksState(playerNum);
 		
 	}
 	class PlayerWindow implements ActionListener
@@ -131,33 +131,34 @@ class GameWindow
 			//블럭을 업데이트 한다.
 			for(int i = 0; i < State.length; i++)
 			{
-				if(m_Card[i] != null)
+				if(m_Card[i] == null)
 				{
-					
-					if(State[i].getColor() == 0)
+					m_Card[i] = new JButton();
+				}
+				if(State[i].getColor() == 0)
+				{
+					if(State[i].getOpen())
 					{
-						if(State[i].getOpen())
-						{
-							m_Card[i].setIcon(ImageCardBlack[State[i].getNum()]);
-						}
-						else
-						{
-							//m_Card[i].setIcon()안뒤집힌 이미지
-						}
+						
+						m_Card[i].setIcon(ImageCardBlack[State[i].getNum()]);
 					}
 					else
 					{
-						if(State[i].getOpen())
-						{
-							m_Card[i].setIcon(ImageCardWhite[State[i].getNum()]);
-						}
-						else
-						{
-							//m_Card[i].setIcon()안뒤집힌 이미지
-						}
+						//m_Card[i].setIcon()안뒤집힌 이미지
 					}
 				}
-			}
+				else
+				{
+					if(State[i].getOpen())
+					{
+						m_Card[i].setIcon(ImageCardWhite[State[i].getNum()]);
+					}
+					else
+					{
+						//m_Card[i].setIcon()안뒤집힌 이미지
+					}
+				}
+			}	
 		}
 		public void actionPerformed(ActionEvent e)
 		{
@@ -169,7 +170,6 @@ class GameWindow
 				}
 			}
 		}
-		
 	}
 	class NPC extends PlayerWindow
 	{
