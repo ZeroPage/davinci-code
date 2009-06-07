@@ -153,15 +153,13 @@ public class Server extends Network
 		}
 		public void dataEvent(DataHeader data)
 		{
-			if(data.getHeadData().equals("chat"))
-			{
+			//서버에게 온 데이터의 처리는 여기서 담당한다.
+			// 기본적으로 서버에게 온 데이터는 브로드 캐스팅이 되어 다시 나간다.
+			// 브로드 캐스팅을 막으려면 조건문 안에서 return을 시킬것.
+			String head = data.getHeadData();
+			if(head.equals("chat"))
 				m_Taget.AddChatString((String)data.getData());
-				BroadCasting(data);
-			}
-			else if(data.getHeadData().equals("game-playerNum"))
-			{
-				m_Game.setPlayerNum(((Integer)data.getData()).intValue());
-			}
+			BroadCasting(data);
 		}
 		public void run()
 		{

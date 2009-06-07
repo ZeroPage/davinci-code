@@ -2,6 +2,7 @@
 
 import java.io.*;
 import java.net.*;
+import java.util.ArrayList;
 
 public class Client extends Network
 {
@@ -80,35 +81,10 @@ public class Client extends Network
 		}
 		public void dataEvent(DataHeader data)
 		{
+			//입력된 데이터의 처리는 여기에 추가할것.
 			String head = data.getHeadData();
 			if(head.equals("chat"))
 				m_Taget.AddChatString((String)data.getData());
-			else if(head.equals("game-playerNum"))
-			{
-				m_Game.setPlayerNum(((Integer)data.getData()).intValue());
-			}
-			else if(head.equals("playOrder-int"))
-			{
-				m_Game.setPlayOrder(((Integer)data.getData()).intValue());
-			}
-			else if(head.equals("get-Block"))
-			{
-				m_Game.getDC().getBlocks().remove((Block)data.getData());
-			}
-			else if(head.equals("ask-int[]"))
-			{
-				int[] temp = ((int[])data.getData());
-				if(m_Game.getPlayOrder() == temp[0])
-					m_Game.getDC().getPlayers().get(temp[0]).checkBlock(temp[1], temp[2]);
-				m_Taget.AddChatString("System : " + temp[0] + "번 플레" +
-						"이어의 " + temp[1] + "번째 Bl" +
-								"ock을" + temp[2] + "로 지목" +
-										"하였습니다.");		
-			}
-			else if(head.equals("askOX-boolean"))
-			{
-				m_Taget.AddChatString("System : " + ((Boolean)data.getData()).booleanValue() + "입니다.");
-			}
 		}
 		public void run()
 		{
