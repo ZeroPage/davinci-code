@@ -102,7 +102,7 @@ class GameWindow
 				}
 			}
 		}
-		public void AddCard(boolean isJoker)
+		public void AddCard(int PlayerNum)
 		{
 			
 		}
