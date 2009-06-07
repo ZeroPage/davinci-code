@@ -146,10 +146,18 @@ public class Server extends Network
 			this.client = client;
 			inOb = new ObjectInputStream(client.getInputStream());
 		}
-		public void close() throws IOException
+		public void close()
 		{
 			stop();
-			inOb.close();
+			try
+			{
+				inOb.close();
+			} catch (IOException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			clientNum--;
 		}
 		public void dataEvent(DataHeader data)
 		{
@@ -170,15 +178,16 @@ public class Server extends Network
 					dataEvent((DataHeader)inOb.readObject());
 				} catch (IOException e)
 				{
+					close();
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				} catch (ClassNotFoundException e)
 				{
+					close();
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
-			clientNum--;
 		}
 	}
 	public boolean isServer()
