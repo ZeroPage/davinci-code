@@ -12,6 +12,7 @@ class GameWindow
 	JPanel JPanel_Main;
 	JPanel [] JPanel_Player;
 	PlayerWindow [] players = new PlayerWindow[4];
+	PlayerWindow Center;
 	
 	ImageIcon [] ImageCardBlack = new ImageIcon[13];
 	ImageIcon [] ImageCardWhite = new ImageIcon[13];
@@ -38,32 +39,36 @@ class GameWindow
 		{
 			players[i] = new PlayerWindow(i);
 		}
+		
+		Center = new NPC();
+		
 		main.add(JPanel_Main);
-		JPanel JPanel_Center = new JPanel();
-		JPanel_Center.setOpaque(false);
+		
 		Process = new GameProcess(this, n);
-		
-		for(int i =0; i < 26; i++)
-		{
-			JButton temp = new JButton(" "); 
-			JPanel_Center.add(temp);
-		}
-		
-		JPanel_Main.add(JPanel_Center);
 	}
-	public void setEnable(boolean state)
+	public void setEnable(int playerNum, boolean state)
 	{
+		//플레이어 넘버와 화면번호의 매칭
 		players[0].setEnable(state);//0이 아래 부터 시계방향 순서대로
+	}
+	public void CenterEnable(boolean state)
+	{
+		
 	}
 	class PlayerWindow implements ActionListener
 	{
-		JButton [] m_Card = new JButton[13];
+		JButton [] m_Card;
 		JPanel m_Panel;
 		int m_PlayerNum;
 		
+		protected PlayerWindow()
+		{
+			//하위클래스에서 필요한것 바깥에서는 위험함으로 쓰지말것.
+		}
 		public PlayerWindow(int PlayerNum)
 		{
 			m_Panel = new JPanel();
+			m_Card = new JButton[13];
 			m_PlayerNum = PlayerNum;
 			String lo = "";
 			switch(PlayerNum)
@@ -85,8 +90,8 @@ class GameWindow
 			}
 			JPanel_Main.add(lo,m_Panel);
 			m_Panel.setOpaque(false);
-			
 		}
+		
 		public void setEnable(boolean state)
 		{
 			for(int i = 0; m_Card[i] != null; i++)
@@ -102,7 +107,7 @@ class GameWindow
 				}
 			}
 		}
-		public void AddCard(int PlayerNum)
+		public void AddCard(int CardNum)
 		{
 			
 		}
@@ -113,6 +118,18 @@ class GameWindow
 				
 			}
 		}
+		
 	}
-	
+	class NPC extends PlayerWindow
+	{
+		public NPC()
+		{
+			super();
+			m_Panel = new JPanel();
+			m_PlayerNum = 5;
+			m_Card = new JButton[26];
+			JPanel_Main.add(BorderLayout.CENTER,m_Panel);
+			m_Panel.setOpaque(false);
+		}
+	}
 }
