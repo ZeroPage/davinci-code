@@ -4,13 +4,15 @@ public class GameProcess
 	int playerNum;
 	Network connection;
 	GameWindow m_Taget;
+	Network m_NetTaget;
 	int playOrder;
 	
 	Game DC;
 	
-	public GameProcess(GameWindow Taget)
+	public GameProcess(GameWindow Taget, Network NetTaget)
 	{
 		m_Taget = Taget;
+		m_NetTaget = NetTaget;
 	}
 	
 	public void setPlayerNum(int playerNum)

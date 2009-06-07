@@ -20,7 +20,7 @@ class GameWindow
 	
 	GameProcess Process;
 	
-	public GameWindow(JPanel main)
+	public GameWindow(JPanel main, Network n)
 	{
 		JPanel_Main = new JPanel()
 		{
@@ -41,10 +41,11 @@ class GameWindow
 		main.add(JPanel_Main);
 		JPanel JPanel_Center = new JPanel();
 		JPanel_Center.setOpaque(false);
-		Process = new GameProcess(this);
+		Process = new GameProcess(this, n);
+		
 		for(int i =0; i < 26; i++)
 		{
-			JButton temp = new JButton(""+i); 
+			JButton temp = new JButton(" "); 
 			JPanel_Center.add(temp);
 		}
 		
