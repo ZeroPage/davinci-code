@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 class GameWindow
@@ -92,6 +93,10 @@ class GameWindow
 		if(Process.m_NetTaget.isServer())
 		{
 			Process.Start();
+		}
+		else
+		{
+			JOptionPane.showMessageDialog(null, "방장이 아닙니다.","알림", 2);
 		}
 	}
 	class PlayerWindow implements ActionListener
