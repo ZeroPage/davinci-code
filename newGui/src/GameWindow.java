@@ -1,6 +1,7 @@
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -120,7 +121,7 @@ class GameWindow
 		public PlayerWindow(int PlayerNum)
 		{
 			m_Panel = new JPanel();
-			m_Panel.setLayout(new FlowLayout());
+			//m_Panel.setLayout(new FlowLayout());
 			m_Card = new JButton[13];
 			m_PlayerNum = PlayerNum;
 			String lo = "";
@@ -163,7 +164,8 @@ class GameWindow
 					m_Card[i] = new JStyleButton(ImageCardBlackUnknown);
 					m_Card[i].addActionListener(this);
 					m_Panel.add(m_Card[i]);
-					SetButtonLocation(m_Card[i], i);
+					//SetButtonLocation(m_Card[i], i);
+					m_Card[i].setMargin(new Insets(0,0,0,0));
 				}
 				if(State[i].getColor() == 0)
 				{
@@ -194,12 +196,6 @@ class GameWindow
 				m_Card[i].setRolloverEnabled(false);
 				m_Card[i].repaint();
 			}	
-		}
-		private void SetButtonLocation(JButton Taget, int i)
-		{
-			int row = i/10;
-			int cal = i%10;
-			Taget.setLocation(cal * ImageCardBlackUnknown.getIconWidth(), row * ImageCardBlackUnknown.getIconHeight());
 		}
 		public void actionPerformed(ActionEvent e)
 		{
