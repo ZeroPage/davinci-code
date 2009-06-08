@@ -23,6 +23,7 @@ public class GameProcess
 	public void Start()
 	{
 		GC = new Game(this, ((Server)m_NetTaget).clientNum);
+		m_GUITaget.Center.update(GetCenterBlocksState());
 		//서버측에서만 인원수를 알수잇다. 우선은 접속한인원수를 게임 참가인원으로 한다.
 		//게임을 시작하는 것은 방장만이 할수 있는것 이것에 대한 조치를 취해야 한다.
 		//Network에 isSever함수를 두고 클라에서는 false를 리턴하게 오버로딩을
