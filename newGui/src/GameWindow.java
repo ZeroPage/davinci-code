@@ -1,9 +1,11 @@
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.PreparedStatement;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -125,19 +127,24 @@ class GameWindow
 			m_Card = new JButton[13];
 			m_PlayerNum = PlayerNum;
 			String lo = "";
+			int Size = 150;
 			switch(PlayerNum)
 			{
 				case 0:
 					lo = BorderLayout.SOUTH;
+					m_Panel.setPreferredSize(new Dimension(0,Size));
 					break;
 				case 1:
 					lo = BorderLayout.WEST;
+					m_Panel.setPreferredSize(new Dimension(Size,0));
 					break;
 				case 2:
 					lo = BorderLayout.NORTH;
+					m_Panel.setPreferredSize(new Dimension(0,Size));
 					break;
 				case 3:
 					lo = BorderLayout.EAST;
+					m_Panel.setPreferredSize(new Dimension(Size,0));
 					break;
 				default:
 					break;
@@ -165,7 +172,7 @@ class GameWindow
 					m_Card[i].addActionListener(this);
 					m_Panel.add(m_Card[i]);
 					//SetButtonLocation(m_Card[i], i);
-					m_Card[i].setMargin(new Insets(0,0,0,0));
+					m_Card[i].setMargin(new Insets(-1,-1,-1,-1));//마법의 한구문.. 플로우레이아웃이 먹는다.
 				}
 				if(State[i].getColor() == 0)
 				{
