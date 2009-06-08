@@ -1,6 +1,7 @@
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Insets;
 import java.awt.Label;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
@@ -201,12 +202,23 @@ public class DavichiGUI extends JFrame
 		mWindow TagetChat;
 		Network TagetNetwork;
 		
+		ImageIcon BG = new ImageIcon(DavichiGUI.class.getResource("cover.jpg"));
+		
 		public ConnetDlg(mWindow chat)
 		{
 			super(some, "접속창", true);
+			this.setContentPane(new JPanel(){
+				public void paint(Graphics g)
+				{
+					g.drawImage(BG.getImage(), 0, 0, BG.getIconWidth(), BG.getIconHeight(), null);
+					this.setOpaque(false);
+					this.setSize(BG.getIconWidth(), BG.getIconHeight());
+					super.paint(g);
+				}
+			});
 			TagetChat = chat; 
 			//TagetNetwork = Taget;
-			setSize(350, 200);
+			setSize(BG.getIconWidth()+5, BG.getIconHeight()+20);
 			setLocation(getRootPane().getSize().width/2, getRootPane().getSize().height/2);
 			setResizable(false);
 			this.addWindowListener(new WindowAdapter()
@@ -219,55 +231,63 @@ public class DavichiGUI extends JFrame
 			});
 			this.getContentPane().setLayout(null);
 			
+			JPanel JPanel_Connect = new JPanel();
+			JPanel_Connect.setLayout(null);
+			JPanel_Connect.setBounds(20, 350, 380, 300);
+			JPanel_Connect.setOpaque(false);
+			
+			
 			JLabel temp = new JLabel("닉네임");
 			temp.setBounds(0, 10, 100, 30);
 			temp.setHorizontalAlignment(JLabel.CENTER);
-			this.getContentPane().add(temp);
+			JPanel_Connect.add(temp);
 			
 			JTF_Nick = new JTextField();
 			JTF_Nick.setBounds(100, 10, 100, 30);
-			this.getContentPane().add(JTF_Nick);
+			JPanel_Connect.add(JTF_Nick);
 			
 			temp = new JLabel("서버");
 			temp.setBounds(200, 10, 80, 30);
 			temp.setHorizontalAlignment(JLabel.CENTER);
-			this.getContentPane().add(temp);
+			JPanel_Connect.add(temp);
 			
 			JCB_Server = new JCheckBox();
-			JCB_Server.setBounds(280, 15, 20, 20);
+			JCB_Server.setBounds(280, 19, 13, 13);
 			JCB_Server.addItemListener(this);
-			this.getContentPane().add(JCB_Server);
+			JCB_Server.setMargin(new Insets(-2,-2,-2,-2));
+			JPanel_Connect.add(JCB_Server);
 			
 			temp = new JLabel("IP");
 			temp.setBounds(0, 50, 100, 30);
 			temp.setHorizontalAlignment(JLabel.CENTER);
-			this.getContentPane().add(temp);
+			JPanel_Connect.add(temp);
 			
 			JTF_IPAdress = new JTextField();
 			JTF_IPAdress.setBounds(100, 50, 200, 30);
 			JTF_IPAdress.addActionListener(this);
-			this.getContentPane().add(JTF_IPAdress);
+			JPanel_Connect.add(JTF_IPAdress);
 			
 			temp = new JLabel("Port");
 			temp.setBounds(0, 90, 100, 30);
 			temp.setHorizontalAlignment(JLabel.CENTER);
-			this.getContentPane().add(temp);
+			JPanel_Connect.add(temp);
 			
 			JTF_Port = new JTextField();
 			JTF_Port.setBounds(100, 90, 50, 30);
 			JTF_Port.setText("10000");
-			this.getContentPane().add(JTF_Port);
+			JPanel_Connect.add(JTF_Port);
 			
 			JB_Connect = new JButton("접속");
 			JB_Connect.setBounds(50 , 130, 100, 30);
 			JB_Connect.addActionListener(this);
-			this.getContentPane().add(JB_Connect);
+			JPanel_Connect.add(JB_Connect);
 			
 			JB_Cancel = new JButton("취소");
 			JB_Cancel.setBounds(200, 130, 100, 30);
 			JB_Cancel.addActionListener(this);
-			this.getContentPane().add(JB_Cancel);
+			JPanel_Connect.add(JB_Cancel);
 			
+			this.getContentPane().add(JPanel_Connect);
 			this.setVisible(true);
 		}
 		public void actionPerformed(ActionEvent event)
