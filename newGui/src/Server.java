@@ -157,6 +157,7 @@ public class Server extends Network
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			SendChatMsg("접속이 끉어졌습니다.");
 			clientNum--;
 		}
 		public void dataEvent(DataHeader data)

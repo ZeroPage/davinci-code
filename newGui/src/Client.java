@@ -85,6 +85,7 @@ public class Client extends Network
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			m_Taget.AddChatString("접속이 끉어졌습니다.");
 		}
 		public void dataEvent(DataHeader data)
 		{
@@ -104,6 +105,7 @@ public class Client extends Network
 
 				} catch (IOException e)
 				{
+					e.
 					close();
 					// TODO Auto-generated catch block
 					e.printStackTrace();
