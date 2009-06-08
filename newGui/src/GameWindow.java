@@ -168,7 +168,8 @@ class GameWindow
 			{
 				if(m_Card[i] == null)
 				{
-					m_Card[i] = new JButton();
+					m_Card[i] = new JStyleButton(ImageCardBlackUnknown);
+					m_Panel.add(m_Card[i]);
 				}
 				if(State[i].getColor() == 0)
 				{
