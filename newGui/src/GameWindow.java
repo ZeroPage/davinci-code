@@ -194,6 +194,7 @@ class GameWindow
 						m_Card[i].setIcon(ImageCardWhiteUnknown);
 					}
 				}
+				m_Card[i].repaint();
 			}	
 		}
 		public void actionPerformed(ActionEvent e)
