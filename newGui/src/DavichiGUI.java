@@ -2,6 +2,7 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Insets;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -145,10 +146,12 @@ public class DavichiGUI extends JFrame
 				if(event.getSource() == JB_NewGame)
 				{
 					//새게임 시작
+					GW.strat();
 				}
 				if(event.getSource() == JB_Exit)
 				{
 					//종료코드
+					getWindowListeners()[0].windowClosing(new WindowEvent(getWindows()[0], 0));
 				}
 			}
 			public void StringAdd(String msg)
