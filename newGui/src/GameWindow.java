@@ -66,7 +66,7 @@ class GameWindow
 	{
 		//플레이어 넘버와 화면번호의 매칭
 		Block [] card = Process.GetBlocksState(playerNum);
-		players[NumMatching(playerNum)].setEnable(state);//0이 아래 부터 시계방향 순서대로
+		players[NumfPtW(playerNum)].setEnable(state);//0이 아래 부터 시계방향 순서대로
 	}
 	public void setCenterEnable(boolean state)
 	{
@@ -78,24 +78,31 @@ class GameWindow
 		//플레이어 넘버를 받고 그 번호의 플레이어를 즉시 업데이트 한다
 		//센터는 updateCenter를 쓴다.
 		Block [] state = Process.GetBlocksState(PlayerNum);
-		players[NumMatching(PlayerNum)].update(state);
+		players[NumfPtW(PlayerNum)].update(state);
 	}
 	public void CenterUpdate()
 	{
 		Block[] State = Process.GetCenterBlocksState();
 		Center.update(State);
 	}
-	private int NumMatching(int PlayerNum)
+	private int NumfPtW(int PlayerNum)
 	{
 		if(PlayerNum < 4)
 		{
-			PlayerNum -= Process.playOrder;
+			PlayerNum += 4 - Process.playOrder;
+			PlayerNum = PlayerNum % 4;
 			return PlayerNum;
 		}
 		else
 		{
 			return 4; 	
 		}
+	}
+	private int NumfWtP(int WindowNum)
+	{
+		WindowNum += Process.playOrder;;
+		WindowNum = WindowNum % 4;
+		return WindowNum;
 	}
 	public void strat()
 	{
@@ -168,7 +175,7 @@ class GameWindow
 			{
 				if(m_Card[i] == null)
 				{
-					m_Card[i] = new JStyleButton(ImageCardBlackUnknown);
+					m_Card[i] = new JStyleButton();
 					m_Card[i].addActionListener(this);
 					m_Panel.add(m_Card[i]);
 					//SetButtonLocation(m_Card[i], i);
