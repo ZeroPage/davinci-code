@@ -65,10 +65,12 @@ class GameWindow
 	public void setEnable(int playerNum, boolean state)
 	{
 		//플레이어 넘버와 화면번호의 매칭
+		Block [] card = Process.GetBlocksState(playerNum);
 		players[NumMatching(playerNum)].setEnable(state);//0이 아래 부터 시계방향 순서대로
 	}
 	public void setCenterEnable(boolean state)
 	{
+		Block [] card = Process.GetCenterBlocksState();
 		Center.setEnable(state);
 	}
 	public void update(int PlayerNum)
@@ -147,23 +149,13 @@ class GameWindow
 		
 		public void setEnable(boolean state)
 		{
+			
+			
 			for(int i = 0; m_Card[i] != null; i++)
 			{
 				m_Card[i].setEnabled(state);
-				if(state)
-				{
-					//롤오버 설정 선택가능
-					
-				}
-				else
-				{
-					//롤오버 설정 선택 불가.
-				}
+				m_Card[i].setRolloverEnabled(state);
 			}
-		}
-		public void AddCard(int CardNum)
-		{
-			
 		}
 		public void update(Block [] State)
 		{
@@ -181,7 +173,7 @@ class GameWindow
 					if(State[i].getOpen())
 					{
 						m_Card[i].setIcon(ImageCardBlack[State[i].getNum()]);
-						
+						m_Card[i].setRolloverIcon(ImageCardBlackRollover[State[i].getNum()]);
 					}
 					else
 					{
@@ -194,6 +186,7 @@ class GameWindow
 					if(State[i].getOpen())
 					{
 						m_Card[i].setIcon(ImageCardWhite[State[i].getNum()]);
+						m_Card[i].setRolloverIcon(ImageCardWhiteRollover[State[i].getNum()]);
 					}
 					else
 					{
@@ -201,6 +194,7 @@ class GameWindow
 						m_Card[i].setIcon(ImageCardWhiteUnknown);
 					}
 				}
+				m_Card[i].setRolloverEnabled(false);
 				m_Card[i].repaint();
 			}	
 		}
