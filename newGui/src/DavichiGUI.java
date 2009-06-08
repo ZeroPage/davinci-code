@@ -63,8 +63,9 @@ public class DavichiGUI extends JFrame
 			JPanel_Room = new JPanel();
 			JPanel_Room.setLayout(new BorderLayout());
 			CW = new ChatWindow(JPanel_Room);
-			GW = new GameWindow(JPanel_Room, NC);
 			ConnetDlg CD = new ConnetDlg(this);
+			GW = new GameWindow(JPanel_Room, NC);
+			
 			main.add(BorderLayout.CENTER, JPanel_Room);
 		}
 		class ChatWindow implements ActionListener
@@ -282,6 +283,7 @@ public class DavichiGUI extends JFrame
 			JB_Connect.setBounds(50 , 130, 100, 30);
 			JB_Connect.addActionListener(this);
 			JPanel_Connect.add(JB_Connect);
+			
 			
 			JB_Cancel = new JButton("√Îº“");
 			JB_Cancel.setBounds(200, 130, 100, 30);
