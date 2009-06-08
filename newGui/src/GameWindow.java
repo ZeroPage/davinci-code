@@ -17,6 +17,8 @@ class GameWindow
 	ImageIcon [] ImageCardWhite = new ImageIcon[13];
 	ImageIcon [] ImageCardBlackRollover = new ImageIcon[13];
 	ImageIcon [] ImageCardWhiteRollover = new ImageIcon[13];
+	ImageIcon ImageCardBlackUnknown;
+	ImageIcon ImageCardWhiteUnknown;
 	
 	GameProcess Process;
 	
@@ -49,6 +51,9 @@ class GameWindow
 			ImageCardWhite[i] = new ImageIcon(DavichiGUI.class.getResource("w"+i+".gif"));
 			ImageCardWhiteRollover[i] = new ImageIcon(DavichiGUI.class.getResource("w"+i+"r.gif"));
 		}
+		ImageCardBlackUnknown = new ImageIcon(DavichiGUI.class.getResource("bu.gif"));
+		ImageCardWhiteUnknown = new ImageIcon(DavichiGUI.class.getResource("wu.gif"));
+		
 		main.add(JPanel_Main);
 		
 		Process = new GameProcess(this, n);
@@ -151,12 +156,12 @@ class GameWindow
 				{
 					if(State[i].getOpen())
 					{
-						
 						m_Card[i].setIcon(ImageCardBlack[State[i].getNum()]);
 					}
 					else
 					{
-						//m_Card[i].setIcon()안뒤집힌 이미지
+						//오픈 안되있는 경우 뒷면을 보여준다.
+						m_Card[i].setIcon(ImageCardBlackUnknown);
 					}
 				}
 				else
@@ -167,7 +172,8 @@ class GameWindow
 					}
 					else
 					{
-						//m_Card[i].setIcon()안뒤집힌 이미지
+						//오픈 안되있는 경우 뒷면을 보여준다.
+						m_Card[i].setIcon(ImageCardWhiteUnknown);
 					}
 				}
 			}	
