@@ -1,4 +1,5 @@
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Insets;
@@ -246,7 +247,8 @@ public class DavichiGUI extends JFrame
 			JPanel_Connect.setOpaque(false);
 			
 			
-			JLabel temp = new JLabel("<html><font color = #ff0000>닉네임</font></html>");
+			JLabel temp = new JLabel("닉네임");
+			temp.setForeground(Color.red);
 			temp.setBounds(0, 10, 100, 30);
 			temp.setHorizontalAlignment(JLabel.CENTER);
 			JPanel_Connect.add(temp);
@@ -255,7 +257,8 @@ public class DavichiGUI extends JFrame
 			JTF_Nick.setBounds(100, 10, 100, 30);
 			JPanel_Connect.add(JTF_Nick);
 			
-			temp = new JLabel("<html><font color = #ff0000>서버</font></html>");
+			temp = new JLabel("서버");
+			temp.setForeground(Color.red);
 			temp.setBounds(200, 10, 80, 30);
 			temp.setHorizontalAlignment(JLabel.CENTER);
 			JPanel_Connect.add(temp);
@@ -266,7 +269,8 @@ public class DavichiGUI extends JFrame
 			JCB_Server.setMargin(new Insets(-2,-2,-2,-2));
 			JPanel_Connect.add(JCB_Server);
 			
-			temp = new JLabel("<html><font color = #ff0000>IP</font></html>");
+			temp = new JLabel("IP");
+			temp.setForeground(Color.red);
 			temp.setBounds(0, 50, 100, 30);
 			temp.setHorizontalAlignment(JLabel.CENTER);
 			JPanel_Connect.add(temp);
@@ -276,7 +280,8 @@ public class DavichiGUI extends JFrame
 			JTF_IPAdress.addActionListener(this);
 			JPanel_Connect.add(JTF_IPAdress);
 			
-			temp = new JLabel("<html><font color = #ff0000>Port</font></html>");
+			temp = new JLabel("Port");
+			temp.setForeground(Color.red);
 			temp.setBounds(0, 90, 100, 30);
 			temp.setHorizontalAlignment(JLabel.CENTER);
 			JPanel_Connect.add(temp);
