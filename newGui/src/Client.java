@@ -105,7 +105,6 @@ public class Client extends Network
 
 				} catch (IOException e)
 				{
-					e.
 					close();
 					// TODO Auto-generated catch block
 					e.printStackTrace();
