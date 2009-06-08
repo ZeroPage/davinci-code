@@ -161,6 +161,7 @@ class GameWindow
 				if(m_Card[i] == null)
 				{
 					m_Card[i] = new JStyleButton(ImageCardBlackUnknown);
+					m_Card[i].addActionListener(this);
 					m_Panel.add(m_Card[i]);
 					SetButtonLocation(m_Card[i], i);
 				}
@@ -207,6 +208,7 @@ class GameWindow
 			{
 				if(e.getSource() == m_Card[i])
 				{
+					//선택되면 상대방의 패를 물어보는 것이기 때문에 askblock을 호출한다.
 					break;
 				}
 			}
