@@ -115,15 +115,7 @@ public class DavichiGUI extends JFrame
 				JPanel_Main.add(JB_ChatClear);
 				
 				//새게임
-				
-				if(NC.isServer())
-				{
-					JB_NewGame = new JButton("시작");
-				}
-				else
-				{
-					JB_NewGame = new JButton("레디");
-				}
+				JB_NewGame = new JButton("시작");
 				JB_NewGame.setBounds(0, 480, 100, 30);
 				JB_NewGame.addActionListener(this);
 				JPanel_Main.add(JB_NewGame);

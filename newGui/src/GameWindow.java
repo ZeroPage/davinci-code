@@ -44,10 +44,10 @@ class GameWindow
 		//이미지 로딩
 		for(int i = 0; i < 13; i++)
 		{
-			ImageCardBlack[i] = new ImageIcon(DavichiGUI.class.getResource("b"+i+".gif"));
-			ImageCardBlackRollover[i] = new ImageIcon(DavichiGUI.class.getResource("b"+i+"r.gif"));
-			ImageCardWhite[i] = new ImageIcon(DavichiGUI.class.getResource("w"+i+".gif"));
-			ImageCardWhiteRollover[i] = new ImageIcon(DavichiGUI.class.getResource("w"+i+"r.gif"));
+			//ImageCardBlack[i] = new ImageIcon(DavichiGUI.class.getResource("b"+i+".gif"));
+			//ImageCardBlackRollover[i] = new ImageIcon(DavichiGUI.class.getResource("b"+i+"r.gif"));
+			//ImageCardWhite[i] = new ImageIcon(DavichiGUI.class.getResource("w"+i+".gif"));
+			//ImageCardWhiteRollover[i] = new ImageIcon(DavichiGUI.class.getResource("w"+i+"r.gif"));
 		}
 		
 		main.add(JPanel_Main);
