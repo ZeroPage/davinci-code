@@ -57,17 +57,30 @@ class GameWindow
 	public void setEnable(int playerNum, boolean state)
 	{
 		//플레이어 넘버와 화면번호의 매칭
-		players[0].setEnable(state);//0이 아래 부터 시계방향 순서대로
+		players[NumMatching(playerNum)].setEnable(state);//0이 아래 부터 시계방향 순서대로
 	}
-	public void CenterEnable(boolean state)
+	public void setCenterEnable(boolean state)
 	{
-		
+		Center.setEnable(state);
 	}
-	public void update(int playerNum)
+	public void update(int PlayerNum)
 	{
 		//플레이어 넘버를 받고 그 번호의 플레이어를 즉시 업데이트 한다
-		Block [] state = Process.GetBlocksState(playerNum);
-		
+		//센터는 updateCenter를 쓴다.
+		Block [] state = Process.GetBlocksState(PlayerNum);
+		players[NumMatching(PlayerNum)].update(state);
+	}
+	private int NumMatching(int PlayerNum)
+	{
+		if(PlayerNum < 4)
+		{
+			PlayerNum -= Process.playOrder;
+			return PlayerNum;
+		}
+		else
+		{
+			return 4; 	
+		}
 	}
 	class PlayerWindow implements ActionListener
 	{
@@ -162,6 +175,7 @@ class GameWindow
 		}
 		public void actionPerformed(ActionEvent e)
 		{
+			//플레이어의 패가 선택된것이다. 
 			for(int i =0; m_Card[i] != null; i++)
 			{
 				if(e.getSource() == m_Card[i])
@@ -186,7 +200,7 @@ class GameWindow
 		{
 			//가운데는 선택되면 이것은 처음에 가운데 블럭을 선택하기 위한것이다.
 			//moveblock을 호출해서 가운데것을 가져가게 하면 된다.
-			//그리고 선택된것은 빼어버린다.
+			//그리고 선택된것은 빼어버린다.(업데이트가 나으려나.)
 			for(int i = 0; i < 26; i++)
 			{
 				if(m_Card[i] != null)

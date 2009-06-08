@@ -40,7 +40,7 @@ public class GameProcess
 	public void selectBlock()
 	{
 		//패를 고르기 위해서 GUI의 가운데 패를 enable 시킨다.
-		m_GUITaget.CenterEnable(true);
+		m_GUITaget.setCenterEnable(true);
 	}
 	public void moveBlock(int indexNum)
 	{
