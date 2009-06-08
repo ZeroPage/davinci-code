@@ -149,8 +149,6 @@ class GameWindow
 		
 		public void setEnable(boolean state)
 		{
-			
-			
 			for(int i = 0; m_Card[i] != null; i++)
 			{
 				m_Card[i].setEnabled(state);
@@ -226,6 +224,17 @@ class GameWindow
 			m_Card = new JButton[26];
 			JPanel_Main.add(BorderLayout.CENTER,m_Panel);
 			m_Panel.setOpaque(false);
+		}
+		public void update(Block [] State)
+		{
+			super.update(State);
+		
+			for(int i = State.length; m_Card[i] != null; i++)
+			{
+				//m_Card[i].removeAll();
+				m_Panel.remove(m_Card[i]);
+				//어느쪽이지 제거하는거?
+			}
 		}
 		public void actionPerformed(ActionEvent e)
 		{
