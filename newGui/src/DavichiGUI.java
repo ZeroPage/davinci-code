@@ -207,19 +207,23 @@ public class DavichiGUI extends JFrame
 		
 		public ConnetDlg(mWindow chat)
 		{
-			super(some, "立加芒", true);
-			this.setContentPane(new JPanel(){
+			super((JFrame)null, "立加芒", true);
+			this.setContentPane(new JPanel()
+			{
 				public void paint(Graphics g)
 				{
 					g.drawImage(BG.getImage(), 0, 0, BG.getIconWidth(), BG.getIconHeight(), null);
 					this.setOpaque(false);
-					this.setSize(BG.getIconWidth(), BG.getIconHeight());
+					this.setPreferredSize(new Dimension(BG.getIconWidth(), BG.getIconHeight()));
+					//this.setSize(BG.getIconWidth(), BG.getIconHeight());
 					super.paint(g);
 				}
-			});
+			}
+			);
 			TagetChat = chat; 
 			//TagetNetwork = Taget;
-			setSize(BG.getIconWidth()+5, BG.getIconHeight()+20);
+			
+			this.setSize(new Dimension(BG.getIconWidth()+5, BG.getIconHeight()+20));
 			setLocation(getRootPane().getSize().width/2, getRootPane().getSize().height/2);
 			setResizable(false);
 			this.addWindowListener(new WindowAdapter()
