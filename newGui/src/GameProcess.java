@@ -65,7 +65,9 @@ public class GameProcess
 	public Block[] GetCenterBlocksState()
 	{
 		//가운데 블럭의 상태를 리턴한다.
-		return (Block [])GC.getBlocks().toArray();
+		Block[] temp = new Block[GC.getBlocks().size()];
+		GC.getBlocks().toArray(temp);
+		return temp;
 	}
 	public void AskBlock()
 	{
