@@ -89,7 +89,10 @@ class GameWindow
 	public void strat()
 	{
 		//채팅창에 있는 게임 시작 버튼의 동작을  받기위한 것.
-		Process.Start();
+		if(Process.m_NetTaget.isServer())
+		{
+			Process.Start();
+		}
 	}
 	class PlayerWindow implements ActionListener
 	{
