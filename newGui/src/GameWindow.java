@@ -1,6 +1,7 @@
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
+import java.awt.GridLayout;
 import java.awt.LayoutManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -173,7 +174,7 @@ class GameWindow
 				{
 					m_Card[i] = new JStyleButton(ImageCardBlackUnknown);
 					m_Panel.add(m_Card[i]);
-					m_Card[i].setLocation(i*10, 0);
+					SetButtonLocation(m_Card[i], i);
 				}
 				if(State[i].getColor() == 0)
 				{
@@ -202,6 +203,12 @@ class GameWindow
 				}
 				m_Card[i].repaint();
 			}	
+		}
+		private void SetButtonLocation(JButton Taget, int i)
+		{
+			int row = i/10;
+			int cal = i%10;
+			Taget.setLocation(row * ImageCardBlackUnknown.getIconWidth(), cal * ImageCardBlackUnknown.getIconHeight());
 		}
 		public void actionPerformed(ActionEvent e)
 		{
