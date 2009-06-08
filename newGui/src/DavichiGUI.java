@@ -30,6 +30,8 @@ public class DavichiGUI extends JFrame
 	RoomWindow RW = null;
 	LobbyWindow LW = null;
 	static DavichiGUI some = null;
+	GameProcess process;
+	GameWindow m_target;
 	public static void main(String [] args)
 	{
 		DavichiGUI aa = new DavichiGUI();
@@ -146,6 +148,7 @@ public class DavichiGUI extends JFrame
 				}
 				if(event.getSource() == JB_NewGame)
 				{
+					m_target.Process.Start();
 					//새게임 시작
 				}
 				if(event.getSource() == JB_Exit)

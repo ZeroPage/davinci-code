@@ -61,22 +61,6 @@ public class Game {
 		}
 	}
 
-	public void printBlocks(ArrayList<Block> blocks) {		
-		for(int i=0; i<blocks.size(); i++) {
-			Block tb = blocks.get(i);
-			System.out.print(tb.getColor() + " ");
-			//if(blocks[i].getOpen() == true)
-			System.out.print(tb.getNum() + " ");
-			/*else
-				System.out.print("?");*/
-			System.out.print(tb.getOwn() + " ");
-			System.out.print(tb.getOpen());
-			System.out.print("\t");
-			if(i%5 == 0)
-				System.out.println();
-		}
-	}
-
 	/*for(int i=0; i<playerNum; i++) {
 			for(int j=0; j<4; j++) { // 시작하면 j 개 만큼 패를 가진다.
 				System.out.println("\n\n");
@@ -222,7 +206,7 @@ public class Game {
 			temp[0] = selectedPlayer;
 			temp[1] = selectedBlock;
 			temp[2] = selectedNum;
-			connection.SendOb(new DataHeader("ask-int[]",temp));
+			module.m_NetTaget.SendOb(new DataHeader("ask-int[]",temp));
 
 			/*if(players.get(selectedPlayer).checkBlock(selectedBlock, selectedNum)==true)
 			{
@@ -239,7 +223,7 @@ public class Game {
 		public boolean checkBlock(int selectedBlock, int num) {
 			if(hand.get(selectedBlock).getNum() == num) {
 				hand.get(selectedBlock).setOpen(true);
-				connection.SendOb(new DataHeader("askOX-boolean", Boolean.valueOf(true)));
+				module.m_NetTaget.SendOb(new DataHeader("askOX-boolean", Boolean.valueOf(true)));
 				isPlay();
 				return true;
 			}
@@ -251,7 +235,7 @@ public class Game {
 				if(tb.getOpen() == false)
 					return;
 			}
-			connection.SendOb(new DataHeader("doa-boolean", Boolean.valueOf(false)));
+			module.m_NetTaget.SendOb(new DataHeader("doa-boolean", Boolean.valueOf(false)));
 			setPlay(false);
 		}
 		public void swapBlock(ArrayList<Block> blocks, int n1, int n2) {
@@ -268,6 +252,9 @@ public class Game {
 						swapBlock(blocks, j, j+1);
 				}
 			}
+		}
+		public void next(int n) {
+			module.m_NetTaget.SendOb(Integer.valueOf(n+1));
 		}
 	}
 }
