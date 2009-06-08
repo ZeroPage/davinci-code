@@ -221,14 +221,13 @@ class GameWindow
 			super();
 			m_Panel = new JPanel();
 			m_PlayerNum = 5;
-			m_Card = new JButton[26];
+			m_Card = new JButton[27];
 			JPanel_Main.add(BorderLayout.CENTER,m_Panel);
 			m_Panel.setOpaque(false);
 		}
 		public void update(Block [] State)
 		{
 			super.update(State);
-		
 			for(int i = State.length; m_Card[i] != null; i++)
 			{
 				//m_Card[i].removeAll();
