@@ -49,7 +49,6 @@ class GameWindow
 			ImageCardWhite[i] = new ImageIcon(DavichiGUI.class.getResource("w"+i+".gif"));
 			ImageCardWhiteRollover[i] = new ImageIcon(DavichiGUI.class.getResource("w"+i+"r.gif"));
 		}
-		
 		main.add(JPanel_Main);
 		
 		Process = new GameProcess(this, n);
