@@ -208,7 +208,7 @@ class GameWindow
 		{
 			int row = i/10;
 			int cal = i%10;
-			Taget.setLocation(row * ImageCardBlackUnknown.getIconWidth(), cal * ImageCardBlackUnknown.getIconHeight());
+			Taget.setLocation(cal * ImageCardBlackUnknown.getIconWidth(), row * ImageCardBlackUnknown.getIconHeight());
 		}
 		public void actionPerformed(ActionEvent e)
 		{
