@@ -71,13 +71,9 @@ public class GameProcess
 		//파라미터가 있으므로 위에 함수와 구분이 된다.몇번 플레이어에 몇번 인덱스라는 것만 알려주면 된다.
 		//어떤 숫자인지 알아야한다.
 		//네트워크에 물어보는 내용을 전송한다.
-		int[] temp = new int[3];
-		temp[0] = playerNum;
-		temp[1] = index;
-		temp[2] = num;
-		m_NetTaget.SendOb(new DataHeader("블럭을 물어본다.", temp));
+		GC.getPlayers().get(playOrder).askBlock(playerNum, index, num);
 	}
-	public void CheekBlock(int index, int num)
+	public void CheckBlock(int index, int num)
 	{
 		//네크워크에서 물음을 받으면 자신의 패를 체크해준다.그리고 리턴값을 돌려주는것이 아니라 네트워크에 맞는지 틀린지 전송해준다.
 		//게임의 체크 블록을 부른다. 단 자신의 패가 아니면 건들지 않는다.

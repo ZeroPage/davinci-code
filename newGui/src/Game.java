@@ -155,7 +155,7 @@ public class Game {
 		}
 		public void selectBlock()
 		{
-			//m_Taget.setEnable(true);
+			module.m_GUITaget.setCenterEnable(true);
 		}
 		public void getBlock(int blockNum) {
 			hand.add(blocks.get(blockNum));
