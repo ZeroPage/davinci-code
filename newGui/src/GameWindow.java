@@ -5,7 +5,6 @@ import java.awt.Graphics;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.PreparedStatement;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -123,7 +122,8 @@ class GameWindow
 		public PlayerWindow(int PlayerNum)
 		{
 			m_Panel = new JPanel();
-			//m_Panel.setLayout(new FlowLayout());
+			FlowLayout layout = new FlowLayout(FlowLayout.LEADING,0,0);//왜 동작이 되질 안을까?
+			m_Panel.setLayout(layout);
 			m_Card = new JButton[13];
 			m_PlayerNum = PlayerNum;
 			String lo = "";
@@ -172,7 +172,7 @@ class GameWindow
 					m_Card[i].addActionListener(this);
 					m_Panel.add(m_Card[i]);
 					//SetButtonLocation(m_Card[i], i);
-					m_Card[i].setMargin(new Insets(-1,-1,-1,-1));//마법의 한구문.. 플로우레이아웃이 먹는다.
+					m_Card[i].setMargin(new Insets(0,0,0,0));//마법의 한구문.. 플로우레이아웃이 먹는다.
 				}
 				if(State[i].getColor() == 0)
 				{
@@ -201,7 +201,6 @@ class GameWindow
 					}
 				}
 				m_Card[i].setRolloverEnabled(false);
-				m_Card[i].repaint();
 			}	
 		}
 		public void actionPerformed(ActionEvent e)
