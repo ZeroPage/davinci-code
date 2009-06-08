@@ -75,6 +75,11 @@ class GameWindow
 		Block [] state = Process.GetBlocksState(PlayerNum);
 		players[NumMatching(PlayerNum)].update(state);
 	}
+	public void CenterUpdate()
+	{
+		Block[] State = Process.GetCenterBlocksState();
+		Center.update(State);
+	}
 	private int NumMatching(int PlayerNum)
 	{
 		if(PlayerNum < 4)
