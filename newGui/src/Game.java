@@ -8,6 +8,8 @@ public class Game {
 	Game(GameProcess pro,  int n)
 	{
 		module = pro;
+		players = new ArrayList<Player>();
+		blocks = new ArrayList<Block>();
 		setPlayers(n);
 		setBlocks();
 		mixBlocks(blocks);
@@ -112,6 +114,7 @@ public class Game {
 		private boolean isWjoker = false;//화이트조커 소유 여부
 		private boolean isJoker = isBjoker&isWjoker;//조커 소유여부
 		Player() {
+			hand = new ArrayList<Block>();
 			play = true;
 		}
 		public void setHand(Block n) {
