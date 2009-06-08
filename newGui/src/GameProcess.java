@@ -58,7 +58,7 @@ public class GameProcess
 	{
 		//enable할때 블럭의 상태를 알아야 이미지를 바꿔줄수 있다.
 		//몇번 플레이어의 블록 배열을 리턴하면 된다.
-		return (Block[])GC.getPlayers().get(playerNum).getHand().toArray();
+		return (Block[])GC.getPlayers().get(playerNum).getHand().toArray();//왠만하면 이런 복잡한 형식보다는 Game클래스 에다가 getPlayerBlock함수를 두고 거기서 Block의 배열을 리턴하도록 만들지 그래? 이렇게 짜면 읽기가 힘들어.
 	}
 	public void AskBlock()
 	{
