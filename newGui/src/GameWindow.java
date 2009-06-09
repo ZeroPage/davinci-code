@@ -245,11 +245,9 @@ class GameWindow
 		{
 			m_Panel = new JPanel();
 			FlowLayout layout = new FlowLayout(FlowLayout.CENTER,-1,-1);
-			m_Panel.setLayout(layout);
 			m_PlayerNum = PlayerNum;
 			m_Card = new JButton[13];
 			String lo = "";
-			m_WindowNum = PlayerNum;
 			switch(PlayerNum)
 			{
 				case 0:
@@ -259,6 +257,7 @@ class GameWindow
 				case 1:
 					lo = BorderLayout.WEST;
 					m_Panel.setPreferredSize(new Dimension(Size,0));
+					layout.setAlignment(FlowLayout.LEADING);
 					break;
 				case 2:
 					lo = BorderLayout.NORTH;
@@ -267,10 +266,12 @@ class GameWindow
 				case 3:
 					lo = BorderLayout.EAST;
 					m_Panel.setPreferredSize(new Dimension(Size,0));
+					layout.setAlignment(FlowLayout.TRAILING);
 					break;
 				default:
 					break;
 			}
+			m_Panel.setLayout(layout);
 			JPanel_Main.add(lo,m_Panel);
 			m_Panel.setOpaque(false);
 		}
