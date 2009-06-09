@@ -74,6 +74,17 @@ class GameWindow
 		Block [] card = Process.GetCenterBlocksState();
 		Center.setEnable(state);
 	}
+	public void update()
+	{
+		Block [] State;
+		for(int i = 0; i < 4; i++)
+		{
+			State = Process.GetBlocksState(i);
+			players[NumfPtW(i)].update(State);
+		}
+		State = Process.GetCenterBlocksState();
+		Center.update(State);
+	}
 	public void update(int PlayerNum)
 	{
 		//플레이어 넘버를 받고 그 번호의 플레이어를 즉시 업데이트 한다
