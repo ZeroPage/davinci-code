@@ -112,7 +112,7 @@ class GameWindow
 	}
 	private int NumfWtP(int WindowNum)
 	{
-		WindowNum += Process.playOrder;;
+		WindowNum += Process.playOrder;
 		WindowNum = WindowNum % 4;
 		return WindowNum;
 	}
@@ -132,7 +132,7 @@ class GameWindow
 	{
 		JButton [] m_Card;
 		JPanel m_Panel;
-		int m_PlayerNum;
+		int m_WindowNum;
 		
 		protected PlayerWindow()
 		{
@@ -144,10 +144,10 @@ class GameWindow
 			FlowLayout layout = new FlowLayout(FlowLayout.CENTER,-1,-1);
 			m_Panel.setLayout(layout);
 			m_Card = new JButton[13];
-			m_PlayerNum = PlayerNum;
+			m_WindowNum = NumfPtW(PlayerNum);
 			String lo = "";
 			int Size = 150;
-			switch(PlayerNum)
+			switch(NumfPtW(PlayerNum))
 			{
 				case 0:
 					lo = BorderLayout.SOUTH;
@@ -229,10 +229,9 @@ class GameWindow
 		}
 		private void SetButtonLocation(JButton button, int i)
 		{
-			int row = i / 10;
-			int cal = i % 10;
+			int row = i / 13;
+			int cal = i % 13;
 			button.setSize(cal * 50, row *72);
-			
 		}
 		public void actionPerformed(ActionEvent e)
 		{
