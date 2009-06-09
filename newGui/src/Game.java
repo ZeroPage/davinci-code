@@ -4,7 +4,7 @@ import java.util.ArrayList;
 public class Game implements Serializable {
 	private ArrayList<Player> players;
 	private ArrayList<Block> blocks;
-	private GameProcess module;
+	transient private GameProcess module;
 	
 	Game(GameProcess pro,  int n)
 	{
@@ -106,7 +106,7 @@ public class Game implements Serializable {
 		return alive<1;
 	}
 
-	public class Player {
+	public class Player implements Serializable {
 		private ArrayList<Block> hand;//자신이 가진 블록을 저장하는 배열
 		private boolean play;//플레이여부를 결정
 		private int loh = -5;//핸드의 가장 왼쪽 숫자.기본값은 범위 밖

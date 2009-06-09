@@ -23,6 +23,7 @@ public class GameProcess
 	public void Start()
 	{
 		GC = new Game(this, ((Server)m_NetTaget).clientNum+1);
+		m_NetTaget.SendOb(new DataHeader("game", GC));
 		m_GUITaget.CenterUpdate();
 		turn();
 		//서버측에서만 인원수를 알수잇다. 우선은 접속한인원수를 게임 참가인원으로 한다.
@@ -55,8 +56,10 @@ public class GameProcess
 		//Gui에서는 블럭배열을 받은뒤 블럭을 바꾸어 준다.
 		//그다음 상대방에게 블럭을 물어본다.
 		GC.getPlayers().get(playOrder).getBlock(indexNum);
+		m_GUITaget.setCenterEnable(false);
 		m_GUITaget.update(playOrder);
 		m_GUITaget.CenterUpdate();
+		
 		if(GC.getPlayers().get(playOrder).getHand().size()<=4)
 		{
 			Next();
