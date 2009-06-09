@@ -40,12 +40,7 @@ class GameWindow
 		};
 		JPanel_Main.setLayout(new BorderLayout());
 		
-		//플레이어 와 NPC패널의 설정
-		for(int i = 0; i < 4; i++)
-		{
-			players[i] = new PlayerWindow(i);
-		}
-		Center = new NPC();
+		
 		
 		//이미지 로딩
 		for(int i = 0; i < 13; i++)
@@ -118,6 +113,13 @@ class GameWindow
 	}
 	public void strat()
 	{
+		//플레이어 와 NPC패널의 설정
+		for(int i = 0; i < 4; i++)
+		{
+			players[i] = new PlayerWindow(i);
+		}
+		Center = new NPC();
+		
 		//채팅창에 있는 게임 시작 버튼의 동작을  받기위한 것.
 		if(Process.m_NetTaget.isServer())
 		{
@@ -127,6 +129,7 @@ class GameWindow
 		{
 			JOptionPane.showMessageDialog(null, "방장이 아닙니다.","알림", 2);
 		}
+		
 	}
 	class PlayerWindow implements ActionListener
 	{
