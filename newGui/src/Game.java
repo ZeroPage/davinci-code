@@ -250,14 +250,14 @@ public class Game implements Serializable {
 			blocks.set(n1,tb2);
 			blocks.set(n2,tb1);
 		}
-		public void sortBlock(ArrayList<Block> blocks, int s, int e) {
+		public void sortBlock(int s, int e) {
 			for(int i = s; i<e;i++)
 			{
 				for(int j=s;j<e;j++){
-					if(blocks.get(j).getNum()>blocks.get(j+1).getNum())
-						swapBlock(blocks, j, j+1);
-					if(blocks.get(j).getNum()==blocks.get(j+1).getNum()&&blocks.get(j).getColor()==1&&blocks.get(j+1).getColor()==0)
-						swapBlock(blocks, j, j+1);
+					if(hand.get(j).getNum()>hand.get(j+1).getNum())
+						swapBlock(hand, j, j+1);
+					if(hand.get(j).getNum()==hand.get(j+1).getNum()&&hand.get(j).getColor()==1&&hand.get(j+1).getColor()==0)
+						swapBlock(hand, j, j+1);
 				}
 			}
 		}

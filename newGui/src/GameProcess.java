@@ -69,8 +69,9 @@ public class GameProcess
 			
 		}
 		GC.getPlayers().get(playOrder).getBlock(indexNum);
+		GC.getPlayers().get(playOrder).sortBlock(0, GC.getPlayers().get(playOrder).getHand().size()-1);
 		m_GUITaget.setCenterEnable(false);
-		//m_GUITaget.update(); 테스트차 주석처리
+		m_GUITaget.update(); //테스트차 주석처리
 		m_NetTaget.SendOb(new DataHeader("game", GC));
 		if(GC.getPlayers().get(playOrder).getHand().size()<=4)
 		{
