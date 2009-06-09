@@ -92,6 +92,8 @@ public class Client extends Network
 			String head = data.getHeadData();
 			if(head.equals("chat"))
 				m_Taget.AddChatString((String)data.getData());
+			if(head.equals("game"))
+				m_Game.setGC((Game)data.getData());
 		}
 		public void run()
 		{

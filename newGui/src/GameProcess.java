@@ -127,4 +127,8 @@ public class GameProcess
 		//승자를 표시해준다.
 		//
 	}
+	public void setGC(Game gc)
+	{
+		GC = gc;
+	}
 }
