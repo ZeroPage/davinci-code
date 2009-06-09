@@ -1,13 +1,19 @@
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Frame;
 import java.awt.Graphics;
+import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -109,7 +115,6 @@ class GameWindow
 		}
 		else
 		{
-			//update();
 			JOptionPane.showMessageDialog(null, "방장이 아닙니다.","알림", 2);
 		}
 	}
@@ -339,7 +344,8 @@ class GameWindow
 				if(e.getSource() == m_Card[i])
 				{
 					//선택되면 상대방의 패를 물어보는 것이기 때문에 askblock을 호출한다.
-					Process.AskBlock(m_WindowNum, i,Integer.parseInt(JOptionPane.showInputDialog("몇번일까?")));
+					
+					Process.AskBlock(m_WindowNum, i,askNum());
 					break;
 				}
 			}
@@ -381,6 +387,54 @@ class GameWindow
 					}
 				}
 			}
+		}
+	}
+	private int askNum()
+	{
+		AskDlg AD = new AskDlg();
+		return AD.getNum();
+	}
+	class AskDlg extends JDialog implements ActionListener
+	{
+		JButton [] JB_Num = new JButton[13];
+		int Num;
+		public AskDlg()
+		{
+			super((JFrame) getWindows()[0], "숫자를 선택하세요",true);
+			this.setSize(300,400);
+			this.setLayout(new GridLayout(5,3));
+			this.setLocation(getRootPane().getSize().width/2, getRootPane().getSize().height/2);
+			this.setResizable(false);
+			this.addWindowListener(new WindowAdapter()
+			{
+				public void windowClosing(WindowEvent e)
+				{
+				}	
+			});
+			
+			for(int i = 0; i < 13; i++)
+			{
+				JB_Num[i] = new JButton(""+ i);
+				JB_Num[i].addActionListener(this);
+				this.getContentPane().add(JB_Num[i]);
+			}
+			
+			this.setVisible(true);
+		}
+		public void actionPerformed(ActionEvent e)
+		{
+			for(int i = 0; i <13; i++)
+			{
+				if(e.getSource() == JB_Num[i])
+				{
+					Num = i;
+					break;
+				}
+			}
+		}
+		public int getNum()
+		{
+			return Num;
 		}
 	}
 }
