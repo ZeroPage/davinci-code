@@ -1,6 +1,7 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Game {
+public class Game implements Serializable {
 	private ArrayList<Player> players;
 	private ArrayList<Block> blocks;
 	private GameProcess module;
@@ -162,6 +163,7 @@ public class Game {
 		}
 		public void getBlock(int blockNum) {
 			hand.add(blocks.get(blockNum));
+			hand.get(blockNum).setOwn(true);
 			module.m_NetTaget.SendOb(new DataHeader("바닥의 블럭을 가져감", blocks.get(blockNum)));
 			blocks.remove(blockNum);
 		}
