@@ -134,6 +134,7 @@ public class GameProcess
 		for(int i=0; i<GC.getPlayers().size(); i++)
 			m_GUITaget.update(i);
 		m_GUITaget.CenterUpdate();
+		GC.setModule(this);
 	}
 	public void setPlayOrder(int n)
 	{
