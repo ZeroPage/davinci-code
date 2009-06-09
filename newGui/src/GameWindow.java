@@ -235,7 +235,7 @@ class GameWindow
 		JPanel m_Panel;
 		int m_WindowNum;
 		int m_PlayerNum;
-		final int Size = 150;
+		final int Size = 100;
 		
 		protected PlayerWindow()
 		{
