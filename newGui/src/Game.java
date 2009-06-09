@@ -15,7 +15,10 @@ public class Game implements Serializable {
 		setBlocks();
 		mixBlocks(blocks);
 	}
-
+	public void setModule(GameProcess module)
+	{
+		this.module = module;
+	}
 	public void setPlayers(int n) {
 		Player[] p = new Player[n];
 		for(int i=0; i<n; i++)
