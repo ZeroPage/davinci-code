@@ -233,6 +233,7 @@ public class Game implements Serializable {
 			if(hand.get(selectedBlock).getNum() == num) {
 				hand.get(selectedBlock).setOpen(true);
 				module.m_NetTaget.SendOb(new DataHeader("game2", new GameData(module.GC)));
+				module.m_GUITaget.update();
 				isPlay();
 				return true;
 			}
