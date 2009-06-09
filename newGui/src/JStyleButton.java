@@ -14,9 +14,8 @@ public class JStyleButton extends JButton
 	{
 		super(image);
 		setDisabledIcon(image);
-		initalButton();
 		this.setSize(image.getIconWidth(), image.getIconHeight());
-		this.setEnabled(false);
+		initalButton();
 	}
 	private void initalButton()
 	{
@@ -26,6 +25,8 @@ public class JStyleButton extends JButton
 		this.setFocusPainted(false);//선택됬을때 주변의 점선표시
 		//this.setMargin(new Insets(3,3,3,3));//주변에 여유분 주기
 		this.setOpaque(false);
+		
+		this.setEnabled(false);
 	}
 	public void setIcon(Icon defaultIcon)
 	{
