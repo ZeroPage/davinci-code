@@ -123,12 +123,12 @@ public class GameProcess
 		//어떤 숫자인지 알아야한다.
 		//네트워크에 물어보는 내용을 전송한다.
 		GC.getPlayers().get(playOrder).askBlock(playerNum, index, num);
-		m_NetTaget.SendOb(new DataHeader("game2", new GameData(GC)));
 	}
 	
 	public void Next()
 	{
 		//다음 플레이어에게 턴을 넘겨준다. 게임 윈도우의 모든 입력은 블록 처리 되어 있으므로 자동으로 대기상태가 된다. 
+		m_NetTaget.SendOb(new DataHeader("game2", new GameData(GC)));
 		m_NetTaget.SendOb(new DataHeader("pass", ((Integer.valueOf((playOrder+1))%(GC.getPlayers().size())))));
 	}
 	public void End()

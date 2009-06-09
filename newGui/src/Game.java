@@ -212,12 +212,11 @@ public class Game implements Serializable {
 			//sortBlock(getHand(), 0, hand.size()-1);
 
 		public void askBlock(int selectedPlayer, int selectedBlock, int selectedNum) {		
-			
-			
+				
 			if(players.get(selectedPlayer).checkBlock(selectedBlock, selectedNum))
 			{
 				module.m_NetTaget.SendChatMsg("정답입니다.");
-				if(JOptionPane.showConfirmDialog(null, "계속하시겠습니까?", "확인",JOptionPane.YES_NO_OPTION)==0)
+				if(JOptionPane.showConfirmDialog(null, "빙고! 계속하시겠습니까?", "확인",JOptionPane.YES_NO_OPTION)==0)
 					module.AskBlock();
 				else
 					module.Next();
@@ -226,6 +225,7 @@ public class Game implements Serializable {
 			{
 				module.m_NetTaget.SendChatMsg("오답입니다.");
 				last.setOpen(true);
+				module.Next();
 			}
 		}
 		public boolean checkBlock(int selectedBlock, int num) {
