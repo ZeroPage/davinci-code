@@ -76,6 +76,7 @@ public class Client extends Network
 			inOb = new ObjectInputStream(connection.getInputStream());
 		}
 		public void close() {
+			stop();
 			try
 			{
 				inOb.close();
