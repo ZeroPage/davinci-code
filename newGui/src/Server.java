@@ -176,6 +176,8 @@ public class Server extends Network
 					m_Game.setGC((Game)data.getData());
 					//return;
 			}
+			if(head.equals("game2"))
+				m_Game.setGC((GameData)data.getData());
 			if(head.equals("pass"))
 				if(m_Game.getPlayOrder() == ((Integer)data.getData()).intValue())
 					m_Game.turn();
