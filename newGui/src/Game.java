@@ -7,7 +7,8 @@ public class Game implements Serializable {
 	ArrayList<Player> players;
 	ArrayList<Block> blocks;
 	transient private GameProcess module;
-	
+	Block bJoker;
+	Block wJoker;
 	Game(GameProcess pro,  int n)
 	{
 		module = pro;
@@ -35,8 +36,16 @@ public class Game implements Serializable {
 		for(int i=0; i<26; i++)
 		{
 			b[i] = new Block(((i<13) ? 0 : 1), i%13);
-			if(i==12||i==25)
-				b[i].setNum(-1);
+			if(i==12)
+			{
+				bJoker = b[i];
+				bJoker.setNum(-1);
+			}
+			else if(i==25)
+			{
+				wJoker = b[i];
+				wJoker.setNum(-1);
+			}
 			blocks.add(b[i]);
 		}
 	}
@@ -117,9 +126,7 @@ public class Game implements Serializable {
 		private boolean play;//플레이여부를 결정
 		private int loh = -5;//핸드의 가장 왼쪽 숫자.기본값은 범위 밖
 		private int roh = 15;//핸드의 가장 오른쪽 숫자.기본값은 범위 밖
-		private boolean isBjoker = false;//블랙조커 소유 여부
-		private boolean isWjoker = false;//화이트조커 소유 여부
-		private boolean isJoker = isBjoker&isWjoker;//조커 소유여부
+		private int isJoker = -1;//조커 소유여부. 기본값-1은 조커가 없을때, 0은 블랙, 1은 화이트 조커가 있을때
 		Player() {
 			hand = new ArrayList<Block>();
 			play = true;
@@ -136,11 +143,15 @@ public class Game implements Serializable {
 		public void setRoh(int n) {
 			roh = n;
 		}
-		public void setIsbjoker(boolean n) {
+		/*public void setIsbjoker(boolean n) {
 			isBjoker = n;
 		}
 		public void setIswjoker(boolean n) {
 			isWjoker = n;
+		}*/
+		public void setIsjoker(int n)
+		{
+			isJoker = n;
 		}
 		public ArrayList<Block> getHand() {
 			return hand;
@@ -154,13 +165,13 @@ public class Game implements Serializable {
 		public int getRoh() {
 			return roh;
 		}
-		public boolean getIsbjoker() {
+		/*public boolean getIsbjoker() {
 			return isBjoker;
 		}
 		public boolean getIswjoker() {
 			return isWjoker;
-		}
-		public boolean getIsjoker() {
+		}*/
+		public int getIsjoker() {
 			return isJoker;
 		}
 		public void selectBlock()
@@ -246,6 +257,7 @@ public class Game implements Serializable {
 					return;
 			}
 			setPlay(false);
+			module.m_NetTaget.SendChatMsg("패가 모두 공개되었습니다.탈락");
 			module.m_NetTaget.SendOb(new DataHeader("game2", new GameData(module.GC)));
 		}
 		public void swapBlock(ArrayList<Block> blocks, int n1, int n2) {

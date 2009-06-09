@@ -61,15 +61,11 @@ public class GameProcess
 		//그다음 상대방에게 블럭을 물어본다.
 		if(GC.getBlocks().get(indexNum).getNum()==-1)
 		{
-			//조커인경우
 			if(GC.getBlocks().get(indexNum).getColor()==0)
-			{
-				GC.getPlayers().get(playOrder).setIsbjoker(true);
-			}
+				GC.getPlayers().get(playOrder).setIsjoker(0);
 			else
-				GC.getPlayers().get(playOrder).setIswjoker(true);
-			//무조건
-
+				GC.getPlayers().get(playOrder).setIsjoker(1);
+			joKer();
 		}
 		GC.getPlayers().get(playOrder).getBlock(indexNum);
 		GC.getPlayers().get(playOrder).sortBlock(0, GC.getPlayers().get(playOrder).getHand().size()-1);
@@ -81,12 +77,28 @@ public class GameProcess
 		m_GUITaget.setCenterEnable(false);
 		m_GUITaget.update(); //테스트차 주석처리
 		//m_NetTaget.SendOb(new DataHeader("game2", new GameData(GC)));
-		if(GC.getPlayers().get(playOrder).getHand().size()<=4)
+		int onlyDraw=4;
+		if(GC.getPlayers().size()==4)
+			onlyDraw=3;
+		if(GC.getPlayers().get(playOrder).getHand().size()<=onlyDraw)
 		{
 			Next();
 		}
 		else
 			AskBlock();
+	}
+	public void joKer()
+	{
+		m_GUITaget.setEnable(playOrder, true);
+	}
+	public void joKer(int indexNum)
+	{
+		if(GC.getPlayers().get(playOrder).getIsjoker()==0)
+			GC.getPlayers().get(playOrder).getHand().add(indexNum,GC.bJoker);
+		else if(GC.getPlayers().get(playOrder).getIsjoker()==1)
+			GC.getPlayers().get(playOrder).getHand().add(indexNum,GC.wJoker);
+		else
+			return;
 	}
 	public Block[] GetBlocksState(int playerNum)
 	{
