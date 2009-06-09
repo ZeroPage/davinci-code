@@ -171,9 +171,9 @@ public class Server extends Network
 				m_Taget.AddChatString((String)data.getData());
 			if(head.equals("game"))
 			{
-				//if(m_Game.GC == null || !m_Game.GC.equals((Game)data.getData()))
+				if(m_Game.GC == null || !m_Game.GC.equals((Game)data.getData()))
 					m_Game.setGC((Game)data.getData());
-					return;
+					//return;
 			}
 			if(head.equals("pass"))
 				if(m_Game.getPlayOrder() == ((Integer)data.getData()).intValue())

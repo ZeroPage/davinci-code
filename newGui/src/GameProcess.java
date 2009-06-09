@@ -58,10 +58,10 @@ public class GameProcess
 		//Gui에서는 블럭배열을 받은뒤 블럭을 바꾸어 준다.
 		//그다음 상대방에게 블럭을 물어본다.
 		GC.getPlayers().get(playOrder).getBlock(indexNum);
+		m_NetTaget.SendOb(new DataHeader("game", GC));
 		m_GUITaget.setCenterEnable(false);
 		m_GUITaget.update(playOrder);
 		m_GUITaget.CenterUpdate();
-		m_NetTaget.SendOb(new DataHeader("game", GC));
 		if(GC.getPlayers().get(playOrder).getHand().size()<=4)
 		{
 			Next();
