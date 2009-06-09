@@ -200,4 +200,16 @@ public class Server extends Network
 	{
 		return true;
 	}
+	public void SendOrder()
+	{
+		int temp = 0;
+		for(int i=0; i<clientNum; i++)
+			if(clients[i].getConnect().isConnected())
+			{
+				SendOb(new DataHeader("서버-네순서", Integer.valueOf(temp)));
+				temp++;
+				break;
+			}
+	}
+}
 }

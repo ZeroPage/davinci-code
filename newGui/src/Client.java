@@ -98,6 +98,8 @@ public class Client extends Network
 			if(head.equals("pass"))
 				if(m_Game.getPlayOrder() == ((Integer)data.getData()).intValue())
 					m_Game.turn();
+			if(head.equals("서버-네순서"))
+				m_Game.setPlayOrder(((Integer)data.getData()).intValue());
 		}
 		public void run()
 		{

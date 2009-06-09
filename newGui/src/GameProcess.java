@@ -24,6 +24,7 @@ public class GameProcess
 	public void Start()
 	{
 		GC = new Game(this, ((Server)m_NetTaget).clientNum+1);
+		((Server)m_NetTaget).SendOrder();
 		m_NetTaget.SendOb(new DataHeader("game", GC));
 		turn();
 		Next();
