@@ -61,8 +61,8 @@ class GameWindow
 	public void setEnable(int playerNum, boolean state)
 	{
 		//플레이어 넘버와 화면번호의 매칭
-		Block [] card = Process.GetBlocksState(playerNum);
-		players[NumfPtW(playerNum)].setEnable(state);//0이 아래 부터 시계방향 순서대로
+		//Block [] card = Process.GetBlocksState(playerNum);
+		players[playerNum].setEnable(state);//0이 아래 부터 시계방향 순서대로
 	}
 	public void setCenterEnable(boolean state)
 	{
@@ -85,7 +85,7 @@ class GameWindow
 		//플레이어 넘버를 받고 그 번호의 플레이어를 즉시 업데이트 한다
 		//센터는 updateCenter를 쓴다.
 		Block [] state = Process.GetBlocksState(PlayerNum);
-		players[NumfPtW(PlayerNum)].update(state);
+		players[PlayerNum].update(state);
 	}
 	public void CenterUpdate()
 	{
@@ -94,21 +94,14 @@ class GameWindow
 	}
 	private int NumfPtW(int PlayerNum)
 	{
-		if(PlayerNum < 4)
-		{
 			PlayerNum += 4 - Process.playOrder;
-			PlayerNum = PlayerNum % 4;
+			PlayerNum = PlayerNum % Process.GC.getPlayers().size();
 			return PlayerNum;
-		}
-		else
-		{
-			return 4; 	
-		}
 	}
 	private int NumfWtP(int WindowNum)
 	{
 		WindowNum += Process.playOrder;
-		WindowNum = WindowNum % 4;
+		WindowNum = WindowNum % Process.GC.getPlayers().size();
 		return WindowNum;
 	}
 	public void strat()
@@ -119,7 +112,6 @@ class GameWindow
 			players[i] = new PlayerWindow(i);
 		}
 		Center = new NPC();
-		
 		//채팅창에 있는 게임 시작 버튼의 동작을  받기위한 것.
 		if(Process.m_NetTaget.isServer())
 		{
@@ -130,12 +122,14 @@ class GameWindow
 			JOptionPane.showMessageDialog(null, "방장이 아닙니다.","알림", 2);
 		}
 		
+		
 	}
 	class PlayerWindow implements ActionListener
 	{
 		JButton [] m_Card;
 		JPanel m_Panel;
 		int m_WindowNum;
+		final int Size = 150;
 		
 		protected PlayerWindow()
 		{
@@ -147,10 +141,9 @@ class GameWindow
 			FlowLayout layout = new FlowLayout(FlowLayout.CENTER,-1,-1);
 			m_Panel.setLayout(layout);
 			m_Card = new JButton[13];
-			m_WindowNum = NumfPtW(PlayerNum);
 			String lo = "";
-			int Size = 150;
-			switch(NumfPtW(PlayerNum))
+			m_WindowNum = PlayerNum;
+			switch(PlayerNum)
 			{
 				case 0:
 					lo = BorderLayout.SOUTH;
@@ -194,7 +187,7 @@ class GameWindow
 					m_Card[i] = new JStyleButton();
 					m_Card[i].addActionListener(this);
 					m_Panel.add(m_Card[i]);
-					SetButtonLocation(m_Card[i], i);
+					//SetButtonLocation(m_Card[i], i);
 					m_Card[i].setMargin(new Insets(0,0,0,0));//마법의 한구문.. 플로우레이아웃이 먹는다.
 				}
 				if(State[i].getColor() == 0)
@@ -244,6 +237,7 @@ class GameWindow
 				if(e.getSource() == m_Card[i])
 				{
 					//선택되면 상대방의 패를 물어보는 것이기 때문에 askblock을 호출한다.
+					Process.AskBlock(m_WindowNum, i,Integer.parseInt(JOptionPane.showInputDialog("몇번일까?")));
 					break;
 				}
 			}
