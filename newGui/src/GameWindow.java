@@ -314,19 +314,17 @@ class GameWindow
 		
 		public void setEnable(Block [] Card, boolean state)
 		{
+			//NPC에 같은 함수 가팅 변경해야 함
 			for(int i = 0; m_Card[i] != null; i++)
 			{
 				//배열정보 얻어와서 열려진것은 선택 안되도록 해야함.
 				m_Card[i].setEnabled(state);
 				m_Card[i].setRolloverEnabled(state);
 				
-				if(i < Card.length)
+				if(Card[i].getOpen())
 				{
-					if(Card[i].getOpen())
-					{
-						m_Card[i].setEnabled(false);
-						m_Card[i].setRolloverEnabled(false);
-					}
+					m_Card[i].setEnabled(false);
+					m_Card[i].setRolloverEnabled(false);
 				}
 			}
 		}
@@ -420,6 +418,17 @@ class GameWindow
 				//m_Card[i].removeAll();
 				m_Panel.remove(m_Card[i]);
 				m_Panel.repaint();
+			}
+		}
+		@Override
+		public void setEnable(Block[] Card, boolean state)
+		{
+			//위의 플레이어 윈도우와 같이 변경해야함. 
+			for(int i = 0; m_Card[i] != null; i++)
+			{
+				//배열정보 얻어와서 열려진것은 선택 안되도록 해야함.
+				m_Card[i].setEnabled(state);
+				m_Card[i].setRolloverEnabled(state);
 			}
 		}
 		public void actionPerformed(ActionEvent e)
