@@ -49,7 +49,8 @@ public class DavichiGUI extends JFrame
 		//화면 띄우기
 		//로비화면 띄우기* -> lobbywindow 클래스 생성
 		//게임화면 띄우기 -> Roomwindow 클래스 생성
-		RW = new RoomWindow((JPanel)this.getContentPane());
+		LW = new LobbyWindow((JPanel)this.getContentPane());
+		//RW = new RoomWindow((JPanel)this.getContentPane());
 		this.addWindowListener(new MainWindowListener());
 	}
 	class RoomWindow extends mWindow
@@ -63,7 +64,19 @@ public class DavichiGUI extends JFrame
 			JPanel_Room = new JPanel();
 			JPanel_Room.setLayout(new BorderLayout());
 			CW = new ChatWindow(JPanel_Room);
-			ConnetDlg CD = new ConnetDlg(this);
+			//ConnetDlg CD = new ConnetDlg(this);
+			CW.SetButton(NC.isServer());
+			GW = new GameWindow(JPanel_Room, NC);
+			
+			main.add(BorderLayout.CENTER, JPanel_Room);
+		}
+		public RoomWindow(JPanel main, Network n)
+		{			
+			JPanel_Room = new JPanel();
+			JPanel_Room.setLayout(new BorderLayout());
+			CW = new ChatWindow(JPanel_Room);
+			NC = n;
+			//ConnetDlg CD = new ConnetDlg(this);
 			CW.SetButton(NC.isServer());
 			GW = new GameWindow(JPanel_Room, NC);
 			
@@ -190,7 +203,7 @@ public class DavichiGUI extends JFrame
 		
 		LobbyWindowLisener Lisener = new LobbyWindowLisener();
 		
-		public LobbyWindow()
+		public LobbyWindow(JPanel main)
 		{
 			JPanel_Lobby = new JPanel()
 			{
@@ -203,7 +216,6 @@ public class DavichiGUI extends JFrame
 				}
 			};
 			
-			
 			JPanel JPanel_Connect = new JPanel();
 			JPanel_Connect.setOpaque(false);
 			JPanel_Connect.setPreferredSize(new Dimension(380,300));
@@ -211,7 +223,6 @@ public class DavichiGUI extends JFrame
 			JPanel_Connect.setLayout(null);
 			JPanel_Connect.setBounds(30, 350, 380, 300);
 			JPanel_Connect.setOpaque(false);
-			
 			
 			JLabel temp = new JLabel("닉네임");
 			temp.setForeground(Color.red);
@@ -270,6 +281,9 @@ public class DavichiGUI extends JFrame
 			
 			JPanel_Lobby.add(JPanel_Connect);
 			JTF_Nick.requestFocus();
+			
+			JPanel_Lobby.add(JPanel_Connect);
+			main.add(JPanel_Lobby);
 		}
 		class LobbyWindowLisener implements ActionListener, ItemListener
 		{
@@ -295,6 +309,13 @@ public class DavichiGUI extends JFrame
 					TagetNetwork.setM_Name(JTF_Nick.getText());
 					TagetNetwork.setPortNum(Integer.parseInt(JTF_Port.getText()));
 					TagetNetwork.Connect(JTF_IPAdress.getText());
+					//룸윈도우 생성하고 네트워크와 연결.
+					RW = new RoomWindow((JPanel) getRootPane().getContentPane(), TagetNetwork);
+					RW.setNetwork(TagetNetwork);
+					TagetNetwork.m_Taget = RW;
+					
+					LW.JPanel_Lobby.setVisible(false);
+					RW.JPanel_Room.setVisible(true);
 					if(TagetNetwork.isServer())
 					{
 						TagetNetwork.SendChatMsg("서버를 개설하였습니다,");
