@@ -2,8 +2,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Game implements Serializable {
-	 ArrayList<Player> players;
-	 ArrayList<Block> blocks;
+	ArrayList<Player> players;
+	ArrayList<Block> blocks;
 	transient private GameProcess module;
 	
 	Game(GameProcess pro,  int n)
