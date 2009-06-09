@@ -25,8 +25,8 @@ class GameWindow
 	
 	ImageIcon [] ImageCardBlack = new ImageIcon[13];
 	ImageIcon [] ImageCardWhite = new ImageIcon[13];
-	ImageIcon [] ImageCardBlackRollover = new ImageIcon[13];
-	ImageIcon [] ImageCardWhiteRollover = new ImageIcon[13];
+	ImageIcon [] ImageCardBlackOpen = new ImageIcon[13];
+	ImageIcon [] ImageCardWhiteOpen = new ImageIcon[13];
 	ImageIcon ImageCardBlackUnknown;
 	ImageIcon ImageCardWhiteUnknown;
 	ImageIcon ImageCardBlackUnknownRollerover;
@@ -54,9 +54,9 @@ class GameWindow
 		for(int i = 0; i < 13; i++)
 		{
 			ImageCardBlack[i] = new ImageIcon(DavichiGUI.class.getResource("card/b"+i+".gif"));
-			ImageCardBlackRollover[i] = new ImageIcon(DavichiGUI.class.getResource("card/b"+i+"r.gif"));
+			ImageCardBlackOpen[i] = new ImageIcon(DavichiGUI.class.getResource("card/b"+i+"r.gif"));
 			ImageCardWhite[i] = new ImageIcon(DavichiGUI.class.getResource("card/w"+i+".gif"));
-			ImageCardWhiteRollover[i] = new ImageIcon(DavichiGUI.class.getResource("card/w"+i+"r.gif"));
+			ImageCardWhiteOpen[i] = new ImageIcon(DavichiGUI.class.getResource("card/w"+i+"r.gif"));
 		}
 		ImageCardBlackUnknown = new ImageIcon(DavichiGUI.class.getResource("card/bu.gif"));
 		ImageCardWhiteUnknown = new ImageIcon(DavichiGUI.class.getResource("card/wu.gif"));
@@ -350,8 +350,14 @@ class GameWindow
 				{
 					if(State[i].getOpen() || State[i].getOwn())
 					{
-						m_Card[i].setIcon(ImageCardBlack[num]);
-						m_Card[i].setRolloverIcon(ImageCardBlackRollover[num]);
+						if(State[i].getOpen())
+						{
+							m_Card[i].setRolloverIcon(ImageCardBlackOpen[num]);
+						}
+						else
+						{
+							m_Card[i].setIcon(ImageCardBlack[num]);
+						}
 					}
 					else
 					{
@@ -364,9 +370,14 @@ class GameWindow
 				{
 					if(State[i].getOpen() || State[i].getOwn())
 					{
-						
-						m_Card[i].setIcon(ImageCardWhite[num]);
-						m_Card[i].setRolloverIcon(ImageCardWhiteRollover[num]);
+						if(State[i].getOpen())
+						{
+							m_Card[i].setIcon(ImageCardWhiteOpen[num]);
+						}
+						else
+						{
+							m_Card[i].setIcon(ImageCardWhite[num]);
+						}
 					}
 					else
 					{
