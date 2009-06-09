@@ -223,7 +223,6 @@ public class Server extends Network
 					e.printStackTrace();
 				}
 				temp++;
-				break;
 			}
 	}
 }
