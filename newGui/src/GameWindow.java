@@ -128,11 +128,16 @@ class GameWindow
 				{
 					PlayerNumToWindowNum[0] = 0;
 					PlayerNumToWindowNum[1] = 2;
+					PlayerPane[0].m_PlayerNum = 0;
+					PlayerPane[2].m_PlayerNum = 1;
+					
 				}
 				else
 				{
 					PlayerNumToWindowNum[0] = 2;
 					PlayerNumToWindowNum[1] = 0;
+					PlayerPane[2].m_PlayerNum = 0;
+					PlayerPane[0].m_PlayerNum = 1;
 				}
 				break;
 			case 3:
@@ -141,18 +146,27 @@ class GameWindow
 					PlayerNumToWindowNum[0] = 0;
 					PlayerNumToWindowNum[1] = 1;
 					PlayerNumToWindowNum[2] = 3;
+					PlayerPane[0].m_PlayerNum = 0;
+					PlayerPane[1].m_PlayerNum = 1;
+					PlayerPane[3].m_PlayerNum = 2;
 				}
 				else if(Process.playOrder == 1)
 				{
 					PlayerNumToWindowNum[0] = 3;
 					PlayerNumToWindowNum[1] = 0;
 					PlayerNumToWindowNum[2] = 1;
+					PlayerPane[3].m_PlayerNum = 0;
+					PlayerPane[0].m_PlayerNum = 1;
+					PlayerPane[1].m_PlayerNum = 2;
 				}
 				else if(Process.playOrder == 2)
 				{
 					PlayerNumToWindowNum[0] = 1;
 					PlayerNumToWindowNum[1] = 3;
 					PlayerNumToWindowNum[2] = 0;
+					PlayerPane[1].m_PlayerNum = 0;
+					PlayerPane[3].m_PlayerNum = 1;
+					PlayerPane[0].m_PlayerNum = 2;
 				}
 				break;
 			case 4:
@@ -162,6 +176,10 @@ class GameWindow
 					PlayerNumToWindowNum[1] = 1;
 					PlayerNumToWindowNum[2] = 2;
 					PlayerNumToWindowNum[3] = 3;
+					PlayerPane[0].m_PlayerNum = 0;
+					PlayerPane[1].m_PlayerNum = 1;
+					PlayerPane[2].m_PlayerNum = 2;
+					PlayerPane[3].m_PlayerNum = 3;
 				}
 				else if(Process.playOrder == 1)
 				{
@@ -169,6 +187,10 @@ class GameWindow
 					PlayerNumToWindowNum[1] = 0;
 					PlayerNumToWindowNum[2] = 1;
 					PlayerNumToWindowNum[3] = 2;
+					PlayerPane[3].m_PlayerNum = 0;
+					PlayerPane[0].m_PlayerNum = 1;
+					PlayerPane[1].m_PlayerNum = 2;
+					PlayerPane[2].m_PlayerNum = 3;
 				}
 				else if(Process.playOrder == 2)
 				{
@@ -176,6 +198,10 @@ class GameWindow
 					PlayerNumToWindowNum[1] = 3;
 					PlayerNumToWindowNum[2] = 0;
 					PlayerNumToWindowNum[3] = 1;
+					PlayerPane[2].m_PlayerNum = 0;
+					PlayerPane[3].m_PlayerNum = 1;
+					PlayerPane[0].m_PlayerNum = 2;
+					PlayerPane[1].m_PlayerNum = 3;
 				}
 				else if(Process.playOrder == 3)
 				{
@@ -183,6 +209,10 @@ class GameWindow
 					PlayerNumToWindowNum[1] = 2;
 					PlayerNumToWindowNum[2] = 3;
 					PlayerNumToWindowNum[3] = 0;
+					PlayerPane[1].m_PlayerNum = 0;
+					PlayerPane[2].m_PlayerNum = 1;
+					PlayerPane[3].m_PlayerNum = 2;
+					PlayerPane[0].m_PlayerNum = 3;
 				}
 				break;
 		}
