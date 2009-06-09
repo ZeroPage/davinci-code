@@ -26,6 +26,8 @@ class GameWindow
 	
 	GameProcess Process;
 	
+	int [] PlayerNumToWindowNum; 
+	
 	public GameWindow(JPanel main, Network n)
 	{
 		JPanel_Main = new JPanel()
@@ -66,7 +68,7 @@ class GameWindow
 	public void setEnable(int playerNum, boolean state)
 	{
 		//플레이어 넘버와 화면번호의 매칭
-		PlayerPane[playerNum].setEnable(state);//0이 아래 부터 시계방향 순서대로
+		PlayerPane[PlayerNumToWindowNum[playerNum]].setEnable(state);//0이 아래 부터 시계방향 순서대로
 	}
 	public void setCenterEnable(boolean state)
 	{
@@ -88,7 +90,7 @@ class GameWindow
 		//플레이어 넘버를 받고 그 번호의 플레이어를 즉시 업데이트 한다
 		//센터는 updateCenter를 쓴다.
 		Block [] state = Process.GetBlocksState(PlayerNum);
-		PlayerPane[PlayerNum].update(state);
+		PlayerPane[PlayerNumToWindowNum[PlayerNum]].update(state);
 	}
 	public void CenterUpdate()
 	{
@@ -102,6 +104,11 @@ class GameWindow
 		if(Process.m_NetTaget.isServer())
 		{
 			Process.Start();
+			PlayerNumToWindowNum = new int[Process.getPlayerNum()];
+			for(int i = 0; i < PlayerNumToWindowNum.length; i++)
+			{
+				PlayerNumToWindowNum[i] = (Process.playOrder + i )%4;
+			}
 			Process.turn();
 		}
 		else
