@@ -470,7 +470,10 @@ class GameWindow
 		}
 		public int getNum()
 		{
-			System.out.print(Num);
+			if(Num == 12)
+			{
+				Num = -1;
+			}
 			return Num;
 		}
 	}
