@@ -61,6 +61,7 @@ class GameWindow
 		main.add(JPanel_Main);
 		
 		Process = new GameProcess(this, n);
+		n.setM_Game(Process);
 	}
 	public void setEnable(int playerNum, boolean state)
 	{
