@@ -140,7 +140,7 @@ public class GameProcess
 	public void Next()
 	{
 		//다음 플레이어에게 턴을 넘겨준다. 게임 윈도우의 모든 입력은 블록 처리 되어 있으므로 자동으로 대기상태가 된다. 
-		m_NetTaget.SendOb(new DataHeader("game2", new GameData(GC)));
+		//m_NetTaget.SendOb(new DataHeader("game2", new GameData(GC)));
 		for(int i=0;i<GC.getPlayers().size();i++)
 			m_GUITaget.setEnable(i, false);
 		m_GUITaget.setCenterEnable(false);
