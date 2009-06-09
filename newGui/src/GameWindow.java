@@ -242,7 +242,7 @@ class GameWindow
 			{
 				//m_Card[i].removeAll();
 				m_Panel.remove(m_Card[i]);
-				//어느쪽이지 제거하는거?
+				m_Panel.repaint();
 			}
 		}
 		public void actionPerformed(ActionEvent e)
