@@ -48,6 +48,7 @@ public class Client extends Network
 		try
 		{
 			outOb.writeObject(ob);
+			outOb.flush();
 		} catch (IOException e)
 		{
 			// TODO Auto-generated catch block
@@ -94,7 +95,8 @@ public class Client extends Network
 			if(head.equals("chat"))
 				m_Taget.AddChatString((String)data.getData());
 			if(head.equals("game"))
-				m_Game.setGC((Game)data.getData());
+				//if(m_Game.GC == null || !m_Game.GC.equals((Game)data.getData()))
+					m_Game.setGC((Game)data.getData());
 			if(head.equals("pass"))
 				if(m_Game.getPlayOrder() == ((Integer)data.getData()).intValue())
 					m_Game.turn();
@@ -111,7 +113,6 @@ public class Client extends Network
 				try
 				{
 					dataEvent((DataHeader)inOb.readObject());
-
 				} catch (IOException e)
 				{
 					close();

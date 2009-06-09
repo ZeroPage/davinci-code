@@ -93,6 +93,7 @@ public class Server extends Network
 		public void SendOb(Object ob) throws IOException
 		{
 			outOb.writeObject(ob);
+			outOb.flush();
 		}
 		public void close() throws IOException
 		{
@@ -169,7 +170,11 @@ public class Server extends Network
 			if(head.equals("chat"))
 				m_Taget.AddChatString((String)data.getData());
 			if(head.equals("game"))
-				m_Game.setGC((Game)data.getData());
+			{
+				//if(m_Game.GC == null || !m_Game.GC.equals((Game)data.getData()))
+					m_Game.setGC((Game)data.getData());
+					return;
+			}
 			if(head.equals("pass"))
 				if(m_Game.getPlayOrder() == ((Integer)data.getData()).intValue())
 					m_Game.turn();
