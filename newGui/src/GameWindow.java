@@ -298,12 +298,17 @@ class GameWindow
 					//SetButtonLocation(m_Card[i], i);
 					m_Card[i].setMargin(new Insets(0,0,0,0));//마법의 한구문.. 플로우레이아웃이 먹는다.
 				}
+				int num = State[i].getNum();
+				if(num < 0)
+				{
+					num = 12;
+				}
 				if(State[i].getColor() == 0)
 				{
 					if(State[i].getOpen() || State[i].getOwn())
 					{
-						m_Card[i].setIcon(ImageCardBlack[State[i].getNum()]);
-						m_Card[i].setRolloverIcon(ImageCardBlackRollover[State[i].getNum()]);
+						m_Card[i].setIcon(ImageCardBlack[num]);
+						m_Card[i].setRolloverIcon(ImageCardBlackRollover[num]);
 					}
 					else
 					{
@@ -315,8 +320,9 @@ class GameWindow
 				{
 					if(State[i].getOpen() || State[i].getOwn())
 					{
-						m_Card[i].setIcon(ImageCardWhite[State[i].getNum()]);
-						m_Card[i].setRolloverIcon(ImageCardWhiteRollover[State[i].getNum()]);
+						
+						m_Card[i].setIcon(ImageCardWhite[num]);
+						m_Card[i].setRolloverIcon(ImageCardWhiteRollover[num]);
 					}
 					else
 					{
