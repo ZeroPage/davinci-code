@@ -53,6 +53,13 @@ class GameWindow
 		ImageCardBlackUnknown = new ImageIcon(DavichiGUI.class.getResource("card/bu.gif"));
 		ImageCardWhiteUnknown = new ImageIcon(DavichiGUI.class.getResource("card/wu.gif"));
 		
+		//플레이어 와 NPC패널의 설정
+		for(int i = 0; i < 4; i++)
+		{
+			players[i] = new PlayerWindow(i);
+		}
+		Center = new NPC();
+		
 		main.add(JPanel_Main);
 		
 		Process = new GameProcess(this, n);
@@ -106,12 +113,7 @@ class GameWindow
 	}
 	public void strat()
 	{
-		//플레이어 와 NPC패널의 설정
-		for(int i = 0; i < 4; i++)
-		{
-			players[i] = new PlayerWindow(i);
-		}
-		Center = new NPC();
+		
 		//채팅창에 있는 게임 시작 버튼의 동작을  받기위한 것.
 		if(Process.m_NetTaget.isServer())
 		{
