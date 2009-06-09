@@ -252,7 +252,7 @@ class GameWindow
 		{
 			super();
 			m_Panel = new JPanel();
-			m_PlayerNum = 5;
+			m_WindowNum = 5;
 			m_Card = new JButton[27];
 			JPanel_Main.add(BorderLayout.CENTER, m_Panel);
 			m_Panel.setOpaque(false);
