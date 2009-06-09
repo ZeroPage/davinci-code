@@ -113,7 +113,8 @@ class GameWindow
 		}
 		else
 		{
-			JOptionPane.showMessageDialog(null, "방장이 아닙니다.","알림", 2);
+			update();
+			//JOptionPane.showMessageDialog(null, "방장이 아닙니다.","알림", 2);
 		}
 	}
 	class PlayerWindow implements ActionListener
