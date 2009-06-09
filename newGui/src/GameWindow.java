@@ -32,7 +32,7 @@ class GameWindow
 	{
 		JPanel_Main = new JPanel()
 		{
-			ImageIcon BG = new ImageIcon(DavichiGUI.class.getResource("board2.jpg"));
+			ImageIcon BG = new ImageIcon(DavichiGUI.class.getResource("board.jpg"));
 			public void paint(Graphics g)
 			{
 				g.drawImage(BG.getImage(), 0, 0, BG.getIconWidth(), BG.getIconHeight(), null);
