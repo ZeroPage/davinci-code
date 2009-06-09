@@ -5,7 +5,7 @@ public class GameData implements Serializable
 {
 	Block[] floor;
 	Block[][] p;
-
+	
 	public GameData(Game gc)
 	{
 		floor = new Block[gc.blocks.size()];

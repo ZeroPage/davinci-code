@@ -94,7 +94,6 @@ public class Server extends Network
 		{
 			outOb.writeObject(ob);
 			outOb.flush();
-			outOb.flush();
 		}
 		public void close() throws IOException
 		{
