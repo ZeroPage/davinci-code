@@ -104,12 +104,7 @@ class GameWindow
 		if(Process.m_NetTaget.isServer())
 		{
 			Process.Start();
-			
-			PlayerNumToWindowNum = new int[Process.getPlayerNum()];
-			for(int i = 0; i < PlayerNumToWindowNum.length; i++)
-			{
-				PlayerNumToWindowNum[i] = (i - Process.playOrder + PlayerNumToWindowNum.length)%PlayerNumToWindowNum.length;
-			}
+			Setting(Process.getPlayerNum());
 			Process.turn();
 		}
 		else
@@ -186,6 +181,21 @@ class GameWindow
 				}
 				break;
 		}
+	}
+	public void JokerInput(int [] intdex)
+	{
+		
+	}
+	class JokerWindow implements ActionListener
+	{
+
+		@Override
+		public void actionPerformed(ActionEvent e)
+		{
+			// TODO Auto-generated method stub
+			
+		}
+		
 	}
 	class PlayerWindow implements ActionListener
 	{
