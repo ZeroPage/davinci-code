@@ -320,19 +320,26 @@ public class DavichiGUI extends JFrame
 				{
 					//서버
 					TagetNetwork = new Server();
-					TagetChat.AddChatString("서버가 개설되었습니다.");
 				}
 				else
 				{
 					//클라
 					TagetNetwork = new Client();
-					TagetNetwork.SendChatMsg("접속하였습니다.");
 				}
 				TagetNetwork.setM_Name(JTF_Nick.getText());
 				TagetNetwork.setM_Taget(TagetChat);
 				TagetNetwork.setPortNum(Integer.parseInt(JTF_Port.getText()));
 				TagetNetwork.Connect(JTF_IPAdress.getText());
 				TagetChat.setNetwork(TagetNetwork);
+				if(TagetNetwork.isServer())
+				{
+					TagetNetwork.SendChatMsg("서버를 개설하였습니다,");
+				}
+				else
+				{
+					TagetNetwork.SendChatMsg("접속하였습니다.");
+				}
+				
 				this.setVisible(false);
 			}
 			if(event.getSource() == JB_Cancel)
