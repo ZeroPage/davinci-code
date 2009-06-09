@@ -432,9 +432,11 @@ class GameWindow
 				if(e.getSource() == JB_Num[i])
 				{
 					Num = i;
+					setVisible(false);
 					break;
 				}
 			}
+			
 		}
 		public int getNum()
 		{
