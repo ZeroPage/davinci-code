@@ -4,7 +4,7 @@ public class Game {
 	private ArrayList<Player> players;
 	private ArrayList<Block> blocks;
 	private GameProcess module;
-
+	
 	Game(GameProcess pro,  int n)
 	{
 		module = pro;
