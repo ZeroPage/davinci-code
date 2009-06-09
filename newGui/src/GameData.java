@@ -13,7 +13,6 @@ public class GameData implements Serializable
 		
 		p = new Block[gc.players.size()][13];
 		for(int i=0; i<gc.players.size(); i++)
-			for(int j=0; j<gc.players.get(i).hand.size();j++)
-				p[i][j] = gc.players.get(i).hand.get(j);
+			gc.players.get(i).hand.toArray(p[i]);
 	}
 }
