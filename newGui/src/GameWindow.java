@@ -77,7 +77,7 @@ class GameWindow
 	public void update()
 	{
 		Block [] State;
-		for(int i = 0; i < Process.GC.getPlayers().size(); i++)
+		for(int i = 0; i < Process.GC.getPlayers().size(); i++)//싸이즈 얻어오는거 게임 프로세스에 추가할것
 		{
 			State = Process.GetBlocksState(i);
 			players[i].update(State);
@@ -191,7 +191,7 @@ class GameWindow
 					m_Card[i] = new JStyleButton();
 					m_Card[i].addActionListener(this);
 					m_Panel.add(m_Card[i]);
-					//SetButtonLocation(m_Card[i], i);
+					SetButtonLocation(m_Card[i], i);
 					m_Card[i].setMargin(new Insets(0,0,0,0));//마법의 한구문.. 플로우레이아웃이 먹는다.
 				}
 				if(State[i].getColor() == 0)
@@ -226,6 +226,13 @@ class GameWindow
 				}
 				m_Card[i].setRolloverEnabled(false);
 			}	
+		}
+		private void SetButtonLocation(JButton button, int i)
+		{
+			int row = i / 10;
+			int cal = i % 10;
+			button.setSize(cal * 50, row *72);
+			
 		}
 		public void actionPerformed(ActionEvent e)
 		{
