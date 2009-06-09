@@ -9,7 +9,7 @@ public class GameProcess
 	//gui와 game은 동기화이나 network와의 관계는 적지 않았다. network는 혁수가 적당히 적어주길
 	GameWindow m_GUITaget;
 	Network m_NetTaget;
-	int playOrder; // 자신의 플레이 순서인 모양이다.?
+	int playOrder = 0; // 자신의 플레이 순서인 모양이다.?
 	//next함수를 쓰면 네트워크에서 브로드캐스팅으로 다음 사람을 찾도록 int형 값을 전송한다.
 	//네트워크에서 int를 받아 이 값과 같아 자신의 차례면 turn을 호출하도록 하겠다.
 
@@ -19,7 +19,6 @@ public class GameProcess
 	{
 		m_GUITaget = GUITaget;
 		m_NetTaget = NetTaget;
-		playOrder = 0;
 	}
 	public void Start()
 	{
@@ -57,11 +56,22 @@ public class GameProcess
 		//네트워크에도 그내용을 전송해준다.(가운데에 몇번째 패가 선택되었는지..그게 뭔지..)
 		//Gui에서는 블럭배열을 받은뒤 블럭을 바꾸어 준다.
 		//그다음 상대방에게 블럭을 물어본다.
+		if(GC.getBlocks().get(indexNum).getNum()==-1)
+		{
+			//조커인경우
+			if(GC.getBlocks().get(indexNum).getColor()==0)
+			{
+				GC.getPlayers().get(playOrder).setIsbjoker(true);
+			}
+			else
+				GC.getPlayers().get(playOrder).setIswjoker(true);
+			//무조건
+			
+		}
 		GC.getPlayers().get(playOrder).getBlock(indexNum);
-		m_NetTaget.SendOb(new DataHeader("game", GC));
 		m_GUITaget.setCenterEnable(false);
-		m_GUITaget.update(playOrder);
-		m_GUITaget.CenterUpdate();
+		m_GUITaget.update();
+		m_NetTaget.SendOb(new DataHeader("game", GC));
 		if(GC.getPlayers().get(playOrder).getHand().size()<=4)
 		{
 			Next();

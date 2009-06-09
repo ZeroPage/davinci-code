@@ -170,8 +170,6 @@ public class Game implements Serializable {
 			module.m_NetTaget.SendOb(new DataHeader("바닥의 블럭을 가져감", blocks.get(blockNum)));
 			blocks.remove(blockNum);
 		}
-			//m_Taget.setEnable(true);
-
 			/*if(DC.getBlocks().get(blockNum).getNum()==-1)
 			{
 				if(DC.getBlocks().get(blockNum).getColor()==0)
@@ -257,6 +255,8 @@ public class Game implements Serializable {
 			{
 				for(int j=s;j<e;j++){
 					if(blocks.get(j).getNum()>blocks.get(j+1).getNum())
+						swapBlock(blocks, j, j+1);
+					if(blocks.get(j).getNum()==blocks.get(j+1).getNum()&&blocks.get(j).getColor()==1&&blocks.get(j+1).getColor()==0)
 						swapBlock(blocks, j, j+1);
 				}
 			}
