@@ -199,7 +199,7 @@ public class DavichiGUI extends JFrame
 		
 		Network TagetNetwork;
 		
-		ImageIcon BG = new ImageIcon(DavichiGUI.class.getResource("cover.jpg"));
+		ImageIcon BG = new ImageIcon(DavichiGUI.class.getResource("cover.gif"));
 		
 		LobbyWindowLisener Lisener = new LobbyWindowLisener();
 		
@@ -215,6 +215,9 @@ public class DavichiGUI extends JFrame
 					super.paint(g);
 				}
 			};
+			JPanel_Lobby.setLayout(null);
+			
+			getWindows()[0].setSize(800, 600);
 			
 			JPanel JPanel_Connect = new JPanel();
 			JPanel_Connect.setOpaque(false);
@@ -313,7 +316,7 @@ public class DavichiGUI extends JFrame
 					RW = new RoomWindow((JPanel) getRootPane().getContentPane(), TagetNetwork);
 					RW.setNetwork(TagetNetwork);
 					TagetNetwork.m_Taget = RW;
-					
+					getWindows()[0].setSize(1000,600);
 					LW.JPanel_Lobby.setVisible(false);
 					RW.JPanel_Room.setVisible(true);
 					if(TagetNetwork.isServer())
@@ -324,7 +327,6 @@ public class DavichiGUI extends JFrame
 					{
 						TagetNetwork.SendChatMsg("접속하였습니다.");
 					}
-					
 				}
 				if(event.getSource() == JB_Cancel)
 				{
@@ -346,7 +348,6 @@ public class DavichiGUI extends JFrame
 						JTF_IPAdress.setEnabled(true);
 					}
 				}
-				
 			}
 		}
 		public void AddChatString(String msg)
