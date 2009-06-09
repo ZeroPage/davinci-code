@@ -1,6 +1,7 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
@@ -91,6 +92,7 @@ public class DavichiGUI extends JFrame
 			JButton JB_NewGame;
 			JButton JB_Exit;
 			JButton JB_ChatClear;
+			JButton JB_About;
 			
 			public ChatWindow(JPanel main)
 			{
@@ -137,6 +139,12 @@ public class DavichiGUI extends JFrame
 				JB_Exit.setBounds(100, 480, 100, 30);
 				JB_Exit.addActionListener(this);
 				JPanel_Main.add(JB_Exit);
+				
+				//룰 설명
+				JB_About = new JButton("게임 방법");
+				JB_About.setBounds(0,510,200,30);
+				JB_About.addActionListener(this);
+				JPanel_Main.add(JB_About);
 					
 				main.add(BorderLayout.EAST, JPanel_Main);
 			}
@@ -167,6 +175,24 @@ public class DavichiGUI extends JFrame
 				{
 					//종료코드
 					getWindowListeners()[0].windowClosing(new WindowEvent(getWindows()[0], 0));
+				}
+				if(event.getSource() == JB_About)
+				{
+					//게임 설명
+					JDialog some = new JDialog((Frame) getWindows()[0],"게임설명", true)
+					{
+						ImageIcon BG = new ImageIcon(DavichiGUI.class.getResource("About.jpg"));
+						public void paint(Graphics g)
+						{
+							this.setSize(BG.getIconWidth(), BG.getIconHeight());
+							g.drawImage(BG.getImage(), 0,20, this.getWidth(), this.getHeight(), null);
+							//this.getContentPane().
+							//super.paint(g);
+						}
+					};
+					some.setVisible(true);
+					
+					
 				}
 			}
 			public void StringAdd(String msg)
