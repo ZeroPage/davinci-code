@@ -33,7 +33,7 @@ public class Game implements Serializable {
 		for(int i=0; i<26; i++)
 		{
 			b[i] = new Block(((i<13) ? 0 : 1), i%13);
-			if(i==12&&i==25)
+			if(i==12||i==25)
 				b[i].setNum(-1);
 			blocks.add(b[i]);
 		}
@@ -167,7 +167,6 @@ public class Game implements Serializable {
 		public void getBlock(int blockNum) {
 			hand.add(blocks.get(blockNum));
 			hand.get(hand.size()-1).setOwn(true);
-			module.m_NetTaget.SendOb(new DataHeader("바닥의 블럭을 가져감", blocks.get(blockNum)));
 			blocks.remove(blockNum);
 		}
 			/*if(DC.getBlocks().get(blockNum).getNum()==-1)
