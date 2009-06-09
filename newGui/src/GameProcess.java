@@ -12,9 +12,9 @@ public class GameProcess
 	int playOrder; // 자신의 플레이 순서인 모양이다.?
 	//next함수를 쓰면 네트워크에서 브로드캐스팅으로 다음 사람을 찾도록 int형 값을 전송한다.
 	//네트워크에서 int를 받아 이 값과 같아 자신의 차례면 turn을 호출하도록 하겠다.
-	
+
 	Game GC;
-	
+
 	public GameProcess(GameWindow GUITaget, Network NetTaget)
 	{
 		m_GUITaget = GUITaget;
@@ -31,7 +31,7 @@ public class GameProcess
 		//Network에 isSever함수를 두고 클라에서는 false를 리턴하게 오버로딩을
 		//서버에서는 true를 리턴도록 오버로딩을 하면 된다.(isServer 구현완료.)
 		//레디버튼을 선택할수 없도록 하는 코드도 있어야 한다.
-		
+
 		//게임 시작시 필요한 준비 과정을 여기에서 끝내고
 		//이 함수를 끝내기 전에 네트워크로 데이터를 보내서 모두의 블럭들을 동기화 하자.
 	}
@@ -59,7 +59,7 @@ public class GameProcess
 		m_GUITaget.setCenterEnable(false);
 		m_GUITaget.update(playOrder);
 		m_GUITaget.CenterUpdate();
-		
+
 		if(GC.getPlayers().get(playOrder).getHand().size()<=4)
 		{
 			Next();
@@ -118,7 +118,7 @@ public class GameProcess
 	public void Next()
 	{
 		//다음 플레이어에게 턴을 넘겨준다. 게임 윈도우의 모든 입력은 블록 처리 되어 있으므로 자동으로 대기상태가 된다. 
-	
+
 		m_NetTaget.SendOb(new DataHeader("pass", Integer.valueOf(playOrder+1)));
 	}
 	public void End()
@@ -130,6 +130,9 @@ public class GameProcess
 	public void setGC(Game gc)
 	{
 		GC = gc;
+		for(int i=0; i<GC.getPlayers().size(); i++)
+			m_GUITaget.update(i);
+		m_GUITaget.CenterUpdate();
 	}
 	public void setPlayOrder(int n)
 	{
