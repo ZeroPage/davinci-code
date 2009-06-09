@@ -163,7 +163,7 @@ public class Game implements Serializable {
 		}
 		public void getBlock(int blockNum) {
 			hand.add(blocks.get(blockNum));
-			hand.get(blockNum).setOwn(true);
+			hand.get(hand.size()-1).setOwn(true);
 			module.m_NetTaget.SendOb(new DataHeader("바닥의 블럭을 가져감", blocks.get(blockNum)));
 			blocks.remove(blockNum);
 		}
