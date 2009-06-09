@@ -77,7 +77,7 @@ class GameWindow
 	public void update()
 	{
 		Block [] State;
-		for(int i = 0; i < 4; i++)
+		for(int i = 0; i < Process.GC.getPlayers().size(); i++)
 		{
 			State = Process.GetBlocksState(i);
 			players[i].update(State);
