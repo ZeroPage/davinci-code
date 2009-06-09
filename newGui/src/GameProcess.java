@@ -70,7 +70,7 @@ public class GameProcess
 		}
 		GC.getPlayers().get(playOrder).getBlock(indexNum);
 		m_GUITaget.setCenterEnable(false);
-		m_GUITaget.update();
+		//m_GUITaget.update(); 테스트차 주석처리
 		m_NetTaget.SendOb(new DataHeader("game", GC));
 		if(GC.getPlayers().get(playOrder).getHand().size()<=4)
 		{
@@ -102,7 +102,7 @@ public class GameProcess
 	{
 		//생대방에게 블럭을 물어 봐야 한다.
 		//그러기 위해서는 다른 사람들 패를 하나 골라 선택해야 한다. 따라서 다른 플레이어의 패을 enable 해준다
-		for(int i=0;i<4;i++)
+		for(int i=0;i<GC.getPlayers().size();i++)
 		{
 			if(i!=playOrder)
 				m_GUITaget.setEnable(i, true);
