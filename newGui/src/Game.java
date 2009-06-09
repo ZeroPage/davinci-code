@@ -216,6 +216,7 @@ public class Game implements Serializable {
 			
 			if(players.get(selectedPlayer).checkBlock(selectedBlock, selectedNum))
 			{
+				module.m_NetTaget.SendChatMsg("정답입니다.");
 				if(JOptionPane.showConfirmDialog(null, "계속하시겠습니까?", "확인",JOptionPane.YES_NO_OPTION)==0)
 					module.AskBlock();
 				else
@@ -223,6 +224,7 @@ public class Game implements Serializable {
 			}
 			else
 			{
+				module.m_NetTaget.SendChatMsg("오답입니다.");
 				last.setOpen(true);
 			}
 		}
