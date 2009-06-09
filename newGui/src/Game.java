@@ -232,8 +232,8 @@ public class Game implements Serializable {
 		public boolean checkBlock(int selectedBlock, int num) {
 			if(hand.get(selectedBlock).getNum() == num) {
 				hand.get(selectedBlock).setOpen(true);
-				module.m_NetTaget.SendOb(new DataHeader("game2", new GameData(module.GC)));
 				module.m_GUITaget.update();
+				module.m_NetTaget.SendOb(new DataHeader("game2", new GameData(module.GC)));
 				isPlay();
 				return true;
 			}
