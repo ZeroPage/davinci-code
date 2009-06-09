@@ -14,7 +14,7 @@ import javax.swing.JPanel;
 class GameWindow
 {
 	JPanel JPanel_Main;
-	PlayerWindow [] players = new PlayerWindow[4];
+	PlayerWindow [] PlayerPane = new PlayerWindow[4];
 	PlayerWindow Center;
 	
 	ImageIcon [] ImageCardBlack = new ImageIcon[13];
@@ -39,9 +39,7 @@ class GameWindow
 			}
 		};
 		JPanel_Main.setLayout(new BorderLayout());
-		
-		
-		
+
 		//이미지 로딩
 		for(int i = 0; i < 13; i++)
 		{
@@ -56,7 +54,7 @@ class GameWindow
 		//플레이어 와 NPC패널의 설정
 		for(int i = 0; i < 4; i++)
 		{
-			players[i] = new PlayerWindow(i);
+			PlayerPane[i] = new PlayerWindow(i);
 		}
 		Center = new NPC();
 		
@@ -68,11 +66,10 @@ class GameWindow
 	public void setEnable(int playerNum, boolean state)
 	{
 		//플레이어 넘버와 화면번호의 매칭
-		players[playerNum].setEnable(state);//0이 아래 부터 시계방향 순서대로
+		PlayerPane[playerNum].setEnable(state);//0이 아래 부터 시계방향 순서대로
 	}
 	public void setCenterEnable(boolean state)
 	{
-		Block [] card = Process.GetCenterBlocksState();
 		Center.setEnable(state);
 	}
 	public void update()
@@ -81,7 +78,7 @@ class GameWindow
 		for(int i = 0; i < Process.getPlayerNum(); i++)//싸이즈 얻어오는거 게임 프로세스에 추가할것
 		{
 			State = Process.GetBlocksState(i);
-			players[i].update(State);
+			PlayerPane[i].update(State);
 		}
 		State = Process.GetCenterBlocksState();
 		Center.update(State);
@@ -91,24 +88,12 @@ class GameWindow
 		//플레이어 넘버를 받고 그 번호의 플레이어를 즉시 업데이트 한다
 		//센터는 updateCenter를 쓴다.
 		Block [] state = Process.GetBlocksState(PlayerNum);
-		players[PlayerNum].update(state);
+		PlayerPane[PlayerNum].update(state);
 	}
 	public void CenterUpdate()
 	{
 		Block[] State = Process.GetCenterBlocksState();
 		Center.update(State);
-	}
-	private int NumfPtW(int PlayerNum)
-	{
-			PlayerNum += 4 - Process.playOrder;
-			PlayerNum = PlayerNum % Process.GC.getPlayers().size();
-			return PlayerNum;
-	}
-	private int NumfWtP(int WindowNum)
-	{
-		WindowNum += Process.playOrder;
-		WindowNum = WindowNum % Process.GC.getPlayers().size();
-		return WindowNum;
 	}
 	public void strat()
 	{
@@ -117,19 +102,19 @@ class GameWindow
 		if(Process.m_NetTaget.isServer())
 		{
 			Process.Start();
+			Process.turn();
 		}
 		else
 		{
 			JOptionPane.showMessageDialog(null, "방장이 아닙니다.","알림", 2);
 		}
-		
-		
 	}
 	class PlayerWindow implements ActionListener
 	{
 		JButton [] m_Card;
 		JPanel m_Panel;
 		int m_WindowNum;
+		int m_PlayerNum;
 		final int Size = 150;
 		
 		protected PlayerWindow()
@@ -141,6 +126,7 @@ class GameWindow
 			m_Panel = new JPanel();
 			FlowLayout layout = new FlowLayout(FlowLayout.CENTER,-1,-1);
 			m_Panel.setLayout(layout);
+			m_PlayerNum = PlayerNum;
 			m_Card = new JButton[13];
 			String lo = "";
 			m_WindowNum = PlayerNum;
