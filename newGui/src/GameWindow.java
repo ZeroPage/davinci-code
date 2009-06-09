@@ -440,6 +440,7 @@ class GameWindow
 		}
 		public int getNum()
 		{
+			System.out.print(Num);
 			return Num;
 		}
 	}
