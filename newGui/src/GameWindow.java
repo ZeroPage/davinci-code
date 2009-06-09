@@ -352,7 +352,7 @@ class GameWindow
 					{
 						if(State[i].getOpen())
 						{
-							m_Card[i].setRolloverIcon(ImageCardBlackOpen[num]);
+							m_Card[i].setIcon(ImageCardBlackOpen[num]);
 						}
 						else
 						{
