@@ -125,7 +125,6 @@ public class Server extends Network
 						try
 						{
 							clients[i].setClientData(ObServer.accept());
-							clients[i].SendOb(new DataHeader("접속순서", Integer.valueOf(i+1)));
 						} catch (IOException e)
 						{
 							// TODO Auto-generated catch block
