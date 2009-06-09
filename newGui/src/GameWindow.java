@@ -80,7 +80,7 @@ class GameWindow
 		for(int i = 0; i < 4; i++)
 		{
 			State = Process.GetBlocksState(i);
-			players[NumfPtW(i)].update(State);
+			players[i].update(State);
 		}
 		State = Process.GetCenterBlocksState();
 		Center.update(State);
