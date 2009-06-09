@@ -89,7 +89,7 @@ public class GameProcess
 		for(int i=0;i<4;i++)
 		{
 			if(i!=playOrder)
-				m_GUITaget.update(i);
+				m_GUITaget.setEnable(i, true);
 		}
 	}
 	public void AskBlock(int playerNum, int index, int num)
