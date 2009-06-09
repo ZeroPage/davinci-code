@@ -202,7 +202,7 @@ public class Server extends Network
 	}
 	public void SendOrder()
 	{
-		int temp = 0;
+		int temp = 1;
 		for(int i=0; i<clientNum; i++)
 			if(clients[i].getConnect().isConnected())
 			{
@@ -211,5 +211,4 @@ public class Server extends Network
 				break;
 			}
 	}
-}
 }
