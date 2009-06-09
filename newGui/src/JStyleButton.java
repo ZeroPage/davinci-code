@@ -27,6 +27,7 @@ public class JStyleButton extends JButton
 		this.setOpaque(false);
 		
 		this.setEnabled(false);
+		this.setRolloverEnabled(false);
 	}
 	public void setIcon(Icon defaultIcon)
 	{

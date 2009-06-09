@@ -29,6 +29,8 @@ class GameWindow
 	ImageIcon [] ImageCardWhiteRollover = new ImageIcon[13];
 	ImageIcon ImageCardBlackUnknown;
 	ImageIcon ImageCardWhiteUnknown;
+	ImageIcon ImageCardBlackUnknownRollerover;
+	ImageIcon ImageCardWhiteUnknownRollerover;
 	
 	GameProcess Process;
 	
@@ -58,6 +60,8 @@ class GameWindow
 		}
 		ImageCardBlackUnknown = new ImageIcon(DavichiGUI.class.getResource("card/bu.gif"));
 		ImageCardWhiteUnknown = new ImageIcon(DavichiGUI.class.getResource("card/wu.gif"));
+		ImageCardBlackUnknownRollerover = new ImageIcon(DavichiGUI.class.getResource("card/bur.gif"));
+		ImageCardWhiteUnknownRollerover = new ImageIcon(DavichiGUI.class.getResource("card/wur.gif"));
 		
 		//플레이어 와 NPC패널의 설정
 		for(int i = 0; i < 4; i++)
@@ -74,11 +78,13 @@ class GameWindow
 	public void setEnable(int playerNum, boolean state)
 	{
 		//플레이어 넘버와 화면번호의 매칭
-		PlayerPane[PlayerNumToWindowNum[playerNum]].setEnable(state);//0이 아래 부터 시계방향 순서대로
+		Block [] Card = Process.GetBlocksState(playerNum);
+		PlayerPane[PlayerNumToWindowNum[playerNum]].setEnable(Card, state);//0이 아래 부터 시계방향 순서대로
 	}
 	public void setCenterEnable(boolean state)
 	{
-		Center.setEnable(state);
+		Block [] Card = Process.GetCenterBlocksState();
+		Center.setEnable(Card, state);
 	}
 	public void update()
 	{
@@ -306,14 +312,15 @@ class GameWindow
 			m_Panel.setOpaque(false);
 		}
 		
-		public void setEnable(boolean state)
+		public void setEnable(Block [] Card, boolean state)
 		{
 			for(int i = 0; m_Card[i] != null; i++)
 			{
 				//배열정보 얻어와서 열려진것은 선택 안되도록 해야함.
 				m_Card[i].setEnabled(state);
-			 	m_Card[i].setRolloverEnabled(state);
-			 	m_Card[i].enableInputMethods(false);
+				m_Card[i].setRolloverEnabled(state);
+				
+				Card[i].getOpen();
 			}
 		}
 		public void update(Block [] State)
@@ -345,6 +352,7 @@ class GameWindow
 					{
 						//오픈 안되있는 경우 뒷면을 보여준다.
 						m_Card[i].setIcon(ImageCardBlackUnknown);
+						m_Card[i].setRolloverIcon(ImageCardBlackUnknownRollerover);
 					}
 				}
 				else
@@ -359,6 +367,7 @@ class GameWindow
 					{
 						//오픈 안되있는 경우 뒷면을 보여준다.
 						m_Card[i].setIcon(ImageCardWhiteUnknown);
+						m_Card[i].setRolloverIcon(ImageCardWhiteUnknownRollerover);
 					}
 				}
 				m_Card[i].setRolloverEnabled(false);
