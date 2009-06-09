@@ -80,7 +80,7 @@ class GameWindow
 		for(int i = 0; i < Process.getPlayerNum(); i++)//싸이즈 얻어오는거 게임 프로세스에 추가할것
 		{
 			State = Process.GetBlocksState(i);
-			PlayerPane[i].update(State);
+			PlayerPane[PlayerNumToWindowNum[i]].update(State);
 		}
 		State = Process.GetCenterBlocksState();
 		Center.update(State);
