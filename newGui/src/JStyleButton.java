@@ -12,6 +12,7 @@ public class JStyleButton extends JButton
 	public JStyleButton(ImageIcon image)
 	{
 		super(image);
+		setDisabledIcon(image);
 		initalButton();
 		this.setSize(image.getIconWidth(), image.getIconHeight());
 		this.setEnabled(false);
