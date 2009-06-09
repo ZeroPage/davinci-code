@@ -1,3 +1,4 @@
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
@@ -25,5 +26,10 @@ public class JStyleButton extends JButton
 		this.setFocusPainted(false);//선택됬을때 주변의 점선표시
 		//this.setMargin(new Insets(3,3,3,3));//주변에 여유분 주기
 		this.setOpaque(false);
+	}
+	public void setIcon(Icon defaultIcon)
+	{
+		setDisabledIcon(defaultIcon);
+		super.setIcon(defaultIcon);
 	}
 }

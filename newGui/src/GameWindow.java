@@ -303,14 +303,12 @@ class GameWindow
 					if(State[i].getOpen() || State[i].getOwn())
 					{
 						m_Card[i].setIcon(ImageCardBlack[State[i].getNum()]);
-						m_Card[i].setDisabledIcon(ImageCardBlack[State[i].getNum()]);
 						m_Card[i].setRolloverIcon(ImageCardBlackRollover[State[i].getNum()]);
 					}
 					else
 					{
 						//오픈 안되있는 경우 뒷면을 보여준다.
 						m_Card[i].setIcon(ImageCardBlackUnknown);
-						m_Card[i].setDisabledIcon(ImageCardBlackUnknown);
 					}
 				}
 				else
@@ -318,14 +316,12 @@ class GameWindow
 					if(State[i].getOpen() || State[i].getOwn())
 					{
 						m_Card[i].setIcon(ImageCardWhite[State[i].getNum()]);
-						m_Card[i].setDisabledIcon(ImageCardWhite[State[i].getNum()]);
 						m_Card[i].setRolloverIcon(ImageCardWhiteRollover[State[i].getNum()]);
 					}
 					else
 					{
 						//오픈 안되있는 경우 뒷면을 보여준다.
 						m_Card[i].setIcon(ImageCardWhiteUnknown);
-						m_Card[i].setDisabledIcon(ImageCardWhiteUnknown);
 					}
 				}
 				m_Card[i].setRolloverEnabled(false);
