@@ -56,6 +56,13 @@ public class GameProcess
 		//그다음 상대방에게 블럭을 물어본다.
 		GC.getPlayers().get(playOrder).getBlock(indexNum);
 		m_GUITaget.update(playOrder);
+		m_GUITaget.CenterUpdate();
+		if(GC.getPlayers().get(playOrder).getHand().size()<=4)
+		{
+			Next();
+		}
+		else
+			AskBlock();
 	}
 	public Block[] GetBlocksState(int playerNum)
 	{
@@ -76,6 +83,11 @@ public class GameProcess
 	{
 		//생대방에게 블럭을 물어 봐야 한다.
 		//그러기 위해서는 다른 사람들 패를 하나 골라 선택해야 한다. 따라서 다른 플레이어의 패을 enable 해준다
+		for(int i=0;i<4;i++)
+		{
+			if(i!=playOrder)
+				m_GUITaget.update(i);
+		}
 	}
 	public void AskBlock(int playerNum, int index, int num)
 	{
@@ -103,7 +115,8 @@ public class GameProcess
 	public void Next()
 	{
 		//다음 플레이어에게 턴을 넘겨준다. 게임 윈도우의 모든 입력은 블록 처리 되어 있으므로 자동으로 대기상태가 된다. 
-		GC.getBlocks();
+		playOrder++;
+		turn();
 	}
 	public void End()
 	{
