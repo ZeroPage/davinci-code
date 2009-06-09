@@ -349,7 +349,7 @@ class GameWindow
 				{
 					//선택되면 상대방의 패를 물어보는 것이기 때문에 askblock을 호출한다.
 					
-					Process.AskBlock(m_WindowNum, i,askNum());
+					Process.AskBlock(m_PlayerNum, i,askNum());
 					break;
 				}
 			}
