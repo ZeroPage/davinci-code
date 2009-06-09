@@ -222,7 +222,7 @@ class GameWindow
 		{
 			int row = i / 13;
 			int cal = i % 13;
-			button.setSize(cal * 50, row *72);
+			button.setLocation(cal * 50, row *72);
 		}
 		public void actionPerformed(ActionEvent e)
 		{
