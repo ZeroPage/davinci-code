@@ -320,7 +320,14 @@ class GameWindow
 				m_Card[i].setEnabled(state);
 				m_Card[i].setRolloverEnabled(state);
 				
-				Card[i].getOpen();
+				if(i < Card.length)
+				{
+					if(Card[i].getOpen())
+					{
+						m_Card[i].setEnabled(false);
+						m_Card[i].setRolloverEnabled(false);
+					}
+				}
 			}
 		}
 		public void update(Block [] State)
