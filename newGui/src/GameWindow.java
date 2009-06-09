@@ -282,6 +282,7 @@ class GameWindow
 				//배열정보 얻어와서 열려진것은 선택 안되도록 해야함.
 				m_Card[i].setEnabled(state);
 			 	m_Card[i].setRolloverEnabled(state);
+			 	m_Card[i].enableInputMethods(false);
 			}
 		}
 		public void update(Block [] State)
