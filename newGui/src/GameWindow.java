@@ -191,18 +191,30 @@ class GameWindow
 	{
 		JPanel JPanel_Joker;
 		int m_index = 0;
-		public JokerWindow(int [] index)
+		JButton [] JB_Cheek;
+		         
+		public JokerWindow(int [] index) 
 		{
 			JPanel_Joker = new JPanel();
 			JPanel_Joker.setOpaque(false);
 			JPanel_Joker.setPreferredSize(new Dimension(800,150));
 			JPanel_Joker.setLocation(0, 400);
 			
+			ImageIcon ucheek = new ImageIcon(DavichiGUI.class.getResource("ucheek.gif"));
 			ImageIcon cheek = new ImageIcon(DavichiGUI.class.getResource("cheek.gif"));
 			
-			for(int i =0; PlayerPane[0].m_Card[i] != null; i++)
+			int length = 0;
+			for(length =0; PlayerPane[0].m_Card[length] != null; length++);
+			JB_Cheek = new JStyleButton[length];
+			for(int i = 0; i < length; i++)
 			{
-				
+				JB_Cheek[i] = new JStyleButton(ucheek);
+				JB_Cheek[i].addActionListener(this);
+				JB_Cheek[i].setEnabled(true);
+			}
+			for(int i = 0; i < index.length; i++)
+			{
+				JB_Cheek[index[i]].setIcon(cheek);
 			}
 		}
 		public void actionPerformed(ActionEvent e)
