@@ -68,7 +68,6 @@ class GameWindow
 	public void setEnable(int playerNum, boolean state)
 	{
 		//플레이어 넘버와 화면번호의 매칭
-		//Block [] card = Process.GetBlocksState(playerNum);
 		players[playerNum].setEnable(state);//0이 아래 부터 시계방향 순서대로
 	}
 	public void setCenterEnable(boolean state)
@@ -79,7 +78,7 @@ class GameWindow
 	public void update()
 	{
 		Block [] State;
-		for(int i = 0; i < Process.GC.getPlayers().size(); i++)//싸이즈 얻어오는거 게임 프로세스에 추가할것
+		for(int i = 0; i < Process.getPlayerNum(); i++)//싸이즈 얻어오는거 게임 프로세스에 추가할것
 		{
 			State = Process.GetBlocksState(i);
 			players[i].update(State);

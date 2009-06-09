@@ -84,6 +84,10 @@ public class GameProcess
 		GC.getBlocks().toArray(temp);
 		return temp;
 	}
+	public int getPlayerNum()
+	{
+		return GC.getPlayers().size();
+	}
 	public void AskBlock()
 	{
 		//생대방에게 블럭을 물어 봐야 한다.
