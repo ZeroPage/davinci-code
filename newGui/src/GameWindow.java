@@ -129,7 +129,7 @@ class GameWindow
 		public PlayerWindow(int PlayerNum)
 		{
 			m_Panel = new JPanel();
-			FlowLayout layout = new FlowLayout(FlowLayout.CENTER,-1,-1);//왜 동작이 되질 안을까?
+			FlowLayout layout = new FlowLayout(FlowLayout.CENTER,-1,-1);
 			m_Panel.setLayout(layout);
 			m_Card = new JButton[13];
 			m_PlayerNum = PlayerNum;
@@ -164,8 +164,9 @@ class GameWindow
 		{
 			for(int i = 0; m_Card[i] != null; i++)
 			{
+				//배열정보 얻어와서 열려진것은 선택 안되도록 해야함.
 				m_Card[i].setEnabled(state);
-				m_Card[i].setRolloverEnabled(state);
+			 	m_Card[i].setRolloverEnabled(state);
 			}
 		}
 		public void update(Block [] State)
@@ -183,7 +184,7 @@ class GameWindow
 				}
 				if(State[i].getColor() == 0)
 				{
-					if(State[i].getOpen())
+					if(State[i].getOpen() || State[i].getOwn())
 					{
 						m_Card[i].setIcon(ImageCardBlack[State[i].getNum()]);
 						m_Card[i].setRolloverIcon(ImageCardBlackRollover[State[i].getNum()]);
@@ -196,7 +197,7 @@ class GameWindow
 				}
 				else
 				{
-					if(State[i].getOpen())
+					if(State[i].getOpen() || State[i].getOwn())
 					{
 						m_Card[i].setIcon(ImageCardWhite[State[i].getNum()]);
 						m_Card[i].setRolloverIcon(ImageCardWhiteRollover[State[i].getNum()]);
