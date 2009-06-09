@@ -131,4 +131,8 @@ public class GameProcess
 	{
 		GC = gc;
 	}
+	public void setPlayOrder(int n)
+	{
+		playOrder = n;
+	}
 }
