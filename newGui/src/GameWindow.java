@@ -182,14 +182,29 @@ class GameWindow
 				break;
 		}
 	}
-	public void JokerInput(int [] intdex)
+	public int JokerInput(int [] index)
 	{
-		
+		JokerWindow JI = new JokerWindow(index);
+		return JI.m_index;
 	}
 	class JokerWindow implements ActionListener
 	{
-
-		@Override
+		JPanel JPanel_Joker;
+		int m_index = 0;
+		public JokerWindow(int [] index)
+		{
+			JPanel_Joker = new JPanel();
+			JPanel_Joker.setOpaque(false);
+			JPanel_Joker.setPreferredSize(new Dimension(800,150));
+			JPanel_Joker.setLocation(0, 400);
+			
+			ImageIcon cheek = new ImageIcon(DavichiGUI.class.getResource("cheek.gif"));
+			
+			for(int i =0; PlayerPane[0].m_Card[i] != null; i++)
+			{
+				
+			}
+		}
 		public void actionPerformed(ActionEvent e)
 		{
 			// TODO Auto-generated method stub
