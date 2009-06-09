@@ -162,7 +162,8 @@ public class GameProcess
 			GC.players.get(i).hand = temp;
 		}
 		GC.setModule(this);
-		GC.getPlayers().get(playOrder).sortBlock(0, GC.getPlayers().get(playOrder).getHand().size()-1);
+		for(int i = 0;i<GC.getPlayers().size();i++)
+			GC.getPlayers().get(i).sortBlock(0, GC.getPlayers().get(i).getHand().size()-1);
 		m_GUITaget.update();
 	}
 	public void setPlayOrder(int n)
