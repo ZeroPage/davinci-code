@@ -176,6 +176,158 @@ public class DavichiGUI extends JFrame
 	}
 	class LobbyWindow extends mWindow
 	{
+		JTextField JTF_IPAdress;
+		JTextField JTF_Nick;
+		JButton JB_Connect;
+		JButton JB_Cancel;
+		JCheckBox JCB_Server;
+		JTextField JTF_Port;
+		JPanel JPanel_Lobby;
+		
+		Network TagetNetwork;
+		
+		ImageIcon BG = new ImageIcon(DavichiGUI.class.getResource("cover.jpg"));
+		
+		LobbyWindowLisener Lisener = new LobbyWindowLisener();
+		
+		public LobbyWindow()
+		{
+			JPanel_Lobby = new JPanel()
+			{
+				public void paint(Graphics g)
+				{
+					g.drawImage(BG.getImage(), 0, 0, BG.getIconWidth(), BG.getIconHeight(), null);
+					this.setOpaque(false);
+					this.setPreferredSize(new Dimension(BG.getIconWidth(), BG.getIconHeight()));
+					super.paint(g);
+				}
+			};
+			
+			
+			JPanel JPanel_Connect = new JPanel();
+			JPanel_Connect.setOpaque(false);
+			JPanel_Connect.setPreferredSize(new Dimension(380,300));
+			
+			JPanel_Connect.setLayout(null);
+			JPanel_Connect.setBounds(30, 350, 380, 300);
+			JPanel_Connect.setOpaque(false);
+			
+			
+			JLabel temp = new JLabel("닉네임");
+			temp.setForeground(Color.red);
+			temp.setBounds(0, 10, 100, 30);
+			temp.setHorizontalAlignment(JLabel.CENTER);
+			JPanel_Connect.add(temp);
+			
+			JTF_Nick = new JTextField();
+			JTF_Nick.setBounds(100, 10, 100, 30);
+			JPanel_Connect.add(JTF_Nick);
+			
+			temp = new JLabel("서버");
+			temp.setForeground(Color.red);
+			temp.setBounds(200, 10, 80, 30);
+			temp.setHorizontalAlignment(JLabel.CENTER);
+			JPanel_Connect.add(temp);
+			
+			JCB_Server = new JCheckBox();
+			JCB_Server.setBounds(280, 19, 13, 13);
+			JCB_Server.addItemListener(Lisener);
+			JCB_Server.setMargin(new Insets(-2,-2,-2,-2));
+			JPanel_Connect.add(JCB_Server);
+			
+			temp = new JLabel("IP");
+			temp.setForeground(Color.red);
+			temp.setBounds(0, 50, 100, 30);
+			temp.setHorizontalAlignment(JLabel.CENTER);
+			JPanel_Connect.add(temp);
+			
+			JTF_IPAdress = new JTextField();
+			JTF_IPAdress.setBounds(100, 50, 200, 30);
+			JTF_IPAdress.addActionListener(Lisener);
+			JPanel_Connect.add(JTF_IPAdress);
+			
+			temp = new JLabel("Port");
+			temp.setForeground(Color.red);
+			temp.setBounds(0, 90, 100, 30);
+			temp.setHorizontalAlignment(JLabel.CENTER);
+			JPanel_Connect.add(temp);
+			
+			JTF_Port = new JTextField();
+			JTF_Port.setBounds(100, 90, 50, 30);
+			JTF_Port.setText("10000");
+			JPanel_Connect.add(JTF_Port);
+			
+			JB_Connect = new JButton("접속");
+			JB_Connect.setBounds(50 , 130, 100, 30);
+			JB_Connect.addActionListener(Lisener);
+			JPanel_Connect.add(JB_Connect);
+			
+			
+			JB_Cancel = new JButton("취소");
+			JB_Cancel.setBounds(200, 130, 100, 30);
+			JB_Cancel.addActionListener(Lisener);
+			JPanel_Connect.add(JB_Cancel);
+			
+			JPanel_Lobby.add(JPanel_Connect);
+			JTF_Nick.requestFocus();
+		}
+		class LobbyWindowLisener implements ActionListener, ItemListener
+		{
+			public void actionPerformed(ActionEvent event)
+			{
+				if(event.getSource() == JB_Connect || event.getSource() == JTF_IPAdress)
+				{
+					if(JTF_Nick.getText().length() == 0)
+					{
+						JOptionPane.showMessageDialog(null, "닉네임을 입력하세요.", "알림", JOptionPane.ERROR_MESSAGE);
+						return;
+					}
+					if(JCB_Server.isSelected())
+					{
+						//서버
+						TagetNetwork = new Server();
+					}
+					else
+					{
+						//클라
+						TagetNetwork = new Client();
+					}
+					TagetNetwork.setM_Name(JTF_Nick.getText());
+					TagetNetwork.setPortNum(Integer.parseInt(JTF_Port.getText()));
+					TagetNetwork.Connect(JTF_IPAdress.getText());
+					if(TagetNetwork.isServer())
+					{
+						TagetNetwork.SendChatMsg("서버를 개설하였습니다,");
+					}
+					else
+					{
+						TagetNetwork.SendChatMsg("접속하였습니다.");
+					}
+					
+				}
+				if(event.getSource() == JB_Cancel)
+				{
+					//this.setVisible(false);
+					//JOptionPane.showMessageDialog(null, "접속을 하셔야만 합니다.");
+					System.exit(0);
+				}
+			}
+			public void itemStateChanged(ItemEvent event)
+			{
+				if(event.getSource() == JCB_Server)
+				{
+					if(JCB_Server.isSelected())
+					{
+						JTF_IPAdress.setEnabled(false);
+					}
+					else
+					{
+						JTF_IPAdress.setEnabled(true);
+					}
+				}
+				
+			}
+		}
 		public void AddChatString(String msg)
 		{
 			// TODO Auto-generated method stub
@@ -308,7 +460,6 @@ public class DavichiGUI extends JFrame
 		}
 		public void actionPerformed(ActionEvent event)
 		{
-			
 			if(event.getSource() == JB_Connect || event.getSource() == JTF_IPAdress)
 			{
 				if(JTF_Nick.getText().length() == 0)
