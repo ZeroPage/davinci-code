@@ -135,6 +135,9 @@ public class GameProcess
 	}
 	public void setGC(Game gc)
 	{
+		if(GC != null)
+			for(int i=0; i<gc.getPlayers().get(playOrder).getHand().size(); i++)
+				gc.getPlayers().get(playOrder).getHand().get(i).setOwn(GC.getPlayers().get(playOrder).getHand().get(i).getOwn());
 		GC = gc;
 		m_GUITaget.update();
 		GC.setModule(this);
