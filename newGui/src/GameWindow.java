@@ -80,7 +80,7 @@ class GameWindow
 		for(int i = 0; i < Process.getPlayerNum(); i++)//싸이즈 얻어오는거 게임 프로세스에 추가할것
 		{
 			State = Process.GetBlocksState(i);
-			PlayerPane[PlayerNumToWindowNum[i]].update(State);
+			//PlayerPane[PlayerNumToWindowNum[i]].update(State);
 		}
 		State = Process.GetCenterBlocksState();
 		Center.update(State);
@@ -115,6 +115,14 @@ class GameWindow
 		{
 			update();
 			//JOptionPane.showMessageDialog(null, "방장이 아닙니다.","알림", 2);
+		}
+	}
+	public void Setting(int PlayerNum)
+	{
+		PlayerNumToWindowNum = new int[PlayerNum];
+		for(int i = 0; i < PlayerNumToWindowNum.length; i++)
+		{
+			PlayerNumToWindowNum[i] = (Process.playOrder + i )%4;
 		}
 	}
 	class PlayerWindow implements ActionListener
