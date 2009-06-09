@@ -98,6 +98,8 @@ public class Client extends Network
 			if(head.equals("game"))
 				//if(m_Game.GC == null || !m_Game.GC.equals((Game)data.getData()))
 					m_Game.setGC((Game)data.getData());
+			if(head.equals("game2"))
+					m_Game.setGC((GameData)data.getData());
 			if(head.equals("pass"))
 				if(m_Game.getPlayOrder() == ((Integer)data.getData()).intValue())
 					m_Game.turn();
