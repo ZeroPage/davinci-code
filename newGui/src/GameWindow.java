@@ -104,6 +104,7 @@ class GameWindow
 		if(Process.m_NetTaget.isServer())
 		{
 			Process.Start();
+			
 			PlayerNumToWindowNum = new int[Process.getPlayerNum()];
 			for(int i = 0; i < PlayerNumToWindowNum.length; i++)
 			{
@@ -120,9 +121,70 @@ class GameWindow
 	public void Setting(int PlayerNum)
 	{
 		PlayerNumToWindowNum = new int[PlayerNum];
-		for(int i = 0; i < PlayerNumToWindowNum.length; i++)
+		switch(PlayerNum)
 		{
-			PlayerNumToWindowNum[i] = (i - Process.playOrder + PlayerNumToWindowNum.length)%PlayerNum;
+			case 2:
+				if(Process.playOrder == 0)
+				{
+					PlayerNumToWindowNum[0] = 0;
+					PlayerNumToWindowNum[1] = 2;
+				}
+				else
+				{
+					PlayerNumToWindowNum[0] = 2;
+					PlayerNumToWindowNum[1] = 0;
+				}
+				break;
+			case 3:
+				if(Process.playOrder == 0)
+				{
+					PlayerNumToWindowNum[0] = 0;
+					PlayerNumToWindowNum[1] = 1;
+					PlayerNumToWindowNum[2] = 3;
+				}
+				else if(Process.playOrder == 1)
+				{
+					PlayerNumToWindowNum[0] = 3;
+					PlayerNumToWindowNum[1] = 0;
+					PlayerNumToWindowNum[2] = 1;
+				}
+				else if(Process.playOrder == 2)
+				{
+					PlayerNumToWindowNum[0] = 1;
+					PlayerNumToWindowNum[1] = 3;
+					PlayerNumToWindowNum[2] = 0;
+				}
+				break;
+			case 4:
+				if(Process.playOrder == 0)
+				{
+					PlayerNumToWindowNum[0] = 0;
+					PlayerNumToWindowNum[1] = 1;
+					PlayerNumToWindowNum[2] = 2;
+					PlayerNumToWindowNum[3] = 3;
+				}
+				else if(Process.playOrder == 1)
+				{
+					PlayerNumToWindowNum[0] = 3;
+					PlayerNumToWindowNum[1] = 0;
+					PlayerNumToWindowNum[2] = 1;
+					PlayerNumToWindowNum[3] = 2;
+				}
+				else if(Process.playOrder == 2)
+				{
+					PlayerNumToWindowNum[0] = 2;
+					PlayerNumToWindowNum[1] = 3;
+					PlayerNumToWindowNum[2] = 0;
+					PlayerNumToWindowNum[3] = 1;
+				}
+				else if(Process.playOrder == 3)
+				{
+					PlayerNumToWindowNum[0] = 1;
+					PlayerNumToWindowNum[1] = 2;
+					PlayerNumToWindowNum[2] = 3;
+					PlayerNumToWindowNum[3] = 0;
+				}
+				break;
 		}
 	}
 	class PlayerWindow implements ActionListener
