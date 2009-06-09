@@ -41,6 +41,7 @@ public class GameProcess
 	{
 		//내턴이 왔을때는 일단 하나 골라온다음에 상대방것을 추리하고 맞추면 그걸 까고 아니면
 		//가져온 내것을 깐다.
+		System.out.println(playOrder);
 		m_GUITaget.CenterUpdate();
 		selectBlock();
 	}
