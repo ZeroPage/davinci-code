@@ -129,7 +129,7 @@ class GameWindow
 		public PlayerWindow(int PlayerNum)
 		{
 			m_Panel = new JPanel();
-			FlowLayout layout = new FlowLayout(FlowLayout.LEADING,0,0);//왜 동작이 되질 안을까?
+			FlowLayout layout = new FlowLayout(FlowLayout.CENTER,-1,-1);//왜 동작이 되질 안을까?
 			m_Panel.setLayout(layout);
 			m_Card = new JButton[13];
 			m_PlayerNum = PlayerNum;
