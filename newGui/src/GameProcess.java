@@ -72,6 +72,7 @@ public class GameProcess
 
 		}
 		GC.getPlayers().get(playOrder).getBlock(indexNum);
+		GC.getPlayers().get(playOrder).sortBlock(0, GC.getPlayers().get(playOrder).getHand().size()-1);
 		for(int i = 0; i<GC.getPlayers().get(playOrder).getHand().size();i++)
 		{
 			System.out.print(GC.getPlayers().get(playOrder).getHand().get(i).getNum()+ " ");
