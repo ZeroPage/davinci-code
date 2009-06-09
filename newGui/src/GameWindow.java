@@ -107,7 +107,7 @@ class GameWindow
 			PlayerNumToWindowNum = new int[Process.getPlayerNum()];
 			for(int i = 0; i < PlayerNumToWindowNum.length; i++)
 			{
-				PlayerNumToWindowNum[i] = (Process.playOrder + i )%PlayerNumToWindowNum.length;
+				PlayerNumToWindowNum[i] = (i - Process.playOrder)%PlayerNumToWindowNum.length;
 			}
 			Process.turn();
 		}
@@ -122,7 +122,7 @@ class GameWindow
 		PlayerNumToWindowNum = new int[PlayerNum];
 		for(int i = 0; i < PlayerNumToWindowNum.length; i++)
 		{
-			PlayerNumToWindowNum[i] = (Process.playOrder + i )%PlayerNum;
+			PlayerNumToWindowNum[i] = (i - Process.playOrder)%PlayerNum;
 		}
 	}
 	class PlayerWindow implements ActionListener
