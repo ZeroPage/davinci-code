@@ -102,7 +102,10 @@ public class Client extends Network
 					m_Game.setGC((GameData)data.getData());
 			if(head.equals("pass"))
 				if(m_Game.getPlayOrder() == ((Integer)data.getData()).intValue())
+				{
+					SendChatMsg("턴 입니다.");
 					m_Game.turn();
+				}
 			if(head.equals("서버-네순서"))
 				m_Game.setPlayOrder(((Integer)data.getData()).intValue());
 			if(head.equals("총인원수"))

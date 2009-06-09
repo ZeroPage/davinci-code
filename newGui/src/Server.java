@@ -171,16 +171,15 @@ public class Server extends Network
 			if(head.equals("chat"))
 				m_Taget.AddChatString((String)data.getData());
 			if(head.equals("game"))
-			{
-				//if(m_Game.GC == null || !m_Game.GC.equals((Game)data.getData()))
-					m_Game.setGC((Game)data.getData());
-					//return;
-			}
+				m_Game.setGC((Game)data.getData());
 			if(head.equals("game2"))
 				m_Game.setGC((GameData)data.getData());
 			if(head.equals("pass"))
 				if(m_Game.getPlayOrder() == ((Integer)data.getData()).intValue())
+				{
+					SendChatMsg("턴 입니다.");
 					m_Game.turn();
+				}
 			BroadCasting(data);
 		}
 		public void run()
