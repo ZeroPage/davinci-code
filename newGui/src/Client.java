@@ -100,6 +100,8 @@ public class Client extends Network
 					m_Game.turn();
 			if(head.equals("서버-네순서"))
 				m_Game.setPlayOrder(((Integer)data.getData()).intValue());
+			if(head.equals("총인원수"))
+				m_Game.m_GUITaget.Setting(((Integer)data.getData()).intValue());
 		}
 		public void run()
 		{
