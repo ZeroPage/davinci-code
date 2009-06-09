@@ -123,27 +123,12 @@ public class GameProcess
 		//어떤 숫자인지 알아야한다.
 		//네트워크에 물어보는 내용을 전송한다.
 		GC.getPlayers().get(playOrder).askBlock(playerNum, index, num);
+		m_NetTaget.SendOb(new DataHeader("game2", new GameData(GC)));
 	}
-	public void CheckBlock(int index, int num)
-	{
-		//네크워크에서 물음을 받으면 자신의 패를 체크해준다.그리고 리턴값을 돌려주는것이 아니라 네트워크에 맞는지 틀린지 전송해준다.
-		//게임의 체크 블록을 부른다. 단 자신의 패가 아니면 건들지 않는다.
-		GC.getPlayers().get(playOrder).checkBlock(index, num);
-	}
-	public void correct()
-	{
-		//맞았을때의 내용이다. 계속할껀지 턴을 넘길지 컨핌 다이얼 로그로 물어본후
-		//계속하려면 askblock()을 
-		//턴을 넘기려면 next()를 호출하면 된다.
-	}
-	public void incorrect()
-	{
-		//틀렸을때의 내용이다. 자신의 패를 하나 깐다.
-	}
+	
 	public void Next()
 	{
 		//다음 플레이어에게 턴을 넘겨준다. 게임 윈도우의 모든 입력은 블록 처리 되어 있으므로 자동으로 대기상태가 된다. 
-
 		m_NetTaget.SendOb(new DataHeader("pass", ((Integer.valueOf((playOrder+1))%(GC.getPlayers().size())))));
 	}
 	public void End()

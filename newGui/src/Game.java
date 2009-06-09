@@ -1,6 +1,8 @@
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
+
 public class Game implements Serializable {
 	ArrayList<Player> players;
 	ArrayList<Block> blocks;
@@ -111,6 +113,7 @@ public class Game implements Serializable {
 
 	public class Player implements Serializable {
 		ArrayList<Block> hand;//자신이 가진 블록을 저장하는 배열
+		private Block last;
 		private boolean play;//플레이여부를 결정
 		private int loh = -5;//핸드의 가장 왼쪽 숫자.기본값은 범위 밖
 		private int roh = 15;//핸드의 가장 오른쪽 숫자.기본값은 범위 밖
@@ -165,7 +168,8 @@ public class Game implements Serializable {
 			module.m_GUITaget.setCenterEnable(true);
 		}
 		public void getBlock(int blockNum) {
-			hand.add(blocks.get(blockNum));
+			last = blocks.get(blockNum);
+			hand.add(last);
 			hand.get(hand.size()-1).setOwn(true);
 			blocks.remove(blockNum);
 			module.m_NetTaget.SendOb(new DataHeader("game2", new GameData(module.GC)));
@@ -208,28 +212,23 @@ public class Game implements Serializable {
 			//sortBlock(getHand(), 0, hand.size()-1);
 
 		public void askBlock(int selectedPlayer, int selectedBlock, int selectedNum) {		
-			int[] temp = new int[3];
-			temp[0] = selectedPlayer;
-			temp[1] = selectedBlock;
-			temp[2] = selectedNum;
-			module.m_NetTaget.SendOb(new DataHeader("ask-int[]",temp));
-
-			/*if(players.get(selectedPlayer).checkBlock(selectedBlock, selectedNum)==true)
+			
+			
+			if(players.get(selectedPlayer).checkBlock(selectedBlock, selectedNum))
 			{
-				boolean again;//다시 추리할지여부
-				if(again==true)
-					askBlock(turnPlayernum);
+				if(JOptionPane.showConfirmDialog(null, "계속하시겠습니까?", "확인",JOptionPane.YES_NO_OPTION)==0)
+					module.AskBlock();
+				else
+					module.Next();
 			}
 			else
 			{
-				int num;//오픈할 패의 인덱스.플레이어가 선택
-				players.get(turnPlayernum).getHand().get(num).setOpen(true);
-			}*/
+				last.setOpen(true);
+			}
 		}
 		public boolean checkBlock(int selectedBlock, int num) {
 			if(hand.get(selectedBlock).getNum() == num) {
 				hand.get(selectedBlock).setOpen(true);
-				module.m_NetTaget.SendOb(new DataHeader("askOX-boolean", Boolean.valueOf(true)));
 				isPlay();
 				return true;
 			}
@@ -241,8 +240,8 @@ public class Game implements Serializable {
 				if(tb.getOpen() == false)
 					return;
 			}
-			module.m_NetTaget.SendOb(new DataHeader("doa-boolean", Boolean.valueOf(false)));
 			setPlay(false);
+			module.m_NetTaget.SendOb(new DataHeader("game2", new GameData(module.GC)));
 		}
 		public void swapBlock(ArrayList<Block> blocks, int n1, int n2) {
 			Block tb1 = blocks.get(n1);
