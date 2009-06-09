@@ -209,7 +209,7 @@ public class DavichiGUI extends JFrame
 			{
 				public void paint(Graphics g)
 				{
-					g.drawImage(BG.getImage(), 0, 0, BG.getIconWidth(), BG.getIconHeight(), null);
+					g.drawImage(BG.getImage(), 0, 0, this.getWidth(), this.getHeight(), null);
 					this.setOpaque(false);
 					this.setPreferredSize(new Dimension(BG.getIconWidth(), BG.getIconHeight()));
 					super.paint(g);
@@ -217,14 +217,12 @@ public class DavichiGUI extends JFrame
 			};
 			JPanel_Lobby.setLayout(null);
 			
-			getWindows()[0].setSize(800, 600);
-			
 			JPanel JPanel_Connect = new JPanel();
 			JPanel_Connect.setOpaque(false);
 			JPanel_Connect.setPreferredSize(new Dimension(380,300));
 			
 			JPanel_Connect.setLayout(null);
-			JPanel_Connect.setBounds(30, 350, 380, 300);
+			JPanel_Connect.setBounds(600, 300, 380, 300);
 			JPanel_Connect.setOpaque(false);
 			
 			JLabel temp = new JLabel("´Ð³×ÀÓ");
