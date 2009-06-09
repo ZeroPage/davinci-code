@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 
 public class GameProcess
 {
@@ -66,7 +68,7 @@ public class GameProcess
 			else
 				GC.getPlayers().get(playOrder).setIswjoker(true);
 			//무조건
-			
+
 		}
 		GC.getPlayers().get(playOrder).getBlock(indexNum);
 		GC.getPlayers().get(playOrder).sortBlock(0, GC.getPlayers().get(playOrder).getHand().size()-1);
@@ -77,7 +79,7 @@ public class GameProcess
 		System.out.println();
 		m_GUITaget.setCenterEnable(false);
 		m_GUITaget.update(); //테스트차 주석처리
-		m_NetTaget.SendOb(new DataHeader("game", GC));
+		//m_NetTaget.SendOb(new DataHeader("game2", new GameData(GC)));
 		if(GC.getPlayers().get(playOrder).getHand().size()<=4)
 		{
 			Next();
@@ -151,12 +153,30 @@ public class GameProcess
 	}
 	public void setGC(Game gc)
 	{
-		if(GC != null)
-			for(int i=0; i<gc.getPlayers().get(playOrder).getHand().size(); i++)
-				gc.getPlayers().get(playOrder).getHand().get(i).setOwn(GC.getPlayers().get(playOrder).getHand().get(i).getOwn());
 		GC = gc;
-		m_GUITaget.update();
 		GC.setModule(this);
+		m_GUITaget.update();
+	}
+	public void setGC(GameData gc)
+	{
+		ArrayList<Block> temp = new ArrayList<Block>();
+		for(int i=0; i< gc.floor.length; i++)
+			temp.add(gc.floor[i]);
+		GC.blocks = temp;
+
+		for(int i=0; i<gc.p.length; i++)
+		{
+			temp = new ArrayList<Block>();
+			for(int j=0; gc.p[i][j] != null; j++)
+			{
+				if(i == playOrder)
+					gc.p[i][j].setOwn(true);
+				temp.add(gc.p[i][j]);
+			}
+			GC.players.get(i).hand = temp;
+		}
+		GC.setModule(this);
+		m_GUITaget.update();
 	}
 	public void setPlayOrder(int n)
 	{

@@ -2,8 +2,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Game implements Serializable {
-	private ArrayList<Player> players;
-	private ArrayList<Block> blocks;
+	 ArrayList<Player> players;
+	 ArrayList<Block> blocks;
 	transient private GameProcess module;
 	
 	Game(GameProcess pro,  int n)
@@ -110,7 +110,7 @@ public class Game implements Serializable {
 	}
 
 	public class Player implements Serializable {
-		private ArrayList<Block> hand;//자신이 가진 블록을 저장하는 배열
+		ArrayList<Block> hand;//자신이 가진 블록을 저장하는 배열
 		private boolean play;//플레이여부를 결정
 		private int loh = -5;//핸드의 가장 왼쪽 숫자.기본값은 범위 밖
 		private int roh = 15;//핸드의 가장 오른쪽 숫자.기본값은 범위 밖
@@ -168,6 +168,7 @@ public class Game implements Serializable {
 			hand.add(blocks.get(blockNum));
 			hand.get(hand.size()-1).setOwn(true);
 			blocks.remove(blockNum);
+			module.m_NetTaget.SendOb(new DataHeader("game2", new GameData(module.GC)));
 		}
 			/*if(DC.getBlocks().get(blockNum).getNum()==-1)
 			{
