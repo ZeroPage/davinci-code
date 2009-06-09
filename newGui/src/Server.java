@@ -170,6 +170,9 @@ public class Server extends Network
 				m_Taget.AddChatString((String)data.getData());
 			if(head.equals("game"))
 				m_Game.setGC((Game)data.getData());
+			if(head.equals("pass"))
+				if(m_Game.getPlayOrder() == ((Integer)data.getData()).intValue())
+					m_Game.turn();
 			BroadCasting(data);
 		}
 		public void run()

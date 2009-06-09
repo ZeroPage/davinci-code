@@ -135,4 +135,8 @@ public class GameProcess
 	{
 		playOrder = n;
 	}
+	public int getPlayOrder()
+	{
+		return playOrder;
+	}
 }
