@@ -214,7 +214,14 @@ public class Server extends Network
 		for(int i=0; i<clientNum; i++)
 			if(clients[i].getConnect().isConnected())
 			{
-				SendOb(new DataHeader("서버-네순서", Integer.valueOf(temp)));
+				try
+				{
+					clients[i].SendOb(new DataHeader("서버-네순서", Integer.valueOf(temp)));
+				} catch (IOException e)
+				{
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				temp++;
 				break;
 			}
