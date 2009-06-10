@@ -172,6 +172,13 @@ public class GameProcess
 			{
 				if(i == playOrder)
 					gc.p[i][j].setOwn(true);
+				else
+					gc.p[i][j].setOwn(false);
+				for(int k=0; k<GC.players.get(i).hand.size(); k++)
+				{
+					if(GC.players.get(i).hand.get(k).getColor() == gc.p[i][j].getColor() && GC.players.get(i).hand.get(k).getNum() == gc.p[i][j].getNum())
+						gc.p[i][j].setOpen(GC.players.get(i).hand.get(k).getOpen());
+				}
 				temp.add(gc.p[i][j]);
 			}
 			GC.players.get(i).hand = temp;
