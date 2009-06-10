@@ -236,7 +236,7 @@ class GameWindow
 		         
 		public JokerWindow(int [] index) 
 		{
-			JPanel_Joker = new JPanel();
+			JPanel_Joker = new JPanel(new FlowLayout());
 			JPanel_Joker.setOpaque(false);
 			JPanel_Joker.setPreferredSize(new Dimension(800,150));
 			JPanel_Joker.setLocation(0, 400);
@@ -258,10 +258,16 @@ class GameWindow
 				JB_Cheek[index[i]].setIcon(cheek);
 			}
 		}
-		public void actionPerformed(ActionEvent e)
+		public void actionPerformed(ActionEvent event)
 		{
-			// TODO Auto-generated method stub
-			
+			for(int i = 0; i < JB_Cheek.length; i++)
+			{
+				if(event.getSource() == JB_Cheek[i])
+				{
+					m_index = i;
+					break;
+				}
+			}
 		}
 		
 	}
