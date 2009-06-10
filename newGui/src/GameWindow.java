@@ -223,6 +223,14 @@ class GameWindow
 				break;
 		}
 	}
+	public void RemoveAll()
+	{
+		for(int i =0; i < 4; i++)
+		{
+			PlayerPane[i].remove();
+		}
+		Center.remove();
+	}
 	public int JokerInput(int [] index)
 	{
 		JokerWindow JI = new JokerWindow(index);
@@ -332,6 +340,13 @@ class GameWindow
 					m_Card[i].setEnabled(false);
 					m_Card[i].setRolloverEnabled(false);
 				}
+			}
+		}
+		public void remove()
+		{
+			for(int i =0; i < m_Card.length; i++)
+			{
+				m_Panel.remove(m_Card[i]);
 			}
 		}
 		public void update(Block [] State)
