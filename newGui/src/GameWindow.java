@@ -266,6 +266,8 @@ class GameWindow
 				JB_Cheek[index[i]].setIcon(cheek);
 			}
 			JPanel_Joker.setVisible(true);
+			
+			JPanel_Main.add(JPanel_Joker);
 		}
 		public void actionPerformed(ActionEvent event)
 		{
