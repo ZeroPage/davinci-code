@@ -265,6 +265,7 @@ class GameWindow
 			{
 				JB_Cheek[index[i]].setIcon(cheek);
 			}
+			JPanel_Joker.setVisible(true);
 		}
 		public void actionPerformed(ActionEvent event)
 		{
@@ -273,6 +274,7 @@ class GameWindow
 				if(event.getSource() == JB_Cheek[i])
 				{
 					m_index = i;
+					JPanel_Joker.setVisible(false);
 					break;
 				}
 			}
