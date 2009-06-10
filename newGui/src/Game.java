@@ -116,7 +116,7 @@ public class Game implements Serializable {
 			if(true == players.get(i).getPlay())
 				alive++;
 		}
-		return alive<1;
+		return alive==1;
 	}
 
 	public class Player implements Serializable {
@@ -226,6 +226,7 @@ public class Game implements Serializable {
 			if(players.get(selectedPlayer).checkBlock(selectedBlock, selectedNum))
 			{
 				module.m_NetTaget.SendOb(new DataHeader("game2", new GameData(module.GC)));
+				if(!getPlay())	
 				module.m_NetTaget.SendChatMsg("정답입니다.");
 				if(JOptionPane.showConfirmDialog(null, "빙고! 계속하시겠습니까?", "확인",JOptionPane.YES_NO_OPTION)==0)
 					module.AskBlock();
@@ -262,8 +263,10 @@ public class Game implements Serializable {
 					return;
 			}
 			setPlay(false);
-			module.m_NetTaget.SendChatMsg("패를 모두 알아냈습니다");
+			module.m_NetTaget.SendChatMsg("패를 모두 알아냈습니다.");
 			module.m_NetTaget.SendOb(new DataHeader("game2", new GameData(module.GC)));
+			if(module.GC.End())
+				module.End();
 		}
 		public void swapBlock(ArrayList<Block> blocks, int n1, int n2) {
 			Block tb1 = blocks.get(n1);
