@@ -181,9 +181,9 @@ public class Game implements Serializable {
 		public void getBlock(int blockNum) {
 			last = blocks.get(blockNum);
 			hand.add(last);
-			hand.get(hand.size()-1).setOwn(true);
 			blocks.remove(blockNum);
 			module.m_NetTaget.SendOb(new DataHeader("game2", new GameData(module.GC)));
+			hand.get(hand.size()-1).setOwn(true);
 		}
 			/*if(DC.getBlocks().get(blockNum).getNum()==-1)
 			{
@@ -237,7 +237,7 @@ public class Game implements Serializable {
 			{
 				module.m_NetTaget.SendChatMsg("오답입니다.");
 				last.setOpen(true);
-				module.m_NetTaget.SendOb(new DataHeader("game2", new GameData(module.GC)));
+				//module.m_NetTaget.SendOb(new DataHeader("game2", new GameData(module.GC)));
 				module.Next();
 			}
 		}
@@ -253,8 +253,7 @@ public class Game implements Serializable {
 		}
 		public void isPlay() {
 			for(int i=0; i<hand.size(); i++) {
-				Block tb = hand.get(i);
-				if(tb.getOpen() == false)
+				if(hand.get(i).getOpen() == false)
 					return;
 			}
 			setPlay(false);
@@ -277,9 +276,6 @@ public class Game implements Serializable {
 						swapBlock(hand, j, j+1);
 				}
 			}
-		}
-		public void next(int n) {
-			module.m_NetTaget.SendOb(Integer.valueOf(n+1));
 		}
 	}
 }
