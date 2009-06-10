@@ -262,7 +262,7 @@ public class Game implements Serializable {
 					return;
 			}
 			setPlay(false);
-			module.m_NetTaget.SendChatMsg("패가 모두 공개되었습니다.탈락");
+			module.m_NetTaget.SendChatMsg("패를 모두 알아냈습니다");
 			module.m_NetTaget.SendOb(new DataHeader("game2", new GameData(module.GC)));
 		}
 		public void swapBlock(ArrayList<Block> blocks, int n1, int n2) {
