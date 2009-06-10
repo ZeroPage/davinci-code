@@ -1,10 +1,10 @@
 import java.io.Serializable;
 
 public class Block implements Serializable {
-	private int color; //검정 0, 하양 1
-	private int num; //하이픈(조커)는 -1
-	private boolean open;
-	private boolean own;
+	int color; //검정 0, 하양 1
+	int num; //하이픈(조커)는 -1
+	transient boolean open;
+	transient boolean own;
 	
 	Block() {
 		color = -1;
