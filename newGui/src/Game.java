@@ -113,8 +113,7 @@ public class Game implements Serializable {
 	public boolean End() {
 		int alive = 0;
 		for(int i=0; i<players.size(); i++) {
-			Player tp = players.get(i);
-			if(true == tp.getPlay())
+			if(true == players.get(i).getPlay())
 				alive++;
 		}
 		return alive<1;

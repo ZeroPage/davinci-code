@@ -41,7 +41,7 @@ public class GameProcess
 	{
 		//내턴이 왔을때는 일단 하나 골라온다음에 상대방것을 추리하고 맞추면 그걸 까고 아니면
 		//가져온 내것을 깐다.
-		System.out.println(playOrder);
+		//System.out.println(playOrder);
 		m_GUITaget.CenterUpdate();
 		selectBlock();
 	}
@@ -69,11 +69,11 @@ public class GameProcess
 		}
 		GC.getPlayers().get(playOrder).getBlock(indexNum);
 		GC.getPlayers().get(playOrder).sortBlock(0, GC.getPlayers().get(playOrder).getHand().size()-1);
-		for(int i = 0; i<GC.getPlayers().get(playOrder).getHand().size();i++)
+		/*for(int i = 0; i<GC.getPlayers().get(playOrder).getHand().size();i++)
 		{
 			System.out.print(GC.getPlayers().get(playOrder).getHand().get(i).getNum()+ " ");
 		}
-		System.out.println();
+		System.out.println();*/
 		m_GUITaget.setCenterEnable(false);
 		m_GUITaget.update(); //테스트차 주석처리
 		//m_NetTaget.SendOb(new DataHeader("game2", new GameData(GC)));
@@ -148,6 +148,8 @@ public class GameProcess
 	}
 	public void End()
 	{
+		if(GC.End())
+			GC=null;
 		//게임이 끝났을때의 호출 레디버튼을 활성화 해주고 모든 이미지를 안보이게 지정한뒤 
 		//승자를 표시해준다.
 		//
