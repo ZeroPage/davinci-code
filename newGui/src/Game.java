@@ -235,7 +235,13 @@ public class Game implements Serializable {
 			else
 			{
 				module.m_NetTaget.SendChatMsg("오답입니다.");
-				System.out.println(hand.indexOf(last));
+				/*for(int i=0; i<hand.size();i++)
+					if(hand.get(i).getColor() == last.getColor() && hand.get(i).getNum() == last.getNum())
+					{
+						hand.get(i).setOpen(true);
+						break;
+					}*/
+				last.setOpen(true);
 				module.m_NetTaget.SendOb(new DataHeader("game2", new GameData(module.GC)));
 				module.Next();
 			}

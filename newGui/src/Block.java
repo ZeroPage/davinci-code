@@ -3,7 +3,7 @@ import java.io.Serializable;
 public class Block implements Serializable {
 	int color; //검정 0, 하양 1
 	int num; //하이픈(조커)는 -1
-	transient boolean open;
+	boolean open;
 	transient boolean own;
 	
 	Block() {
