@@ -79,6 +79,7 @@ class GameWindow
 	{
 		//플레이어 넘버와 화면번호의 매칭
 		Block [] Card = Process.GetBlocksState(playerNum);
+		PlayerPane[PlayerNumToWindowNum[playerNum]].update(Card);
 		PlayerPane[PlayerNumToWindowNum[playerNum]].setEnable(Card, state);//0이 아래 부터 시계방향 순서대로
 	}
 	public void setCenterEnable(boolean state)
