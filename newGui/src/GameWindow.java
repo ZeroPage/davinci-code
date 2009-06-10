@@ -34,10 +34,13 @@ class GameWindow
 	
 	GameProcess Process;
 	
-	int [] PlayerNumToWindowNum; 
+	int [] PlayerNumToWindowNum;
+	
+	private JPanel nevertouch;
 	
 	public GameWindow(JPanel main, Network n)
 	{
+		nevertouch = main;
 		JPanel_Main = new JPanel()
 		{
 			ImageIcon BG = new ImageIcon(DavichiGUI.class.getResource("board.jpg"));
@@ -226,11 +229,13 @@ class GameWindow
 	}
 	public void RemoveAll()
 	{
+		JPanel_Main.setVisible(false);
+		
 		for(int i =0; i < 4; i++)
 		{
-			PlayerPane[i].remove();
+			PlayerPane[i].m_Panel.setVisible(false);
 		}
-		Center.remove();
+		Center.m_Panel.setVisible(false);
 	}
 	public int JokerInput(int [] index)
 	{
@@ -266,9 +271,8 @@ class GameWindow
 			{
 				JB_Cheek[index[i]].setIcon(cheek);
 			}
+			nevertouch.add(JPanel_Joker);
 			JPanel_Joker.setVisible(true);
-			
-			JPanel_Main.add(JPanel_Joker);
 		}
 		public void actionPerformed(ActionEvent event)
 		{
