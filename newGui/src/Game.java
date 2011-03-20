@@ -17,18 +17,19 @@ public class Game implements Serializable {		// 게임의 시작을 위한 초기 작업을 �
 		players	= new ArrayList<Player>();	// player 들을 저장할 리스트.
 		floor	= new ArrayList<Block>();	// 모든 block 들을 저장할 리스트.
 		setPlayers(numOfPlayer);			// playerNum 명의 player 를 생성함.
-		makeBlocks();						// block 들을 생성함.
+		makeFloorBlocks();						// block 들을 생성함.
 		mixBlocks(floor);					// 생성한 block 들을 섞음.
 	}
 
 	public void 				setFloor( ArrayList<Block> target )	{	floor = target; }
 	
-	public void 				setPlayers(int numOfPlayer) 		{	for(int i = 0; i < numOfPlayer; i++)	players.add( new Player() ); }// 주어진 인자 만큼의 player 를 생성한다.
-	public ArrayList<Player> 	getPlayers() 						{	return players; }
+	public void 				setPlayers(int numOfPlayer) {	for(int i = 0; i < numOfPlayer; i++)	players.add( new Player() ); }// 주어진 인자 만큼의 player 를 생성한다.
+	public ArrayList<Player> 	getPlayers() 				{	return players; }
+	public Player				getPlayer(int index)		{	return players.get(index); }
 	
 	//Block( int color, int num ), Black 0 : white 1
-	public void 				makeBlocks() 						{	for(int i = 0 ; i < 26; i++) floor.add( new Block( i/13, i%13 ) ); }// block 들의 숫자와 색을 설정한 뒤 blocks 에 추가한다.
-	public ArrayList<Block>		getBlocks()				 			{	return floor;	}
+	public void 				makeFloorBlocks() 			{	for(int i = 0 ; i < 26; i++) floor.add( new Block( i/13, i%13 ) ); }// block 들의 숫자와 색을 설정한 뒤 blocks 에 추가한다.
+	public ArrayList<Block>		getFloorBlocks()			{	return floor;	}
 	
 	public void swapBlock(ArrayList<Block> blocks, int n1, int n2)
 	{

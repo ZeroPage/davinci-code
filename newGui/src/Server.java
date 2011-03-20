@@ -13,6 +13,7 @@ public class Server extends Network
 
 	public Server()
 	{
+		System.out.println("[ Server : Constructor ]");
 		clientNum	= 0;								//현재 접속한 client 의 수를 초기화.
 		clients		= new ClientData[maxClient];		// client 정보를 저장할 메모리 생성.
 		wait		= new WaitingClient();						// server 가 client 의 접속을 기다리기 시작.
@@ -38,6 +39,7 @@ public class Server extends Network
 	}
 	public void SendOb(Object ob)		// 전달받은 객체를 server 에 접속한 모든 객체에 전달하는 메소드.
 	{
+		System.out.println("[ Server : SendOb ]");
 		for(int i = 0 ; i < clientNum ; i++)
 		{
 			try {	clients[i].SendOb(ob);	}	// client 에게 객체를 전달한다.
@@ -158,6 +160,8 @@ public class Server extends Network
 			//서버에게 온 데이터의 처리는 여기서 담당한다.
 			// 기본적으로 서버에게 온 데이터는 브로드 캐스팅이 되어 다시 나간다.
 			// 브로드 캐스팅을 막으려면 조건문 안에서 return을 시킬것.
+			
+			System.out.println("[ Server : dataEvent ]");
 			int flag = data.getFlag();
 			switch(flag) {
 				case DataHeader.CHAT:		// 데이터 헤더가 대화 이벤트일 경우.
@@ -165,10 +169,10 @@ public class Server extends Network
 					break;
 				case DataHeader.GAME:
 					//if(gameProcess.gameControl == null || !gameProcess.gameControl.equals((Game)data.getData()))
-					gameProcess.setGameControl((Game)data.getData());
+					gameProcess.setGameEnv((Game)data.getData());
 					break;
 				case DataHeader.GAMEDATA:
-					gameProcess.setGameControl((GameData)data.getData());
+					gameProcess.setGameEnv((GameData)data.getData());
 					break;
 				case DataHeader.PASS:		// 턴 넘김 메시지를 받고서, client 자신이 플레이할 차례가 되면 턴을 시행한다.
 					if(gameProcess.getPlayOrder() == ((Integer)data.getData()).intValue())
@@ -197,6 +201,7 @@ public class Server extends Network
 	
 	public void SendOrder()			// player 들에게 자신들의 게임 순서를 전송한다.
 	{
+		System.out.println("[ Server : SendOrder ]");
 		for(int i = 0; i < clientNum ; i++)
 			try {
 				clients[i].SendOb( new DataHeader( DataHeader.MYORDER, Integer.valueOf(i+1)) );	

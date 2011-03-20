@@ -11,7 +11,10 @@ public class Block implements Serializable {
 	private boolean		joker;
 	private boolean		open;
 	private int			sortingNum;	// 조커와 일반 블럭을 구분하지 않고, block 을 정렬하기 위해 선언된 변수. 조커는 기본적으로 12이지만 사용자의 선택에 따라 그 외의 숫자가 되기 때문에 이 변수가 필요함.
-	private boolean		own;		// 소유된 블럭인지 아닌지를 저장할 변수. transient는 직렬화할 때 제외할 변수임을 명시하는 기능을 함. 
+	private boolean		own;		// 소유된 블럭인지 아닌지를 저장할 변수. transient는 직렬화할 때 제외할 변수임을 명시하는 기능을 함.
+	
+	public static final int BLACK = 0;
+	public static final int WHITE = 1;
 	
 	/**
 	 * 기본 생성자는 만약을 대비해서 유지하는 것이 좋겠으나,

@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -7,12 +8,12 @@ import java.awt.event.WindowEvent;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
-import java.awt.Color;
 class AskDlg extends JDialog implements ActionListener		// ÃßÃøÇÒ ¼ýÀÚ¸¦ »ý¼ºÇÏ´Â ´ëÈ­»óÀÚ
 	{
-		JButton [] JB_Num = new JButton[13];
-		int Num;
-		public AskDlg() {
+		JButton []	JB_Num = new JButton[13];
+		int 		Num;
+		public AskDlg()									// Á¶Ä¿ ¸ÂÃß±â¿ë ´ëÈ­»óÀÚ
+		{
 			super((JFrame) getWindows()[0], "¼ýÀÚ¸¦ ¼±ÅÃÇÏ¼¼¿ä",true);
 			this.setSize(240,300);
 			this.setLayout(new GridLayout(5,3));
@@ -23,7 +24,8 @@ class AskDlg extends JDialog implements ActionListener		// ÃßÃøÇÒ ¼ýÀÚ¸¦ »ý¼ºÇÏ´
 				}	
 			});
 			
-			for(int i = 0; i < 13; i++) {
+			for(int i = 0; i < 13; i++)
+			{
 				JB_Num[i] = new JButton(""+ i);
 				JB_Num[i].addActionListener(this);
 				this.getContentPane().add(JB_Num[i]);
@@ -32,8 +34,8 @@ class AskDlg extends JDialog implements ActionListener		// ÃßÃøÇÒ ¼ýÀÚ¸¦ »ý¼ºÇÏ´
 			
 			this.setVisible(true);
 		}
-		public AskDlg(String title, String color) {		// Á¶Ä¿¿ë ´ëÈ­»óÀÚ.
-			super((JFrame) getWindows()[0], title,true);
+		public AskDlg(int color) {		// Á¶Ä¿ ¼³Á¤¿ë ´ëÈ­»óÀÚ.
+			super((JFrame) getWindows()[0], "Á¶Ä¿°¡ ´ë½ÅÇÒ ¼ýÀÚ¸¦ ¼±ÅÃÇÏ¼¼¿ä",true);
 			this.setSize(240,300);
 			this.setLayout(new GridLayout(5,3));
 			this.setLocation(getRootPane().getSize().width/2, getRootPane().getSize().height/2);
@@ -43,13 +45,18 @@ class AskDlg extends JDialog implements ActionListener		// ÃßÃøÇÒ ¼ýÀÚ¸¦ »ý¼ºÇÏ´
 				}	
 			});
 			
-			Color bgColor, frColor;
-			if(color.equals("black")) {
-				bgColor = new Color(0,0,0);
-				frColor = new Color(255,255,255);
-			} else {
-				frColor = new Color(0,0,0);
-				bgColor = new Color(255,255,255);
+			Color bgColor = null;
+			Color frColor = null;
+			
+			switch(color) {
+				case Block.BLACK:
+					bgColor = new Color(0,0,0);
+					frColor = new Color(255,255,255);
+					break;
+				case Block.WHITE:
+					frColor = new Color(0,0,0);
+					bgColor = new Color(255,255,255);
+					break;
 			}
 			for(int i = 0; i < 13; i++) {
 				JB_Num[i] = new JButton(""+ i);

@@ -37,8 +37,10 @@ class LobbyWindow implements ActionListener, ItemListener
 				JOptionPane.showMessageDialog(null, "닉네임을 입력하세요.", "알림", JOptionPane.ERROR_MESSAGE);
 				return;
 			}
+			
 			if(JCB_Server.isSelected())	myNetworkType = new Server();	//서버
-			else						myNetworkType = new Client();	//클라				
+			else						myNetworkType = new Client();	//클라
+			
 			myNetworkType.setM_Name		( JTF_Nick.getText() );							// 대상 네트워크 객체에 nick name 설정.
 			myNetworkType.setPortNum	( Integer.parseInt( JTF_Port.getText() ) );		// 포트 설정.
 			myNetworkType.Connect		( JTF_IPAddr.getText() );						// server 에 접속.

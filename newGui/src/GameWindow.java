@@ -79,6 +79,7 @@ class GameWindow
 	}
 	public void setEnable(int target, boolean state)
 	{
+		System.out.println("[ GameWindow : setEnable ]");
 		ArrayList<Block> blockState;
 		switch(target) {
 			case OTHERS:
@@ -98,6 +99,7 @@ class GameWindow
 		}
 	}
 	public void update() {				// 게임 윈도우 내의 block( center 와 player 모두) 들 상태를 갱신하는 메소드.
+		System.out.println("[ GameWindow : update ]");
 		ArrayList<Block> blockState;
 		int playerNum = Process.getNumOfPlayer();
 		for(int of_Player = 0; of_Player < playerNum; of_Player++) {			// player 수 만큼
@@ -120,7 +122,7 @@ class GameWindow
 			JOptionPane.showMessageDialog(null, "방장이 아닙니다.","알림", 2);
 		}
 	}
-	public void Setting(int PlayerNum)		// player 의 화면에서 자신은 맨 아래, 나머지는 다른 위치에 맞게 배열하도록 하는 메소드.
+	public void Setting(int PlayerNum)	// player 의 화면에서 자신은 맨 아래, 나머지는 다른 위치에 맞게 배열하도록 하는 메소드.
 	{
 		PlayerNumToWindowNum = new int[PlayerNum];	// 게임중인 player 수만큼 배열 생성.
 		switch(PlayerNum) {
@@ -218,7 +220,7 @@ class GameWindow
 				break;
 		}
 	}
-	public void RemoveAll()		// 게임 윈도우를 모두 보이지 않게 하는 메소드.
+	public void RemoveAll()				// 게임 윈도우를 모두 보이지 않게 하는 메소드.
 	{
 		JPanel_Main.setVisible(false);
 		for(int i = 0; i < 4; i++)	PlayerPane[i].m_Panel.setVisible(false);
@@ -272,6 +274,7 @@ class GameWindow
 		
 		public void setEnable(ArrayList<Block> blockState, boolean state)	// player 가 가진 block 들의 상태를 state 로 설정함.
 		{
+			System.out.println("[ PlayerWindow : setEnable ]");
 			//NPC에 같은 함수 같이 변경해야 함
 			for(int i = 0; playerBlock[i] != null; i++)
 			{
@@ -286,22 +289,22 @@ class GameWindow
 		}
 		public void update(ArrayList<Block> blocks)		// block 의 상태에 따라 색깔과 open,unknown 상태에 맞는 이미지로 block 을 갱신해준다.
 		{
-			for(int i = 0; i < blocks.size(); i++) {				//블럭을 업데이트 한다.
-				if(playerBlock[i] == null) {						// 아직 block 이 생성된 적이 없으면 새로 생성.
+			for(int i = 0; i < blocks.size(); i++)				//블럭을 업데이트 한다.
+			{
+				if(playerBlock[i] == null)
+				{						// 아직 block 이 생성된 적이 없으면 새로 생성.
 					playerBlock[i] = new JStyleButton();
 					playerBlock[i].addActionListener(this);
 					m_Panel.add(playerBlock[i]);
 					playerBlock[i].setMargin(new Insets(0,0,0,0));	// 버튼사이에 여백을 넣는 문구. 이 문장이 없을 경우 여백크기가 기본크기로 들어가는데, 그 크기가 너무 크다.
 				}
 				int num = blocks.get(i).getNum();
-				if(blocks.get(i).getColor() == 0) {					// i 번째 block 이 검정 일 경우
-					if(blocks.get(i).isOpen() || blocks.get(i).isOwned()) {
-						if(blocks.get(i).isOpen()) {							// 그 block 이 open 되어있을 경우에는
-							playerBlock[i].setIcon(ImageCardBlackOpen[num]);	// 알려진 표시를 해주고
-						}
-						else {													// 그렇지 않으면
-							playerBlock[i].setIcon(ImageCardBlack[num]);		// 일반 이미지를 표시한다.
-						}
+				if(blocks.get(i).getColor() == 0)					// i 번째 block 이 검정 일 경우
+				{
+					if(blocks.get(i).isOpen() || blocks.get(i).isOwned())
+					{
+						if(blocks.get(i).isOpen())	{ playerBlock[i].setIcon(ImageCardBlackOpen[num]); }// 그 block 이 open 되어있을 경우 알려진 표시를 해주고
+						else 						{ playerBlock[i].setIcon(ImageCardBlack[num]);	}	// 그렇지 않으면 일반 이미지를 표시한다.
 					}
 					else {														// open 되어있지 않고 소유되지도 않은 경우
 						playerBlock[i].setIcon(ImageCardBlackUnknown);			// 소유되어있지 않은 block 일 경우에는 알려지지 않았다는 이미지를 보여준다.
@@ -310,12 +313,8 @@ class GameWindow
 				}
 				else {			// 흰색 block 일 경우
 					if(blocks.get(i).isOpen() || blocks.get(i).isOwned()) {
-						if(blocks.get(i).isOpen()) {
-							playerBlock[i].setIcon(ImageCardWhiteOpen[num]);
-						}
-						else {
-							playerBlock[i].setIcon(ImageCardWhite[num]);
-						}
+						if(blocks.get(i).isOpen())	{ playerBlock[i].setIcon(ImageCardWhiteOpen[num]); }
+						else 						{ playerBlock[i].setIcon(ImageCardWhite[num]); }
 					}
 					else {		// 소유되어있지 않은 경우 뒷면을 보여준다.
 						playerBlock[i].setIcon(ImageCardWhiteUnknown);
@@ -328,7 +327,8 @@ class GameWindow
 		public void actionPerformed(ActionEvent e) {
 			// 해당 PlayerWindow 의 block 이 선택된 것이다. 
 			// 선택이 된다는 것은 이 playerWindow 에 해당하는 player 의 block 을 물어보는 것이기 때문에 askblock을 호출한다.
-			for(int btnIndex =0; playerBlock[btnIndex] != null; btnIndex++) {
+			for(int btnIndex =0; playerBlock[btnIndex] != null; btnIndex++)
+			{
 				if(e.getSource() == playerBlock[btnIndex]) {
 					Process.AskBlock(playerOrder, btnIndex, askNum());
 					break;
@@ -346,6 +346,7 @@ class GameWindow
 			m_Panel.setOpaque(false);
 		}
 		public void update(ArrayList<Block> blockState) {
+			System.out.println("[ NPC : update ]");
 			super.update(blockState);		// center 가 가진 block 들은 아무것도 소유되어진 것이 없기 때문에 모두 뒷면으로 이미지가 설정된다.
 			for(int i = blockState.size(); playerBlock[i] != null; i++) {
 				//playerBlock[i].removeAll();
@@ -356,6 +357,7 @@ class GameWindow
 		@Override
 		public void setEnable(ArrayList<Block> blockState, boolean state) {
 			//위의 플레이어 윈도우와 같이 변경해야함. 
+			System.out.println("[ NPC : setEnable ]");
 			for(int i = 0; playerBlock[i] != null; i++) {
 				playerBlock[i].setEnabled(state);
 				playerBlock[i].setRolloverEnabled(state);
@@ -369,7 +371,6 @@ class GameWindow
 			for(int i = 0; i < 26; i++) {
 				if(playerBlock[i] != null) {
 					if(e.getSource() == playerBlock[i]) {
-						
 						Process.moveBlock(i);
 					}
 				}

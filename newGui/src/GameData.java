@@ -11,11 +11,12 @@ public class GameData implements Serializable
 
 	public GameData(Game gc)
 	{
+		System.out.println("[ GameData : Constructor ]");
 		ArrayList<Block>	tmp;
 		ArrayList<Boolean>	boolTmp;
 		floor = new ArrayList<Block>();
-		for(int i = 0 ; i < gc.getBlocks().size() ; i++)
-			floor.add(gc.getBlocks().get(i));
+		for(int i = 0 ; i < gc.getFloorBlocks().size() ; i++)
+			floor.add(gc.getFloorBlocks().get(i));
 		
 		blocks = new ArrayList<ArrayList<Block>>();
 		
@@ -34,6 +35,7 @@ public class GameData implements Serializable
 		}
 		System.out.println("**************************************************");
 	}
-	public ArrayList<Block> 			getFloor()		{	return floor; }
-	public ArrayList<ArrayList<Block>>	getPlayers()	{	return blocks; }
+	public ArrayList<Block> 			getFloor()			{	return floor; }
+	public ArrayList<ArrayList<Block>>	getPlayers()		{	return blocks; }
+	public ArrayList<Block>				getBlocksOfPlayer(int index)	{	return blocks.get(index); }
 }

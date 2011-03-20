@@ -56,18 +56,13 @@ public class Client extends Network
 	
 	public void SendOb(Object ob)		// 인자로 받은 객체를 서버로 전송하는 메소드.
 	{
-		try
-		{
+		System.out.println("[ Client : SendOb ]");
+		try	{
 			OOutStream.writeObject(ob);		// 객체 output 스트림에 객체를 실어 보냄.
 			OOutStream.flush();				// 객체 output 스트림을 깨끗이 치운다.
-		} catch (SocketException e) {
-			System.out.println("Server 와의 연결이 종료되었습니다.");
-		} 
-		catch (IOException e)
-		{
-			
-			e.printStackTrace();
 		}
+		catch (SocketException e) {	System.out.println("Server 와의 연결이 종료되었습니다.");	} 
+		catch (IOException e)		{	e.printStackTrace(); }
 	}
 	public void Close()					// client 와 server 사이의 연결을 모두 종료하는 메소드.
 	{
@@ -115,6 +110,7 @@ public class Client extends Network
 //				System.out.println("재전송된 데이터 막힘.");
 //				return;
 //			}
+			System.out.println("[ Client : dataEvent ]");
 			int flag = data.getFlag();
 			switch(flag) {
 				case DataHeader.CHAT:		// 데이터 헤더가 대화 이벤트일 경우.
@@ -122,10 +118,10 @@ public class Client extends Network
 					break;
 				case DataHeader.GAME:
 					//if(gameProcess.gameControl == null || !gameProcess.gameControl.equals((Game)data.getData()))
-					gameProcess.setGameControl((Game)data.getData());
+					gameProcess.setGameEnv((Game)data.getData());
 					break;
 				case DataHeader.GAMEDATA:
-					gameProcess.setGameControl((GameData)data.getData());
+					gameProcess.setGameEnv((GameData)data.getData());
 					break;
 				case DataHeader.PASS:		// 턴 넘김 메시지를 받고서, client 자신이 플레이할 차례가 되면 턴을 시행한다.
 					if(gameProcess.getPlayOrder() == ((Integer)data.getData()).intValue())
@@ -154,11 +150,9 @@ public class Client extends Network
 				} 
 				catch (IOException e) {
 					listenning = false;
-					
 					e.printStackTrace();
 				} catch (ClassNotFoundException e) {
 //					close();
-					
 					e.printStackTrace();
 				}
 			}
@@ -166,9 +160,7 @@ public class Client extends Network
 	}
 
 	@Override
-	public boolean isServer()
-	{
+	public boolean isServer() {
 		return false;
 	}
-
 }
