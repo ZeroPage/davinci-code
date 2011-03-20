@@ -1,289 +1,57 @@
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import javax.swing.JOptionPane;
-
-public class Game implements Serializable {
-	ArrayList<Player> players;
-	ArrayList<Block> blocks;
-	transient private GameProcess module;
-	Block bJoker;
-	Block wJoker;
-	Game(GameProcess pro,  int n)
+/**
+ * 하나의 호스트에서 보여져야 할 player 들과 block 들을 게임 시작 전에 준비하는 클래스. 
+ * 
+ * @author Teolex
+ *
+ */
+public class Game implements Serializable {		// 게임의 시작을 위한 초기 작업을 수행한다.
+	
+	private ArrayList<Player>	players;		// 게임 내의 player 들을 저장할 리스트.
+	private ArrayList<Block>	floor;			// 게임중 바닥에 깔려있을 block 들을 저장할 리스트.
+	
+	Game( int numOfPlayer )
 	{
-		module = pro;
-		players = new ArrayList<Player>();
-		blocks = new ArrayList<Block>();
-		setPlayers(n);
-		setBlocks();
-		mixBlocks(blocks);
-	}
-	public void setModule(GameProcess module)
-	{
-		this.module = module;
-	}
-	public void setPlayers(int n) {
-		Player[] p = new Player[n];
-		for(int i=0; i<n; i++)
-		{
-			p[i] = new Player();
-			players.add(p[i]);
-		}
-	}
-	public void setBlocks() {
-		Block[] b = new Block[26];
-
-		for(int i=0; i<26; i++)
-		{
-			b[i] = new Block(((i<13) ? 0 : 1), i%13);
-			if(i==12)
-			{
-				bJoker = b[i];
-				bJoker.setNum(-1);
-			}
-			else if(i==25)
-			{
-				wJoker = b[i];
-				wJoker.setNum(-1);
-			}
-			blocks.add(b[i]);
-		}
-	}
-	public void setBlocks(ArrayList<Block> tb)
-	{
-		for(int i=0;i<tb.size();i++)
-			blocks.add(tb.get(i));
-	}
-	public ArrayList<Player> getPlayers() {
-		return players;
-	}
-	public ArrayList<Block> getBlocks() {
-		return blocks;
+		players	= new ArrayList<Player>();	// player 들을 저장할 리스트.
+		floor	= new ArrayList<Block>();	// 모든 block 들을 저장할 리스트.
+		setPlayers(numOfPlayer);			// playerNum 명의 player 를 생성함.
+		makeBlocks();						// block 들을 생성함.
+		mixBlocks(floor);					// 생성한 block 들을 섞음.
 	}
 
-	public void swapBlock(ArrayList<Block> blocks, int n1, int n2) {
+	public void 				setFloor( ArrayList<Block> target )	{	floor = target; }
+	
+	public void 				setPlayers(int numOfPlayer) 		{	for(int i = 0; i < numOfPlayer; i++)	players.add( new Player() ); }// 주어진 인자 만큼의 player 를 생성한다.
+	public ArrayList<Player> 	getPlayers() 						{	return players; }
+	
+	//Block( int color, int num ), Black 0 : white 1
+	public void 				makeBlocks() 						{	for(int i = 0 ; i < 26; i++) floor.add( new Block( i/13, i%13 ) ); }// block 들의 숫자와 색을 설정한 뒤 blocks 에 추가한다.
+	public ArrayList<Block>		getBlocks()				 			{	return floor;	}
+	
+	public void swapBlock(ArrayList<Block> blocks, int n1, int n2)
+	{
 		Block tb = blocks.get(n1);
 
 		blocks.set(n1,blocks.get(n2));
 		blocks.set(n2,tb);
 	}
-	public void mixBlocks(ArrayList<Block> blocks) {
-		int n1 = (int)(Math.random()*26);
-		int n2 = (int)(Math.random()*26);
-
-		for(int i=0; i<50; i++) {
-			swapBlock(blocks, n1, n2);
+	public void mixBlocks(ArrayList<Block> blocks)	// 게임 컨트롤이 생성한 block 들의 순서를 섞는다.
+	{
+		int n1, n2;
+		for(int i = 0; i < 50; i++)
+		{
 			n1 = (int)(Math.random()*26);
 			n2 = (int)(Math.random()*26);
+			swapBlock(blocks, n1, n2);
 		}
 	}
-
-	/*for(int i=0; i<playerNum; i++) {
-			for(int j=0; j<4; j++) { // 시작하면 j 개 만큼 패를 가진다.
-				System.out.println("\n\n");
-				printBlocks(blocks);
-				//players[i].getBlock(blocks);
-			}
-		}
-		int i=0;
-		while(End()) {
-			if(players[i].getPlay() == false) {
-				i = ++i % 2;
-				continue;
-			}
-
-			System.out.println("\n\n");
-			printBlocks(blocks);
-
-			for(int k=0; k<playerNum; k++) {
-				System.out.println("\n\n");
-				System.out.println("Player : " + (k+1));
-				printBlocks(players[k].getHand());
-				System.out.println();
-			}
-
-			players[i].getBlock(blocks);
-			sortBlock(players[i].getHand(), players[i].getBlockNum());
-
-			players[i].askBlock(players);				
-
-			i = ++i % playerNum;
-		}*/
-
-	public boolean End() {
+	public boolean isEnd()	// player 들의 상태가 어떤지 확인하고  게임이 끝났는지 확인하는 메소드.
+	{
 		int alive = 0;
-		for(int i=0; i<players.size(); i++) {
-			if(true == players.get(i).getPlay())
-				alive++;
-		}
-		return alive==1;
-	}
-
-	public class Player implements Serializable {
-		ArrayList<Block> hand;//자신이 가진 블록을 저장하는 배열
-		private Block last;
-		private boolean play;//플레이여부를 결정
-		private int loh = -5;//핸드의 가장 왼쪽 숫자.기본값은 범위 밖
-		private int roh = 15;//핸드의 가장 오른쪽 숫자.기본값은 범위 밖
-		private int isJoker = -1;//조커 소유여부. 기본값-1은 조커가 없을때, 0은 블랙, 1은 화이트 조커가 있을때
-		Player() {
-			hand = new ArrayList<Block>();
-			play = true;
-		}
-		public void setHand(Block n) {
-
-		}
-		public void setPlay(boolean n) {
-			play = n;
-		}
-		public void setLoh(int n) {
-			loh = n;
-		}
-		public void setRoh(int n) {
-			roh = n;
-		}
-		/*public void setIsbjoker(boolean n) {
-			isBjoker = n;
-		}
-		public void setIswjoker(boolean n) {
-			isWjoker = n;
-		}*/
-		public void setIsjoker(int n)
-		{
-			isJoker = n;
-		}
-		public ArrayList<Block> getHand() {
-			return hand;
-		}
-		public boolean getPlay() {
-			return play;
-		}
-		public int getLoh() {
-			return loh;
-		}
-		public int getRoh() {
-			return roh;
-		}
-		/*public boolean getIsbjoker() {
-			return isBjoker;
-		}
-		public boolean getIswjoker() {
-			return isWjoker;
-		}*/
-		public int getIsjoker() {
-			return isJoker;
-		}
-		public void selectBlock()
-		{
-			module.m_GUITaget.setCenterEnable(true);
-		}
-		public void getBlock(int blockNum) {
-			last = blocks.get(blockNum);
-			hand.add(last);
-			blocks.remove(blockNum);
-			hand.get(hand.size()-1).setOwn(true);
-			module.m_NetTaget.SendOb(new DataHeader("game2", new GameData(module.GC)));
-		}
-			/*if(DC.getBlocks().get(blockNum).getNum()==-1)
-			{
-				if(DC.getBlocks().get(blockNum).getColor()==0)
-					setIsbjoker(true);
-				else
-					setIswjoker(true);
-				int input;//원하는 위치에 클릭.input받음
-				hand.add(input,blocks.get(selectedBlock));
-				blocks.remove(selectedBlock);
-				if(input==0)
-				{
-					setRoh(hand.get(1).getNum());
-				}
-				else if(input>=hand.get(hand.size()-1).getNum())
-				{
-					setLoh(hand.get(hand.size()-2).getNum());
-				}
-				else
-				{
-					setRoh(hand.get(input-1).getNum());
-					setLoh(hand.get(input+1).getNum());
-				}
-			}
-			else if(blocks.get(selectedBlock).getNum()!=-1&&getIsjoker()==true)
-			{
-				if(blocks.get(selectedBlock).getNum()>loh && blocks.get(selectedBlock).getNum()<roh)
-				{
-					int choice;//어느쪽에 들어갈지 선택.-1은 왼쪽, 1은 오른쪽(가정)
-					if(choice == -1)
-					{
-						hand.add(, blocks.get(selectedBlock));
-					}
-				}
-			}
-			 */
-			//sortBlock(getHand(), 0, hand.size()-1);
-
-		public void askBlock(int selectedPlayer, int selectedBlock, int selectedNum) {		
-				
-			if(players.get(selectedPlayer).checkBlock(selectedBlock, selectedNum))
-			{
-				module.m_NetTaget.SendOb(new DataHeader("game2", new GameData(module.GC)));
-				if(!getPlay())	
-				module.m_NetTaget.SendChatMsg("정답입니다.");
-				if(JOptionPane.showConfirmDialog(null, "빙고! 계속하시겠습니까?", "확인",JOptionPane.YES_NO_OPTION)==0)
-					module.AskBlock();
-				else
-					module.Next();
-			}
-			else
-			{
-				module.m_NetTaget.SendChatMsg("오답입니다.");
-				/*for(int i=0; i<hand.size();i++)
-					if(hand.get(i).getColor() == last.getColor() && hand.get(i).getNum() == last.getNum())
-					{
-						hand.get(i).setOpen(true);
-						break;
-					}*/
-				last.setOpen(true);
-				module.m_NetTaget.SendOb(new DataHeader("game2", new GameData(module.GC)));
-				module.Next();
-			}
-		}
-		public boolean checkBlock(int selectedBlock, int num) {
-			if(hand.get(selectedBlock).getNum() == num) {
-				hand.get(selectedBlock).setOpen(true);
-				module.m_GUITaget.update();
-				module.m_NetTaget.SendOb(new DataHeader("game2", new GameData(module.GC)));
-				isPlay();
-				return true;
-			}
-			return false;
-		}
-		public void isPlay() {
-			for(int i=0; i<hand.size(); i++) {
-				if(hand.get(i).getOpen() == false)
-					return;
-			}
-			setPlay(false);
-			module.m_NetTaget.SendChatMsg("패를 모두 알아냈습니다.");
-			module.m_NetTaget.SendOb(new DataHeader("game2", new GameData(module.GC)));
-			if(module.GC.End())
-				module.End();
-		}
-		public void swapBlock(ArrayList<Block> blocks, int n1, int n2) {
-			Block tb1 = blocks.get(n1);
-			Block tb2 = blocks.get(n2);
-			blocks.set(n1,tb2);
-			blocks.set(n2,tb1);
-		}
-		public void sortBlock(int s, int e) {
-			for(int i = s; i<e;i++)
-			{
-				for(int j=s;j<e;j++){
-					if(hand.get(j).getNum()>hand.get(j+1).getNum())
-						swapBlock(hand, j, j+1);
-					if(hand.get(j).getNum()==hand.get(j+1).getNum()&&hand.get(j).getColor()==1&&hand.get(j+1).getColor()==0)
-						swapBlock(hand, j, j+1);
-				}
-			}
-		}
+		for( int i = 0; i < players.size(); i++ )
+			if(players.get(i).getPlay() == true)	alive++;
+		return alive==1;	// 남아있는 것이 혼자이면 게임이 끝난 것.
 	}
 }
