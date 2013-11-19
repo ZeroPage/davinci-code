@@ -1,8 +1,8 @@
 
 
 public class Block {
-	private int color; //°ËÁ¤ 0, ÇÏ¾ç 1
-	private int num; //ÇÏÀÌÇÂ(Á¶Ä¿)´Â -1
+	private int color; //ê²€ì • 0, í•˜ì–‘ 1
+	private int num; //í•˜ì´í”ˆ(ì¡°ì»¤)ëŠ” -1
 	private boolean own;
 	private boolean open;
 	
@@ -15,8 +15,8 @@ public class Block {
 	Block(int color, int num){
 		setColor(color);
 		setNum(num);
-		own  = false; //´©±º°¡ °¡Á³´ÂÁö ¿©ºÎ
-		open = false; //°ø°³¿©ºÎ
+		own  = false; //ëˆ„êµ°ê°€ ê°€ì¡ŒëŠ”ì§€ ì—¬ë¶€
+		open = false; //ê³µê°œì—¬ë¶€
 	}	
 	public void setColor(int n) {
 		color = n;

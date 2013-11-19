@@ -31,7 +31,7 @@ public class Player {
 	}
 	public ArrayList<Block> getHand() {
 		return hand;
-	}
+	} 
 	public boolean getPlay() {
 		return play;
 	}

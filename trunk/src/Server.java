@@ -12,7 +12,7 @@ public class Server extends Thread {
 	private String myName;
 	
 	Server(int port) throws IOException {
-		server = new ServerSocket(port, 3); //3¸í±îÁö¸¸ Á¢¼Ó °¡´É
+		server = new ServerSocket(port, 3); //3ëª…ê¹Œì§€ë§Œ ì ‘ì† ê°€ëŠ¥
 		clients = new Socket[3];
 		outData = new PrintWriter[3];
 		inData = new SLisener[3];

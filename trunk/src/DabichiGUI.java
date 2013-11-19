@@ -80,7 +80,7 @@ public class DabichiGUI extends JFrame
 			JMenu JM_File = new JMenu("파일");//파일 메뉴단추;
 			
 			JMI_File_Connet = new JMenuItem("접속");
-			JM_File.add(JMI_File_Connet);//file 메뉴에 부착;
+			JM_File.add(JMI_File_Connet);//file 메뉴에 부착; 
 			JMI_File_Connet.addActionListener(handler);
 			
 			JMI_File_Exit = new JMenuItem("닫기");

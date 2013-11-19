@@ -50,7 +50,7 @@ public class Game {
 		Block tb = blocks.get(n1);
 		
 		blocks.set(n1,blocks.get(n2));
-		blocks.set(n2,tb);
+		blocks.set(n2,tb); 
 	}
 	public void mixBlocks(ArrayList<Block> blocks) {
 		int n1 = (int)(Math.random()*26);

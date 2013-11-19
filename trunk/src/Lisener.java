@@ -31,7 +31,7 @@ public class Lisener extends Thread {
 	public void setGUI(DabichiGUI gui)
 	{
 		GUI = gui;
-	}
+	} 
 	public DabichiGUI getGUI()
 	{
 		return GUI;

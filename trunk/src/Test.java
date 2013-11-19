@@ -18,7 +18,7 @@ public class Test {
 		name = scan.nextLine();
 		System.out.print("1 : server.\n2 : client.\nEnter the case : ");
 		switch(Integer.parseInt(scan.nextLine())) {
-		case 1: //¼­¹ö ºÎºĞ
+		case 1: //ì„œë²„ ë¶€ë¶„
 			host = new Server(10002);
 			host.start();
 			
@@ -27,7 +27,7 @@ public class Test {
 				host.sendData(input);
 			}
 			break;
-		case 2: //Å¬¶óÀÌ¾ğÆ® ºÎºĞ
+		case 2: //í´ë¼ì´ì–¸íŠ¸ ë¶€ë¶„
 			client = new Client();
 			System.out.print("Enter the server ip : ");
 			input = scan.nextLine();

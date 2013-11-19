@@ -18,7 +18,7 @@ public class SLisener extends Lisener {
 		while(true) {
 			if(!getConnection().isConnected() || temp.equals("exit")) {
 				close();
-				getGUI().ChatLisener("Á¢¼ÓÀÌ Á¾·áµÇ¾ú½À´Ï´Ù.");
+				getGUI().ChatLisener("ì ‘ì†ì´ ì¢…ë£Œë˜ì—ˆìŠµë‹ˆë‹¤.");
 				//System.out.println(temp);
 				return;
 			}

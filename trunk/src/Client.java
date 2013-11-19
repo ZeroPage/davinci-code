@@ -24,7 +24,7 @@ public class Client {
 	public void connectServer(Socket server) throws IOException {
 		inData = new Lisener(server);
 		outData = new PrintWriter(server.getOutputStream(), true);
-		sendData("Á¢¼ÓÇÏ¿´½À´Ï´Ù.");
+		sendData("ì ‘ì†í•˜ì˜€ìŠµë‹ˆë‹¤.");
 		inData.start();
 	}
 	public void sendData(String data) {
