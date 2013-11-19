@@ -5,67 +5,67 @@ import javax.swing.JOptionPane;
 
 public class Player implements Serializable
 {
-		ArrayList<Block>	hand	= null;		//ÀÚ½ÅÀÌ °¡Áø ºí·ÏÀ» ÀúÀåÇÏ´Â ¹è¿­
-		private Block		last	= null;		//¸¶Áö¸·¿¡ °¡Á®¿Â block. »ó´ë¹æÀÇ block À» Ãß¸®ÇÑ °Ô Æ²¸± °æ¿ì ÀÌ block À» °ø°³ÇØ¾ß ÇÑ´Ù.
-		private boolean		play	= false;	//ÇÃ·¹ÀÌ ¿©ºÎ¸¦ °áÁ¤
+		ArrayList<Block>	hand	= null;		//ìì‹ ì´ ê°€ì§„ ë¸”ë¡ì„ ì €ì¥í•˜ëŠ” ë°°ì—´
+		private Block		last	= null;		//ë§ˆì§€ë§‰ì— ê°€ì ¸ì˜¨ block. ìƒëŒ€ë°©ì˜ block ì„ ì¶”ë¦¬í•œ ê²Œ í‹€ë¦´ ê²½ìš° ì´ block ì„ ê³µê°œí•´ì•¼ í•œë‹¤.
+		private boolean		play	= false;	//í”Œë ˆì´ ì—¬ë¶€ë¥¼ ê²°ì •
 		
 		Player() {
 			hand = new ArrayList<Block>();
 			play = true;
 		}
-		public Block			getLast() {	return last; }	// ¸¶Áö¸·À¸·Î ¹ŞÀº block À» ¹İÈ¯ÇÏ´Â ¸Ş¼Òµå.
-		public ArrayList<Block> getHand() {	return hand; }	// player °¡ °¡Áö°í ÀÖ´Â block µéÀ» ¹İÈ¯.
-		public boolean 			getPlay() {	return play; }	// ÇöÀç play ÁßÀÎÁö¸¦ ¹İÈ¯.
-		public void 			getBlock(ArrayList<Block> floor, int blockIndex)	// center ¿¡ ÀÖ´ø block À» °¡Á®¿À´Â ÇÔ¼ö. player ÀÇ ¼ÒÀ¯°¡ µÇµµ·Ï ¼³Á¤µÈ´Ù.
+		public Block			getLast() {	return last; }	// ë§ˆì§€ë§‰ìœ¼ë¡œ ë°›ì€ block ì„ ë°˜í™˜í•˜ëŠ” ë©”ì†Œë“œ.
+		public ArrayList<Block> getHand() {	return hand; }	// player ê°€ ê°€ì§€ê³  ìˆëŠ” block ë“¤ì„ ë°˜í™˜.
+		public boolean 			getPlay() {	return play; }	// í˜„ì¬ play ì¤‘ì¸ì§€ë¥¼ ë°˜í™˜.
+		public void 			getBlock(ArrayList<Block> floor, int blockIndex)	// center ì— ìˆë˜ block ì„ ê°€ì ¸ì˜¤ëŠ” í•¨ìˆ˜. player ì˜ ì†Œìœ ê°€ ë˜ë„ë¡ ì„¤ì •ëœë‹¤.
 		{
-			last = floor.get(blockIndex);	// ¹Ù´Ú¿¡ ±ò¸° block µé Áß blockIndex ¿¡ ÇØ´çÇÏ´Â block À» ¼±ÅÃ.
-			last.setOwn(true);				// ÇØ´ç block À» ¼ÒÀ¯µÈ block À¸·Î ¼³Á¤.
-			hand.add(last);					// player ÀÇ block ¿¡ Ãß°¡ÇÑ´Ù.
-			floor.remove(blockIndex);		// ¹Ù´Ú¿¡¼­ ±× block À» Á¦°ÅÇÑ´Ù.
-			sortBlock();					// ÇöÀç °¡Áö°í ÀÖ´Â block À» Á¤·ÄÇÑ´Ù.
+			last = floor.get(blockIndex);	// ë°”ë‹¥ì— ê¹”ë¦° block ë“¤ ì¤‘ blockIndex ì— í•´ë‹¹í•˜ëŠ” block ì„ ì„ íƒ.
+			last.setOwn(true);				// í•´ë‹¹ block ì„ ì†Œìœ ëœ block ìœ¼ë¡œ ì„¤ì •.
+			hand.add(last);					// player ì˜ block ì— ì¶”ê°€í•œë‹¤.
+			floor.remove(blockIndex);		// ë°”ë‹¥ì—ì„œ ê·¸ block ì„ ì œê±°í•œë‹¤.
+			sortBlock();					// í˜„ì¬ ê°€ì§€ê³  ìˆëŠ” block ì„ ì •ë ¬í•œë‹¤.
 			
 		}
 		public void askBlock(Player targetPlayer, GameProcess proc, int selectedBlockIndex, int selectedNum)
 		{
 			System.out.println("[ Player : askBlock ]");
-			if(targetPlayer.checkBlock(proc, selectedBlockIndex, selectedNum))	// ÃßÃøÀÌ ¸ÂÀ¸¸é
+			if(targetPlayer.checkBlock(proc, selectedBlockIndex, selectedNum))	// ì¶”ì¸¡ì´ ë§ìœ¼ë©´
 			{
-				if(JOptionPane.showConfirmDialog(null, "ºù°í! °è¼ÓÇÏ½Ã°Ú½À´Ï±î?", "È®ÀÎ",JOptionPane.YES_NO_OPTION)==0)
-					proc.gameWndGUI.setEnable(GameWindow.OTHERS, true);		// °è¼ÓÇÒ °æ¿ì ´Ù¸¥ ÇÃ·¹ÀÌ¾îµéÀÇ block À» ¼±ÅÃ°¡´ÉÇÏ°Ô ¼³Á¤.
+				if(JOptionPane.showConfirmDialog(null, "ë¹™ê³ ! ê³„ì†í•˜ì‹œê² ìŠµë‹ˆê¹Œ?", "í™•ì¸",JOptionPane.YES_NO_OPTION)==0)
+					proc.gameWndGUI.setEnable(GameWindow.OTHERS, true);		// ê³„ì†í•  ê²½ìš° ë‹¤ë¥¸ í”Œë ˆì´ì–´ë“¤ì˜ block ì„ ì„ íƒê°€ëŠ¥í•˜ê²Œ ì„¤ì •.
 				else
-					proc.Next();							// ±×¸¸µÑ °æ¿ì ´ÙÀ½ player ¿¡°Ô ÅÏ ³Ñ±è.
+					proc.Next();							// ê·¸ë§Œë‘˜ ê²½ìš° ë‹¤ìŒ player ì—ê²Œ í„´ ë„˜ê¹€.
 			}
-			else {			// Æ²·ÈÀ» °æ¿ì
+			else {			// í‹€ë ¸ì„ ê²½ìš°
 				System.out.println("last = "+last.getNum());
-				proc.netObject.SendChatMsg("¿À´äÀÔ´Ï´Ù.");		// ¿À´ä ¸Ş½ÃÁö¸¦ Ã¤ÆÃÃ¢¿¡ º¸³»°í
-				last.setOpen(true);								// ¸¶Áö¸·¿¡ °¡Á®¿Â block À» °ø°³ÇÏµµ·Ï ¼³Á¤ÇÏ°í
+				proc.netObject.SendChatMsg("ì˜¤ë‹µì…ë‹ˆë‹¤.");		// ì˜¤ë‹µ ë©”ì‹œì§€ë¥¼ ì±„íŒ…ì°½ì— ë³´ë‚´ê³ 
+				last.setOpen(true);								// ë§ˆì§€ë§‰ì— ê°€ì ¸ì˜¨ block ì„ ê³µê°œí•˜ë„ë¡ ì„¤ì •í•˜ê³ 
 				proc.gameWndGUI.update();
 				proc.netObject.SendOb(new DataHeader(DataHeader.GAMEDATA, new GameData(proc.getGameEnv())));
 				proc.Next();
 			}
 		}
 
-		public boolean checkBlock(GameProcess proc, int selectedBlockIndex, int num)	// ´Ù¸¥ player °¡ ÃßÃøÇÑ num °ú  ³» blockÀÇ ¼ıÀÚ°¡ °°ÀºÁö Ã¼Å©ÇÏ´Â ÇÔ¼ö.
+		public boolean checkBlock(GameProcess proc, int selectedBlockIndex, int num)	// ë‹¤ë¥¸ player ê°€ ì¶”ì¸¡í•œ num ê³¼  ë‚´ blockì˜ ìˆ«ìê°€ ê°™ì€ì§€ ì²´í¬í•˜ëŠ” í•¨ìˆ˜.
 		{
 			System.out.println("[ Player : cheeckBlock ]");
 			Block b_tmp = hand.get(selectedBlockIndex); 
-			if(b_tmp.getNum() == num) {	// ¼±ÅÃµÈ block ÀÇ ¼ıÀÚ°¡ num °ú °°À¸¸é
-				b_tmp.setOpen(true);		// ±× block À» open »óÅÂ·Î ¼³Á¤.
-				proc.gameWndGUI.update();						// °ÔÀÓ ÇÁ·Î¼¼½ºÀÇ GUI »óÅÂ¸¦ ¾÷µ¥ÀÌÆ® ÇÑ´Ù.
+			if(b_tmp.getNum() == num) {	// ì„ íƒëœ block ì˜ ìˆ«ìê°€ num ê³¼ ê°™ìœ¼ë©´
+				b_tmp.setOpen(true);		// ê·¸ block ì„ open ìƒíƒœë¡œ ì„¤ì •.
+				proc.gameWndGUI.update();						// ê²Œì„ í”„ë¡œì„¸ìŠ¤ì˜ GUI ìƒíƒœë¥¼ ì—…ë°ì´íŠ¸ í•œë‹¤.
 				proc.netObject.SendOb(new DataHeader(DataHeader.GAMEDATA, new GameData(proc.getGameEnv())));
-				// °ÔÀÓ ÇÁ·Î¼¼½ºÀÇ ³×Æ®¿öÅ©¿¡ ÇöÀç °ÔÀÓ»óÅÂ(GameData(proc.gameControl))°´Ã¼¸¦ Àü´ŞÇÑ´Ù.
+				// ê²Œì„ í”„ë¡œì„¸ìŠ¤ì˜ ë„¤íŠ¸ì›Œí¬ì— í˜„ì¬ ê²Œì„ìƒíƒœ(GameData(proc.gameControl))ê°ì²´ë¥¼ ì „ë‹¬í•œë‹¤.
 				isPlay(proc);
 				return true;
 			}
 			return false;
 		}
-		public void isPlay(GameProcess proc)					// player°¡ °è¼Ó play ÇÒ¼ö ÀÖ´Â »óÅÂÀÎÁö¸¦ È®ÀÎÇÏ°í ±×¿¡ µû¸¥ µ¿ÀÛÀ» ¼öÇàÇÑ´Ù.
+		public void isPlay(GameProcess proc)					// playerê°€ ê³„ì† play í• ìˆ˜ ìˆëŠ” ìƒíƒœì¸ì§€ë¥¼ í™•ì¸í•˜ê³  ê·¸ì— ë”°ë¥¸ ë™ì‘ì„ ìˆ˜í–‰í•œë‹¤.
 		{
-			for(int i = 0; i < hand.size(); i++)				// ¾ÆÁ÷ open µÇÁö ¾ÊÀº block ÀÌ ÀÖÀ» °æ¿ì
-				if(hand.get(i).isOpen() == false)	return;		// ÇÔ¼ö Á¾·á.
+			for(int i = 0; i < hand.size(); i++)				// ì•„ì§ open ë˜ì§€ ì•Šì€ block ì´ ìˆì„ ê²½ìš°
+				if(hand.get(i).isOpen() == false)	return;		// í•¨ìˆ˜ ì¢…ë£Œ.
 
-			play = false;										// ¸ğµÎ open µÇ¾úÀ¸¹Ç·Î play »óÅÂ¸¦ false·Î ¼³Á¤.
-			proc.netObject.SendChatMsg("ÆĞ¸¦ ¸ğµÎ ¾Ë¾Æ³Â½À´Ï´Ù.");	// °ÔÀÓ ÇÁ·Î¼¼½ºÀÇ network Å¸°ÙÀ¸·Î ¸Ş½ÃÁö Àü´Ş.
+			play = false;										// ëª¨ë‘ open ë˜ì—ˆìœ¼ë¯€ë¡œ play ìƒíƒœë¥¼ falseë¡œ ì„¤ì •.
+			proc.netObject.SendChatMsg("íŒ¨ë¥¼ ëª¨ë‘ ì•Œì•„ëƒˆìŠµë‹ˆë‹¤.");	// ê²Œì„ í”„ë¡œì„¸ìŠ¤ì˜ network íƒ€ê²Ÿìœ¼ë¡œ ë©”ì‹œì§€ ì „ë‹¬.
 			proc.netObject.SendOb(new DataHeader(DataHeader.GAMEDATA, new GameData(proc.getGameEnv())));
 			if(proc.getGameEnv().isEnd())
 				proc.End();
@@ -76,7 +76,7 @@ public class Player implements Serializable
 			blocks.set(n1,tb2);
 			blocks.set(n2,tb1);
 		}
-		public void sortBlock()			// player ÀÇ block À» Á¤·Ä.
+		public void sortBlock()			// player ì˜ block ì„ ì •ë ¬.
 		{
 			Block	pre, pst;
 			int		preCol, pstCol;
@@ -87,15 +87,15 @@ public class Player implements Serializable
 				{
 					pre	= hand.get(j);
 					pst	= hand.get(j+1);
-					preCol	= pre.getColor();		// block ÀÇ »ö±ò
+					preCol	= pre.getColor();		// block ì˜ ìƒ‰ê¹”
 					pstCol	= pst.getColor();
-					preNum	= pre.getSortingNum();	// block ÀÇ Á¤·Ä¼ıÀÚ.
+					preNum	= pre.getSortingNum();	// block ì˜ ì •ë ¬ìˆ«ì.
 					pstNum	= pst.getSortingNum();
 					
 					if( preNum > pstNum )
-						swapBlock(hand, j, j+1);	// ¾ÕÀÇ °ÍÀÌ ´õ ¼ıÀÚ°¡ Å©¸é ¼ø¼­±³È¯.
+						swapBlock(hand, j, j+1);	// ì•ì˜ ê²ƒì´ ë” ìˆ«ìê°€ í¬ë©´ ìˆœì„œêµí™˜.
 					else if( (preNum == pstNum) && ( preCol == Block.WHITE) && (pstCol == Block.BLACK ) )
-						swapBlock(hand, j, j+1);	// µÎ block ÀÇ ¼ıÀÚ°¡ °°À» °æ¿ì¿¡´Â °ËÀº»ö ºí·°À» ¿ŞÂÊ¿¡ ³õ´Â´Ù.
+						swapBlock(hand, j, j+1);	// ë‘ block ì˜ ìˆ«ìê°€ ê°™ì„ ê²½ìš°ì—ëŠ” ê²€ì€ìƒ‰ ë¸”ëŸ­ì„ ì™¼ìª½ì— ë†“ëŠ”ë‹¤.
 				}
 			}
 		}

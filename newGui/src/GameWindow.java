@@ -35,12 +35,12 @@ class GameWindow
 	public static final int NORMAL = 0;
 	public static final int OTHERS = 4;
 	
-	GameProcess Process;				// °ÔÀÓ À©µµ¿ì ÀüÃ¼ ³»¿¡¼­ °ÔÀÓ ÁøÇàÀ» ¸ÃÀ» Å¬·¡½º.
+	GameProcess Process;				// ê²Œì„ ìœˆë„ìš° ì „ì²´ ë‚´ì—ì„œ ê²Œì„ ì§„í–‰ì„ ë§¡ì„ í´ë˜ìŠ¤.
 	
-	int [] PlayerNumToWindowNum;		// index ´Â player °ÔÀÓ ¼ø¼­, °ªÀº player °¡ À©µµ¿ì »ó¿¡ ³ªÅ¸³¯ À§Ä¡¸¦ ±â·ÏÇÏ´Â ¹è¿­.
-										// PlayerNumToWindowNum[n] == 0 ÀÏ¶§, n Àº player ÀÚ½ÅÀÇ °ÔÀÓ ¼ø¼­. 
+	int [] PlayerNumToWindowNum;		// index ëŠ” player ê²Œì„ ìˆœì„œ, ê°’ì€ player ê°€ ìœˆë„ìš° ìƒì— ë‚˜íƒ€ë‚  ìœ„ì¹˜ë¥¼ ê¸°ë¡í•˜ëŠ” ë°°ì—´.
+										// PlayerNumToWindowNum[n] == 0 ì¼ë•Œ, n ì€ player ìì‹ ì˜ ê²Œì„ ìˆœì„œ. 
 	
-	private JPanel nevertouch;			// °ÔÀÓ À©µµ¿ìÀÇ ÃÖ»óÀ§ frame panel.
+	private JPanel nevertouch;			// ê²Œì„ ìœˆë„ìš°ì˜ ìµœìƒìœ„ frame panel.
 	
 	public GameWindow(JPanel main, Network net)
 	{
@@ -56,7 +56,7 @@ class GameWindow
 		};
 		JPanel_Main.setLayout(new BorderLayout());
 
-		//ÀÌ¹ÌÁö ·Îµù
+		//ì´ë¯¸ì§€ ë¡œë”©
 		for(int i = 0; i < 13; i++) {
 			ImageCardBlack[i]		= new ImageIcon(DavichiGUI.class.getResource("card/b"+i+".gif"));
 			ImageCardBlackOpen[i]	= new ImageIcon(DavichiGUI.class.getResource("card/b"+i+"r.gif"));
@@ -68,13 +68,13 @@ class GameWindow
 		ImageCardBlackUnknownRollerover = new ImageIcon(DavichiGUI.class.getResource("card/bur.gif"));
 		ImageCardWhiteUnknownRollerover = new ImageIcon(DavichiGUI.class.getResource("card/wur.gif"));
 		
-		//ÇÃ·¹ÀÌ¾î ¿Í NPCÆĞ³ÎÀÇ ¼³Á¤
+		//í”Œë ˆì´ì–´ ì™€ NPCíŒ¨ë„ì˜ ì„¤ì •
 		for(int i = 0; i < 4; i++)	PlayerPane[i] = new PlayerWindow(i);
 		Center = new NPC();
 		
 		main.add(JPanel_Main);
 		
-		Process = new GameProcess(this, net);		// °ÔÀÓ À©µµ¿ì°¡ »ı¼ºµÇ¸é¼­ °ÔÀÓ ÇÁ·Î¼¼½ºµµ ÇÏ³ª »ı¼ºµÊ.
+		Process = new GameProcess(this, net);		// ê²Œì„ ìœˆë„ìš°ê°€ ìƒì„±ë˜ë©´ì„œ ê²Œì„ í”„ë¡œì„¸ìŠ¤ë„ í•˜ë‚˜ ìƒì„±ë¨.
 		net.setM_Game(Process);
 	}
 	public void setEnable(int target, boolean state)
@@ -85,65 +85,65 @@ class GameWindow
 			case OTHERS:
 				for(int i = 0; i < Process.getNumOfPlayer(); i++)
 				{
-					if(i != Process.myPlayOrder) {											// ÇöÀç player ¸¦ Á¦¿ÜÇÏ°í ³ª¸ÓÁö player µéÀÇ °æ¿ì
+					if(i != Process.myPlayOrder) {											// í˜„ì¬ player ë¥¼ ì œì™¸í•˜ê³  ë‚˜ë¨¸ì§€ player ë“¤ì˜ ê²½ìš°
 						blockState = Process.GetPlayerBlocksState(i);
-						PlayerPane[PlayerNumToWindowNum[i]].update(blockState);				//ÇÃ·¹ÀÌ¾î ³Ñ¹ö¿Í È­¸é¹øÈ£ÀÇ ¸ÅÄªÇÏ¿© update.
-						PlayerPane[PlayerNumToWindowNum[i]].setEnable(blockState, state);	//0ÀÌ ¾Æ·¡ ºÎÅÍ ½Ã°è¹æÇâ ¼ø¼­´ë·Î
+						PlayerPane[PlayerNumToWindowNum[i]].update(blockState);				//í”Œë ˆì´ì–´ ë„˜ë²„ì™€ í™”ë©´ë²ˆí˜¸ì˜ ë§¤ì¹­í•˜ì—¬ update.
+						PlayerPane[PlayerNumToWindowNum[i]].setEnable(blockState, state);	//0ì´ ì•„ë˜ ë¶€í„° ì‹œê³„ë°©í–¥ ìˆœì„œëŒ€ë¡œ
 					}
 				}
 				break;
 			case CENTER:
-				blockState = Process.GetCenterBlocksState();		// ¹Ù´Ú¿¡ ±ò¸° block µéÀÇ »óÅÂ¸¦ ¹Ş¾Æ¿Í ÀúÀå.
+				blockState = Process.GetCenterBlocksState();		// ë°”ë‹¥ì— ê¹”ë¦° block ë“¤ì˜ ìƒíƒœë¥¼ ë°›ì•„ì™€ ì €ì¥.
 				Center.setEnable(blockState, state);
 				break;
 		}
 	}
-	public void update() {				// °ÔÀÓ À©µµ¿ì ³»ÀÇ block( center ¿Í player ¸ğµÎ) µé »óÅÂ¸¦ °»½ÅÇÏ´Â ¸Ş¼Òµå.
+	public void update() {				// ê²Œì„ ìœˆë„ìš° ë‚´ì˜ block( center ì™€ player ëª¨ë‘) ë“¤ ìƒíƒœë¥¼ ê°±ì‹ í•˜ëŠ” ë©”ì†Œë“œ.
 		System.out.println("[ GameWindow : update ]");
 		ArrayList<Block> blockState;
 		int playerNum = Process.getNumOfPlayer();
-		for(int of_Player = 0; of_Player < playerNum; of_Player++) {			// player ¼ö ¸¸Å­
-			blockState = Process.GetPlayerBlocksState(of_Player);			// player #i ÀÇ block »óÅÂ¸¦ ¹Ş¾Æ¿Í¼­
-			PlayerPane[PlayerNumToWindowNum[of_Player]].update(blockState);	// °ÔÀÓ À©µµ¿ì¿¡ °»½Å.
+		for(int of_Player = 0; of_Player < playerNum; of_Player++) {			// player ìˆ˜ ë§Œí¼
+			blockState = Process.GetPlayerBlocksState(of_Player);			// player #i ì˜ block ìƒíƒœë¥¼ ë°›ì•„ì™€ì„œ
+			PlayerPane[PlayerNumToWindowNum[of_Player]].update(blockState);	// ê²Œì„ ìœˆë„ìš°ì— ê°±ì‹ .
 		}
-		blockState = Process.GetCenterBlocksState();						// ¹Ù´Ú¿¡ ±ò¸° block µéÀÇ »óÅÂ¸¦ ¹Ş¾Æ¿Í¼­
+		blockState = Process.GetCenterBlocksState();						// ë°”ë‹¥ì— ê¹”ë¦° block ë“¤ì˜ ìƒíƒœë¥¼ ë°›ì•„ì™€ì„œ
 		Center.update(blockState);		
 	}
-	public void start()		// player ¼ö¸¸Å­ °ÔÀÓ À©µµ¿ì¿¡¼­ player µéÀÇ À§Ä¡¸¦ ¼³Á¤ÇÏ°í server ºÎÅÍ °ÔÀÓÀ» ½ÃÀÛÇÏ´Â ¸Ş¼Òµå.
+	public void start()		// player ìˆ˜ë§Œí¼ ê²Œì„ ìœˆë„ìš°ì—ì„œ player ë“¤ì˜ ìœ„ì¹˜ë¥¼ ì„¤ì •í•˜ê³  server ë¶€í„° ê²Œì„ì„ ì‹œì‘í•˜ëŠ” ë©”ì†Œë“œ.
 	{
-		//Ã¤ÆÃÃ¢¿¡ ÀÖ´Â °ÔÀÓ ½ÃÀÛ ¹öÆ°ÀÇ µ¿ÀÛÀ»  ¹Ş±âÀ§ÇÑ °Í.
+		//ì±„íŒ…ì°½ì— ìˆëŠ” ê²Œì„ ì‹œì‘ ë²„íŠ¼ì˜ ë™ì‘ì„  ë°›ê¸°ìœ„í•œ ê²ƒ.
 		if(Process.netObject.isServer())
 		{
-			Process.Start();					// °ÔÀÓ ÇÁ·Î¼¼½º¸¦ ½ÃÀÛ
-			Setting(Process.getNumOfPlayer());	// °ÔÀÓ À©µµ¿ì ³»¿¡¼­ player µéÀÇ À§Ä¡¸¦ ¼³Á¤ÇÑ´Ù. 
-			Process.turn();						// server ºÎÅÍ °ÔÀÓ ½ÃÀÛ.
+			Process.Start();					// ê²Œì„ í”„ë¡œì„¸ìŠ¤ë¥¼ ì‹œì‘
+			Setting(Process.getNumOfPlayer());	// ê²Œì„ ìœˆë„ìš° ë‚´ì—ì„œ player ë“¤ì˜ ìœ„ì¹˜ë¥¼ ì„¤ì •í•œë‹¤. 
+			Process.turn();						// server ë¶€í„° ê²Œì„ ì‹œì‘.
 		}
 		else {
-			JOptionPane.showMessageDialog(null, "¹æÀåÀÌ ¾Æ´Õ´Ï´Ù.","¾Ë¸²", 2);
+			JOptionPane.showMessageDialog(null, "ë°©ì¥ì´ ì•„ë‹™ë‹ˆë‹¤.","ì•Œë¦¼", 2);
 		}
 	}
-	public void Setting(int PlayerNum)	// player ÀÇ È­¸é¿¡¼­ ÀÚ½ÅÀº ¸Ç ¾Æ·¡, ³ª¸ÓÁö´Â ´Ù¸¥ À§Ä¡¿¡ ¸Â°Ô ¹è¿­ÇÏµµ·Ï ÇÏ´Â ¸Ş¼Òµå.
+	public void Setting(int PlayerNum)	// player ì˜ í™”ë©´ì—ì„œ ìì‹ ì€ ë§¨ ì•„ë˜, ë‚˜ë¨¸ì§€ëŠ” ë‹¤ë¥¸ ìœ„ì¹˜ì— ë§ê²Œ ë°°ì—´í•˜ë„ë¡ í•˜ëŠ” ë©”ì†Œë“œ.
 	{
-		PlayerNumToWindowNum = new int[PlayerNum];	// °ÔÀÓÁßÀÎ player ¼ö¸¸Å­ ¹è¿­ »ı¼º.
+		PlayerNumToWindowNum = new int[PlayerNum];	// ê²Œì„ì¤‘ì¸ player ìˆ˜ë§Œí¼ ë°°ì—´ ìƒì„±.
 		switch(PlayerNum) {
-			case 2:		// player ¼ö°¡ 2 ¸íÀÏ °æ¿ì
-				if(Process.myPlayOrder == 0)		// player ÀÚ½ÅÀÇ ¼ø¼­°¡ 0 ¹øÀÌ¸é
+			case 2:		// player ìˆ˜ê°€ 2 ëª…ì¼ ê²½ìš°
+				if(Process.myPlayOrder == 0)		// player ìì‹ ì˜ ìˆœì„œê°€ 0 ë²ˆì´ë©´
 				{
-					PlayerNumToWindowNum[0] = 0;	// ÀÚ½ÅÀº ¸Ç ¹Ø À§Ä¡·Î,
-					PlayerNumToWindowNum[1] = 2;	// »ó´ë¹æÀº ¸Ç À§ÂÊÀ¸·Î ÀÌµ¿.
+					PlayerNumToWindowNum[0] = 0;	// ìì‹ ì€ ë§¨ ë°‘ ìœ„ì¹˜ë¡œ,
+					PlayerNumToWindowNum[1] = 2;	// ìƒëŒ€ë°©ì€ ë§¨ ìœ„ìª½ìœ¼ë¡œ ì´ë™.
 					PlayerPane[0].playerOrder = 0;
 					PlayerPane[2].playerOrder = 1;
 					
 				}
-				else							// player ÀÇ play ¼ø¼­°¡ 1 ¹øÀÌ¸é
+				else							// player ì˜ play ìˆœì„œê°€ 1 ë²ˆì´ë©´
 				{
-					PlayerNumToWindowNum[0] = 2;	// »ó´ë¹æÀ» À§ ÂÊÀ¸·Î,
-					PlayerNumToWindowNum[1] = 0;	// ÀÚ½ÅÀ» ¾Æ·¡ÂÊÀ¸·Î ¼³Á¤.
+					PlayerNumToWindowNum[0] = 2;	// ìƒëŒ€ë°©ì„ ìœ„ ìª½ìœ¼ë¡œ,
+					PlayerNumToWindowNum[1] = 0;	// ìì‹ ì„ ì•„ë˜ìª½ìœ¼ë¡œ ì„¤ì •.
 					PlayerPane[2].playerOrder = 0;
 					PlayerPane[0].playerOrder = 1;
 				}
 				break;
-			case 3:		// player ¼ö°¡ 3 ¸íÀÏ °æ¿ì
+			case 3:		// player ìˆ˜ê°€ 3 ëª…ì¼ ê²½ìš°
 				if(Process.myPlayOrder == 0)
 				{
 					PlayerNumToWindowNum[0] = 0;
@@ -172,7 +172,7 @@ class GameWindow
 					PlayerPane[0].playerOrder = 2;
 				}
 				break;
-			case 4:		// player ¼ö°¡ 4 ¸íÀÏ °æ¿ì
+			case 4:		// player ìˆ˜ê°€ 4 ëª…ì¼ ê²½ìš°
 				if(Process.myPlayOrder == 0)
 				{
 					PlayerNumToWindowNum[0] = 0;
@@ -220,7 +220,7 @@ class GameWindow
 				break;
 		}
 	}
-	public void RemoveAll()				// °ÔÀÓ À©µµ¿ì¸¦ ¸ğµÎ º¸ÀÌÁö ¾Ê°Ô ÇÏ´Â ¸Ş¼Òµå.
+	public void RemoveAll()				// ê²Œì„ ìœˆë„ìš°ë¥¼ ëª¨ë‘ ë³´ì´ì§€ ì•Šê²Œ í•˜ëŠ” ë©”ì†Œë“œ.
 	{
 		JPanel_Main.setVisible(false);
 		for(int i = 0; i < 4; i++)	PlayerPane[i].m_Panel.setVisible(false);
@@ -235,16 +235,16 @@ class GameWindow
 		int			playerOrder;
 		final int	Size = 100;
 		
-		protected PlayerWindow() { //ÇÏÀ§Å¬·¡½º¿¡¼­ ÇÊ¿äÇÑ°Í ¹Ù±ù¿¡¼­´Â À§ÇèÇÔÀ¸·Î ¾²Áö¸»°Í. 
-		}	// ³»¿ë ¾øÀ½.
+		protected PlayerWindow() { //í•˜ìœ„í´ë˜ìŠ¤ì—ì„œ í•„ìš”í•œê²ƒ ë°”ê¹¥ì—ì„œëŠ” ìœ„í—˜í•¨ìœ¼ë¡œ ì“°ì§€ë§ê²ƒ. 
+		}	// ë‚´ìš© ì—†ìŒ.
 		public PlayerWindow(int PlayerNum)
 		{
-			m_Panel		= new JPanel();		// °ÔÀÓ ³»¿¡¼­ player ÀÇ block ÀÌ ³õÀÌ´Â À§Ä¡
+			m_Panel		= new JPanel();		// ê²Œì„ ë‚´ì—ì„œ player ì˜ block ì´ ë†“ì´ëŠ” ìœ„ì¹˜
 			FlowLayout layout = new FlowLayout(FlowLayout.CENTER,-1,-1);
 			playerOrder = PlayerNum;
-			playerBlock = new JButton[13];		// ÇØ´ç player ÀÇ block ¿ªÇÒÀ» ÇÏ°Ô µÉ ¹öÆ° 13°³.
+			playerBlock = new JButton[13];		// í•´ë‹¹ player ì˜ block ì—­í• ì„ í•˜ê²Œ ë  ë²„íŠ¼ 13ê°œ.
 			String lo	= "";
-			switch(PlayerNum)	// PlayerNum ¿¡ µû¶ó ´Ù¸¥ »ç¶÷µé°ú ÀÚ½ÅÀÇ block ÀÌ ³õÀÏ À§Ä¡¸¦ ¼³Á¤ÇÑ´Ù.
+			switch(PlayerNum)	// PlayerNum ì— ë”°ë¼ ë‹¤ë¥¸ ì‚¬ëŒë“¤ê³¼ ìì‹ ì˜ block ì´ ë†“ì¼ ìœ„ì¹˜ë¥¼ ì„¤ì •í•œë‹¤.
 			{
 				case 0:
 					lo = BorderLayout.SOUTH;
@@ -269,64 +269,64 @@ class GameWindow
 			}
 			m_Panel.setLayout(layout);
 			JPanel_Main.add(lo,m_Panel);
-			m_Panel.setOpaque(false);		// ºÒÅõ¸íÇÏ°Ô ¼³Á¤ÇÏ´Â ¸Ş¼Òµå¿¡ false¸¦ ÁÖ¾î Åõ¸íÇÏ°Ô ¸¸µë.
+			m_Panel.setOpaque(false);		// ë¶ˆíˆ¬ëª…í•˜ê²Œ ì„¤ì •í•˜ëŠ” ë©”ì†Œë“œì— falseë¥¼ ì£¼ì–´ íˆ¬ëª…í•˜ê²Œ ë§Œë“¬.
 		}
 		
-		public void setEnable(ArrayList<Block> blockState, boolean state)	// player °¡ °¡Áø block µéÀÇ »óÅÂ¸¦ state ·Î ¼³Á¤ÇÔ.
+		public void setEnable(ArrayList<Block> blockState, boolean state)	// player ê°€ ê°€ì§„ block ë“¤ì˜ ìƒíƒœë¥¼ state ë¡œ ì„¤ì •í•¨.
 		{
 			System.out.println("[ PlayerWindow : setEnable ]");
-			//NPC¿¡ °°Àº ÇÔ¼ö °°ÀÌ º¯°æÇØ¾ß ÇÔ
+			//NPCì— ê°™ì€ í•¨ìˆ˜ ê°™ì´ ë³€ê²½í•´ì•¼ í•¨
 			for(int i = 0; playerBlock[i] != null; i++)
 			{
 				playerBlock[i].setEnabled(state);
 				playerBlock[i].setRolloverEnabled(state);
 				
-				if(blockState.get(i).isOpen()) {				// ÀÌ¹Ì open µÈ Ä«µåÀÏ °æ¿ì,
-					playerBlock[i].setEnabled(false);			// Ä«µå ¼±ÅÃÀÌ ºÒ°¡´ÉÇÏµµ·Ï ¼³Á¤.
-					playerBlock[i].setRolloverEnabled(false);	// ¸¶¿ì½º ¿À¹öÇØµµ Ç¥½ÃµÇÁö ¾Êµµ·Ï ¼³Á¤.
+				if(blockState.get(i).isOpen()) {				// ì´ë¯¸ open ëœ ì¹´ë“œì¼ ê²½ìš°,
+					playerBlock[i].setEnabled(false);			// ì¹´ë“œ ì„ íƒì´ ë¶ˆê°€ëŠ¥í•˜ë„ë¡ ì„¤ì •.
+					playerBlock[i].setRolloverEnabled(false);	// ë§ˆìš°ìŠ¤ ì˜¤ë²„í•´ë„ í‘œì‹œë˜ì§€ ì•Šë„ë¡ ì„¤ì •.
 				}
 			}
 		}
-		public void update(ArrayList<Block> blocks)		// block ÀÇ »óÅÂ¿¡ µû¶ó »ö±ò°ú open,unknown »óÅÂ¿¡ ¸Â´Â ÀÌ¹ÌÁö·Î block À» °»½ÅÇØÁØ´Ù.
+		public void update(ArrayList<Block> blocks)		// block ì˜ ìƒíƒœì— ë”°ë¼ ìƒ‰ê¹”ê³¼ open,unknown ìƒíƒœì— ë§ëŠ” ì´ë¯¸ì§€ë¡œ block ì„ ê°±ì‹ í•´ì¤€ë‹¤.
 		{
-			for(int i = 0; i < blocks.size(); i++)				//ºí·°À» ¾÷µ¥ÀÌÆ® ÇÑ´Ù.
+			for(int i = 0; i < blocks.size(); i++)				//ë¸”ëŸ­ì„ ì—…ë°ì´íŠ¸ í•œë‹¤.
 			{
 				if(playerBlock[i] == null)
-				{						// ¾ÆÁ÷ block ÀÌ »ı¼ºµÈ ÀûÀÌ ¾øÀ¸¸é »õ·Î »ı¼º.
+				{						// ì•„ì§ block ì´ ìƒì„±ëœ ì ì´ ì—†ìœ¼ë©´ ìƒˆë¡œ ìƒì„±.
 					playerBlock[i] = new JStyleButton();
 					playerBlock[i].addActionListener(this);
 					m_Panel.add(playerBlock[i]);
-					playerBlock[i].setMargin(new Insets(0,0,0,0));	// ¹öÆ°»çÀÌ¿¡ ¿©¹éÀ» ³Ö´Â ¹®±¸. ÀÌ ¹®ÀåÀÌ ¾øÀ» °æ¿ì ¿©¹éÅ©±â°¡ ±âº»Å©±â·Î µé¾î°¡´Âµ¥, ±× Å©±â°¡ ³Ê¹« Å©´Ù.
+					playerBlock[i].setMargin(new Insets(0,0,0,0));	// ë²„íŠ¼ì‚¬ì´ì— ì—¬ë°±ì„ ë„£ëŠ” ë¬¸êµ¬. ì´ ë¬¸ì¥ì´ ì—†ì„ ê²½ìš° ì—¬ë°±í¬ê¸°ê°€ ê¸°ë³¸í¬ê¸°ë¡œ ë“¤ì–´ê°€ëŠ”ë°, ê·¸ í¬ê¸°ê°€ ë„ˆë¬´ í¬ë‹¤.
 				}
 				int num = blocks.get(i).getNum();
-				if(blocks.get(i).getColor() == 0)					// i ¹øÂ° block ÀÌ °ËÁ¤ ÀÏ °æ¿ì
+				if(blocks.get(i).getColor() == 0)					// i ë²ˆì§¸ block ì´ ê²€ì • ì¼ ê²½ìš°
 				{
 					if(blocks.get(i).isOpen() || blocks.get(i).isOwned())
 					{
-						if(blocks.get(i).isOpen())	{ playerBlock[i].setIcon(ImageCardBlackOpen[num]); }// ±× block ÀÌ open µÇ¾îÀÖÀ» °æ¿ì ¾Ë·ÁÁø Ç¥½Ã¸¦ ÇØÁÖ°í
-						else 						{ playerBlock[i].setIcon(ImageCardBlack[num]);	}	// ±×·¸Áö ¾ÊÀ¸¸é ÀÏ¹İ ÀÌ¹ÌÁö¸¦ Ç¥½ÃÇÑ´Ù.
+						if(blocks.get(i).isOpen())	{ playerBlock[i].setIcon(ImageCardBlackOpen[num]); }// ê·¸ block ì´ open ë˜ì–´ìˆì„ ê²½ìš° ì•Œë ¤ì§„ í‘œì‹œë¥¼ í•´ì£¼ê³ 
+						else 						{ playerBlock[i].setIcon(ImageCardBlack[num]);	}	// ê·¸ë ‡ì§€ ì•Šìœ¼ë©´ ì¼ë°˜ ì´ë¯¸ì§€ë¥¼ í‘œì‹œí•œë‹¤.
 					}
-					else {														// open µÇ¾îÀÖÁö ¾Ê°í ¼ÒÀ¯µÇÁöµµ ¾ÊÀº °æ¿ì
-						playerBlock[i].setIcon(ImageCardBlackUnknown);			// ¼ÒÀ¯µÇ¾îÀÖÁö ¾ÊÀº block ÀÏ °æ¿ì¿¡´Â ¾Ë·ÁÁöÁö ¾Ê¾Ò´Ù´Â ÀÌ¹ÌÁö¸¦ º¸¿©ÁØ´Ù.
+					else {														// open ë˜ì–´ìˆì§€ ì•Šê³  ì†Œìœ ë˜ì§€ë„ ì•Šì€ ê²½ìš°
+						playerBlock[i].setIcon(ImageCardBlackUnknown);			// ì†Œìœ ë˜ì–´ìˆì§€ ì•Šì€ block ì¼ ê²½ìš°ì—ëŠ” ì•Œë ¤ì§€ì§€ ì•Šì•˜ë‹¤ëŠ” ì´ë¯¸ì§€ë¥¼ ë³´ì—¬ì¤€ë‹¤.
 						playerBlock[i].setRolloverIcon(ImageCardBlackUnknownRollerover);
 					}
 				}
-				else {			// Èò»ö block ÀÏ °æ¿ì
+				else {			// í°ìƒ‰ block ì¼ ê²½ìš°
 					if(blocks.get(i).isOpen() || blocks.get(i).isOwned()) {
 						if(blocks.get(i).isOpen())	{ playerBlock[i].setIcon(ImageCardWhiteOpen[num]); }
 						else 						{ playerBlock[i].setIcon(ImageCardWhite[num]); }
 					}
-					else {		// ¼ÒÀ¯µÇ¾îÀÖÁö ¾ÊÀº °æ¿ì µŞ¸éÀ» º¸¿©ÁØ´Ù.
+					else {		// ì†Œìœ ë˜ì–´ìˆì§€ ì•Šì€ ê²½ìš° ë’·ë©´ì„ ë³´ì—¬ì¤€ë‹¤.
 						playerBlock[i].setIcon(ImageCardWhiteUnknown);
 						playerBlock[i].setRolloverIcon(ImageCardWhiteUnknownRollerover);
 					}
 				}
-				playerBlock[i].setRolloverEnabled(false);		// ±âº»ÀûÀ¸·Î´Â ¸¶¿ì½º¿À¹öÇØµµ ¾Æ¹«°Íµµ ¾Èº¸ÀÌ°Ô ¼³Á¤ÇÑ´Ù.
+				playerBlock[i].setRolloverEnabled(false);		// ê¸°ë³¸ì ìœ¼ë¡œëŠ” ë§ˆìš°ìŠ¤ì˜¤ë²„í•´ë„ ì•„ë¬´ê²ƒë„ ì•ˆë³´ì´ê²Œ ì„¤ì •í•œë‹¤.
 			}	
 		}
 		public void actionPerformed(ActionEvent e) {
-			// ÇØ´ç PlayerWindow ÀÇ block ÀÌ ¼±ÅÃµÈ °ÍÀÌ´Ù. 
-			// ¼±ÅÃÀÌ µÈ´Ù´Â °ÍÀº ÀÌ playerWindow ¿¡ ÇØ´çÇÏ´Â player ÀÇ block À» ¹°¾îº¸´Â °ÍÀÌ±â ¶§¹®¿¡ askblockÀ» È£ÃâÇÑ´Ù.
+			// í•´ë‹¹ PlayerWindow ì˜ block ì´ ì„ íƒëœ ê²ƒì´ë‹¤. 
+			// ì„ íƒì´ ëœë‹¤ëŠ” ê²ƒì€ ì´ playerWindow ì— í•´ë‹¹í•˜ëŠ” player ì˜ block ì„ ë¬¼ì–´ë³´ëŠ” ê²ƒì´ê¸° ë•Œë¬¸ì— askblockì„ í˜¸ì¶œí•œë‹¤.
 			for(int btnIndex =0; playerBlock[btnIndex] != null; btnIndex++)
 			{
 				if(e.getSource() == playerBlock[btnIndex]) {
@@ -341,13 +341,13 @@ class GameWindow
 			super();
 			m_Panel = new JPanel();
 			m_WindowNum = 5;
-			playerBlock = new JButton[27];		// ¸ğµÎ 27°³ÀÇ block µé.
+			playerBlock = new JButton[27];		// ëª¨ë‘ 27ê°œì˜ block ë“¤.
 			JPanel_Main.add(BorderLayout.CENTER, m_Panel);
 			m_Panel.setOpaque(false);
 		}
 		public void update(ArrayList<Block> blockState) {
 			System.out.println("[ NPC : update ]");
-			super.update(blockState);		// center °¡ °¡Áø block µéÀº ¾Æ¹«°Íµµ ¼ÒÀ¯µÇ¾îÁø °ÍÀÌ ¾ø±â ¶§¹®¿¡ ¸ğµÎ µŞ¸éÀ¸·Î ÀÌ¹ÌÁö°¡ ¼³Á¤µÈ´Ù.
+			super.update(blockState);		// center ê°€ ê°€ì§„ block ë“¤ì€ ì•„ë¬´ê²ƒë„ ì†Œìœ ë˜ì–´ì§„ ê²ƒì´ ì—†ê¸° ë•Œë¬¸ì— ëª¨ë‘ ë’·ë©´ìœ¼ë¡œ ì´ë¯¸ì§€ê°€ ì„¤ì •ëœë‹¤.
 			for(int i = blockState.size(); playerBlock[i] != null; i++) {
 				//playerBlock[i].removeAll();
 				m_Panel.remove(playerBlock[i]);
@@ -356,18 +356,18 @@ class GameWindow
 		}
 		@Override
 		public void setEnable(ArrayList<Block> blockState, boolean state) {
-			//À§ÀÇ ÇÃ·¹ÀÌ¾î À©µµ¿ì¿Í °°ÀÌ º¯°æÇØ¾ßÇÔ. 
+			//ìœ„ì˜ í”Œë ˆì´ì–´ ìœˆë„ìš°ì™€ ê°™ì´ ë³€ê²½í•´ì•¼í•¨. 
 			System.out.println("[ NPC : setEnable ]");
 			for(int i = 0; playerBlock[i] != null; i++) {
 				playerBlock[i].setEnabled(state);
 				playerBlock[i].setRolloverEnabled(state);
 			}
 		}
-		public void actionPerformed(ActionEvent e) {		// center¿¡¼­ ¼±ÅÃµÈ block ÀÇ index ¸¦ ³Ñ°Ü block À» player ¿¡°Ô Àü´ŞÇÏµµ·Ï ÇÑ´Ù.
-			//°¡¿îµ¥´Â ¼±ÅÃµÇ¸é ÀÌ°ÍÀº Ã³À½¿¡ °¡¿îµ¥ ºí·°À» ¼±ÅÃÇÏ±â À§ÇÑ°ÍÀÌ´Ù.
-			//moveblockÀ» È£ÃâÇØ¼­ °¡¿îµ¥°ÍÀ» °¡Á®°¡°Ô ÇÏ¸é µÈ´Ù.
-			//±×¸®°í ¼±ÅÃµÈ°ÍÀº »©¾î¹ö¸°´Ù.(¾÷µ¥ÀÌÆ®°¡ ³ªÀ¸·Á³ª.)
-			Process.gameWndGUI.setEnable(GameWindow.CENTER, false);	// block À» °¡Á®°¡°í³­ ÈÄ¿¡´Â ´Ù½Ã centerÀÇ block À» ¼±ÅÃÇÏÁö ¸øÇÏ°Ô ¸·´Â´Ù.
+		public void actionPerformed(ActionEvent e) {		// centerì—ì„œ ì„ íƒëœ block ì˜ index ë¥¼ ë„˜ê²¨ block ì„ player ì—ê²Œ ì „ë‹¬í•˜ë„ë¡ í•œë‹¤.
+			//ê°€ìš´ë°ëŠ” ì„ íƒë˜ë©´ ì´ê²ƒì€ ì²˜ìŒì— ê°€ìš´ë° ë¸”ëŸ­ì„ ì„ íƒí•˜ê¸° ìœ„í•œê²ƒì´ë‹¤.
+			//moveblockì„ í˜¸ì¶œí•´ì„œ ê°€ìš´ë°ê²ƒì„ ê°€ì ¸ê°€ê²Œ í•˜ë©´ ëœë‹¤.
+			//ê·¸ë¦¬ê³  ì„ íƒëœê²ƒì€ ë¹¼ì–´ë²„ë¦°ë‹¤.(ì—…ë°ì´íŠ¸ê°€ ë‚˜ìœ¼ë ¤ë‚˜.)
+			Process.gameWndGUI.setEnable(GameWindow.CENTER, false);	// block ì„ ê°€ì ¸ê°€ê³ ë‚œ í›„ì—ëŠ” ë‹¤ì‹œ centerì˜ block ì„ ì„ íƒí•˜ì§€ ëª»í•˜ê²Œ ë§‰ëŠ”ë‹¤.
 			for(int i = 0; i < 26; i++) {
 				if(playerBlock[i] != null) {
 					if(e.getSource() == playerBlock[i]) {
@@ -377,8 +377,8 @@ class GameWindow
 			}
 		}
 	}
-	public int askNum()	{	// block ÀÇ ¼ıÀÚ¸¦ ¹¯´Â ´ëÈ­Ã¢À» ¸¸µé¾î ¼ıÀÚ¸¦ ¹°¾îº» µÚ ±× ¼ö¸¦ ¹İÈ¯ÇÑ´Ù.
-		AskDlg AD = new AskDlg();		// ´ëÈ­»óÀÚ¸¦ ¿­¾î ¼ıÀÚ¸¦ ¼±ÅÃÇÏ°í
- 		return AD.getNum();				// ±× ¼ıÀÚ¸¦ ¹İÈ¯ÇÑ´Ù.
+	public int askNum()	{	// block ì˜ ìˆ«ìë¥¼ ë¬»ëŠ” ëŒ€í™”ì°½ì„ ë§Œë“¤ì–´ ìˆ«ìë¥¼ ë¬¼ì–´ë³¸ ë’¤ ê·¸ ìˆ˜ë¥¼ ë°˜í™˜í•œë‹¤.
+		AskDlg AD = new AskDlg();		// ëŒ€í™”ìƒìë¥¼ ì—´ì–´ ìˆ«ìë¥¼ ì„ íƒí•˜ê³ 
+ 		return AD.getNum();				// ê·¸ ìˆ«ìë¥¼ ë°˜í™˜í•œë‹¤.
 	}
 }

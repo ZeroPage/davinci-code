@@ -19,10 +19,10 @@ public class JStyleButton extends JButton
 	}
 	private void initialButton()
 	{
-		this.setBorderPainted(false);		//Å×µÎ¸® ±×¸®±â
-		this.setContentAreaFilled(false);	//³×¸ğ³­ ¿µ¿ª Ã¤¿ì±â
-		this.setDefaultCapable(false);		//³×¸ğ³­ ¼±ÅÃ¿µ¿ª Ãë¼Ò
-		this.setFocusPainted(false);		//¼±ÅÃ‰çÀ»¶§ ÁÖº¯ÀÇ Á¡¼±Ç¥½Ã
+		this.setBorderPainted(false);		//Ã…Ã—ÂµÃÂ¸Â® Â±Ã—Â¸Â®Â±Ã¢
+		this.setContentAreaFilled(false);	//Â³Ã—Â¸Ã°Â³Â­ Â¿ÂµÂ¿Âª ÃƒÂ¤Â¿Ã¬Â±Ã¢
+		this.setDefaultCapable(false);		//Â³Ã—Â¸Ã°Â³Â­ Â¼Â±Ã…ÃƒÂ¿ÂµÂ¿Âª ÃƒÃ«Â¼Ã’
+		this.setFocusPainted(false);		//Â¼Â±Ã…Ãƒâ€°Ã§Ã€Â»Â¶Â§ ÃÃ–ÂºÂ¯Ã€Ã‡ ÃÂ¡Â¼Â±Ã‡Â¥Â½Ãƒ
 		this.setOpaque(false);
 		
 		this.setEnabled(false);

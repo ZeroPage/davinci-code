@@ -2,33 +2,33 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
- * ÇÏ³ªÀÇ È£½ºÆ®¿¡¼­ º¸¿©Á®¾ß ÇÒ player µé°ú block µéÀ» °ÔÀÓ ½ÃÀÛ Àü¿¡ ÁØºñÇÏ´Â Å¬·¡½º. 
+ * í•˜ë‚˜ì˜ í˜¸ìŠ¤íŠ¸ì—ì„œ ë³´ì—¬ì ¸ì•¼ í•  player ë“¤ê³¼ block ë“¤ì„ ê²Œì„ ì‹œì‘ ì „ì— ì¤€ë¹„í•˜ëŠ” í´ë˜ìŠ¤. 
  * 
  * @author Teolex
  *
  */
-public class Game implements Serializable {		// °ÔÀÓÀÇ ½ÃÀÛÀ» À§ÇÑ ÃÊ±â ÀÛ¾÷À» ¼öÇàÇÑ´Ù.
+public class Game implements Serializable {		// ê²Œì„ì˜ ì‹œì‘ì„ ìœ„í•œ ì´ˆê¸° ì‘ì—…ì„ ìˆ˜í–‰í•œë‹¤.
 	
-	private ArrayList<Player>	players;		// °ÔÀÓ ³»ÀÇ player µéÀ» ÀúÀåÇÒ ¸®½ºÆ®.
-	private ArrayList<Block>	floor;			// °ÔÀÓÁß ¹Ù´Ú¿¡ ±ò·ÁÀÖÀ» block µéÀ» ÀúÀåÇÒ ¸®½ºÆ®.
+	private ArrayList<Player>	players;		// ê²Œì„ ë‚´ì˜ player ë“¤ì„ ì €ì¥í•  ë¦¬ìŠ¤íŠ¸.
+	private ArrayList<Block>	floor;			// ê²Œì„ì¤‘ ë°”ë‹¥ì— ê¹”ë ¤ìˆì„ block ë“¤ì„ ì €ì¥í•  ë¦¬ìŠ¤íŠ¸.
 	
 	Game( int numOfPlayer )
 	{
-		players	= new ArrayList<Player>();	// player µéÀ» ÀúÀåÇÒ ¸®½ºÆ®.
-		floor	= new ArrayList<Block>();	// ¸ğµç block µéÀ» ÀúÀåÇÒ ¸®½ºÆ®.
-		setPlayers(numOfPlayer);			// playerNum ¸íÀÇ player ¸¦ »ı¼ºÇÔ.
-		makeFloorBlocks();						// block µéÀ» »ı¼ºÇÔ.
-		mixBlocks(floor);					// »ı¼ºÇÑ block µéÀ» ¼¯À½.
+		players	= new ArrayList<Player>();	// player ë“¤ì„ ì €ì¥í•  ë¦¬ìŠ¤íŠ¸.
+		floor	= new ArrayList<Block>();	// ëª¨ë“  block ë“¤ì„ ì €ì¥í•  ë¦¬ìŠ¤íŠ¸.
+		setPlayers(numOfPlayer);			// playerNum ëª…ì˜ player ë¥¼ ìƒì„±í•¨.
+		makeFloorBlocks();						// block ë“¤ì„ ìƒì„±í•¨.
+		mixBlocks(floor);					// ìƒì„±í•œ block ë“¤ì„ ì„ìŒ.
 	}
 
 	public void 				setFloor( ArrayList<Block> target )	{	floor = target; }
 	
-	public void 				setPlayers(int numOfPlayer) {	for(int i = 0; i < numOfPlayer; i++)	players.add( new Player() ); }// ÁÖ¾îÁø ÀÎÀÚ ¸¸Å­ÀÇ player ¸¦ »ı¼ºÇÑ´Ù.
+	public void 				setPlayers(int numOfPlayer) {	for(int i = 0; i < numOfPlayer; i++)	players.add( new Player() ); }// ì£¼ì–´ì§„ ì¸ì ë§Œí¼ì˜ player ë¥¼ ìƒì„±í•œë‹¤.
 	public ArrayList<Player> 	getPlayers() 				{	return players; }
 	public Player				getPlayer(int index)		{	return players.get(index); }
 	
 	//Block( int color, int num ), Black 0 : white 1
-	public void 				makeFloorBlocks() 			{	for(int i = 0 ; i < 26; i++) floor.add( new Block( i/13, i%13 ) ); }// block µéÀÇ ¼ıÀÚ¿Í »öÀ» ¼³Á¤ÇÑ µÚ blocks ¿¡ Ãß°¡ÇÑ´Ù.
+	public void 				makeFloorBlocks() 			{	for(int i = 0 ; i < 26; i++) floor.add( new Block( i/13, i%13 ) ); }// block ë“¤ì˜ ìˆ«ìì™€ ìƒ‰ì„ ì„¤ì •í•œ ë’¤ blocks ì— ì¶”ê°€í•œë‹¤.
 	public ArrayList<Block>		getFloorBlocks()			{	return floor;	}
 	
 	public void swapBlock(ArrayList<Block> blocks, int n1, int n2)
@@ -38,7 +38,7 @@ public class Game implements Serializable {		// °ÔÀÓÀÇ ½ÃÀÛÀ» À§ÇÑ ÃÊ±â ÀÛ¾÷À» ¼
 		blocks.set(n1,blocks.get(n2));
 		blocks.set(n2,tb);
 	}
-	public void mixBlocks(ArrayList<Block> blocks)	// °ÔÀÓ ÄÁÆ®·ÑÀÌ »ı¼ºÇÑ block µéÀÇ ¼ø¼­¸¦ ¼¯´Â´Ù.
+	public void mixBlocks(ArrayList<Block> blocks)	// ê²Œì„ ì»¨íŠ¸ë¡¤ì´ ìƒì„±í•œ block ë“¤ì˜ ìˆœì„œë¥¼ ì„ëŠ”ë‹¤.
 	{
 		int n1, n2;
 		for(int i = 0; i < 50; i++)
@@ -48,11 +48,11 @@ public class Game implements Serializable {		// °ÔÀÓÀÇ ½ÃÀÛÀ» À§ÇÑ ÃÊ±â ÀÛ¾÷À» ¼
 			swapBlock(blocks, n1, n2);
 		}
 	}
-	public boolean isEnd()	// player µéÀÇ »óÅÂ°¡ ¾î¶²Áö È®ÀÎÇÏ°í  °ÔÀÓÀÌ ³¡³µ´ÂÁö È®ÀÎÇÏ´Â ¸Ş¼Òµå.
+	public boolean isEnd()	// player ë“¤ì˜ ìƒíƒœê°€ ì–´ë–¤ì§€ í™•ì¸í•˜ê³   ê²Œì„ì´ ëë‚¬ëŠ”ì§€ í™•ì¸í•˜ëŠ” ë©”ì†Œë“œ.
 	{
 		int alive = 0;
 		for( int i = 0; i < players.size(); i++ )
 			if(players.get(i).getPlay() == true)	alive++;
-		return alive==1;	// ³²¾ÆÀÖ´Â °ÍÀÌ È¥ÀÚÀÌ¸é °ÔÀÓÀÌ ³¡³­ °Í.
+		return alive==1;	// ë‚¨ì•„ìˆëŠ” ê²ƒì´ í˜¼ìì´ë©´ ê²Œì„ì´ ëë‚œ ê²ƒ.
 	}
 }

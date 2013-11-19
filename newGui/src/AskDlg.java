@@ -8,13 +8,13 @@ import java.awt.event.WindowEvent;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
-class AskDlg extends JDialog implements ActionListener		// ÃßÃøÇÒ ¼ıÀÚ¸¦ »ı¼ºÇÏ´Â ´ëÈ­»óÀÚ
+class AskDlg extends JDialog implements ActionListener		// ì¶”ì¸¡í•  ìˆ«ìë¥¼ ìƒì„±í•˜ëŠ” ëŒ€í™”ìƒì
 	{
 		JButton []	JB_Num = new JButton[13];
 		int 		Num;
-		public AskDlg()									// Á¶Ä¿ ¸ÂÃß±â¿ë ´ëÈ­»óÀÚ
+		public AskDlg()									// ì¡°ì»¤ ë§ì¶”ê¸°ìš© ëŒ€í™”ìƒì 
 		{
-			super((JFrame) getWindows()[0], "¼ıÀÚ¸¦ ¼±ÅÃÇÏ¼¼¿ä",true);
+			super((JFrame) getWindows()[0], "ìˆ«ìë¥¼ ì„ íƒí•˜ì„¸ìš”",true);
 			this.setSize(240,300);
 			this.setLayout(new GridLayout(5,3));
 			this.setLocation(getRootPane().getSize().width/2, getRootPane().getSize().height/2);
@@ -34,8 +34,8 @@ class AskDlg extends JDialog implements ActionListener		// ÃßÃøÇÒ ¼ıÀÚ¸¦ »ı¼ºÇÏ´
 			
 			this.setVisible(true);
 		}
-		public AskDlg(int color) {		// Á¶Ä¿ ¼³Á¤¿ë ´ëÈ­»óÀÚ.
-			super((JFrame) getWindows()[0], "Á¶Ä¿°¡ ´ë½ÅÇÒ ¼ıÀÚ¸¦ ¼±ÅÃÇÏ¼¼¿ä",true);
+		public AskDlg(int color) {		// ì¡°ì»¤ ì„¤ì •ìš© ëŒ€í™”ìƒì.
+			super((JFrame) getWindows()[0], "ì¡°ì»¤ê°€ ëŒ€ì‹ í•  ìˆ«ìë¥¼ ì„ íƒí•˜ì„¸ìš”",true);
 			this.setSize(240,300);
 			this.setLayout(new GridLayout(5,3));
 			this.setLocation(getRootPane().getSize().width/2, getRootPane().getSize().height/2);
@@ -67,7 +67,7 @@ class AskDlg extends JDialog implements ActionListener		// ÃßÃøÇÒ ¼ıÀÚ¸¦ »ı¼ºÇÏ´
 			}
 			this.setVisible(true);
 		}
-		public void actionPerformed(ActionEvent e)	// »óÅÂ blockÀ» ¸ÂÃß´Â ´ëÈ­»óÀÚ¿¡¼­ ´­·ÁÁø ¹öÆ°ÀÌ ¹«¾ùÀÎÁö ÆÇº°ÇÑ ÈÄ Num ¿¡ ÀúÀå.
+		public void actionPerformed(ActionEvent e)	// ìƒíƒœ blockì„ ë§ì¶”ëŠ” ëŒ€í™”ìƒìì—ì„œ ëˆŒë ¤ì§„ ë²„íŠ¼ì´ ë¬´ì—‡ì¸ì§€ íŒë³„í•œ í›„ Num ì— ì €ì¥.
 		{
 			for(int i = 0; i <13; i++) {
 				if(e.getSource() == JB_Num[i]) {
@@ -77,7 +77,7 @@ class AskDlg extends JDialog implements ActionListener		// ÃßÃøÇÒ ¼ıÀÚ¸¦ »ı¼ºÇÏ´
 				}
 			}
 		}
-		public int getNum() {		// ´ëÈ­»óÀÚ¿¡¼­ Å¬¸¯µÈ ¼ıÀÚ num À» ¹İÈ¯
+		public int getNum() {		// ëŒ€í™”ìƒìì—ì„œ í´ë¦­ëœ ìˆ«ì num ì„ ë°˜í™˜
 			return Num;
 		}
 	}

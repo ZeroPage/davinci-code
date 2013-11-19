@@ -1,16 +1,16 @@
 
-//¼­¹ö¿Í Å¬¶óÀÌ¾ğÆ®°¡ °¢°¢ ¼­¹ö¼ÒÄÏ°ú ¼ÒÄÏÀ» »ç¿ëÇÏ¿© ¼­·Î Åë½ÅÇÒ ¶§,
-//¼ÒÄÏÀ» ÅëÇØ output ½ºÆ®¸²°ú input ½ºÆ®¸²À» ¿¬°áÇØ³õÀ¸¸é,
-//¼­·Î°¡ µ¥ÀÌÅÍ¸¦ ÁÖ°í¹ŞÀ» ¶§ »ç¿ëÇÒ ¸Ş¼Òµå°¡ ¸Å¿ì °£ÆíÇÏ±â ¶§¹®¿¡
-//ÀÏ´Ü ¼ÒÄÏÀ» ¿¬°áÇÑ ÈÄ input/output ½ºÆ®¸²ÀÌ ¿¬°áµÇ¾îÀÖ´Ù¸é
-//¼­¹ö¿Í Å¬¶óÀÌ¾ğÆ®°¡ ¼­·Î Åë½ÅÇÏµµ·Ï ÇÏ´Âµ¥ ¸Å¿ì ½±´Ù.
+//ì„œë²„ì™€ í´ë¼ì´ì–¸íŠ¸ê°€ ê°ê° ì„œë²„ì†Œì¼“ê³¼ ì†Œì¼“ì„ ì‚¬ìš©í•˜ì—¬ ì„œë¡œ í†µì‹ í•  ë•Œ,
+//ì†Œì¼“ì„ í†µí•´ output ìŠ¤íŠ¸ë¦¼ê³¼ input ìŠ¤íŠ¸ë¦¼ì„ ì—°ê²°í•´ë†“ìœ¼ë©´,
+//ì„œë¡œê°€ ë°ì´í„°ë¥¼ ì£¼ê³ ë°›ì„ ë•Œ ì‚¬ìš©í•  ë©”ì†Œë“œê°€ ë§¤ìš° ê°„í¸í•˜ê¸° ë•Œë¬¸ì—
+//ì¼ë‹¨ ì†Œì¼“ì„ ì—°ê²°í•œ í›„ input/output ìŠ¤íŠ¸ë¦¼ì´ ì—°ê²°ë˜ì–´ìˆë‹¤ë©´
+//ì„œë²„ì™€ í´ë¼ì´ì–¸íŠ¸ê°€ ì„œë¡œ í†µì‹ í•˜ë„ë¡ í•˜ëŠ”ë° ë§¤ìš° ì‰½ë‹¤.
 abstract public class Network
 {
-	protected RoomWindow	myRoomWnd;				// Ã¤ÆÃ ¸Ş¼¼Áö¸¦ ¹ŞÀ¸¸é Àü´ŞÇÒ RoomWindow.
+	protected RoomWindow	myRoomWnd;				// ì±„íŒ… ë©”ì„¸ì§€ë¥¼ ë°›ìœ¼ë©´ ì „ë‹¬í•  RoomWindow.
 	protected Network		m_net;				
-	protected GameProcess	gameProcess;			// ÇØ´ç ³×Æ®¿öÅ©¿¡¼­ ÁøÇàÁßÀÎ °ÔÀÓ ÇÁ·Î¼¼½º.
-	protected String		playerNickname;			// ÇØ´ç ³×Æ®¿öÅ©¸¦  ¿¬ player ÀÇ ÀÌ¸§
-	protected int 			portNum = 10000;		// ÇØ´ç ³×Æ®¿öÅ©°¡ Á¢¼ÓµÇ¾îÀÖ´Â ¼­¹öÀÇ Æ÷Æ®.
+	protected GameProcess	gameProcess;			// í•´ë‹¹ ë„¤íŠ¸ì›Œí¬ì—ì„œ ì§„í–‰ì¤‘ì¸ ê²Œì„ í”„ë¡œì„¸ìŠ¤.
+	protected String		playerNickname;			// í•´ë‹¹ ë„¤íŠ¸ì›Œí¬ë¥¼  ì—° player ì˜ ì´ë¦„
+	protected int 			portNum = 10000;		// í•´ë‹¹ ë„¤íŠ¸ì›Œí¬ê°€ ì ‘ì†ë˜ì–´ìˆëŠ” ì„œë²„ì˜ í¬íŠ¸.
 	public void setM_Taget(RoomWindow target) {
 		myRoomWnd = target;
 	}
@@ -26,9 +26,9 @@ abstract public class Network
 	public void setPortNum(int portNum) {
 		this.portNum = portNum;
 	}
-	abstract public boolean	isServer();				//¼­¹öÀÎÁö ¾Æ´ÑÁö ¸®ÅÏ.
-	abstract public void	Connect(String ip);		//ÁöÁ¤µÈ ip·Î Á¢¼ÓÇÏ´Â ÇÔ¼ö
-	abstract public void	SendChatMsg(String msg);//Á¢¼ÓµÈ ³×Æ®¿öÅ©¿¡ Ã¤ÆÃ msg¸¦ ³¯¸®´Â ÇÔ¼ö
-	abstract public void	SendOb(Object ob);		//Á¢¼ÓµÈ ³×Æ®¿öÅ©¿¡ Ã¤ÆÃ ¿ÀºêÁ§Æ®¸¦ ³¯¸®´Â ÇÔ¼ö
-	abstract public void	Close();				//¸ğµçÁ¢¼ÓÀ» ²÷´Â ÇÔ¼ö. ¾²·¹µå Á¾·áÇÊ¼ö
+	abstract public boolean	isServer();				//ì„œë²„ì¸ì§€ ì•„ë‹Œì§€ ë¦¬í„´.
+	abstract public void	Connect(String ip);		//ì§€ì •ëœ ipë¡œ ì ‘ì†í•˜ëŠ” í•¨ìˆ˜
+	abstract public void	SendChatMsg(String msg);//ì ‘ì†ëœ ë„¤íŠ¸ì›Œí¬ì— ì±„íŒ… msgë¥¼ ë‚ ë¦¬ëŠ” í•¨ìˆ˜
+	abstract public void	SendOb(Object ob);		//ì ‘ì†ëœ ë„¤íŠ¸ì›Œí¬ì— ì±„íŒ… ì˜¤ë¸Œì íŠ¸ë¥¼ ë‚ ë¦¬ëŠ” í•¨ìˆ˜
+	abstract public void	Close();				//ëª¨ë“ ì ‘ì†ì„ ëŠëŠ” í•¨ìˆ˜. ì“°ë ˆë“œ ì¢…ë£Œí•„ìˆ˜
 }

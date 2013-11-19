@@ -5,9 +5,9 @@ import javax.swing.JOptionPane;
 
 public class GameData implements Serializable
 {
-	// °´Ã¼°¡ »ı¼ºµÇ¸é ¹Ù´Ú¿¡ ±ò¸° block µé°ú °¢ player µéÀÌ °¡Áö°í ÀÖ´Â block µéÀÇ Á¤º¸¸¦ ÀúÀåÇÑ´Ù.
-	private ArrayList<Block>				floor;	// ¹Ù´Ú¿¡ ±ò·ÁÀÖ´Â block µé.
-	private ArrayList< ArrayList<Block> >	blocks;	// °¢ ¼±¼öµéÀÌ °¡Áö°í ÀÖ´Â block µé.
+	// ê°ì²´ê°€ ìƒì„±ë˜ë©´ ë°”ë‹¥ì— ê¹”ë¦° block ë“¤ê³¼ ê° player ë“¤ì´ ê°€ì§€ê³  ìˆëŠ” block ë“¤ì˜ ì •ë³´ë¥¼ ì €ì¥í•œë‹¤.
+	private ArrayList<Block>				floor;	// ë°”ë‹¥ì— ê¹”ë ¤ìˆëŠ” block ë“¤.
+	private ArrayList< ArrayList<Block> >	blocks;	// ê° ì„ ìˆ˜ë“¤ì´ ê°€ì§€ê³  ìˆëŠ” block ë“¤.
 
 	public GameData(Game gc)
 	{
@@ -30,8 +30,8 @@ public class GameData implements Serializable
 				tmp.add(gc.getPlayers().get(i).hand.get(j));
 				boolTmp.add(gc.getPlayers().get(i).hand.get(j).isOpen());
 			}
-			blocks.add(tmp);		// player 0,1,2,3 µéÀÌ °¡Áø block( hand ) µéÀ»  p ¿¡ ÀúÀåÇÑ´Ù.
-			System.out.println("ÇÃ·¹ÀÌ¾î "+i+"ÀÇ µ¥ÀÌÅÍ Àü¼Û"+boolTmp);
+			blocks.add(tmp);		// player 0,1,2,3 ë“¤ì´ ê°€ì§„ block( hand ) ë“¤ì„  p ì— ì €ì¥í•œë‹¤.
+			System.out.println("í”Œë ˆì´ì–´ "+i+"ì˜ ë°ì´í„° ì „ì†¡"+boolTmp);
 		}
 		System.out.println("**************************************************");
 	}

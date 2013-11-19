@@ -3,19 +3,19 @@ import java.awt.event.WindowEvent;
 
 import javax.swing.JOptionPane;
 
-class myWindowListener extends WindowAdapter		// Main frame Á¾·á¸¦ À§ÇÑ Å¬·¡½º. 
+class myWindowListener extends WindowAdapter		// Main frame ì¢…ë£Œë¥¼ ìœ„í•œ í´ë˜ìŠ¤. 
 	{
 		public void windowClosing(WindowEvent e) {
-			if(JOptionPane.showConfirmDialog(null, "Á¤¸»Á¾·áÇÏ½Ã°Ú½À´Ï±î?","Á¾·áÈ®ÀÎ",JOptionPane.YES_NO_OPTION) == 0) {
+			if(JOptionPane.showConfirmDialog(null, "ì •ë§ì¢…ë£Œí•˜ì‹œê² ìŠµë‹ˆê¹Œ?","ì¢…ë£Œí™•ì¸",JOptionPane.YES_NO_OPTION) == 0) {
 				try {
 //					lobbyWnd.myNetworkType.Close();
 					//TODO 
 				} catch(NullPointerException event) {
 					System.out.println("Lobby Window doesn't exist.");
 				} finally {
-					e.getWindow().setVisible(false);	// FrameÀ» È­¸é¿¡¼­ º¸ÀÌÁö ¾Êµµ·Ï ÇÑ´Ù.
-				    e.getWindow().dispose(); 			// ¸Ş¸ğ¸®¿¡¼­ Á¦°ÅÇÑ´Ù.
-				    System.exit(0); 					// ÇÁ·Î±×·¥À» Á¾·áÇÑ´Ù.
+					e.getWindow().setVisible(false);	// Frameì„ í™”ë©´ì—ì„œ ë³´ì´ì§€ ì•Šë„ë¡ í•œë‹¤.
+				    e.getWindow().dispose(); 			// ë©”ëª¨ë¦¬ì—ì„œ ì œê±°í•œë‹¤.
+				    System.exit(0); 					// í”„ë¡œê·¸ë¨ì„ ì¢…ë£Œí•œë‹¤.
 				}
 			}
 		}

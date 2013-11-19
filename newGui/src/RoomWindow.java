@@ -20,17 +20,17 @@ class RoomWindow extends JFrame
 {
 		JPanel		JPanel_Room	= null;
 		Network		myNetwork;
-		ChatWindow	chatWnd 	= null;		// °ÔÀÓ ¿ìÃø Ã¤ÆÃ À©µµ¿ì
-		GameWindow	gameWndGUI	= null;		// °ÔÀÓ ÁÂÃø ½ÇÁ¦ °ÔÀÓ À©µµ¿ì.
+		ChatWindow	chatWnd 	= null;		// ê²Œì„ ìš°ì¸¡ ì±„íŒ… ìœˆë„ìš°
+		GameWindow	gameWndGUI	= null;		// ê²Œì„ ì¢Œì¸¡ ì‹¤ì œ ê²Œì„ ìœˆë„ìš°.
 		
-		public RoomWindow(JPanel main, Network n) {		// player ¿¡ µû¸¥ ³×Æ®¿öÅ© ¼³Á¤°ú room À©µµ¿ì ¼³Á¤.
+		public RoomWindow(JPanel main, Network n) {		// player ì— ë”°ë¥¸ ë„¤íŠ¸ì›Œí¬ ì„¤ì •ê³¼ room ìœˆë„ìš° ì„¤ì •.
 			myNetwork = n;
 			
 			JPanel_Room = new JPanel();
 			JPanel_Room.setLayout(new BorderLayout());
 			
 			gameWndGUI	= new GameWindow(JPanel_Room, myNetwork);
-			chatWnd		= new ChatWindow(JPanel_Room);		// Ã¤ÆÃÀ©µµ¿ì¸¦ »ı¼ºÇÏ¿© JPanel_Room ¿¡ ºÙÀÎ´Ù.
+			chatWnd		= new ChatWindow(JPanel_Room);		// ì±„íŒ…ìœˆë„ìš°ë¥¼ ìƒì„±í•˜ì—¬ JPanel_Room ì— ë¶™ì¸ë‹¤.
 			chatWnd.SetButton(myNetwork.isServer());	
 			
 			this.addWindowListener(new myWindowListener());
@@ -38,20 +38,20 @@ class RoomWindow extends JFrame
 		}
 		class ChatWindow implements ActionListener {
 			JPanel		JPanel_Main;
-			JButton 	JB_Send;		// º¸³»±â ¹öÆ°.
+			JButton 	JB_Send;		// ë³´ë‚´ê¸° ë²„íŠ¼.
 			JButton 	JB_NewGame;
 			JButton 	JB_Exit;
 			JButton 	JB_ChatClear;
 			JButton 	JB_About;
-			JTextArea 	JTA_Chat;		// ´ëÈ­³»¿ëÀÌ ¾²¿©Áö´Â ÇÊµå.
-			JTextField 	JTF_ChatInput;	// »ç¿ëÀÚ°¡ ´ëÈ­¸¦ ÀÔ·ÂÇÒ ºÎºĞ.
+			JTextArea 	JTA_Chat;		// ëŒ€í™”ë‚´ìš©ì´ ì“°ì—¬ì§€ëŠ” í•„ë“œ.
+			JTextField 	JTF_ChatInput;	// ì‚¬ìš©ìê°€ ëŒ€í™”ë¥¼ ì…ë ¥í•  ë¶€ë¶„.
 			
 			public ChatWindow(JPanel main) {
 				JPanel_Main = new JPanel();
 				JPanel_Main.setLayout(null);
 				JPanel_Main.setPreferredSize(new Dimension(200,500));
 				
-				//Ã¤ÆÃÃ¢
+				//ì±„íŒ…ì°½
 				JTA_Chat = new JTextArea();
 				JTA_Chat.setEditable(false);
 				JTA_Chat.setFocusable(true);
@@ -62,38 +62,38 @@ class RoomWindow extends JFrame
 				JSP_ChatScroll.setBounds(0,0, 200, 400);
 				JPanel_Main.add(JSP_ChatScroll);
 				
-				//Ã¤ÆÃ ÀÔ·ÂÃ¢
+				//ì±„íŒ… ì…ë ¥ì°½
 				JTF_ChatInput = new JTextField();
 				JTF_ChatInput.setBounds(0, 420, 200, 30);
 				JTF_ChatInput.addActionListener(this);
 				JPanel_Main.add(JTF_ChatInput);
 				
-				//º¸³»±â ¹öÆ°
-				JB_Send = new JButton("º¸³»±â");
+				//ë³´ë‚´ê¸° ë²„íŠ¼
+				JB_Send = new JButton("ë³´ë‚´ê¸°");
 				JB_Send.setBounds(0, 450, 100, 30);
 				JB_Send.addActionListener(this);
 				JPanel_Main.add(JB_Send);
 				
-				//Å¬¸®¾î ¹öÆ° 
-				JB_ChatClear = new JButton("Å¬¸®¾î");
+				//í´ë¦¬ì–´ ë²„íŠ¼ 
+				JB_ChatClear = new JButton("í´ë¦¬ì–´");
 				JB_ChatClear.setBounds(100, 450, 100, 30);
 				JB_ChatClear.addActionListener(this);
 				JPanel_Main.add(JB_ChatClear);
 				
-				//»õ°ÔÀÓ
-				JB_NewGame = new JButton("½ÃÀÛ");
+				//ìƒˆê²Œì„
+				JB_NewGame = new JButton("ì‹œì‘");
 				JB_NewGame.setBounds(0, 480, 100, 30);
 				JB_NewGame.addActionListener(this);
 				JPanel_Main.add(JB_NewGame);
 				
-				//³ª°¡±â
-				JB_Exit = new JButton("³ª°¡±â");
+				//ë‚˜ê°€ê¸°
+				JB_Exit = new JButton("ë‚˜ê°€ê¸°");
 				JB_Exit.setBounds(100, 480, 100, 30);
 				JB_Exit.addActionListener(this);
 				JPanel_Main.add(JB_Exit);
 				
-				//·ê ¼³¸í
-				JB_About = new JButton("°ÔÀÓ ¹æ¹ı");
+				//ë£° ì„¤ëª…
+				JB_About = new JButton("ê²Œì„ ë°©ë²•");
 				JB_About.setBounds(0,510,200,30);
 				JB_About.addActionListener(this);
 				JPanel_Main.add(JB_About);
@@ -102,27 +102,27 @@ class RoomWindow extends JFrame
 			}// ChatWindow() end
 			public void actionPerformed(ActionEvent event) {
 				if(event.getSource() == JB_Send || event.getSource() == JTF_ChatInput) {
-					//ÅØ½ºÆ® Àü¼Û
+					//í…ìŠ¤íŠ¸ ì „ì†¡
 					if(JTF_ChatInput.getText().length() !=0) {	
 						myNetwork.SendChatMsg(JTF_ChatInput.getText());
 						JTF_ChatInput.setText("");
 						JTF_ChatInput.requestFocus();
 					}
 				}
-				if(event.getSource() == JB_ChatClear) {				//Å¬¸®¾î
+				if(event.getSource() == JB_ChatClear) {				//í´ë¦¬ì–´
 					JTA_Chat.setText("");
 					JTF_ChatInput.requestFocus();
 				}
-				if(event.getSource() == JB_NewGame) {				//»õ°ÔÀÓ ½ÃÀÛ
-					myNetwork.SendChatMsg("°ÔÀÓÀ» »õ·Î ½ÃÀÛÇÕ´Ï´Ù.");
-					//TODO Å¬¶óÀÌ¾ğÆ®µéÀÇ ÇöÀç »óÅÂ¸¦ Á¾·áÇÑ ÈÄ »õ·Î ½ÃÀÛÇØ¾ß ÇÑ´Ù.
+				if(event.getSource() == JB_NewGame) {				//ìƒˆê²Œì„ ì‹œì‘
+					myNetwork.SendChatMsg("ê²Œì„ì„ ìƒˆë¡œ ì‹œì‘í•©ë‹ˆë‹¤.");
+					//TODO í´ë¼ì´ì–¸íŠ¸ë“¤ì˜ í˜„ì¬ ìƒíƒœë¥¼ ì¢…ë£Œí•œ í›„ ìƒˆë¡œ ì‹œì‘í•´ì•¼ í•œë‹¤.
 					gameWndGUI.start();
 				}
-				if(event.getSource() == JB_Exit) {					//Á¾·áÄÚµå
+				if(event.getSource() == JB_Exit) {					//ì¢…ë£Œì½”ë“œ
 					getWindowListeners()[0].windowClosing(new WindowEvent(getWindows()[0], 0));
 				}
-				if(event.getSource() == JB_About) {					//°ÔÀÓ ¼³¸í
-					JDialog some = new JDialog( (Frame) getWindows()[0],"°ÔÀÓ¼³¸í", true ) {
+				if(event.getSource() == JB_About) {					//ê²Œì„ ì„¤ëª…
+					JDialog some = new JDialog( (Frame) getWindows()[0],"ê²Œì„ì„¤ëª…", true ) {
 						ImageIcon BG = new ImageIcon(DavichiGUI.class.getResource("About.jpg"));
 						public void paint(Graphics g) {
 							this.setSize(BG.getIconWidth(), BG.getIconHeight());
@@ -140,11 +140,11 @@ class RoomWindow extends JFrame
 			}
 			public void SetButton(boolean server) {
 				if(!server) {
-					JB_NewGame.setText("´ë±âÁß");
+					JB_NewGame.setText("ëŒ€ê¸°ì¤‘");
 				}
 			}
 		}
 		public void AddChatString(String msg) {
-			chatWnd.StringAdd(msg);			// ÇöÀç player ÀÇ Ã¤ÆÃÃ¢¿¡¸¸ ¸Ş½ÃÁö¸¦ Ãâ·ÂÇÑ´Ù.
+			chatWnd.StringAdd(msg);			// í˜„ì¬ player ì˜ ì±„íŒ…ì°½ì—ë§Œ ë©”ì‹œì§€ë¥¼ ì¶œë ¥í•œë‹¤.
 		}
 	}

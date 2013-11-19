@@ -5,28 +5,28 @@ import javax.swing.JOptionPane;
 
 public class Server extends Network
 {
-	ClientData[]	clients;	// server ¿¡ Á¢¼ÓÇÑ client µéÀ» ÀúÀåÇÒ º¯¼ö. client Á¢¼Ó ¼ÒÄÏÀÌ ÀúÀåµÇ¾îÀÖ´Ù.
-	WaitingClient	wait;		// ¼­¹ö ¼ÒÄÏÀÌ ÀúÀåµÉ º¯¼ö.
+	ClientData[]	clients;	// server ì— ì ‘ì†í•œ client ë“¤ì„ ì €ì¥í•  ë³€ìˆ˜. client ì ‘ì† ì†Œì¼“ì´ ì €ì¥ë˜ì–´ìˆë‹¤.
+	WaitingClient	wait;		// ì„œë²„ ì†Œì¼“ì´ ì €ì¥ë  ë³€ìˆ˜.
 
-	final int maxClient = 3;	// °ÔÀÓ¿¡´Â server ±îÁö ÃÖ´ë 4 ¸í¸¸ Á¢¼ÓÇÒ ¼ö ÀÖ´Ù.
+	final int maxClient = 3;	// ê²Œì„ì—ëŠ” server ê¹Œì§€ ìµœëŒ€ 4 ëª…ë§Œ ì ‘ì†í•  ìˆ˜ ìˆë‹¤.
 	int clientNum;
 
 	public Server()
 	{
 		System.out.println("[ Server : Constructor ]");
-		clientNum	= 0;								//ÇöÀç Á¢¼ÓÇÑ client ÀÇ ¼ö¸¦ ÃÊ±âÈ­.
-		clients		= new ClientData[maxClient];		// client Á¤º¸¸¦ ÀúÀåÇÒ ¸Ş¸ğ¸® »ı¼º.
-		wait		= new WaitingClient();						// server °¡ client ÀÇ Á¢¼ÓÀ» ±â´Ù¸®±â ½ÃÀÛ.
+		clientNum	= 0;								//í˜„ì¬ ì ‘ì†í•œ client ì˜ ìˆ˜ë¥¼ ì´ˆê¸°í™”.
+		clients		= new ClientData[maxClient];		// client ì •ë³´ë¥¼ ì €ì¥í•  ë©”ëª¨ë¦¬ ìƒì„±.
+		wait		= new WaitingClient();						// server ê°€ client ì˜ ì ‘ì†ì„ ê¸°ë‹¤ë¦¬ê¸° ì‹œì‘.
 		for(int i = 0; i < maxClient; i++)
-			clients[i] = new ClientData();		// client ÀÚ·á±¸Á¶ »ı¼º.
+			clients[i] = new ClientData();		// client ìë£Œêµ¬ì¡° ìƒì„±.
 	}
 
-	public void Connect(String ip)			// ¼­¹ö ¼ÒÄÏÀ» ¿­°í client ¸¦ ±â´Ù¸®±â ½ÃÀÛÇÏ´Â ¸Ş¼Òµå.
+	public void Connect(String ip)			// ì„œë²„ ì†Œì¼“ì„ ì—´ê³  client ë¥¼ ê¸°ë‹¤ë¦¬ê¸° ì‹œì‘í•˜ëŠ” ë©”ì†Œë“œ.
 	{
-		//ip´Â »ó¼ÓµÇ´Â  ÄÚµå¿ÍÀÇ È£È¯À» À§ÇØ. ÀÇ¹Ì¾øÀ½.
-		//ÀÌ Å¬·¡½º´Â ¼­¹ö ÀÌ¹Ç·Î Á¢¼ÓÀ» ÇÏÁö ¾Ê°í ¼­¹ö¸¦ »ı¼º.
-		wait.setServSock(portNum, maxClient);		// server ÀÇ ¼ÒÄÏÀ» ¿­°í Å¬¶óÀÌ¾ğÆ®¸¦ ±â´Ù¸².
-		wait.start();								// server socket ½º·¹µå ½ÃÀÛ.
+		//ipëŠ” ìƒì†ë˜ëŠ”  ì½”ë“œì™€ì˜ í˜¸í™˜ì„ ìœ„í•´. ì˜ë¯¸ì—†ìŒ.
+		//ì´ í´ë˜ìŠ¤ëŠ” ì„œë²„ ì´ë¯€ë¡œ ì ‘ì†ì„ í•˜ì§€ ì•Šê³  ì„œë²„ë¥¼ ìƒì„±.
+		wait.setServSock(portNum, maxClient);		// server ì˜ ì†Œì¼“ì„ ì—´ê³  í´ë¼ì´ì–¸íŠ¸ë¥¼ ê¸°ë‹¤ë¦¼.
+		wait.start();								// server socket ìŠ¤ë ˆë“œ ì‹œì‘. 
 	}
 	public void SendChatMsg(String msg)
 	{
@@ -37,75 +37,75 @@ public class Server extends Network
 		
 		myRoomWnd.AddChatString(playerNickname + " : " + msg);
 	}
-	public void SendOb(Object ob)		// Àü´Ş¹ŞÀº °´Ã¼¸¦ server ¿¡ Á¢¼ÓÇÑ ¸ğµç °´Ã¼¿¡ Àü´ŞÇÏ´Â ¸Ş¼Òµå.
+	public void SendOb(Object ob)		// ì „ë‹¬ë°›ì€ ê°ì²´ë¥¼ server ì— ì ‘ì†í•œ ëª¨ë“  ê°ì²´ì— ì „ë‹¬í•˜ëŠ” ë©”ì†Œë“œ.
 	{
 		System.out.println("[ Server : SendOb ]");
 		for(int i = 0 ; i < clientNum ; i++)
 		{
-			try {	clients[i].SendOb(ob);	}	// client ¿¡°Ô °´Ã¼¸¦ Àü´ŞÇÑ´Ù.
-			catch(SocketException e){	System.out.println("client "+i+" ¹ø ¿¡¼­ ¹İÀÀÀÌ ¾ø½À´Ï´Ù."); 	}
+			try {	clients[i].SendOb(ob);	}	// client ì—ê²Œ ê°ì²´ë¥¼ ì „ë‹¬í•œë‹¤.
+			catch(SocketException e){	System.out.println("client "+i+" ë²ˆ ì—ì„œ ë°˜ì‘ì´ ì—†ìŠµë‹ˆë‹¤."); 	}
 			catch(IOException e)	{	e.printStackTrace(); } 
 		}
 	}
 
 	public void Close()
 	{
-		SendChatMsg("¼­¹ö°¡ Á¾·áµÇ¾ú½À´Ï´Ù.");
+		SendChatMsg("ì„œë²„ê°€ ì¢…ë£Œë˜ì—ˆìŠµë‹ˆë‹¤.");
 		wait.listenning = false;
 		for(int i = 0; i < clientNum; i++)
 		{
 			if(clients[i].getClientSocket().isConnected())
 			{
 				try {			clients[i].close();			}
-				catch(SocketException e)	{	System.out.println("client "+i+" ¹øÀº ÀÌ¹Ì ¿¬°áÀÌ Á¾·áµÇ¾ú½À´Ï´Ù.");	}
+				catch(SocketException e)	{	System.out.println("client "+i+" ë²ˆì€ ì´ë¯¸ ì—°ê²°ì´ ì¢…ë£Œë˜ì—ˆìŠµë‹ˆë‹¤.");	}
 				catch (IOException e) 		{	e.printStackTrace();	}
 			}
 		}
 		wait.close();
 	}
 	
-	class ClientData	// server °¡ °ü¸®ÇÒ client µéÀÇ ¼ÒÄÏÁ¤º¸¿Í input/output Á¤º¸¸¦ 
+	class ClientData	// server ê°€ ê´€ë¦¬í•  client ë“¤ì˜ ì†Œì¼“ì •ë³´ì™€ input/output ì •ë³´ë¥¼ 
 	{
 		Socket 				clientSock	= null;
 		ObjectOutputStream	outOb		= null;
 		ObServerListener	inOb		= null;
 		
-		public ClientData() {	// ÀÓÀÇÀÇ ¼ÒÄÏ ¸Ş¸ğ¸® »ı¼º.
+		public ClientData() {	// ì„ì˜ì˜ ì†Œì¼“ ë©”ëª¨ë¦¬ ìƒì„±.
 			clientSock = new Socket();
 		}
-		public void setClientData(Socket accepted) throws IOException		// client ¿Í ¸ÎÀº »õ·Î¿î ¼ÒÄ¹À» ÀÎÀÚ·Î ¹Ş¾Æ input/output ½ºÆ®¸²À» ¿­°í
-		{																	// ±× ¼ÒÄÏÀ» ÀúÀåÇØµÎ´Â ¸Ş¼Òµå.
-			clientSock	= accepted;										// ÀÎÀÚ·Î Àü´Ş¹ŞÀº client ÀÇ ¼ÒÄÏÀ» ÀúÀå.
-			outOb		= new ObjectOutputStream(clientSock.getOutputStream());	// outputÀÌ client ¿¡°Ô Àü¼ÛµÊ.
-			inOb		= new ObServerListener(clientSock);						// client ¿¡°Ô¼­ Àü¼Û¹ŞÀ½.
+		public void setClientData(Socket accepted) throws IOException		// client ì™€ ë§ºì€ ìƒˆë¡œìš´ ì†Œìº£ì„ ì¸ìë¡œ ë°›ì•„ input/output ìŠ¤íŠ¸ë¦¼ì„ ì—´ê³ 
+		{																	// ê·¸ ì†Œì¼“ì„ ì €ì¥í•´ë‘ëŠ” ë©”ì†Œë“œ.
+			clientSock	= accepted;										// ì¸ìë¡œ ì „ë‹¬ë°›ì€ client ì˜ ì†Œì¼“ì„ ì €ì¥.
+			outOb		= new ObjectOutputStream(clientSock.getOutputStream());	// outputì´ client ì—ê²Œ ì „ì†¡ë¨.
+			inOb		= new ObServerListener(clientSock);						// client ì—ê²Œì„œ ì „ì†¡ë°›ìŒ.
 			inOb.start();
 		}
 		public Socket getClientSocket() {
 			return clientSock;
 		}
-		public void SendOb(Object ob) throws IOException		// client ¿¡°Ô µ¥ÀÌÅÍ¸¦ Àü¼ÛÇÏ´Â ¸Ş¼Òµå.
+		public void SendOb(Object ob) throws IOException		// client ì—ê²Œ ë°ì´í„°ë¥¼ ì „ì†¡í•˜ëŠ” ë©”ì†Œë“œ.
 		{
 			outOb.writeObject(ob);
 			outOb.flush();
 		}
-		public void close() throws IOException		// client¿ÍÀÇ ¿¬°áÀ» ²÷´Â ¸Ş¼Òµå.
+		public void close() throws IOException		// clientì™€ì˜ ì—°ê²°ì„ ëŠëŠ” ë©”ì†Œë“œ.
 		{
 			outOb.close();
 			inOb.close();
 			clientSock.close();
 		}
 	}
-	class WaitingClient extends Thread		// Server °¡ Client ÀÇ Á¢¼ÓÀ» ±â´Ù¸± ¶§ »ç¿ëÇÒ Å¬·¡½º.
+	class WaitingClient extends Thread		// Server ê°€ Client ì˜ ì ‘ì†ì„ ê¸°ë‹¤ë¦´ ë•Œ ì‚¬ìš©í•  í´ë˜ìŠ¤.
 	{
 		ServerSocket	servSock	= null;
 		boolean			listenning	= true;
-		public void setServSock(int portNum, int maxClient)			// ¼­¹ö ¼ÒÄÏÀ» portNum °ú °áÇÕ½ÃÅ²´Ù.
+		public void setServSock(int portNum, int maxClient)			// ì„œë²„ ì†Œì¼“ì„ portNum ê³¼ ê²°í•©ì‹œí‚¨ë‹¤.
 		{
 			try {
-				servSock = new ServerSocket(portNum, maxClient);	// ÁöÁ¤µÈ Æ÷Æ®¹øÈ£·Î ¼­¹ö ¼ÒÄÏÀ» ¿¬´Ù.
+				servSock = new ServerSocket(portNum, maxClient);	// ì§€ì •ëœ í¬íŠ¸ë²ˆí˜¸ë¡œ ì„œë²„ ì†Œì¼“ì„ ì—°ë‹¤.
 			}
 			catch (IllegalArgumentException e) {
-				JOptionPane.showMessageDialog(null, "ÀÔ·ÂÇÏ½Å Port number : "+portNum+"\nPort ´Â 1 ~ 65535 »çÀÌÀÇ °ªÀÌ¾î¾ß ÇÕ´Ï´Ù.\n±âº»°ª 10000 ¹ø Æ÷Æ®·Î ¿¬°áÇÕ´Ï´Ù.", "Port number °æ°í", JOptionPane.OK_OPTION );
+				JOptionPane.showMessageDialog(null, "ì…ë ¥í•˜ì‹  Port number : "+portNum+"\nPort ëŠ” 1 ~ 65535 ì‚¬ì´ì˜ ê°’ì´ì–´ì•¼ í•©ë‹ˆë‹¤.\nê¸°ë³¸ê°’ 10000 ë²ˆ í¬íŠ¸ë¡œ ì—°ê²°í•©ë‹ˆë‹¤.", "Port number ê²½ê³ ", JOptionPane.OK_OPTION );
 				setServSock(10000, maxClient);
 			} 
 			catch (IOException e) {
@@ -119,12 +119,12 @@ public class Server extends Network
 			}
 			catch (IOException e) {	e.printStackTrace(); }
 		}
-		public void run() {					// ½º·¹µå »ı¼º½Ã ½ÇÁ¦ µ¿ÀÛ½ÃÅ³ ³»¿ëÀ» Àû´Â ¸Ş¼Òµå.
+		public void run() {					// ìŠ¤ë ˆë“œ ìƒì„±ì‹œ ì‹¤ì œ ë™ì‘ì‹œí‚¬ ë‚´ìš©ì„ ì ëŠ” ë©”ì†Œë“œ.
 			int current = 0;
-			while(listenning) {						// ¼­¹ö ¼ÒÄÏÀº Å¬¶óÀÌ¾ğÆ®°¡ Á¢¼ÓÇÒ ¶§±îÁö °è¼Ó ±â´Ù·Á¾ß ÇÏ±â ¶§¹®¿¡ while( true ).
+			while(listenning) {						// ì„œë²„ ì†Œì¼“ì€ í´ë¼ì´ì–¸íŠ¸ê°€ ì ‘ì†í•  ë•Œê¹Œì§€ ê³„ì† ê¸°ë‹¤ë ¤ì•¼ í•˜ê¸° ë•Œë¬¸ì— while( true ).
 				if( current <= maxClient ) {
 					if( clients[current].getClientSocket().isConnected() ) {
-						System.out.println("client "+current+" Á¢¼ÓÇÔ.");
+						System.out.println("client "+current+" ì ‘ì†í•¨.");
 						current++;
 					}
 				}
@@ -132,18 +132,18 @@ public class Server extends Network
 				try {	clients[current].setClientData(servSock.accept());	}
 				catch(SocketException e)	{	listenning = false;	close();	}
 				catch (IOException e) 		{	e.printStackTrace();		}
-				clientNum++;			// client ¸¦ ¿¬°á½ÃÅ°°í ³­ ÈÄ ÀüÃ¼ client ¼ö¸¦ ÇÏ³ª Áõ°¡.
+				clientNum++;			// client ë¥¼ ì—°ê²°ì‹œí‚¤ê³  ë‚œ í›„ ì „ì²´ client ìˆ˜ë¥¼ í•˜ë‚˜ ì¦ê°€.
 			}
 		}
 	}
 
-	class ObServerListener extends Thread	// server ·Î µé¾î¿À´Â µ¥ÀÌÅÍµéÀ» ¹Ş¾Æ Ã³¸®ÇÏ´Â Å¬·¡½º.
+	class ObServerListener extends Thread	// server ë¡œ ë“¤ì–´ì˜¤ëŠ” ë°ì´í„°ë“¤ì„ ë°›ì•„ ì²˜ë¦¬í•˜ëŠ” í´ë˜ìŠ¤.
 	{
 		Socket client = null;
 		boolean listenning = true;
 		ObjectInputStream OInStream = null;
 
-		public ObServerListener(Socket client) throws IOException	// Àü´Ş¹ŞÀº ¼ÒÄÏ ÀÎÀÚ¿¡ input ½ºÆ®¸²À» ¿¬°á.
+		public ObServerListener(Socket client) throws IOException	// ì „ë‹¬ë°›ì€ ì†Œì¼“ ì¸ìì— input ìŠ¤íŠ¸ë¦¼ì„ ì—°ê²°.
 		{
 			this.client = client;		
 			OInStream = new ObjectInputStream(client.getInputStream());
@@ -151,20 +151,20 @@ public class Server extends Network
 		public void close() {
 			try {
 				listenning = false;
-				OInStream.close();		// °´Ã¼ input ½ºÆ®¸²À» Á¾·á.
+				OInStream.close();		// ê°ì²´ input ìŠ¤íŠ¸ë¦¼ì„ ì¢…ë£Œ.
 			}
 			catch (IOException e) {	e.printStackTrace(); }
 			clientNum--;
 		}
 		public void dataEvent(DataHeader data) {
-			//¼­¹ö¿¡°Ô ¿Â µ¥ÀÌÅÍÀÇ Ã³¸®´Â ¿©±â¼­ ´ã´çÇÑ´Ù.
-			// ±âº»ÀûÀ¸·Î ¼­¹ö¿¡°Ô ¿Â µ¥ÀÌÅÍ´Â ºê·Îµå Ä³½ºÆÃÀÌ µÇ¾î ´Ù½Ã ³ª°£´Ù.
-			// ºê·Îµå Ä³½ºÆÃÀ» ¸·À¸·Á¸é Á¶°Ç¹® ¾È¿¡¼­ returnÀ» ½ÃÅ³°Í.
+			//ì„œë²„ì—ê²Œ ì˜¨ ë°ì´í„°ì˜ ì²˜ë¦¬ëŠ” ì—¬ê¸°ì„œ ë‹´ë‹¹í•œë‹¤.
+			// ê¸°ë³¸ì ìœ¼ë¡œ ì„œë²„ì—ê²Œ ì˜¨ ë°ì´í„°ëŠ” ë¸Œë¡œë“œ ìºìŠ¤íŒ…ì´ ë˜ì–´ ë‹¤ì‹œ ë‚˜ê°„ë‹¤.
+			// ë¸Œë¡œë“œ ìºìŠ¤íŒ…ì„ ë§‰ìœ¼ë ¤ë©´ ì¡°ê±´ë¬¸ ì•ˆì—ì„œ returnì„ ì‹œí‚¬ê²ƒ.
 			
 			System.out.println("[ Server : dataEvent ]");
 			int flag = data.getFlag();
 			switch(flag) {
-				case DataHeader.CHAT:		// µ¥ÀÌÅÍ Çì´õ°¡ ´ëÈ­ ÀÌº¥Æ®ÀÏ °æ¿ì.
+				case DataHeader.CHAT:		// ë°ì´í„° í—¤ë”ê°€ ëŒ€í™” ì´ë²¤íŠ¸ì¼ ê²½ìš°.
 					myRoomWnd.AddChatString((String)data.getData());
 					break;
 				case DataHeader.GAME:
@@ -174,7 +174,7 @@ public class Server extends Network
 				case DataHeader.GAMEDATA:
 					gameProcess.setGameEnv((GameData)data.getData());
 					break;
-				case DataHeader.PASS:		// ÅÏ ³Ñ±è ¸Ş½ÃÁö¸¦ ¹Ş°í¼­, client ÀÚ½ÅÀÌ ÇÃ·¹ÀÌÇÒ Â÷·Ê°¡ µÇ¸é ÅÏÀ» ½ÃÇàÇÑ´Ù.
+				case DataHeader.PASS:		// í„´ ë„˜ê¹€ ë©”ì‹œì§€ë¥¼ ë°›ê³ ì„œ, client ìì‹ ì´ í”Œë ˆì´í•  ì°¨ë¡€ê°€ ë˜ë©´ í„´ì„ ì‹œí–‰í•œë‹¤.
 					if(gameProcess.getPlayOrder() == ((Integer)data.getData()).intValue())
 						gameProcess.turn();
 					break;
@@ -184,9 +184,9 @@ public class Server extends Network
 		public void run() {
 			while(listenning)
 			{
-				try {		dataEvent((DataHeader)OInStream.readObject());	}	// °è¼Ó ´ë±âÇÏ¸ç µé¾î¿À´Â µ¥ÀÌÅÍ¸¦ Ã³¸®.
-				catch (SocketException e)	{	listenning = false;	}			// ¿¬°áÀÌ ²÷¾îÁ³´Ù°í ÆÇ´ÜµÉ °æ¿ì
-				catch (EOFException e) 		{	listenning = false;	}			// ¿¹»ó ¸øÇÑ ½ºÆ®¸²ÀÇ Á¾·á½Ã¿¡ ¹ß»ı. 
+				try {		dataEvent((DataHeader)OInStream.readObject());	}	// ê³„ì† ëŒ€ê¸°í•˜ë©° ë“¤ì–´ì˜¤ëŠ” ë°ì´í„°ë¥¼ ì²˜ë¦¬.
+				catch (SocketException e)	{	listenning = false;	}			// ì—°ê²°ì´ ëŠì–´ì¡Œë‹¤ê³  íŒë‹¨ë  ê²½ìš°
+				catch (EOFException e) 		{	listenning = false;	}			// ì˜ˆìƒ ëª»í•œ ìŠ¤íŠ¸ë¦¼ì˜ ì¢…ë£Œì‹œì— ë°œìƒ. 
 				catch (IOException e) {
 					listenning = false;					
 					e.printStackTrace();
@@ -199,7 +199,7 @@ public class Server extends Network
 		}
 	}
 	
-	public void SendOrder()			// player µé¿¡°Ô ÀÚ½ÅµéÀÇ °ÔÀÓ ¼ø¼­¸¦ Àü¼ÛÇÑ´Ù.
+	public void SendOrder()			// player ë“¤ì—ê²Œ ìì‹ ë“¤ì˜ ê²Œì„ ìˆœì„œë¥¼ ì „ì†¡í•œë‹¤.
 	{
 		System.out.println("[ Server : SendOrder ]");
 		for(int i = 0; i < clientNum ; i++)

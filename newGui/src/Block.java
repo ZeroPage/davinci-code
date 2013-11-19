@@ -6,22 +6,22 @@ import java.io.Serializable;
  * 2010.08.19( Teolex ) : Comments added. Nothing to touch.
  */
 public class Block implements Serializable {
-	private int 		color;		// ºí·°ÀÇ »ö±ò. °ËÁ¤ == 0, ÇÏ¾ç == 1
-	private int			num; 		//ºí·°ÀÇ ¼ıÀÚ. Á¶Ä¿´Â 12.
+	private int 		color;		// ë¸”ëŸ­ì˜ ìƒ‰ê¹”. ê²€ì • == 0, í•˜ì–‘ == 1
+	private int			num; 		//ë¸”ëŸ­ì˜ ìˆ«ì. ì¡°ì»¤ëŠ” 12.
 	private boolean		joker;
 	private boolean		open;
-	private int			sortingNum;	// Á¶Ä¿¿Í ÀÏ¹İ ºí·°À» ±¸ºĞÇÏÁö ¾Ê°í, block À» Á¤·ÄÇÏ±â À§ÇØ ¼±¾ğµÈ º¯¼ö. Á¶Ä¿´Â ±âº»ÀûÀ¸·Î 12ÀÌÁö¸¸ »ç¿ëÀÚÀÇ ¼±ÅÃ¿¡ µû¶ó ±× ¿ÜÀÇ ¼ıÀÚ°¡ µÇ±â ¶§¹®¿¡ ÀÌ º¯¼ö°¡ ÇÊ¿äÇÔ.
-	private boolean		own;		// ¼ÒÀ¯µÈ ºí·°ÀÎÁö ¾Æ´ÑÁö¸¦ ÀúÀåÇÒ º¯¼ö. transient´Â Á÷·ÄÈ­ÇÒ ¶§ Á¦¿ÜÇÒ º¯¼öÀÓÀ» ¸í½ÃÇÏ´Â ±â´ÉÀ» ÇÔ.
+	private int			sortingNum;	// ì¡°ì»¤ì™€ ì¼ë°˜ ë¸”ëŸ­ì„ êµ¬ë¶„í•˜ì§€ ì•Šê³ , block ì„ ì •ë ¬í•˜ê¸° ìœ„í•´ ì„ ì–¸ëœ ë³€ìˆ˜. ì¡°ì»¤ëŠ” ê¸°ë³¸ì ìœ¼ë¡œ 12ì´ì§€ë§Œ ì‚¬ìš©ìì˜ ì„ íƒì— ë”°ë¼ ê·¸ ì™¸ì˜ ìˆ«ìê°€ ë˜ê¸° ë•Œë¬¸ì— ì´ ë³€ìˆ˜ê°€ í•„ìš”í•¨.
+	private boolean		own;		// ì†Œìœ ëœ ë¸”ëŸ­ì¸ì§€ ì•„ë‹Œì§€ë¥¼ ì €ì¥í•  ë³€ìˆ˜. transientëŠ” ì§ë ¬í™”í•  ë•Œ ì œì™¸í•  ë³€ìˆ˜ì„ì„ ëª…ì‹œí•˜ëŠ” ê¸°ëŠ¥ì„ í•¨.
 	
 	public static final int BLACK = 0;
 	public static final int WHITE = 1;
 	
 	/**
-	 * ±âº» »ı¼ºÀÚ´Â ¸¸¾àÀ» ´ëºñÇØ¼­ À¯ÁöÇÏ´Â °ÍÀÌ ÁÁ°ÚÀ¸³ª,
-	 * block Áß¿¡ ¹øÈ£°¡ ¾ø´Â block ÀÌ ÀÖÀ» ¼ö ¾øÀ¸¹Ç·Î
-	 * ÁÖ¼®À¸·Î¸¸ À¯ÁöÇÏ±â·Î ÇÑ´Ù.
+	 * ê¸°ë³¸ ìƒì„±ìëŠ” ë§Œì•½ì„ ëŒ€ë¹„í•´ì„œ ìœ ì§€í•˜ëŠ” ê²ƒì´ ì¢‹ê² ìœ¼ë‚˜,
+	 * block ì¤‘ì— ë²ˆí˜¸ê°€ ì—†ëŠ” block ì´ ìˆì„ ìˆ˜ ì—†ìœ¼ë¯€ë¡œ
+	 * ì£¼ì„ìœ¼ë¡œë§Œ ìœ ì§€í•˜ê¸°ë¡œ í•œë‹¤.
 	 */
-//	Block()					// ±âº» »ı¼ºÀÚ
+//	Block()					// ê¸°ë³¸ ìƒì„±ì
 //	{
 //		color	= -1;
 //		num		= -2;
@@ -33,13 +33,13 @@ public class Block implements Serializable {
 	{
 		setColor(color);
 		setNum(num);
-		own  		= false; //´©±º°¡ °¡Á³´ÂÁö ¿©ºÎ. ¹Ù´Ú¿¡ ±ò¸° ÆĞ¿Í player °¡ °¡Áø ÆĞ µÎ °¡Áö·Î ³ª´µ¹Ç·Î.
-		open 		= false; //°ø°³¿©ºÎ. player °¡ °¡Áø ÆĞ Áß¿¡ °ø°³µÈ °Í°ú ¾ÈµÈ °ÍÀÌ ÀÖÀ¸¹Ç·Î.
+		own  		= false; //ëˆ„êµ°ê°€ ê°€ì¡ŒëŠ”ì§€ ì—¬ë¶€. ë°”ë‹¥ì— ê¹”ë¦° íŒ¨ì™€ player ê°€ ê°€ì§„ íŒ¨ ë‘ ê°€ì§€ë¡œ ë‚˜ë‰˜ë¯€ë¡œ.
+		open 		= false; //ê³µê°œì—¬ë¶€. player ê°€ ê°€ì§„ íŒ¨ ì¤‘ì— ê³µê°œëœ ê²ƒê³¼ ì•ˆëœ ê²ƒì´ ìˆìœ¼ë¯€ë¡œ.
 		joker 		= false;
 		sortingNum 	= num;
 		if( num == 12)	joker = true;
 	}
-	public void setSortingNum(int sortingNum) {	// block ÀÌ Á¶Ä¿ÀÎ °æ¿ì 
+	public void setSortingNum(int sortingNum) {	// block ì´ ì¡°ì»¤ì¸ ê²½ìš° 
 		this.sortingNum = sortingNum;
 	}
 	public void setColor(int n) {

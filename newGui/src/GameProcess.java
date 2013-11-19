@@ -5,50 +5,50 @@ public class GameProcess
 {
 	GameWindow	gameWndGUI;
 	Network		netObject;
-	int 		myPlayOrder	= 0;	// ÀÚ½ÅÀÇ ÇÃ·¹ÀÌ ¼ø¼­.
-	int 		onlyDraw	= 4;			// player µéÀº block À» 4 °³¸¦ ¸ÕÀú °¡Áö°í ½ÃÀÛÇÑ´Ù.
+	int 		myPlayOrder	= 0;	// ìì‹ ì˜ í”Œë ˆì´ ìˆœì„œ.
+	int 		onlyDraw	= 4;			// player ë“¤ì€ block ì„ 4 ê°œë¥¼ ë¨¼ì € ê°€ì§€ê³  ì‹œì‘í•œë‹¤.
 
 	Game		gameEnv;
 
-	public GameProcess(GameWindow GUITarget, Network NetTarget) {	// °ÔÀÓ ÇÁ·Î¼¼½º °´Ã¼¿¡ °ÔÀÓ GUI ¿Í ³×Æ®¿öÅ©¸¦ ¼³Á¤.
-		gameWndGUI	= GUITarget;		// ÇÁ·Î¼¼½º¸¦ »ı¼ºÇÑ game window¸¦ °¡¸®Å°±âÀ§ÇÑ º¯¼ö.
+	public GameProcess(GameWindow GUITarget, Network NetTarget) {	// ê²Œì„ í”„ë¡œì„¸ìŠ¤ ê°ì²´ì— ê²Œì„ GUI ì™€ ë„¤íŠ¸ì›Œí¬ë¥¼ ì„¤ì •.
+		gameWndGUI	= GUITarget;		// í”„ë¡œì„¸ìŠ¤ë¥¼ ìƒì„±í•œ game windowë¥¼ ê°€ë¦¬í‚¤ê¸°ìœ„í•œ ë³€ìˆ˜.
 		netObject	= NetTarget;
 	}
-	public void Start() {		// server °¡ °ÔÀÓÀ» ½ÃÀÛÇÒ ¶§, ÀÚ½ÅÀÇ °ÔÀÓ ÄÁÆ®·Ñ¸¦ »ı¼ºÇÏ°í, client µé¿¡°Ô ÃÑ play ÀÎ¿ø°ú ¼­¹ö°¡ »ı¼ºÇÑ °ÔÀÓ ÄÁÆ®·ÑÀ» Àü´ŞÇÏ°í ÀÚ½ÅºÎÅÍ °ÔÀÓÀ» ½ÃÀÛÇÏ´Â ¸Ş¼Òµå.
+	public void Start() {		// server ê°€ ê²Œì„ì„ ì‹œì‘í•  ë•Œ, ìì‹ ì˜ ê²Œì„ ì»¨íŠ¸ë¡¤ë¥¼ ìƒì„±í•˜ê³ , client ë“¤ì—ê²Œ ì´ play ì¸ì›ê³¼ ì„œë²„ê°€ ìƒì„±í•œ ê²Œì„ ì»¨íŠ¸ë¡¤ì„ ì „ë‹¬í•˜ê³  ìì‹ ë¶€í„° ê²Œì„ì„ ì‹œì‘í•˜ëŠ” ë©”ì†Œë“œ.
 		System.out.println("[ GameProcess : Start ]");
 		gameEnv = new Game( ((Server)netObject).clientNum+1 );
 		((Server)netObject).SendOrder();
 		netObject.SendOb( new DataHeader( DataHeader.TOTALCOUNT, gameEnv.getPlayers().size()) );
-		netObject.SendOb( new DataHeader( DataHeader.GAME, gameEnv) );		// ¸ğµç client µé¿¡°Ô server °¡ »ı¼ºÇÑ °ÔÀÓ ÄÁÆ®·ÑÀ» Àü´ŞÇÑ´Ù.
+		netObject.SendOb( new DataHeader( DataHeader.GAME, gameEnv) );		// ëª¨ë“  client ë“¤ì—ê²Œ server ê°€ ìƒì„±í•œ ê²Œì„ ì»¨íŠ¸ë¡¤ì„ ì „ë‹¬í•œë‹¤.
 		
-		if(gameEnv.getPlayers().size()==4)	onlyDraw = 3;		// player ¼ö°¡ 4 ¸íÀÏ °æ¿ì, 3 °³¸¸ °¡Áö°í °ÔÀÓÀ» ½ÃÀÛ.	
+		if(gameEnv.getPlayers().size()==4)	onlyDraw = 3;		// player ìˆ˜ê°€ 4 ëª…ì¼ ê²½ìš°, 3 ê°œë§Œ ê°€ì§€ê³  ê²Œì„ì„ ì‹œì‘.	
 	}
 	public void turn() {
 		System.out.println("[ GameProcess : turn ]");
 		gameWndGUI.update();
-		gameWndGUI.setEnable(GameWindow.CENTER, true);				// player ÀÚ½ÅÀÇ ÅÏÀÌ µÇ±â Àü±îÁö´Â center block À» °¡Á®¿Ã ¼ö ¾ø´Ù.
-		netObject.SendChatMsg("ÅÏ ÀÔ´Ï´Ù.");
+		gameWndGUI.setEnable(GameWindow.CENTER, true);				// player ìì‹ ì˜ í„´ì´ ë˜ê¸° ì „ê¹Œì§€ëŠ” center block ì„ ê°€ì ¸ì˜¬ ìˆ˜ ì—†ë‹¤.
+		netObject.SendChatMsg("í„´ ì…ë‹ˆë‹¤.");
 	}
-	public void Next()	//´ÙÀ½ ÇÃ·¹ÀÌ¾î¿¡°Ô ÅÏÀ» ³Ñ°ÜÁØ´Ù. °ÔÀÓ À©µµ¿ìÀÇ ¸ğµç ÀÔ·ÂÀº ºí·Ï Ã³¸® µÇ¾î ÀÖÀ¸¹Ç·Î ÀÚµ¿À¸·Î ´ë±â»óÅÂ°¡ µÈ´Ù.
+	public void Next()	//ë‹¤ìŒ í”Œë ˆì´ì–´ì—ê²Œ í„´ì„ ë„˜ê²¨ì¤€ë‹¤. ê²Œì„ ìœˆë„ìš°ì˜ ëª¨ë“  ì…ë ¥ì€ ë¸”ë¡ ì²˜ë¦¬ ë˜ì–´ ìˆìœ¼ë¯€ë¡œ ìë™ìœ¼ë¡œ ëŒ€ê¸°ìƒíƒœê°€ ëœë‹¤.
 	{
 		System.out.println("[ GameProcess : Next ]");
-		gameWndGUI.setEnable(GameWindow.OTHERS, false);			 	// ÇöÀç player °¡ ´Ù¸¥ block µéÀ» Å¬¸¯ÇÏÁö ¸øÇÏµµ·Ï ¼³Á¤. 
-		gameWndGUI.setEnable(GameWindow.CENTER, false);				// center ÀÇ block µéµµ ¼±ÅÃÇÏÁö ¸øÇÏµµ·Ï ¼³Á¤.
+		gameWndGUI.setEnable(GameWindow.OTHERS, false);			 	// í˜„ì¬ player ê°€ ë‹¤ë¥¸ block ë“¤ì„ í´ë¦­í•˜ì§€ ëª»í•˜ë„ë¡ ì„¤ì •. 
+		gameWndGUI.setEnable(GameWindow.CENTER, false);				// center ì˜ block ë“¤ë„ ì„ íƒí•˜ì§€ ëª»í•˜ë„ë¡ ì„¤ì •.
 		netObject.SendOb( new DataHeader( DataHeader.PASS, ( ( Integer.valueOf( ( myPlayOrder+1 ) ) % ( gameEnv.getPlayers().size() ) ) )) );
-		// ±× ÈÄ ´ÙÀ½ player ¿¡°Ô ÅÏÀ» ³Ñ±è.
+		// ê·¸ í›„ ë‹¤ìŒ player ì—ê²Œ í„´ì„ ë„˜ê¹€.
 	}
-	public void End() {	//°ÔÀÓÀÌ ³¡³µÀ»¶§ÀÇ È£Ãâ ·¹µğ¹öÆ°À» È°¼ºÈ­ ÇØÁÖ°í ¸ğµç ÀÌ¹ÌÁö¸¦ ¾Èº¸ÀÌ°Ô ÁöÁ¤ÇÑµÚ ½ÂÀÚ¸¦ Ç¥½ÃÇØÁØ´Ù.
-		netObject.SendChatMsg("ÀÌ°å½À´Ï´Ù.");
+	public void End() {	//ê²Œì„ì´ ëë‚¬ì„ë•Œì˜ í˜¸ì¶œ ë ˆë””ë²„íŠ¼ì„ í™œì„±í™” í•´ì£¼ê³  ëª¨ë“  ì´ë¯¸ì§€ë¥¼ ì•ˆë³´ì´ê²Œ ì§€ì •í•œë’¤ ìŠ¹ìë¥¼ í‘œì‹œí•´ì¤€ë‹¤.
+		netObject.SendChatMsg("ì´ê²¼ìŠµë‹ˆë‹¤.");
 		gameWndGUI.RemoveAll();
 		gameWndGUI.update();
 		gameEnv=null;
 	}
-	public void moveBlock(int blockIndex) 		// center ¿¡ ÀÖ´Â block µéÀ» player ¿¡°Ô ¿Å±â´Â ÇÔ¼ö.
+	public void moveBlock(int blockIndex) 		// center ì— ìˆëŠ” block ë“¤ì„ player ì—ê²Œ ì˜®ê¸°ëŠ” í•¨ìˆ˜.
 	{
 		System.out.println("[ GameProcess : moveBlock ]");
 		Player me = gameEnv.getPlayer(myPlayOrder);
 		
-		if(gameEnv.getFloorBlocks().get(blockIndex).getNum()==12)	// ¼±ÅÃÇÑ block ÀÌ Joker ÀÏ °æ¿ì diag ´ëÈ­»óÀÚÀÇ ¹öÆ° »öÀ» º¯°æÇÏ°í, joker ¸¦ ³õÀ» Àå¼Ò¸¦ player ¿¡°Ô ¹°¾îº»´Ù.
+		if(gameEnv.getFloorBlocks().get(blockIndex).getNum()==12)	// ì„ íƒí•œ block ì´ Joker ì¼ ê²½ìš° diag ëŒ€í™”ìƒìì˜ ë²„íŠ¼ ìƒ‰ì„ ë³€ê²½í•˜ê³ , joker ë¥¼ ë†“ì„ ì¥ì†Œë¥¼ player ì—ê²Œ ë¬¼ì–´ë³¸ë‹¤.
 		{
 			Block	target	= gameEnv.getFloorBlocks().get(blockIndex);
 			AskDlg	diag	= new AskDlg( target.getColor() );
@@ -56,25 +56,25 @@ public class GameProcess
 			target.setSortingNum(num);
 		}
 		
-		me.getBlock( gameEnv.getFloorBlocks(), blockIndex );	// ÀÌ block À» player ¿¡°Ô Àü´Ş.
+		me.getBlock( gameEnv.getFloorBlocks(), blockIndex );	// ì´ block ì„ player ì—ê²Œ ì „ë‹¬.
 		gameWndGUI.update();
 		netObject.SendOb( new DataHeader(DataHeader.GAMEDATA, new GameData(gameEnv)) );
 
-		if(me.getHand().size()<=onlyDraw)	Next();			// ÇöÀç°¡ Â÷·ÊÀÎ  player °¡ block À» ´Ù ¹ŞÀ» ¶§±îÁö block ¸¸ °¡Á®°¡°í ÅÏÀ» °è¼Ó µ¹¸°´Ù. 
-		else {												// player °¡ block À» ´Ù °¡Á®°¡°í³ª¸é »ó´ë¹æÀÇ block À» ÃßÃøÇÏ±â ½ÃÀÛÇÑ´Ù.
-			gameWndGUI.setEnable(GameWindow.OTHERS, true);	// ÃßÃøÇÏ±â À§ÇØ ´Ù¸¥ player µéÀÇ block À» ¼±ÅÃ°¡´ÉÇÏ°Ô ¼³Á¤ÇÑ´Ù.
+		if(me.getHand().size()<=onlyDraw)	Next();			// í˜„ì¬ê°€ ì°¨ë¡€ì¸  player ê°€ block ì„ ë‹¤ ë°›ì„ ë•Œê¹Œì§€ block ë§Œ ê°€ì ¸ê°€ê³  í„´ì„ ê³„ì† ëŒë¦°ë‹¤. 
+		else {												// player ê°€ block ì„ ë‹¤ ê°€ì ¸ê°€ê³ ë‚˜ë©´ ìƒëŒ€ë°©ì˜ block ì„ ì¶”ì¸¡í•˜ê¸° ì‹œì‘í•œë‹¤.
+			gameWndGUI.setEnable(GameWindow.OTHERS, true);	// ì¶”ì¸¡í•˜ê¸° ìœ„í•´ ë‹¤ë¥¸ player ë“¤ì˜ block ì„ ì„ íƒê°€ëŠ¥í•˜ê²Œ ì„¤ì •í•œë‹¤.
 		}
 	}
 	
-	public ArrayList<Block> GetPlayerBlocksState(int playerNum)	{	return gameEnv.getPlayer(playerNum).getHand();	}// playerÀÇ block µéÀ» ¹İÈ¯ÇÑ´Ù.(»óÅÂ¸¦ ¹İÈ¯ÇÏ´Â °ÍÀÓ.)
-	public ArrayList<Block> GetCenterBlocksState()				{	return gameEnv.getFloorBlocks();	}			// °¡¿îµ¥ ºí·°µéÀ» ¸®ÅÏÇÑ´Ù.(»óÅÂ¸¦ ¹İÈ¯ÇÑ´Ù°í ºÁµµ Å¸´çÇÔ)
-	public int 				getNumOfPlayer()					{	return gameEnv.getPlayers().size();	}	// play ÁßÀÎ player µéÀÇ ¼ö¸¦ ¹İÈ¯ÇÑ´Ù.
-	public void AskBlock(int playerOrder, int index, int num) {	// ÇØ´ç player ¿¡°Ô block ÀÇ ¼ıÀÚ¸¦ ¹°¾îº¸´Â ¸Ş¼Òµå.
+	public ArrayList<Block> GetPlayerBlocksState(int playerNum)	{	return gameEnv.getPlayer(playerNum).getHand();	}// playerì˜ block ë“¤ì„ ë°˜í™˜í•œë‹¤.(ìƒíƒœë¥¼ ë°˜í™˜í•˜ëŠ” ê²ƒì„.)
+	public ArrayList<Block> GetCenterBlocksState()				{	return gameEnv.getFloorBlocks();	}			// ê°€ìš´ë° ë¸”ëŸ­ë“¤ì„ ë¦¬í„´í•œë‹¤.(ìƒíƒœë¥¼ ë°˜í™˜í•œë‹¤ê³  ë´ë„ íƒ€ë‹¹í•¨)
+	public int 				getNumOfPlayer()					{	return gameEnv.getPlayers().size();	}	// play ì¤‘ì¸ player ë“¤ì˜ ìˆ˜ë¥¼ ë°˜í™˜í•œë‹¤.
+	public void AskBlock(int playerOrder, int index, int num) {	// í•´ë‹¹ player ì—ê²Œ block ì˜ ìˆ«ìë¥¼ ë¬¼ì–´ë³´ëŠ” ë©”ì†Œë“œ.
 		System.out.println("[ GameProcess : AskBlock ]");
 		Player me		= gameEnv.getPlayer(myPlayOrder);
 		Player target	= gameEnv.getPlayer(playerOrder);
 		
-		me.askBlock(target, this, index, num);			// ÇöÀç player °¡ ´ë»óÀÌ µÇ´Â Player ¿¡°Ô block À» ¹°¾îº½.
+		me.askBlock(target, this, index, num);			// í˜„ì¬ player ê°€ ëŒ€ìƒì´ ë˜ëŠ” Player ì—ê²Œ block ì„ ë¬¼ì–´ë´„.
 		gameWndGUI.update();
 	}
 	
@@ -87,12 +87,12 @@ public class GameProcess
 	public int	getPlayOrder()		 	{	return myPlayOrder;	}
 	public Game getGameEnv() 			{	return gameEnv; }
 
-	public void setGameEnv(GameData newBlockState)			// Àü´Ş¹ŞÀº ÀÎÀÚ¿¡ »õ·Î¿î block µéÀÇ ºĞ¹è Á¤º¸°¡ µé¾îÀÖ¾î, ±× Á¤º¸·Î ÇöÀçÀÇ block °ÔÀÓ ÄÁÆ®·ÑÀÇ block »óÅÂ¸¦ °»½ÅÇÏ´Â ¸Ş¼Òµå.
+	public void setGameEnv(GameData newBlockState)			// ì „ë‹¬ë°›ì€ ì¸ìì— ìƒˆë¡œìš´ block ë“¤ì˜ ë¶„ë°° ì •ë³´ê°€ ë“¤ì–´ìˆì–´, ê·¸ ì •ë³´ë¡œ í˜„ì¬ì˜ block ê²Œì„ ì»¨íŠ¸ë¡¤ì˜ block ìƒíƒœë¥¼ ê°±ì‹ í•˜ëŠ” ë©”ì†Œë“œ.
 	{
 		System.out.println("[ GameProcess : setGameEnv(GameData newBlockState ]");
-		gameEnv.setFloor( newBlockState.getFloor() );				// center block µéÀ» »õ·Î ¼³Á¤ÇÔ.
+		gameEnv.setFloor( newBlockState.getFloor() );				// center block ë“¤ì„ ìƒˆë¡œ ì„¤ì •í•¨.
 		
-		for(int i = 0; i < newBlockState.getPlayers().size(); i++)	// ÀÎÀÚ·Î ¹ŞÀº °ÔÀÓ ÄÁÆ®·Ñ·¯ÀÇ player ¼ö¸¸Å­ µ¹¸ç
+		for(int i = 0; i < newBlockState.getPlayers().size(); i++)	// ì¸ìë¡œ ë°›ì€ ê²Œì„ ì»¨íŠ¸ë¡¤ëŸ¬ì˜ player ìˆ˜ë§Œí¼ ëŒë©°
 		{
 			if( i == myPlayOrder ) {
 				for(int j = 0 ; j < newBlockState.getBlocksOfPlayer(i).size() ; j++) {

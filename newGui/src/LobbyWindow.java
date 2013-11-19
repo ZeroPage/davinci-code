@@ -24,9 +24,9 @@ class LobbyWindow implements ActionListener, ItemListener
 	JPanel		JPanel_Lobby;
 	JRootPane	motherPane;
 	
-	Network		myNetworkType;			// ³×Æ®¿öÅ©¿¡ Á¢¼ÓÇÒ ¶§ÀÇ playerÀÇ »óÅÂ¸¦ ÀúÀåÇÒ º¯¼ö.
-										// server ¿ªÇÒÀ» ÇÏ´Â playerÀÏ °æ¿ì myNetworkType = Server();
-										// client ÀÎ player ÀÏ °æ¿ì myNetworkType = Client();
+	Network		myNetworkType;			// ë„¤íŠ¸ì›Œí¬ì— ì ‘ì†í•  ë•Œì˜ playerì˜ ìƒíƒœë¥¼ ì €ì¥í•  ë³€ìˆ˜.
+										// server ì—­í• ì„ í•˜ëŠ” playerì¼ ê²½ìš° myNetworkType = Server();
+										// client ì¸ player ì¼ ê²½ìš° myNetworkType = Client();
 	
 	ImageIcon BG = new ImageIcon(DavichiGUI.class.getResource("cover.gif"));
 	
@@ -34,29 +34,29 @@ class LobbyWindow implements ActionListener, ItemListener
 	{
 		if(event.getSource() == JB_Connect || event.getSource() == JTF_IPAddr) {
 			if(JTF_Nick.getText().length() == 0) {
-				JOptionPane.showMessageDialog(null, "´Ğ³×ÀÓÀ» ÀÔ·ÂÇÏ¼¼¿ä.", "¾Ë¸²", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null, "ë‹‰ë„¤ì„ì„ ì…ë ¥í•˜ì„¸ìš”.", "ì•Œë¦¼", JOptionPane.ERROR_MESSAGE);
 				return;
 			}
 			
-			if(JCB_Server.isSelected())	myNetworkType = new Server();	//¼­¹ö
-			else						myNetworkType = new Client();	//Å¬¶ó
+			if(JCB_Server.isSelected())	myNetworkType = new Server();	//ì„œë²„
+			else						myNetworkType = new Client();	//í´ë¼
 			
-			myNetworkType.setM_Name		( JTF_Nick.getText() );							// ´ë»ó ³×Æ®¿öÅ© °´Ã¼¿¡ nick name ¼³Á¤.
-			myNetworkType.setPortNum	( Integer.parseInt( JTF_Port.getText() ) );		// Æ÷Æ® ¼³Á¤.
-			myNetworkType.Connect		( JTF_IPAddr.getText() );						// server ¿¡ Á¢¼Ó.
+			myNetworkType.setM_Name		( JTF_Nick.getText() );							// ëŒ€ìƒ ë„¤íŠ¸ì›Œí¬ ê°ì²´ì— nick name ì„¤ì •.
+			myNetworkType.setPortNum	( Integer.parseInt( JTF_Port.getText() ) );		// í¬íŠ¸ ì„¤ì •.
+			myNetworkType.Connect		( JTF_IPAddr.getText() );						// server ì— ì ‘ì†.
 			
-			myNetworkType.myRoomWnd = new RoomWindow((JPanel) motherPane.getContentPane(), myNetworkType);	//·ëÀ©µµ¿ì »ı¼ºÇÏ°í ³×Æ®¿öÅ©¿Í ¿¬°á.
+			myNetworkType.myRoomWnd = new RoomWindow((JPanel) motherPane.getContentPane(), myNetworkType);	//ë£¸ìœˆë„ìš° ìƒì„±í•˜ê³  ë„¤íŠ¸ì›Œí¬ì™€ ì—°ê²°.
 			
 			JPanel_Lobby.setVisible(false);
 			myNetworkType.myRoomWnd.JPanel_Room.setVisible(true);
 			
-			if(myNetworkType.isServer())	myNetworkType.SendChatMsg("¼­¹ö¸¦ °³¼³ÇÏ¿´½À´Ï´Ù,");
-			else							myNetworkType.SendChatMsg("Á¢¼ÓÇÏ¿´½À´Ï´Ù.");
+			if(myNetworkType.isServer())	myNetworkType.SendChatMsg("ì„œë²„ë¥¼ ê°œì„¤í•˜ì˜€ìŠµë‹ˆë‹¤,");
+			else							myNetworkType.SendChatMsg("ì ‘ì†í•˜ì˜€ìŠµë‹ˆë‹¤.");
 		}
 		if(event.getSource() == JB_Cancel)	System.exit(0);
 	}
 	
-	public LobbyWindow(JPanel main, JRootPane mother)	// Lobby window ÀÇ ¿ÜÇüÀ» ±¸Çö.
+	public LobbyWindow(JPanel main, JRootPane mother)	// Lobby window ì˜ ì™¸í˜•ì„ êµ¬í˜„.
 	{
 		motherPane		= mother;
 		JPanel_Lobby	= new JPanel()
@@ -124,13 +124,13 @@ class LobbyWindow implements ActionListener, ItemListener
 		JTF_Port.setText("10000");
 		JPanel_Connect.add(JTF_Port);
 		
-		JB_Connect = new JButton("Á¢¼Ó");
+		JB_Connect = new JButton("ì ‘ì†");
 		JB_Connect.setBounds(50 , 130, 100, 30);
 		JB_Connect.addActionListener(this);
 		JPanel_Connect.add(JB_Connect);
 		
 		
-		JB_Cancel = new JButton("Ãë¼Ò");
+		JB_Cancel = new JButton("ì·¨ì†Œ");
 		JB_Cancel.setBounds(200, 130, 100, 30);
 		JB_Cancel.addActionListener(this);
 		JPanel_Connect.add(JB_Cancel);
@@ -141,14 +141,14 @@ class LobbyWindow implements ActionListener, ItemListener
 		JPanel_Lobby.add(JPanel_Connect);
 		main.add(JPanel_Lobby);
 	}
-	public void itemStateChanged(ItemEvent event) {		// Server Ç×¸ñ¿¡ Ã¼Å©ÇÒ °æ¿ì IP ÀÔ·ÂÇÊµå°¡ ºñÈ°¼ºÈ­µÊ.
+	public void itemStateChanged(ItemEvent event) {		// Server í•­ëª©ì— ì²´í¬í•  ê²½ìš° IP ì…ë ¥í•„ë“œê°€ ë¹„í™œì„±í™”ë¨.
 		if(event.getSource() == JCB_Server) {
 			if(JCB_Server.isSelected())	JTF_IPAddr.setEnabled(false);
 			else						JTF_IPAddr.setEnabled(true);
 		}
 	}
 
-	public void AddChatString(String msg) {	// DavichiGUI ¿¡¼­ Á¾·á¸Ş½ÃÁö¸¦ º¸³»±â À§ÇØ ÀÛ¼ºµÊ.
-		myNetworkType.SendChatMsg(msg);		// ¸ğµç player µé¿¡°Ô ¸Ş½ÃÁö¸¦ Àü¼ÛÇÑ´Ù.
+	public void AddChatString(String msg) {	// DavichiGUI ì—ì„œ ì¢…ë£Œë©”ì‹œì§€ë¥¼ ë³´ë‚´ê¸° ìœ„í•´ ì‘ì„±ë¨.
+		myNetworkType.SendChatMsg(msg);		// ëª¨ë“  player ë“¤ì—ê²Œ ë©”ì‹œì§€ë¥¼ ì „ì†¡í•œë‹¤.
 	}
 }

@@ -1,6 +1,6 @@
 import java.io.Serializable;
 
-// ³×Æ®¿öÅ©·Î ¿À°¥ µ¥ÀÌÅÍÀÇ Çì´õ. ÇÊ¿äÇÑ Á¤º¸µéÀ» ÀÔ·ÂÇÑ´Ù.
+// ë„¤íŠ¸ì›Œí¬ë¡œ ì˜¤ê°ˆ ë°ì´í„°ì˜ í—¤ë”. í•„ìš”í•œ ì •ë³´ë“¤ì„ ì…ë ¥í•œë‹¤.
 public class DataHeader implements Serializable
 {
 	private int		flag;
@@ -15,8 +15,8 @@ public class DataHeader implements Serializable
 
 	public DataHeader() {	}
 	public DataHeader(int flag, Object data) {
-		this.flag = flag;		// µ¥ÀÌÅÍÀÇ Á¾·ù
-		this.data = data;		// µ¥ÀÌÅÍÀÇ ³»¿ë
+		this.flag = flag;		// ë°ì´í„°ì˜ ì¢…ë¥˜
+		this.data = data;		// ë°ì´í„°ì˜ ë‚´ìš©
 	}
 	public void 	setFlag(int target) 	{ flag = target; }
 	public void 	setData(Object target)	{ data = target; }

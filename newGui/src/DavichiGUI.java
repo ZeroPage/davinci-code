@@ -8,14 +8,14 @@ public class DavichiGUI extends JFrame
 	LobbyWindow	lobbyWnd	= null;
 
 	public DavichiGUI() {
-		super("´ÙºóÄ¡ ÄÚµå - Ãµ»ç¿Í ¾Ç¸¶ Ver 1.9");
+		super("ë‹¤ë¹ˆì¹˜ ì½”ë“œ - ì²œì‚¬ì™€ ì•…ë§ˆ Ver 1.9");
 	
 		this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-		this.setSize(1000, 600);		// Å©±â ¼³Á¤.
-		this.setResizable(false);		// Å©±âº¯°æ ºÒ°¡´É.
+		this.setSize(1000, 600);		// í¬ê¸° ì„¤ì •.
+		this.setResizable(false);		// í¬ê¸°ë³€ê²½ ë¶ˆê°€ëŠ¥.
 		
-		lobbyWnd = new LobbyWindow((JPanel)this.getContentPane(), this.getRootPane());		// Á¢¼ÓÀ» À§ÇÑ window »ı¼º
-		this.addWindowListener(new myWindowListener());										// ÀÌº¥Æ® ¸®½º³Ê µî·Ï.
+		lobbyWnd = new LobbyWindow((JPanel)this.getContentPane(), this.getRootPane());		// ì ‘ì†ì„ ìœ„í•œ window ìƒì„±
+		this.addWindowListener(new myWindowListener());										// ì´ë²¤íŠ¸ ë¦¬ìŠ¤ë„ˆ ë“±ë¡.
 	}
 	public static void main(String [] args) {
 		DavichiGUI obj = new DavichiGUI();

@@ -14,19 +14,19 @@ import javax.swing.JOptionPane;
 public class Client extends Network
 {
 	Socket clientSocket;
-	ObjectOutputStream OOutStream;		// ¼­¹ö·ÎÀÇ °´Ã¼ output ½ºÆ®¸²À» ¿¬°áÇÒ º¯¼ö.
-	ObListener OInStream;				// client °¡ server ·ÎºÎÅÍ µé¾î¿À´Â µ¥ÀÌÅÍ¸¦ °è¼Ó ¹ŞÀ» ¼ö ÀÖ´Â input ½ºÆ®¸²À» ¿¬°áÇÒ º¯¼ö.
+	ObjectOutputStream OOutStream;		// ì„œë²„ë¡œì˜ ê°ì²´ output ìŠ¤íŠ¸ë¦¼ì„ ì—°ê²°í•  ë³€ìˆ˜.
+	ObListener OInStream;				// client ê°€ server ë¡œë¶€í„° ë“¤ì–´ì˜¤ëŠ” ë°ì´í„°ë¥¼ ê³„ì† ë°›ì„ ìˆ˜ ìˆëŠ” input ìŠ¤íŠ¸ë¦¼ì„ ì—°ê²°í•  ë³€ìˆ˜.
 
-	public void Connect(String ip)		// ÁÖ¾îÁø IP ¿Í portNum ¸â¹öº¯¼ö¸¦ »ç¿ëÇÏ¿© ¼­¹ö¿¡ Á¢¼ÓÇÏ´Â ¸Ş¼Òµå.
+	public void Connect(String ip)		// ì£¼ì–´ì§„ IP ì™€ portNum ë©¤ë²„ë³€ìˆ˜ë¥¼ ì‚¬ìš©í•˜ì—¬ ì„œë²„ì— ì ‘ì†í•˜ëŠ” ë©”ì†Œë“œ.
 	{
 		try {
-			clientSocket = new Socket(ip, portNum);		// ¼­¹ö ¼ÒÄÏ¿¡ ¿¬°á.
-			setOutOb();									// output ½ºÆ®¸²À» ¼³Á¤ÇÏ¿© ¼­¹ö¿¡ µ¥ÀÌÅÍ¸¦ Àü¼ÛÇÒ ¼ö ÀÖ°Ô ÁØºñÇÑ´Ù.
-			setListen();								// input ½ºÆ®¸²À» ¼³Á¤ÇÏ¿© ¼­¹ö¿¡¼­ µ¥ÀÌÅÍ¸¦ ¼ö½ÅÇÒ ¼ö ÀÖµµ·Ï ÁØºñÇÑ´Ù.
+			clientSocket = new Socket(ip, portNum);		// ì„œë²„ ì†Œì¼“ì— ì—°ê²°.
+			setOutOb();									// output ìŠ¤íŠ¸ë¦¼ì„ ì„¤ì •í•˜ì—¬ ì„œë²„ì— ë°ì´í„°ë¥¼ ì „ì†¡í•  ìˆ˜ ìˆê²Œ ì¤€ë¹„í•œë‹¤.
+			setListen();								// input ìŠ¤íŠ¸ë¦¼ì„ ì„¤ì •í•˜ì—¬ ì„œë²„ì—ì„œ ë°ì´í„°ë¥¼ ìˆ˜ì‹ í•  ìˆ˜ ìˆë„ë¡ ì¤€ë¹„í•œë‹¤.
 		} catch(ConnectException e) {
-			JOptionPane.showMessageDialog(null, "IP\t: "+ip+"\nPort\t: "+portNum+"\nÈ£½ºÆ® ¶Ç´Â port°¡ ¿Ã¹Ù¸£Áö ¾Ê½À´Ï´Ù.\n\n°ÔÀÓÀ» Á¾·áÇÕ´Ï´Ù.");
+			JOptionPane.showMessageDialog(null, "IP\t: "+ip+"\nPort\t: "+portNum+"\ní˜¸ìŠ¤íŠ¸ ë˜ëŠ” portê°€ ì˜¬ë°”ë¥´ì§€ ì•ŠìŠµë‹ˆë‹¤.\n\nê²Œì„ì„ ì¢…ë£Œí•©ë‹ˆë‹¤.");
 			System.exit(0);
-			//TODO Á¾·á ´ë½Å ´Ù¸¥ ¹æ¹ıÀ¸·Î ip ¿Í port ¸¦ »õ·Î ¹Ş¾Æ Á¢¼ÓÇÒ ¼ö ÀÖµµ·Ï ÇØ¾ß ÇÔ.
+			//TODO ì¢…ë£Œ ëŒ€ì‹  ë‹¤ë¥¸ ë°©ë²•ìœ¼ë¡œ ip ì™€ port ë¥¼ ìƒˆë¡œ ë°›ì•„ ì ‘ì†í•  ìˆ˜ ìˆë„ë¡ í•´ì•¼ í•¨.
 		}
 		catch (UnknownHostException e) {
 			
@@ -36,48 +36,48 @@ public class Client extends Network
 			e.printStackTrace();
 		}
 	}
-	public void SendChatMsg(String msg)	// server ·Î ´ëÈ­¸Ş½ÃÁö¸¦ º¸³»¸é ¼­¹ö°¡ ´Ù½Ã ±× ¸Ş½ÃÁö¸¦ broadcasting ÇØÁÖ°í,
-	{									// ±× broadcasting µÇ¾î ¿Â ¸Ş½ÃÁö´Â dataEvent() ¸Ş¼Òµå¿¡¼­ Ã³¸®µÇ¾î Ã¤ÆÃÃ¢¿¡ Ã¤ÆÃ³»¿ëÀÌ Ç¥½ÃµÈ´Ù.
+	public void SendChatMsg(String msg)	// server ë¡œ ëŒ€í™”ë©”ì‹œì§€ë¥¼ ë³´ë‚´ë©´ ì„œë²„ê°€ ë‹¤ì‹œ ê·¸ ë©”ì‹œì§€ë¥¼ broadcasting í•´ì£¼ê³ ,
+	{									// ê·¸ broadcasting ë˜ì–´ ì˜¨ ë©”ì‹œì§€ëŠ” dataEvent() ë©”ì†Œë“œì—ì„œ ì²˜ë¦¬ë˜ì–´ ì±„íŒ…ì°½ì— ì±„íŒ…ë‚´ìš©ì´ í‘œì‹œëœë‹¤.
 		DataHeader temp = new DataHeader();
 		temp.setFlag(DataHeader.CHAT);
 		temp.setData(playerNickname + " : " + msg);
 		SendOb(temp);
 	}
-	public void setOutOb() throws IOException	// server ·ÎÀÇ output ½ºÆ®¸²À» ¿¬°áÇÏ´Â ¸Ş¼Òµå.
+	public void setOutOb() throws IOException	// server ë¡œì˜ output ìŠ¤íŠ¸ë¦¼ì„ ì—°ê²°í•˜ëŠ” ë©”ì†Œë“œ.
 	{
 		OOutStream = new ObjectOutputStream(clientSocket.getOutputStream());
 	}
-	public void setListen() throws IOException	// input ½ºÆ®¸²À¸·Î µ¥ÀÌÅÍ¸¦ ÀĞ±â ½ÃÀÛÇÏµµ·Ï ÇÏ´Â ¸Ş¼Òµå.
+	public void setListen() throws IOException	// input ìŠ¤íŠ¸ë¦¼ìœ¼ë¡œ ë°ì´í„°ë¥¼ ì½ê¸° ì‹œì‘í•˜ë„ë¡ í•˜ëŠ” ë©”ì†Œë“œ.
 	{
-		OInStream = new ObListener();	// input ½ºÆ®¸²À» °è¼Ó ÀĞÀ» ½º·¹µå °´Ã¼ ¸Ş¸ğ¸® »ı¼º.
-		OInStream.setOInStream();		// input ½ºÆ®¸²À» ¼ÒÄÏ¿¡ ¿¬°á.
-		OInStream.start();				// ½º·¹µå ½ÇÇà.
+		OInStream = new ObListener();	// input ìŠ¤íŠ¸ë¦¼ì„ ê³„ì† ì½ì„ ìŠ¤ë ˆë“œ ê°ì²´ ë©”ëª¨ë¦¬ ìƒì„±.
+		OInStream.setOInStream();		// input ìŠ¤íŠ¸ë¦¼ì„ ì†Œì¼“ì— ì—°ê²°.
+		OInStream.start();				// ìŠ¤ë ˆë“œ ì‹¤í–‰.
 	}
 	
-	public void SendOb(Object ob)		// ÀÎÀÚ·Î ¹ŞÀº °´Ã¼¸¦ ¼­¹ö·Î Àü¼ÛÇÏ´Â ¸Ş¼Òµå.
+	public void SendOb(Object ob)		// ì¸ìë¡œ ë°›ì€ ê°ì²´ë¥¼ ì„œë²„ë¡œ ì „ì†¡í•˜ëŠ” ë©”ì†Œë“œ.
 	{
 		System.out.println("[ Client : SendOb ]");
 		try	{
-			OOutStream.writeObject(ob);		// °´Ã¼ output ½ºÆ®¸²¿¡ °´Ã¼¸¦ ½Ç¾î º¸³¿.
-			OOutStream.flush();				// °´Ã¼ output ½ºÆ®¸²À» ±ú²ıÀÌ Ä¡¿î´Ù.
+			OOutStream.writeObject(ob);		// ê°ì²´ output ìŠ¤íŠ¸ë¦¼ì— ê°ì²´ë¥¼ ì‹¤ì–´ ë³´ëƒ„.
+			OOutStream.flush();				// ê°ì²´ output ìŠ¤íŠ¸ë¦¼ì„ ê¹¨ë—ì´ ì¹˜ìš´ë‹¤.
 		}
-		catch (SocketException e) {	System.out.println("Server ¿ÍÀÇ ¿¬°áÀÌ Á¾·áµÇ¾ú½À´Ï´Ù.");	} 
+		catch (SocketException e) {	System.out.println("Server ì™€ì˜ ì—°ê²°ì´ ì¢…ë£Œë˜ì—ˆìŠµë‹ˆë‹¤.");	} 
 		catch (IOException e)		{	e.printStackTrace(); }
 	}
-	public void Close()					// client ¿Í server »çÀÌÀÇ ¿¬°áÀ» ¸ğµÎ Á¾·áÇÏ´Â ¸Ş¼Òµå.
+	public void Close()					// client ì™€ server ì‚¬ì´ì˜ ì—°ê²°ì„ ëª¨ë‘ ì¢…ë£Œí•˜ëŠ” ë©”ì†Œë“œ.
 	{
-		// client network ÀÌ Á¾·áµÇ·Á¸é,
-		// 1. client °¡ Á¾·áµÈ´Ù´Â ¸Ş½ÃÁö¸¦ ¼­¹ö¿¡ Àü´Ş.
-		// 2. Á¾·á µ¥ÀÌÅÍ¸¦ ¼­¹ö¿¡ Àü´Ş(DataHeader)
-		// 3. ¼ÒÄÏÀ» ÅëÇÑ input/output ½ºÆ®¸²À» Á¾·á.
-		// 4. ¼ÒÄÏ ¿¬°á Á¾·á.
-		// 5. client ÀÇ ÇÁ·Î±×·¥ Á¾·á.
-		// À§ 5 °³ÀÇ ¼ø¼­´ë·Î ÇÁ·Î±×·¥À» Á¾·áÇØ¼­ server ¿¡ ¿¬°áµÈ ´Ù¸¥ client µéÀÇ »óÅÂ¿¡
-		// ¿µÇâÀ» ÁÖÁö ¾Ê°í, °ÔÀÓÀÌ ÁøÇàµÇ°Å³ª Á¾·áµÇµµ·Ï ÇØ¾ß ÇÑ´Ù.
+		// client network ì´ ì¢…ë£Œë˜ë ¤ë©´,
+		// 1. client ê°€ ì¢…ë£Œëœë‹¤ëŠ” ë©”ì‹œì§€ë¥¼ ì„œë²„ì— ì „ë‹¬.
+		// 2. ì¢…ë£Œ ë°ì´í„°ë¥¼ ì„œë²„ì— ì „ë‹¬(DataHeader)
+		// 3. ì†Œì¼“ì„ í†µí•œ input/output ìŠ¤íŠ¸ë¦¼ì„ ì¢…ë£Œ.
+		// 4. ì†Œì¼“ ì—°ê²° ì¢…ë£Œ.
+		// 5. client ì˜ í”„ë¡œê·¸ë¨ ì¢…ë£Œ.
+		// ìœ„ 5 ê°œì˜ ìˆœì„œëŒ€ë¡œ í”„ë¡œê·¸ë¨ì„ ì¢…ë£Œí•´ì„œ server ì— ì—°ê²°ëœ ë‹¤ë¥¸ client ë“¤ì˜ ìƒíƒœì—
+		// ì˜í–¥ì„ ì£¼ì§€ ì•Šê³ , ê²Œì„ì´ ì§„í–‰ë˜ê±°ë‚˜ ì¢…ë£Œë˜ë„ë¡ í•´ì•¼ í•œë‹¤.
 		try	{
-			SendChatMsg("°ÔÀÓ¿¡¼­ ³ª°©´Ï´Ù.");
+			SendChatMsg("ê²Œì„ì—ì„œ ë‚˜ê°‘ë‹ˆë‹¤.");
 			OInStream.close();
-			OOutStream.close();		// °´Ã¼ output ½ºÆ®¸² Á¾·á.
+			OOutStream.close();		// ê°ì²´ output ìŠ¤íŠ¸ë¦¼ ì¢…ë£Œ.
 			clientSocket.close();
 		} catch( SocketException e) {
 			e.printStackTrace();
@@ -87,33 +87,33 @@ public class Client extends Network
 		}
 	}
 
-	class ObListener extends Thread				// server ·ÎºÎÅÍ µé¾î¿À´Â input½ºÆ®¸²À» ¹Ş¾Æ ¾Ë¸ÂÀº µ¿ÀÛÀ» ÇÏµµ·Ï ÇÏ´Â Å¬·¡½º.
+	class ObListener extends Thread				// server ë¡œë¶€í„° ë“¤ì–´ì˜¤ëŠ” inputìŠ¤íŠ¸ë¦¼ì„ ë°›ì•„ ì•Œë§ì€ ë™ì‘ì„ í•˜ë„ë¡ í•˜ëŠ” í´ë˜ìŠ¤.
 	{
 		ObjectInputStream OInStream;
 		boolean listenning = true;
 
-		public void setOInStream() throws IOException {	// °´Ã¼ input ½ºÆ®¸²À» Å¬¶óÀÌ¾ğÆ®ÀÇ ¼ÒÄÏÀ¸·ÎºÎÅÍ ¿¬°áÇÑ´Ù.
+		public void setOInStream() throws IOException {	// ê°ì²´ input ìŠ¤íŠ¸ë¦¼ì„ í´ë¼ì´ì–¸íŠ¸ì˜ ì†Œì¼“ìœ¼ë¡œë¶€í„° ì—°ê²°í•œë‹¤.
 			OInStream = new ObjectInputStream(clientSocket.getInputStream());
 		}
 		public void close() {
 			try {
 				listenning = false;
-				OInStream.close();	// input ½ºÆ®¸² Á¾·á.
+				OInStream.close();	// input ìŠ¤íŠ¸ë¦¼ ì¢…ë£Œ.
 			} catch (IOException e) {
 				
 				e.printStackTrace();
 			}
 		}
 		public void dataEvent(DataHeader data) {
-			//ÀÔ·ÂµÈ µ¥ÀÌÅÍÀÇ Ã³¸®´Â ¿©±â¿¡ Ãß°¡ÇÒ°Í.
-//			if( data.getSender().equals(playerNickname)) {	// ³»°¡ º¸³Â´ø µ¥ÀÌÅÍ°¡ server ¿¡ ÀÇÇØ ÀçÀü¼ÛµÇ¾î¿À´Â °æ¿ì ÀÌ¸¦ ¸·´Â´Ù.
-//				System.out.println("ÀçÀü¼ÛµÈ µ¥ÀÌÅÍ ¸·Èû.");
+			//ì…ë ¥ëœ ë°ì´í„°ì˜ ì²˜ë¦¬ëŠ” ì—¬ê¸°ì— ì¶”ê°€í• ê²ƒ.
+//			if( data.getSender().equals(playerNickname)) {	// ë‚´ê°€ ë³´ëƒˆë˜ ë°ì´í„°ê°€ server ì— ì˜í•´ ì¬ì „ì†¡ë˜ì–´ì˜¤ëŠ” ê²½ìš° ì´ë¥¼ ë§‰ëŠ”ë‹¤.
+//				System.out.println("ì¬ì „ì†¡ëœ ë°ì´í„° ë§‰í˜.");
 //				return;
 //			}
 			System.out.println("[ Client : dataEvent ]");
 			int flag = data.getFlag();
 			switch(flag) {
-				case DataHeader.CHAT:		// µ¥ÀÌÅÍ Çì´õ°¡ ´ëÈ­ ÀÌº¥Æ®ÀÏ °æ¿ì.
+				case DataHeader.CHAT:		// ë°ì´í„° í—¤ë”ê°€ ëŒ€í™” ì´ë²¤íŠ¸ì¼ ê²½ìš°.
 					myRoomWnd.AddChatString((String)data.getData());
 					break;
 				case DataHeader.GAME:
@@ -123,29 +123,29 @@ public class Client extends Network
 				case DataHeader.GAMEDATA:
 					gameProcess.setGameEnv((GameData)data.getData());
 					break;
-				case DataHeader.PASS:		// ÅÏ ³Ñ±è ¸Ş½ÃÁö¸¦ ¹Ş°í¼­, client ÀÚ½ÅÀÌ ÇÃ·¹ÀÌÇÒ Â÷·Ê°¡ µÇ¸é ÅÏÀ» ½ÃÇàÇÑ´Ù.
+				case DataHeader.PASS:		// í„´ ë„˜ê¹€ ë©”ì‹œì§€ë¥¼ ë°›ê³ ì„œ, client ìì‹ ì´ í”Œë ˆì´í•  ì°¨ë¡€ê°€ ë˜ë©´ í„´ì„ ì‹œí–‰í•œë‹¤.
 					if(gameProcess.getPlayOrder() == ((Integer)data.getData()).intValue())
 						gameProcess.turn();
 					break;
-				case DataHeader.MYORDER:	// ÇØ´ç client ÀÇ ¼ø¼­¸¦ Àü´Ş¹ŞÀ¸¸é ±× ¼ø¼­·Î ¼¼ÆÃ. 
+				case DataHeader.MYORDER:	// í•´ë‹¹ client ì˜ ìˆœì„œë¥¼ ì „ë‹¬ë°›ìœ¼ë©´ ê·¸ ìˆœì„œë¡œ ì„¸íŒ…. 
 					gameProcess.setPlayOrder(((Integer)data.getData()).intValue());
 					break;
-				case DataHeader.TOTALCOUNT:	// ÃÑ ÀÎ¿ø¼ö¸¦ Àü´Ş¹ŞÀ¸¸é ±× ¼ıÀÚ´ë·Î °ÔÀÓ GUI ¸¦ ¼¼ÆÃ.
+				case DataHeader.TOTALCOUNT:	// ì´ ì¸ì›ìˆ˜ë¥¼ ì „ë‹¬ë°›ìœ¼ë©´ ê·¸ ìˆ«ìëŒ€ë¡œ ê²Œì„ GUI ë¥¼ ì„¸íŒ….
 					gameProcess.gameWndGUI.Setting(((Integer)data.getData()).intValue());
 					break;
 			}
 		}
 		public void run() {
 			while(listenning) {
-				//ÀÔ·Â µ¥ÀÌÅÍ Á¶°Ç ÇÊ¿ä. 
+				//ì…ë ¥ ë°ì´í„° ì¡°ê±´ í•„ìš”. 
 				try {
 					dataEvent((DataHeader)OInStream.readObject());
-				} catch ( EOFException e ) {		// ¼­¹ö·ÎºÎÅÍÀÇ ½ºÆ®¸²ÀÌ °©ÀÚ±â ²÷±â´Â °æ¿ì
-					JOptionPane.showMessageDialog(null, "¼­¹ö·ÎºÎÅÍ ¿¬°áÀÌ Á¾·áµÇ¾ú½À´Ï´Ù.\n¿¬°áÀ» À§ÇØ¼­´Â ÇÁ·Î±×·¥À» Àç½ÃÀÛÇØÁÖ½Ã±â ¹Ù¶ø´Ï´Ù.","¼­¹ö ¿¬°á Á¾·á", JOptionPane.OK_OPTION);
+				} catch ( EOFException e ) {		// ì„œë²„ë¡œë¶€í„°ì˜ ìŠ¤íŠ¸ë¦¼ì´ ê°‘ìê¸° ëŠê¸°ëŠ” ê²½ìš°
+					JOptionPane.showMessageDialog(null, "ì„œë²„ë¡œë¶€í„° ì—°ê²°ì´ ì¢…ë£Œë˜ì—ˆìŠµë‹ˆë‹¤.\nì—°ê²°ì„ ìœ„í•´ì„œëŠ” í”„ë¡œê·¸ë¨ì„ ì¬ì‹œì‘í•´ì£¼ì‹œê¸° ë°”ëë‹ˆë‹¤.","ì„œë²„ ì—°ê²° ì¢…ë£Œ", JOptionPane.OK_OPTION);
 					listenning = false;
 				} 
 				catch(SocketException e) {
-					System.out.println("Server °¡ ¿¬°áµÇ¾îÀÖÁö ¾Ê½À´Ï´Ù.");
+					System.out.println("Server ê°€ ì—°ê²°ë˜ì–´ìˆì§€ ì•ŠìŠµë‹ˆë‹¤.");
 					listenning = false;
 				} 
 				catch (IOException e) {
