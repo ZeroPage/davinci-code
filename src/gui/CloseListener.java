@@ -4,7 +4,7 @@ import java.awt.event.WindowEvent;
 
 import javax.swing.JOptionPane;
 
-class myWindowListener extends WindowAdapter // Main frame 종료를 위한 클래스.
+class CloseListener extends WindowAdapter // Main frame 종료를 위한 클래스.
 {
 	public void windowClosing(WindowEvent e) {
 		if (JOptionPane.showConfirmDialog(null, "정말종료하시겠습니까?", "종료확인",
