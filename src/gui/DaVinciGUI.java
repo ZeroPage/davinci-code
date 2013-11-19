@@ -3,11 +3,11 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
-public class DavichiGUI extends JFrame {
+public class DaVinciGUI extends JFrame {
 	RoomWindow roomWnd = null;
 	LobbyWindow lobbyWnd = null;
 
-	public DavichiGUI() {
+	public DaVinciGUI() {
 		super("다빈치 코드 - 천사와 악마 Ver 1.9");
 
 		this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -20,7 +20,7 @@ public class DavichiGUI extends JFrame {
 	}
 
 	public static void main(String[] args) {
-		DavichiGUI obj = new DavichiGUI();
+		DaVinciGUI obj = new DaVinciGUI();
 		obj.setVisible(true);
 	}
 }

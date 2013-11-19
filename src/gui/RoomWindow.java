@@ -134,7 +134,7 @@ public class RoomWindow extends JFrame {
 				JDialog some = new JDialog((Frame) getWindows()[0], "게임설명",
 						true) {
 					ImageIcon BG = new ImageIcon(
-							DavichiGUI.class.getResource("About.jpg"));
+							DaVinciGUI.class.getResource("About.jpg"));
 
 					public void paint(Graphics g) {
 						this.setSize(BG.getIconWidth(), BG.getIconHeight());
