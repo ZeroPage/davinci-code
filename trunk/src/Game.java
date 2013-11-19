@@ -50,7 +50,7 @@ public class Game {
 		Block tb = blocks.get(n1);
 		
 		blocks.set(n1,blocks.get(n2));
-		blocks.set(n2,tb); 
+		blocks.set(n2,tb);
 	}
 	public void mixBlocks(ArrayList<Block> blocks) {
 		int n1 = (int)(Math.random()*26);
@@ -78,14 +78,14 @@ public class Game {
 		}
 	}
 	public void Start() {		
-		setBlocks(); //??? ???? ?? ?? ?? ????.
-		setPlayers(playerNum);  //???? ??? ??? ???.
-		mixBlocks(blocks); //?? ???.
+		setBlocks(); //게임이 시작되면 제일 처음 패를 세팅한다.
+		setPlayers(playerNum);  //플레이어 수만큼 객체를 만든다.
+		mixBlocks(blocks); //패를 섞는다.
 	}
 		
 		
 		/*for(int i=0; i<playerNum; i++) {
-			for(int j=0; j<4; j++) { // ???? j ? ?? ?? ???.
+			for(int j=0; j<4; j++) { // 시작하면 j 개 만큼 패를 가진다.
 				System.out.println("\n\n");
 				printBlocks(blocks);
 				//players[i].getBlock(blocks);
