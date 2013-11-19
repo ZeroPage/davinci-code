@@ -50,7 +50,7 @@ public class Lisener extends Thread {
 		while(true) {
 			if(!connection.isConnected() || temp.equals("exit")) {
 				close();
-				GUI.ChatLisener("Á¢¼ÓÀÌ Á¾·áµÇ¾ú½À´Ï´Ù.");
+				GUI.ChatLisener("ì ‘ì†ì´ ì¢…ë£Œë˜ì—ˆìŠµë‹ˆë‹¤.");
 				//System.out.println(temp);
 				return;
 			}

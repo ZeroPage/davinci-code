@@ -1,13 +1,13 @@
 import java.util.ArrayList;
 
 public class Player {
-	private ArrayList<Block> hand;//ÀÚ½ÅÀÌ °¡Áø ºí·ÏÀ» ÀúÀåÇÏ´Â ¹è¿­
-	private boolean play;//ÇÃ·¹ÀÌ¿©ºÎ¸¦ °áÁ¤
-	private int loh = -5;//ÇÚµåÀÇ °¡Àå ¿ŞÂÊ ¼ıÀÚ.±âº»°ªÀº ¹üÀ§ ¹Û
-	private int roh = 15;//ÇÚµåÀÇ °¡Àå ¿À¸¥ÂÊ ¼ıÀÚ.±âº»°ªÀº ¹üÀ§ ¹Û
-	private boolean isBjoker = false;//ºí·¢Á¶Ä¿ ¼ÒÀ¯ ¿©ºÎ
-	private boolean isWjoker = false;//È­ÀÌÆ®Á¶Ä¿ ¼ÒÀ¯ ¿©ºÎ
-	private boolean isJoker = isBjoker&isWjoker;//Á¶Ä¿ ¼ÒÀ¯¿©ºÎ
+	private ArrayList<Block> hand;//ìì‹ ì´ ê°€ì§„ ë¸”ë¡ì„ ì €ì¥í•˜ëŠ” ë°°ì—´
+	private boolean play;//í”Œë ˆì´ì—¬ë¶€ë¥¼ ê²°ì •
+	private int loh = -5;//í•¸ë“œì˜ ê°€ì¥ ì™¼ìª½ ìˆ«ì.ê¸°ë³¸ê°’ì€ ë²”ìœ„ ë°–
+	private int roh = 15;//í•¸ë“œì˜ ê°€ì¥ ì˜¤ë¥¸ìª½ ìˆ«ì.ê¸°ë³¸ê°’ì€ ë²”ìœ„ ë°–
+	private boolean isBjoker = false;//ë¸”ë™ì¡°ì»¤ ì†Œìœ  ì—¬ë¶€
+	private boolean isWjoker = false;//í™”ì´íŠ¸ì¡°ì»¤ ì†Œìœ  ì—¬ë¶€
+	private boolean isJoker = isBjoker&isWjoker;//ì¡°ì»¤ ì†Œìœ ì—¬ë¶€
 	Player() {
 		play = true;
 	}
@@ -56,7 +56,7 @@ public class Player {
 		/*if(blocks.get(selectedBlock).getNum()==-1)
 		{
 			if(blocks.get(selectedBlock)==blackJoker)
-			int input;//¿øÇÏ´Â À§Ä¡¿¡ Å¬¸¯.input¹ŞÀ½
+			int input;//ì›í•˜ëŠ” ìœ„ì¹˜ì— í´ë¦­.inputë°›ìŒ
 			hand.add(input,blocks.get(selectedBlock));
 			blocks.remove(selectedBlock);
 			if(input==0)
@@ -77,7 +77,7 @@ public class Player {
 		{
 			if(blocks.get(selectedBlock).getNum()>loh && blocks.get(selectedBlock).getNum()<roh)
 			{
-				int choice;//¾î´ÀÂÊ¿¡ µé¾î°¥Áö ¼±ÅÃ.-1Àº ¿ŞÂÊ, 1Àº ¿À¸¥ÂÊ(°¡Á¤)
+				int choice;//ì–´ëŠìª½ì— ë“¤ì–´ê°ˆì§€ ì„ íƒ.-1ì€ ì™¼ìª½, 1ì€ ì˜¤ë¥¸ìª½(ê°€ì •)
 				if(choice == -1)
 				{
 					hand.add(, blocks.get(selectedBlock));

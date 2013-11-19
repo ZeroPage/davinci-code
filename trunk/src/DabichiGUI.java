@@ -53,7 +53,7 @@ public class DabichiGUI extends JFrame
 	}
 	public DabichiGUI()
 	{
-		super("다빈치 코드 - 천사와 악마");
+		super("??? ?? - ??? ??");
 		InitalGUI();
 		GameProcessor a = new GameProcessor();
 	}
@@ -61,59 +61,59 @@ public class DabichiGUI extends JFrame
 	{
 		try	{
 			this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-			this.setSize(820, 600);//크기 설정.
+			this.setSize(820, 600);//?? ??.
 			this.setResizable(false);
 			this.setLocation(200, 100);
 			
-			//메인 프레임 세팅;
+			//?? ??? ??;
 			jpanel_mainFrame = new JPanel();
 			
 			jpanel_mainFrame.setLayout(null);
-			//이벤트 처리기 추가.
+			//??? ??? ??.
 			handler = new EventHandle();
 			
-			//아래로는 Gui의 추가 과정
-			//메뉴.
+			//???? Gui? ?? ??
+			//??.
 			JMB_MainMenu = new JMenuBar();
 			setJMenuBar(JMB_MainMenu);
-			//파일메뉴
-			JMenu JM_File = new JMenu("파일");//파일 메뉴단추;
+			//????
+			JMenu JM_File = new JMenu("??");//?? ????;
 			
-			JMI_File_Connet = new JMenuItem("접속");
-			JM_File.add(JMI_File_Connet);//file 메뉴에 부착; 
+			JMI_File_Connet = new JMenuItem("??");
+			JM_File.add(JMI_File_Connet);//file ??? ??; 
 			JMI_File_Connet.addActionListener(handler);
 			
-			JMI_File_Exit = new JMenuItem("닫기");
+			JMI_File_Exit = new JMenuItem("??");
 			JM_File.add(JMI_File_Exit);
 			JMI_File_Exit.addActionListener(handler);
 			
 			JMB_MainMenu.add(JM_File);
-			//정보메뉴
-			JMenu JM_Info = new JMenu("정보");
+			//????
+			JMenu JM_Info = new JMenu("??");
 			
-			JMI_Info_About = new JMenuItem("이게임은?");
+			JMI_Info_About = new JMenuItem("?????");
 			JM_Info.add(JMI_Info_About);
 			JMI_Info_About.addActionListener(handler);
 			
-			JMI_Info_Option = new JMenuItem("옵션");
+			JMI_Info_Option = new JMenuItem("??");
 			JM_Info.add(JMI_Info_Option);
 			JMI_Info_Option.addActionListener(handler);
 			
 			JMB_MainMenu.add(JM_Info);
 			
-			//채팅 보내기 버튼
-			JB_Send = new JButton("보내기");//생성
-			jpanel_mainFrame.add(JB_Send);//추가
-			JB_Send.setBounds(600, 350, 100, 30);//위치 설정.
-			JB_Send.addActionListener(handler);//이벤트 처리기 추가.
+			//?? ??? ??
+			JB_Send = new JButton("???");//??
+			jpanel_mainFrame.add(JB_Send);//??
+			JB_Send.setBounds(600, 350, 100, 30);//?? ??.
+			JB_Send.addActionListener(handler);//??? ??? ??.
 			
-			//클리어 버튼
-			JB_Claer = new JButton("클리어");
+			//??? ??
+			JB_Claer = new JButton("???");
 			jpanel_mainFrame.add(JB_Claer);
 			JB_Claer.setBounds(700, 350, 100, 30);
 			JB_Claer.addActionListener(handler);
 			
-			//채팅창.
+			//???.
 			JTA_Chat = new JTextArea();
 			
 			//JTA_Chat.setBounds(600,0,200,300);
@@ -127,12 +127,12 @@ public class DabichiGUI extends JFrame
 			JSP_ChatScroll.setBounds(600,0, 200, 300);
 			
 			
-			//채팅 입력창
+			//?? ???
 			JTF_Chatinput = new JTextField();
 			jpanel_mainFrame.add(JTF_Chatinput);
 			JTF_Chatinput.setBounds(600, 320, 200, 30);
 			JTF_Chatinput.addActionListener(handler);
-			//게임 창.
+			//?? ?.
 			JPanel_GameFrame = new JPanel();
 			JPanel_GameFrame.setLayout(null);
 			//JPanel_GameFrame.setBackground(Color.blue);
@@ -140,13 +140,13 @@ public class DabichiGUI extends JFrame
 			jpanel_mainFrame.add(JPanel_GameFrame);
 			JPanel_GameFrame.setBounds(0, 0, 590, 450);
 			
-			//게임 시작
-			JB_New = new JButton("게임시작");
+			//?? ??
+			JB_New = new JButton("????");
 			jpanel_mainFrame.add(JB_New);
 			JB_New.setBounds(600, 380, 100, 30);
 			JB_New.addActionListener(handler);
-			//나가기(접속종료)
-			JB_Exit = new JButton("접속종료");
+			//???(????)
+			JB_Exit = new JButton("????");
 			jpanel_mainFrame.add(JB_Exit);
 			JB_Exit.setBounds(700, 380, 100, 30);
 			JB_Exit.addActionListener(handler);
@@ -170,22 +170,22 @@ public class DabichiGUI extends JFrame
 			{
 				if(m_Server == null && m_Client == null)
 				{
-					JOptionPane.showMessageDialog(null, "접속이 되지 않았습니다.", "경고", 2);
+					JOptionPane.showMessageDialog(null, "??? ?? ?????.", "??", 2);
 				}
 				else
 				{
 					if(JTF_Chatinput.getText().length() != 0)
 					{
-						//텍스트  전송;
+						//???  ??;
 						if(isServer)
 						{
-							//서버
+							//??
 							m_Server.sendData(JTF_Chatinput.getText());
 							JTA_Chat.append(JTF_Chatinput.getText() + '\n');
 						}
 						else
 						{
-							//클라이언트
+							//?????
 							m_Client.sendData(JTF_Chatinput.getText());
 						}
 						JTF_Chatinput.setText("");
@@ -200,14 +200,14 @@ public class DabichiGUI extends JFrame
 			}
 			if(e.getSource() == JMI_File_Exit)
 			{
-				if(JOptionPane.showConfirmDialog(null, "정말 종료하시겠습니까?","종료확인", 0) == 0)
+				if(JOptionPane.showConfirmDialog(null, "?? ?????????","????", 0) == 0)
 				{
 					System.exit(0);
 				}
 			}
 			if(e.getSource() == JMI_Info_About)
 			{
-				JOptionPane.showMessageDialog(null, "다빈치 코드 온라인\nProject. D\nfor Java Term Project");
+				JOptionPane.showMessageDialog(null, "??? ?? ???\nProject. D\nfor Java Term Project");
 			}
 			if(e.getSource() == JMI_Info_Option)
 			{
@@ -218,15 +218,15 @@ public class DabichiGUI extends JFrame
 			}
 			if(e.getSource() == JB_Exit)
 			{
-				//접속종료코드
-				JOptionPane.showMessageDialog(null, "접속이 종료되었습니다.");
+				//??????
+				JOptionPane.showMessageDialog(null, "??? ???????.");
 			}
 		}
 	}
 	public void ChatLisener(String chat)
 	{
 		JTA_Chat.append(chat + "\n");
-		JTA_Chat.setCaretPosition(JTA_Chat.getDocument().getLength());//왜 그런지? 신의 한줄..
+		JTA_Chat.setCaretPosition(JTA_Chat.getDocument().getLength());//? ???? ?? ??..
 	}
 	private class ConnetDialog extends JDialog
 	{
@@ -240,7 +240,7 @@ public class DabichiGUI extends JFrame
 		
 		public ConnetDialog()
 		{
-			super(MainGUI ,"접속창", true);
+			super(MainGUI ,"???", true);
 			InitalGUI();
 			setResizable(false);
 			CDMain = this;
@@ -251,7 +251,7 @@ public class DabichiGUI extends JFrame
 			try
 			{
 				this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-				this.setSize(350, 170);//크기 설정.
+				this.setSize(350, 170);//?? ??.
 				this.setLocation(MainGUI.getLocation().x + MainGUI.getWidth()/2 - 350/2, MainGUI.getLocation().y + MainGUI.getHeight()/2 - 200/2);
 				ConnetEventHandler CEH = new ConnetEventHandler();
 				
@@ -259,33 +259,33 @@ public class DabichiGUI extends JFrame
 				
 				JPanel_Connet.setLayout(null);
 				
-				//접속버튼
-				JB_Connet = new JButton("접속");
+				//????
+				JB_Connet = new JButton("??");
 				JPanel_Connet.add(JB_Connet);
 				JB_Connet.setBounds(50 , 100, 100, 30);
 				JB_Connet.addActionListener(CEH);
-				//취소 버튼.
-				JB_Cancel = new JButton("취소");
+				//?? ??.
+				JB_Cancel = new JButton("??");
 				JPanel_Connet.add(JB_Cancel);
 				JB_Cancel.setBounds(200, 100, 100, 30);
 				JB_Cancel.addActionListener(CEH);
-				//ip어드레스
+				//ip????
 				JTF_ipAddress = new JTextField();
 				JPanel_Connet.add(JTF_ipAddress);
 				JTF_ipAddress.setBounds(100, 50, 200, 30);
 				JTF_ipAddress.addActionListener(CEH);
-				//서버의 체크 박스
+				//??? ?? ??
 				JCB_Server = new JCheckBox();
 				JPanel_Connet.add(JCB_Server);
 				JCB_Server.setBounds(280, 15, 20, 20);
 				JCB_Server.addItemListener(CEH);
-				//닉네임
+				//???
 				JTF_Nick = new JTextField();
 				JPanel_Connet.add(JTF_Nick);
 				JTF_Nick.setBounds(100, 10, 100, 30);
 				JTF_Nick.addActionListener(CEH);
-				//텍스트들
-				JLabel JL_Nick = new JLabel("닉네임");
+				//????
+				JLabel JL_Nick = new JLabel("???");
 				JPanel_Connet.add(JL_Nick);
 				JL_Nick.setBounds(0, 10, 100, 30);
 				JL_Nick.setHorizontalAlignment(JLabel.CENTER);
@@ -295,7 +295,7 @@ public class DabichiGUI extends JFrame
 				JL_IP.setBounds(0, 50, 100, 30);
 				JL_IP.setHorizontalAlignment(JLabel.CENTER);
 				
-				JLabel JL_Server = new JLabel("서버");
+				JLabel JL_Server = new JLabel("??");
 				JPanel_Connet.add(JL_Server);
 				JL_Server.setBounds(200, 10, 80, 30);
 				JL_Server.setHorizontalAlignment(JLabel.CENTER);
@@ -316,7 +316,7 @@ public class DabichiGUI extends JFrame
 				{
 					if(JCB_Server.isSelected())
 					{
-						//서버
+						//??
 						try
 						{
 							m_Server = new Server(10000);
@@ -325,7 +325,7 @@ public class DabichiGUI extends JFrame
 							m_Server.setGUI(MainGUI);
 							m_Server.start();
 							CDMain.setVisible(false);
-							JOptionPane.showMessageDialog(null, "접속완료");
+							JOptionPane.showMessageDialog(null, "????");
 						} catch (IOException e1)
 						{
 							// TODO Auto-generated catch block
@@ -336,14 +336,14 @@ public class DabichiGUI extends JFrame
 					{					
 						if(cheekIPAdress(JTF_ipAddress.getText()))
 						{
-							//접속 시도.
+							//?? ??.
 							try
 							{
 								m_Client.connectServer(new Socket(JTF_ipAddress.getText(), 10000));
 								isServer = false;
 								m_Client.getLisener().setGUI(MainGUI);
 								CDMain.setVisible(false);
-								JOptionPane.showMessageDialog(null, "접속완료");
+								JOptionPane.showMessageDialog(null, "????");
 							} catch (UnknownHostException e1)
 							{
 								// TODO Auto-generated catch block
@@ -357,7 +357,7 @@ public class DabichiGUI extends JFrame
 						}
 						else
 						{
-							JOptionPane.showMessageDialog(null, "아이피가 형식에 맞지않습니다.","경고", 2);
+							JOptionPane.showMessageDialog(null, "???? ??? ??????.","??", 2);
 						}
 					}
 				}
@@ -368,7 +368,7 @@ public class DabichiGUI extends JFrame
 			}
 			private boolean cheekIPAdress(String ipAdress)
 			{
-				//아이피 체크 코드
+				//??? ?? ??
 				return true;
 			}
 			@Override
@@ -397,7 +397,7 @@ public class DabichiGUI extends JFrame
 			public void windowClosing(WindowEvent e)
 			{
 				// TODO Auto-generated method stub
-				//종료코드
+				//????
 			}
 			@Override
 			public void windowDeactivated(WindowEvent e)
@@ -430,7 +430,7 @@ public class DabichiGUI extends JFrame
 		
 		public GameProcessor()
 		{
-			//이미지 불러오기
+			//??? ????
 			PeaLayout[0] = new JPanel(new CardLayout());
 			//PeaLayout[0].add(temp, 0);
 			ImageIcon temp  = new ImageIcon(".\\image\\1.jpg");
