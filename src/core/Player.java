@@ -1,7 +1,12 @@
+package core;
+import gui.GameWindow;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
+
+import network.DataHeader;
 
 public class Player implements Serializable {
 	ArrayList<Block> hand = null; // 자신이 가진 블록을 저장하는 배열
@@ -50,7 +55,7 @@ public class Player implements Serializable {
 		{
 			if (JOptionPane.showConfirmDialog(null, "빙고! 계속하시겠습니까?", "확인",
 					JOptionPane.YES_NO_OPTION) == 0)
-				proc.gameWndGUI.setEnable(GameWindow.OTHERS, true); // 계속할 경우 다른
+				proc.getGameWndGUI().setEnable(GameWindow.OTHERS, true); // 계속할 경우 다른
 																	// 플레이어들의
 																	// block 을
 																	// 선택가능하게
@@ -59,10 +64,10 @@ public class Player implements Serializable {
 				proc.Next(); // 그만둘 경우 다음 player 에게 턴 넘김.
 		} else { // 틀렸을 경우
 			System.out.println("last = " + last.getNum());
-			proc.netObject.SendChatMsg("오답입니다."); // 오답 메시지를 채팅창에 보내고
+			proc.getNetObject().SendChatMsg("오답입니다."); // 오답 메시지를 채팅창에 보내고
 			last.setOpen(true); // 마지막에 가져온 block 을 공개하도록 설정하고
-			proc.gameWndGUI.update();
-			proc.netObject.SendOb(new DataHeader(DataHeader.GAMEDATA,
+			proc.getGameWndGUI().update();
+			proc.getNetObject().SendOb(new DataHeader(DataHeader.GAMEDATA,
 					new GameData(proc.getGameEnv())));
 			proc.Next();
 		}
@@ -85,8 +90,8 @@ public class Player implements Serializable {
 		Block b_tmp = hand.get(selectedBlockIndex);
 		if (b_tmp.getNum() == num) { // 선택된 block 의 숫자가 num 과 같으면
 			b_tmp.setOpen(true); // 그 block 을 open 상태로 설정.
-			proc.gameWndGUI.update(); // 게임 프로세스의 GUI 상태를 업데이트 한다.
-			proc.netObject.SendOb(new DataHeader(DataHeader.GAMEDATA,
+			proc.getGameWndGUI().update(); // 게임 프로세스의 GUI 상태를 업데이트 한다.
+			proc.getNetObject().SendOb(new DataHeader(DataHeader.GAMEDATA,
 					new GameData(proc.getGameEnv())));
 			// 게임 프로세스의 네트워크에 현재 게임상태(GameData(proc.gameControl))객체를 전달한다.
 			isPlay(proc);
@@ -104,9 +109,9 @@ public class Player implements Serializable {
 				return; // 함수 종료.
 
 		play = false; // 모두 open 되었으므로 play 상태를 false로 설정.
-		proc.netObject.SendChatMsg("패를 모두 알아냈습니다."); // 게임 프로세스의 network 타겟으로
+		proc.getNetObject().SendChatMsg("패를 모두 알아냈습니다."); // 게임 프로세스의 network 타겟으로
 														// 메시지 전달.
-		proc.netObject.SendOb(new DataHeader(DataHeader.GAMEDATA, new GameData(
+		proc.getNetObject().SendOb(new DataHeader(DataHeader.GAMEDATA, new GameData(
 				proc.getGameEnv())));
 		if (proc.getGameEnv().isEnd())
 			proc.End();

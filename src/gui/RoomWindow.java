@@ -1,3 +1,4 @@
+package gui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -16,7 +17,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-class RoomWindow extends JFrame {
+import network.Network;
+
+public class RoomWindow extends JFrame {
 	JPanel JPanel_Room = null;
 	Network myNetwork;
 	ChatWindow chatWnd = null; // 게임 우측 채팅 윈도우

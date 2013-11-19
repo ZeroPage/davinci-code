@@ -1,3 +1,4 @@
+package gui;
 import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -9,7 +10,9 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 
-class AskDlg extends JDialog implements ActionListener // 추측할 숫자를 생성하는 대화상자
+import core.Block;
+
+public class AskDlg extends JDialog implements ActionListener // 추측할 숫자를 생성하는 대화상자
 {
 	JButton[] JB_Num = new JButton[13];
 	int Num;

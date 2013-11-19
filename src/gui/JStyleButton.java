@@ -1,3 +1,4 @@
+package gui;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -16,10 +17,10 @@ public class JStyleButton extends JButton {
 	}
 
 	private void initialButton() {
-		this.setBorderPainted(false); // Å×µÎ¸® ±×¸®±â
-		this.setContentAreaFilled(false); // ³×¸ð³­ ¿µ¿ª Ã¤¿ì±â
-		this.setDefaultCapable(false); // ³×¸ð³­ ¼±ÅÃ¿µ¿ª Ãë¼Ò
-		this.setFocusPainted(false); // ¼±ÅÃ‰çÀ»¶§ ÁÖº¯ÀÇ Á¡¼±Ç¥½Ã
+		this.setBorderPainted(false); 
+		this.setContentAreaFilled(false); 
+		this.setDefaultCapable(false); 
+		this.setFocusPainted(false); 
 		this.setOpaque(false);
 
 		this.setEnabled(false);

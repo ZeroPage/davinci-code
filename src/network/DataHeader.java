@@ -1,3 +1,4 @@
+package network;
 import java.io.Serializable;
 
 // 네트워크로 오갈 데이터의 헤더. 필요한 정보들을 입력한다.

@@ -1,3 +1,4 @@
+package network;
 import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -8,6 +9,9 @@ import java.net.SocketException;
 import java.net.UnknownHostException;
 
 import javax.swing.JOptionPane;
+
+import core.Game;
+import core.GameData;
 
 //import sun.java2d.Disposer;
 
@@ -126,7 +130,7 @@ public class Client extends Network {
 			int flag = data.getFlag();
 			switch (flag) {
 			case DataHeader.CHAT: // 데이터 헤더가 대화 이벤트일 경우.
-				myRoomWnd.AddChatString((String) data.getData());
+				getMyRoomWnd().AddChatString((String) data.getData());
 				break;
 			case DataHeader.GAME:
 				// if(gameProcess.gameControl == null ||
@@ -146,7 +150,7 @@ public class Client extends Network {
 				gameProcess.setPlayOrder(((Integer) data.getData()).intValue());
 				break;
 			case DataHeader.TOTALCOUNT: // 총 인원수를 전달받으면 그 숫자대로 게임 GUI 를 세팅.
-				gameProcess.gameWndGUI.Setting(((Integer) data.getData())
+				gameProcess.getGameWndGUI().Setting(((Integer) data.getData())
 						.intValue());
 				break;
 			}

@@ -1,27 +1,35 @@
+package core;
+import gui.AskDlg;
+import gui.GameWindow;
+
 import java.util.ArrayList;
 
+import network.DataHeader;
+import network.Network;
+import network.Server;
+
 public class GameProcess {
-	GameWindow gameWndGUI;
-	Network netObject;
-	int myPlayOrder = 0; // 자신의 플레이 순서.
+	private GameWindow gameWnd;
+	private Network network;
+	private int myPlayOrder = 0; // 자신의 플레이 순서.
 	int onlyDraw = 4; // player 들은 block 을 4 개를 먼저 가지고 시작한다.
 
 	Game gameEnv;
 
-	public GameProcess(GameWindow GUITarget, Network NetTarget) {
+	public GameProcess(GameWindow gameWnd, Network network) {
 		// 게임 프로세스 객체에 게임 GUI와 네트워크를 설정.
-		gameWndGUI = GUITarget; // 프로세스를 생성한 game window를 가리키기위한 변수.
-		netObject = NetTarget;
+		this.gameWnd = gameWnd; // 프로세스를 생성한 game window를 가리키기위한 변수.
+		this.network = network;
 	}
 
 	public void Start() { // server 가 게임을 시작할 때, 자신의 게임 컨트롤를 생성하고, client 들에게 총
 							// play 인원과 서버가 생성한 게임 컨트롤을 전달하고 자신부터 게임을 시작하는 메소드.
 		System.out.println("[ GameProcess : Start ]");
-		gameEnv = new Game(((Server) netObject).clientNum + 1);
-		((Server) netObject).SendOrder();
-		netObject.SendOb(new DataHeader(DataHeader.TOTALCOUNT, gameEnv
+		gameEnv = new Game(((Server) getNetObject()).getClientNum() + 1);
+		((Server) getNetObject()).SendOrder();
+		getNetObject().SendOb(new DataHeader(DataHeader.TOTALCOUNT, gameEnv
 				.getPlayers().size()));
-		netObject.SendOb(new DataHeader(DataHeader.GAME, gameEnv));
+		getNetObject().SendOb(new DataHeader(DataHeader.GAME, gameEnv));
 		// 모든 client 들에게 server가 생성한 게임 컨트롤을 전달한다.
 
 		if (gameEnv.getPlayers().size() == 4)
@@ -30,37 +38,37 @@ public class GameProcess {
 
 	public void turn() {
 		System.out.println("[ GameProcess : turn ]");
-		gameWndGUI.update();
-		gameWndGUI.setEnable(GameWindow.CENTER, true);
+		getGameWndGUI().update();
+		getGameWndGUI().setEnable(GameWindow.CENTER, true);
 		// player 자신의 턴이 되기 전까지는 center block 을 가져올 수 없다.
-		netObject.SendChatMsg("턴 입니다.");
+		getNetObject().SendChatMsg("턴 입니다.");
 	}
 
 	public void Next() {
 		// 다음 플레이어에게 턴을 넘겨준다. 게임 윈도우의 모든 입력은 블록 처리 되어 있으므로 자동으로
 		// 대기상태가 된다.
 		System.out.println("[ GameProcess : Next ]");
-		gameWndGUI.setEnable(GameWindow.OTHERS, false); 
+		getGameWndGUI().setEnable(GameWindow.OTHERS, false); 
 		// 현재 player 가 다른 block 들을 클릭하지 못하도록 설정.
-		gameWndGUI.setEnable(GameWindow.CENTER, false);
+		getGameWndGUI().setEnable(GameWindow.CENTER, false);
 		// center 의 block 들도 선택하지 못하도록 설정.
-		netObject.SendOb(new DataHeader(DataHeader.PASS, ((Integer
-				.valueOf((myPlayOrder + 1)) % (gameEnv.getPlayers().size())))));
+		getNetObject().SendOb(new DataHeader(DataHeader.PASS, ((Integer
+				.valueOf((getMyPlayOrder() + 1)) % (gameEnv.getPlayers().size())))));
 		// 그 후 다음 player 에게 턴을 넘김.
 	}
 
 	public void End() {
 		// 게임이 끝났을때의 호출 레디버튼을 활성화 해주고 모든 이미지를 안보이게 지정한뒤 승자를 표시해준다.
-		netObject.SendChatMsg("이겼습니다.");
-		gameWndGUI.RemoveAll();
-		gameWndGUI.update();
+		getNetObject().SendChatMsg("이겼습니다.");
+		getGameWndGUI().RemoveAll();
+		getGameWndGUI().update();
 		gameEnv = null;
 	}
 
 	public void moveBlock(int blockIndex) {
 		// center 에 있는 block 들을 player 에게 옮기는함수.
 		System.out.println("[ GameProcess : moveBlock ]");
-		Player me = gameEnv.getPlayer(myPlayOrder);
+		Player me = gameEnv.getPlayer(getMyPlayOrder());
 
 		if (gameEnv.getFloorBlocks().get(blockIndex).getNum() == 12) {
 			// 선택한 block이 Joker일 경우 diag 대화상자의 버튼 색을 변경하고, joker를 놓을 장소를
@@ -73,15 +81,15 @@ public class GameProcess {
 
 		me.getBlock(gameEnv.getFloorBlocks(), blockIndex);
 		// 이 block 을 player에게 전달.
-		gameWndGUI.update();
-		netObject.SendOb(new DataHeader(DataHeader.GAMEDATA, new GameData(
+		getGameWndGUI().update();
+		getNetObject().SendOb(new DataHeader(DataHeader.GAMEDATA, new GameData(
 				gameEnv)));
 
 		if (me.getHand().size() <= onlyDraw) {
 			Next(); // 현재가 차례인 player 가 block 을 다 받을 때까지 block 만 가져가고 턴을 계속 돌린다.
 		} else {
 			// player 가 block 을 다 가져가고나면 상대방의 block 을 추측하기 시작한다.
-			gameWndGUI.setEnable(GameWindow.OTHERS, true);
+			getGameWndGUI().setEnable(GameWindow.OTHERS, true);
 			// 추측하기 위해 다른 player들의 block 을 선택가능하게 설정한다.
 		}
 	}
@@ -101,26 +109,26 @@ public class GameProcess {
 	public void AskBlock(int playerOrder, int index, int num) {
 		// 해당 player 에게 block 의 숫자를 물어보는 메소드.
 		System.out.println("[ GameProcess : AskBlock ]");
-		Player me = gameEnv.getPlayer(myPlayOrder);
+		Player me = gameEnv.getPlayer(getMyPlayOrder());
 		Player target = gameEnv.getPlayer(playerOrder);
 
 		me.askBlock(target, this, index, num); // 현재 player 가 대상이 되는 Player 에게
 												// block 을 물어봄.
-		gameWndGUI.update();
+		getGameWndGUI().update();
 	}
 
 	public void setGameEnv(Game gc) {
 		System.out.println("[ GameProcess : setGameEnv(Game gc) ]");
 		gameEnv = gc;
-		gameWndGUI.update();
+		getGameWndGUI().update();
 	}
 
 	public void setPlayOrder(int order) {
-		myPlayOrder = order;
+		setMyPlayOrder(order);
 	}
 
 	public int getPlayOrder() {
-		return myPlayOrder;
+		return getMyPlayOrder();
 	}
 
 	public Game getGameEnv() {
@@ -136,7 +144,7 @@ public class GameProcess {
 
 		for (int i = 0; i < newBlockState.getPlayers().size(); i++) {
 			// 인자로 받은 게임 컨트롤러의 player 수만큼 돌며
-			if (i == myPlayOrder) {
+			if (i == getMyPlayOrder()) {
 				for (int j = 0; j < newBlockState.getBlocksOfPlayer(i).size(); j++) {
 					newBlockState.getBlocksOfPlayer(i).get(j).setOwn(true);
 				}
@@ -149,6 +157,22 @@ public class GameProcess {
 		}
 		for (int i = 0; i < gameEnv.getPlayers().size(); i++)
 			gameEnv.getPlayer(i).sortBlock();
-		gameWndGUI.update();
+		getGameWndGUI().update();
+	}
+
+	public int getMyPlayOrder() {
+		return myPlayOrder;
+	}
+
+	public void setMyPlayOrder(int myPlayOrder) {
+		this.myPlayOrder = myPlayOrder;
+	}
+
+	public Network getNetObject() {
+		return network;
+	}
+
+	public GameWindow getGameWndGUI() {
+		return gameWnd;
 	}
 }

@@ -1,3 +1,4 @@
+package gui;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -16,6 +17,11 @@ import javax.swing.JPanel;
 import javax.swing.JRootPane;
 import javax.swing.JTextField;
 
+import resource.ResourceManager;
+import network.Client;
+import network.Network;
+import network.Server;
+
 class LobbyWindow implements ActionListener, ItemListener {
 	JTextField JTF_IPAddr, JTF_Nick, JTF_Port;
 	JCheckBox JCB_Server;
@@ -23,12 +29,12 @@ class LobbyWindow implements ActionListener, ItemListener {
 	JPanel JPanel_Lobby;
 	JRootPane motherPane;
 
-	Network myNetworkType; // 네트워크에 접속할 때의 player의 상태를 저장할 변수.
-							// server 역할을 하는 player일 경우 myNetworkType =
-							// Server();
-							// client 인 player 일 경우 myNetworkType = Client();
+	Network network; // 네트워크에 접속할 때의 player의 상태를 저장할 변수.
+					// server 역할을 하는 player일 경우 myNetworkType =
+					// Server();
+					// client 인 player 일 경우 myNetworkType = Client();
 
-	ImageIcon BG = new ImageIcon(DavichiGUI.class.getResource("cover.gif"));
+
 
 	public void actionPerformed(ActionEvent event) {
 		if (event.getSource() == JB_Connect || event.getSource() == JTF_IPAddr) {
@@ -39,28 +45,28 @@ class LobbyWindow implements ActionListener, ItemListener {
 			}
 
 			if (JCB_Server.isSelected())
-				myNetworkType = new Server(); // 서버
+				network = new Server(); // 서버
 			else
-				myNetworkType = new Client(); // 클라이언트
+				network = new Client(); // 클라이언트
 
-			myNetworkType.setM_Name(JTF_Nick.getText()); // 대상 네트워크 객체에 nickname
+			network.setName(JTF_Nick.getText()); // 대상 네트워크 객체에 nickname
 															// 설정.
-			myNetworkType.setPortNum(Integer.parseInt(JTF_Port.getText()));
+			network.setPortNum(Integer.parseInt(JTF_Port.getText()));
 			// 포트 설정.
-			myNetworkType.Connect(JTF_IPAddr.getText());
+			network.Connect(JTF_IPAddr.getText());
 			// server 에 접속.
 
-			myNetworkType.myRoomWnd = new RoomWindow(
-					(JPanel) motherPane.getContentPane(), myNetworkType);
+			network.setMyRoomWnd(new RoomWindow(
+					(JPanel) motherPane.getContentPane(), network));
 			// 룸윈도우 생성하고 네트워크와 연결.
 
 			JPanel_Lobby.setVisible(false);
-			myNetworkType.myRoomWnd.JPanel_Room.setVisible(true);
+			network.getMyRoomWnd().JPanel_Room.setVisible(true);
 
-			if (myNetworkType.isServer())
-				myNetworkType.SendChatMsg("서버를 개설하였습니다,");
+			if (network.isServer())
+				network.SendChatMsg("서버를 개설하였습니다,");
 			else
-				myNetworkType.SendChatMsg("접속하였습니다.");
+				network.SendChatMsg("접속하였습니다.");
 		}
 		if (event.getSource() == JB_Cancel) {
 			System.exit(0);
@@ -70,6 +76,9 @@ class LobbyWindow implements ActionListener, ItemListener {
 	public LobbyWindow(JPanel main, JRootPane mother) {
 		// Lobby window 의 외형을 구현.
 		motherPane = mother;
+		
+		final ImageIcon BG = ResourceManager.getInstance().getLobbyBackground(); 
+		
 		JPanel_Lobby = new JPanel() {
 			public void paint(Graphics g) {
 				g.drawImage(BG.getImage(), 0, 0, this.getWidth(),
@@ -164,6 +173,6 @@ class LobbyWindow implements ActionListener, ItemListener {
 	}
 
 	public void AddChatString(String msg) { // DavichiGUI 에서 종료메시지를 보내기 위해 작성됨.
-		myNetworkType.SendChatMsg(msg); // 모든 player 들에게 메시지를 전송한다.
+		network.SendChatMsg(msg); // 모든 player 들에게 메시지를 전송한다.
 	}
 }

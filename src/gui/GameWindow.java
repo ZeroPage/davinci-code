@@ -1,52 +1,44 @@
+package gui;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Frame;
 import java.awt.Graphics;
-import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-class GameWindow {
-	JPanel JPanel_Main;
-	PlayerWindow[] PlayerPane = new PlayerWindow[4];
-	PlayerWindow Center;
+import resource.ResourceManager;
+import network.Network;
+import core.Block;
+import core.GameProcess;
 
-	ImageIcon[] ImageCardBlack = new ImageIcon[13];
-	ImageIcon[] ImageCardWhite = new ImageIcon[13];
-	ImageIcon[] ImageCardBlackOpen = new ImageIcon[13];
-	ImageIcon[] ImageCardWhiteOpen = new ImageIcon[13];
-	ImageIcon ImageCardBlackUnknown, ImageCardWhiteUnknown;
-	ImageIcon ImageCardBlackUnknownRollerover, ImageCardWhiteUnknownRollerover;
+public class GameWindow {
+	private JPanel mainPanel;
+	private PlayerWindow[] PlayerPane = new PlayerWindow[4];
+	private PlayerWindow Center;
 
 	public static final int CENTER = 5;
 	public static final int NORMAL = 0;
 	public static final int OTHERS = 4;
 
-	GameProcess Process; // 게임 윈도우 전체 내에서 게임 진행을 맡을 클래스.
+	private GameProcess Process; // 게임 윈도우 전체 내에서 게임 진행을 맡을 클래스.
+	private ResourceManager resourceManager;
 
 	int[] PlayerNumToWindowNum;
+
 	// index 는 player 게임 순서, 값은 player 가 윈도우 상에 나타날 위치를 기록하는 배열.
 	// PlayerNumToWindowNum[n] == 0 일때, n 은 player 자신의 게임 순서.
 
-	private JPanel nevertouch; // 게임 윈도우의 최상위 frame panel.
-
-	public GameWindow(JPanel main, Network net) {
-		nevertouch = main;
-		JPanel_Main = new JPanel() {
-			ImageIcon BG = new ImageIcon(
-					DavichiGUI.class.getResource("board.jpg"));
+	public GameWindow(JPanel main, Network network) {
+		mainPanel = new JPanel() {
+			ImageIcon BG = ResourceManager.getInstance().getGameBackground();
 
 			public void paint(Graphics g) {
 				g.drawImage(BG.getImage(), 0, 0, BG.getIconWidth(),
@@ -55,37 +47,20 @@ class GameWindow {
 				super.paint(g);
 			}
 		};
-		JPanel_Main.setLayout(new BorderLayout());
+		mainPanel.setLayout(new BorderLayout());
 
-		// 이미지 로딩
-		for (int i = 0; i < 13; i++) {
-			ImageCardBlack[i] = new ImageIcon(
-					DavichiGUI.class.getResource("card/b" + i + ".gif"));
-			ImageCardBlackOpen[i] = new ImageIcon(
-					DavichiGUI.class.getResource("card/b" + i + "r.gif"));
-			ImageCardWhite[i] = new ImageIcon(
-					DavichiGUI.class.getResource("card/w" + i + ".gif"));
-			ImageCardWhiteOpen[i] = new ImageIcon(
-					DavichiGUI.class.getResource("card/w" + i + "r.gif"));
-		}
-		ImageCardBlackUnknown = new ImageIcon(
-				DavichiGUI.class.getResource("card/bu.gif"));
-		ImageCardWhiteUnknown = new ImageIcon(
-				DavichiGUI.class.getResource("card/wu.gif"));
-		ImageCardBlackUnknownRollerover = new ImageIcon(
-				DavichiGUI.class.getResource("card/bur.gif"));
-		ImageCardWhiteUnknownRollerover = new ImageIcon(
-				DavichiGUI.class.getResource("card/wur.gif"));
+		resourceManager = ResourceManager.getInstance();
 
 		// 플레이어 와 NPC패널의 설정
 		for (int i = 0; i < 4; i++)
 			PlayerPane[i] = new PlayerWindow(i);
 		Center = new NPC();
 
-		main.add(JPanel_Main);
+		main.add(mainPanel);
 
-		Process = new GameProcess(this, net); // 게임 윈도우가 생성되면서 게임 프로세스도 하나 생성됨.
-		net.setM_Game(Process);
+		Process = new GameProcess(this, network); // 게임 윈도우가 생성되면서 게임 프로세스도 하나
+													// 생성됨.
+		network.setM_Game(Process);
 	}
 
 	public void setEnable(int target, boolean state) {
@@ -94,8 +69,8 @@ class GameWindow {
 		switch (target) {
 		case OTHERS:
 			for (int i = 0; i < Process.getNumOfPlayer(); i++) {
-				if (i != Process.myPlayOrder) { // 현재 player 를 제외하고 나머지 player들의
-												// 경우
+				if (i != Process.getMyPlayOrder()) {
+					// 현재 player 를 제외하고 나머지 player들의 경우
 					blockState = Process.GetPlayerBlocksState(i);
 					PlayerPane[PlayerNumToWindowNum[i]].update(blockState);
 					// 플레이어 넘버와 화면번호의 매칭하여 update.
@@ -133,7 +108,7 @@ class GameWindow {
 	public void start() {
 		// player 수만큼 게임 윈도우에서 player 들의 위치를 설정하고 server 부터 게임을 시작하는 메소드.
 		// 채팅창에 있는 게임 시작 버튼의 동작을 받기위한 것.
-		if (Process.netObject.isServer()) {
+		if (Process.getNetObject().isServer()) {
 			Process.Start(); // 게임 프로세스를 시작
 			Setting(Process.getNumOfPlayer());
 			// 게임 윈도우 내에서 player 들의 위치를 설정한다.
@@ -148,7 +123,7 @@ class GameWindow {
 		PlayerNumToWindowNum = new int[PlayerNum]; // 게임중인 player 수만큼 배열 생성.
 		switch (PlayerNum) {
 		case 2: // player 수가 2 명일 경우
-			if (Process.myPlayOrder == 0) {
+			if (Process.getMyPlayOrder() == 0) {
 				// player 자신의 순서가 0 번이면
 				PlayerNumToWindowNum[0] = 0; // 자신은 맨 밑 위치로,
 				PlayerNumToWindowNum[1] = 2; // 상대방은 맨 위쪽으로 이동.
@@ -164,21 +139,21 @@ class GameWindow {
 			}
 			break;
 		case 3: // player 수가 3 명일 경우
-			if (Process.myPlayOrder == 0) {
+			if (Process.getMyPlayOrder() == 0) {
 				PlayerNumToWindowNum[0] = 0;
 				PlayerNumToWindowNum[1] = 1;
 				PlayerNumToWindowNum[2] = 3;
 				PlayerPane[0].playerOrder = 0;
 				PlayerPane[1].playerOrder = 1;
 				PlayerPane[3].playerOrder = 2;
-			} else if (Process.myPlayOrder == 1) {
+			} else if (Process.getMyPlayOrder() == 1) {
 				PlayerNumToWindowNum[0] = 3;
 				PlayerNumToWindowNum[1] = 0;
 				PlayerNumToWindowNum[2] = 1;
 				PlayerPane[3].playerOrder = 0;
 				PlayerPane[0].playerOrder = 1;
 				PlayerPane[1].playerOrder = 2;
-			} else if (Process.myPlayOrder == 2) {
+			} else if (Process.getMyPlayOrder() == 2) {
 				PlayerNumToWindowNum[0] = 1;
 				PlayerNumToWindowNum[1] = 3;
 				PlayerNumToWindowNum[2] = 0;
@@ -188,7 +163,7 @@ class GameWindow {
 			}
 			break;
 		case 4: // player 수가 4 명일 경우
-			if (Process.myPlayOrder == 0) {
+			if (Process.getMyPlayOrder() == 0) {
 				PlayerNumToWindowNum[0] = 0;
 				PlayerNumToWindowNum[1] = 1;
 				PlayerNumToWindowNum[2] = 2;
@@ -197,7 +172,7 @@ class GameWindow {
 				PlayerPane[1].playerOrder = 1;
 				PlayerPane[2].playerOrder = 2;
 				PlayerPane[3].playerOrder = 3;
-			} else if (Process.myPlayOrder == 1) {
+			} else if (Process.getMyPlayOrder() == 1) {
 				PlayerNumToWindowNum[0] = 3;
 				PlayerNumToWindowNum[1] = 0;
 				PlayerNumToWindowNum[2] = 1;
@@ -206,7 +181,7 @@ class GameWindow {
 				PlayerPane[0].playerOrder = 1;
 				PlayerPane[1].playerOrder = 2;
 				PlayerPane[2].playerOrder = 3;
-			} else if (Process.myPlayOrder == 2) {
+			} else if (Process.getMyPlayOrder() == 2) {
 				PlayerNumToWindowNum[0] = 2;
 				PlayerNumToWindowNum[1] = 3;
 				PlayerNumToWindowNum[2] = 0;
@@ -215,7 +190,7 @@ class GameWindow {
 				PlayerPane[3].playerOrder = 1;
 				PlayerPane[0].playerOrder = 2;
 				PlayerPane[1].playerOrder = 3;
-			} else if (Process.myPlayOrder == 3) {
+			} else if (Process.getMyPlayOrder() == 3) {
 				PlayerNumToWindowNum[0] = 1;
 				PlayerNumToWindowNum[1] = 2;
 				PlayerNumToWindowNum[2] = 3;
@@ -231,7 +206,7 @@ class GameWindow {
 
 	public void RemoveAll() {
 		// 게임 윈도우를 모두 보이지 않게 하는 메소드.
-		JPanel_Main.setVisible(false);
+		mainPanel.setVisible(false);
 		for (int i = 0; i < 4; i++)
 			PlayerPane[i].m_Panel.setVisible(false);
 		Center.m_Panel.setVisible(false);
@@ -277,7 +252,7 @@ class GameWindow {
 				break;
 			}
 			m_Panel.setLayout(layout);
-			JPanel_Main.add(lo, m_Panel);
+			mainPanel.add(lo, m_Panel);
 			m_Panel.setOpaque(false); // 불투명하게 설정하는 메소드에 false를 주어 투명하게 만듬.
 		}
 
@@ -314,30 +289,26 @@ class GameWindow {
 				if (blocks.get(i).getColor() == 0) // i 번째 block 이 검정 일 경우
 				{
 					if (blocks.get(i).isOpen() || blocks.get(i).isOwned()) {
-						if (blocks.get(i).isOpen()) {
-							// 그 block 이 open 되어있을 경우 알려진 표시를 해주고
-							playerBlock[i].setIcon(ImageCardBlackOpen[num]);
-						} else {
-							// 그렇지 않으면 일반 이미지를 표시한다.
-							playerBlock[i].setIcon(ImageCardBlack[num]);
-						}
+						ImageIcon img = resourceManager.getCardImage(
+								BlockColor.Black, num, blocks.get(i).isOpen());
+						playerBlock[i].setIcon(img);
 					} else { // open 되어있지 않고 소유되지도 않은 경우
-						playerBlock[i].setIcon(ImageCardBlackUnknown);
+						playerBlock[i].setIcon(resourceManager.getCardImage(
+								BlockColor.Black, false));
 						// 소유되어있지 않은 block일 경우에는 알려지지 않았다는 이미지를 보여준다.
-						playerBlock[i]
-								.setRolloverIcon(ImageCardBlackUnknownRollerover);
+						playerBlock[i].setRolloverIcon(resourceManager
+								.getCardImage(BlockColor.Black, true));
 					}
 				} else { // 흰색 block 일 경우
 					if (blocks.get(i).isOpen() || blocks.get(i).isOwned()) {
-						if (blocks.get(i).isOpen()) {
-							playerBlock[i].setIcon(ImageCardWhiteOpen[num]);
-						} else {
-							playerBlock[i].setIcon(ImageCardWhite[num]);
-						}
+						ImageIcon img = resourceManager.getCardImage(
+								BlockColor.White, num, blocks.get(i).isOpen());
+						playerBlock[i].setIcon(img);
 					} else { // 소유되어있지 않은 경우 뒷면을 보여준다.
-						playerBlock[i].setIcon(ImageCardWhiteUnknown);
-						playerBlock[i]
-								.setRolloverIcon(ImageCardWhiteUnknownRollerover);
+						playerBlock[i].setIcon(resourceManager.getCardImage(
+								BlockColor.White, false));
+						playerBlock[i].setRolloverIcon(resourceManager
+								.getCardImage(BlockColor.White, true));
 					}
 				}
 				playerBlock[i].setRolloverEnabled(false);
@@ -364,7 +335,7 @@ class GameWindow {
 			m_Panel = new JPanel();
 			m_WindowNum = 5;
 			playerBlock = new JButton[27]; // 모두 27개의 block 들.
-			JPanel_Main.add(BorderLayout.CENTER, m_Panel);
+			mainPanel.add(BorderLayout.CENTER, m_Panel);
 			m_Panel.setOpaque(false);
 		}
 
@@ -394,7 +365,7 @@ class GameWindow {
 			// 가운데는 선택되면 이것은 처음에 가운데 블럭을 선택하기 위한것이다.
 			// moveblock을 호출해서 가운데것을 가져가게 하면 된다.
 			// 그리고 선택된것은 빼어버린다.(업데이트가 나으려나.)
-			Process.gameWndGUI.setEnable(GameWindow.CENTER, false);
+			Process.getGameWndGUI().setEnable(GameWindow.CENTER, false);
 			// block 을 가져가고난 후에는 다시 center의 block 을 선택하지 못하게 막는다.
 			for (int i = 0; i < 26; i++) {
 				if (playerBlock[i] != null) {

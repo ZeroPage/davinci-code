@@ -1,7 +1,11 @@
+package network;
 import java.io.*;
 import java.net.*;
 
 import javax.swing.JOptionPane;
+
+import core.Game;
+import core.GameData;
 
 public class Server extends Network {
 	ClientData[] clients; // server 에 접속한 client 들을 저장할 변수. client 접속 소켓이
@@ -9,7 +13,7 @@ public class Server extends Network {
 	WaitingClient wait; // 서버 소켓이 저장될 변수.
 
 	final int maxClient = 3; // 게임에는 server 까지 최대 4 명만 접속할 수 있다.
-	int clientNum;
+	private int clientNum;
 
 	public Server() {
 		System.out.println("[ Server : Constructor ]");
@@ -34,7 +38,7 @@ public class Server extends Network {
 		temp.setData(playerNickname + " : " + msg);
 		SendOb(temp);
 
-		myRoomWnd.AddChatString(playerNickname + " : " + msg);
+		getMyRoomWnd().AddChatString(playerNickname + " : " + msg);
 	}
 
 	public void SendOb(Object ob) // 전달받은 객체를 server 에 접속한 모든 객체에 전달하는 메소드.
@@ -68,6 +72,9 @@ public class Server extends Network {
 		}
 		wait.close();
 	}
+	public int getClientNum() {
+		return clientNum;
+	}
 
 	class ClientData // server 가 관리할 client 들의 소켓정보와 input/output 정보를
 	{
@@ -79,21 +86,12 @@ public class Server extends Network {
 			clientSock = new Socket();
 		}
 
-		public void setClientData(Socket accepted) throws IOException // client
-																		// 와 맺은
-																		// 새로운
-																		// 소캣을
-																		// 인자로
-																		// 받아
-																		// input/output
-																		// 스트림을
-																		// 열고
-		{ // 그 소켓을 저장해두는 메소드.
+		public void setClientData(Socket accepted) throws IOException {
+			// client 와 맺은 새로운 소캣을 인자로 받아 input/output 스트림을 열고
+			// 그 소켓을 저장해두는 메소드.
 			clientSock = accepted; // 인자로 전달받은 client 의 소켓을 저장.
-			outOb = new ObjectOutputStream(clientSock.getOutputStream()); // output이
-																			// client
-																			// 에게
-																			// 전송됨.
+			outOb = new ObjectOutputStream(clientSock.getOutputStream());
+			// output이 client 에게 전송됨.
 			inOb = new ObServerListener(clientSock); // client 에게서 전송받음.
 			inOb.start();
 		}
@@ -102,32 +100,31 @@ public class Server extends Network {
 			return clientSock;
 		}
 
-		public void SendOb(Object ob) throws IOException // client 에게 데이터를 전송하는
-															// 메소드.
-		{
+		public void SendOb(Object ob) throws IOException {
+			// client 에게 데이터를 전송하는 메소드.
 			outOb.writeObject(ob);
 			outOb.flush();
 		}
 
-		public void close() throws IOException // client와의 연결을 끊는 메소드.
-		{
+		public void close() throws IOException {
+			// client와의 연결을 끊는 메소드.
 			outOb.close();
 			inOb.close();
 			clientSock.close();
 		}
 	}
 
-	class WaitingClient extends Thread // Server 가 Client 의 접속을 기다릴 때 사용할 클래스.
-	{
+	// Server 가 Client 의 접속을 기다릴 때 사용할 클래스.
+	class WaitingClient extends Thread {
+
 		ServerSocket servSock = null;
 		boolean listenning = true;
 
-		public void setServSock(int portNum, int maxClient) // 서버 소켓을 portNum 과
-															// 결합시킨다.
-		{
+		// 서버 소켓을 portNum 과결합시킨다.
+		public void setServSock(int portNum, int maxClient) {
 			try {
-				servSock = new ServerSocket(portNum, maxClient); // 지정된 포트번호로 서버
-																	// 소켓을 연다.
+				// 지정된 포트번호로 서버 소켓을 연다.
+				servSock = new ServerSocket(portNum, maxClient);
 			} catch (IllegalArgumentException e) {
 				JOptionPane
 						.showMessageDialog(
@@ -181,10 +178,8 @@ public class Server extends Network {
 		boolean listenning = true;
 		ObjectInputStream OInStream = null;
 
-		public ObServerListener(Socket client) throws IOException // 전달받은 소켓 인자에
-																	// input
-																	// 스트림을 연결.
-		{
+		// 전달받은 소켓 인자에 input 스트림을 연결.
+		public ObServerListener(Socket client) throws IOException {
 			this.client = client;
 			OInStream = new ObjectInputStream(client.getInputStream());
 		}
@@ -208,7 +203,7 @@ public class Server extends Network {
 			int flag = data.getFlag();
 			switch (flag) {
 			case DataHeader.CHAT: // 데이터 헤더가 대화 이벤트일 경우.
-				myRoomWnd.AddChatString((String) data.getData());
+				getMyRoomWnd().AddChatString((String) data.getData());
 				break;
 			case DataHeader.GAME:
 				// if(gameProcess.gameControl == null ||
