@@ -7,8 +7,8 @@ import java.util.ArrayList;
  * @author Teolex
  * 
  */
-public class Game implements Serializable { // 게임의 시작을 위한 초기 작업을 수행한다.
-
+public class Game implements Serializable {
+	// 게임의 시작을 위한 초기 작업을 수행한다.
 	private ArrayList<Player> players; // 게임 내의 player 들을 저장할 리스트.
 	private ArrayList<Block> floor; // 게임중 바닥에 깔려있을 block 들을 저장할 리스트.
 
@@ -54,9 +54,8 @@ public class Game implements Serializable { // 게임의 시작을 위한 초기
 		blocks.set(n2, tb);
 	}
 
-	public void mixBlocks(ArrayList<Block> blocks) // 게임 컨트롤이 생성한 block 들의 순서를
-													// 섞는다.
-	{
+	public void mixBlocks(ArrayList<Block> blocks) {
+		// 게임 컨트롤이 생성한 block 들의 순서를 섞는다.
 		int n1, n2;
 		for (int i = 0; i < 50; i++) {
 			n1 = (int) (Math.random() * 26);
@@ -65,8 +64,8 @@ public class Game implements Serializable { // 게임의 시작을 위한 초기
 		}
 	}
 
-	public boolean isEnd() // player 들의 상태가 어떤지 확인하고 게임이 끝났는지 확인하는 메소드.
-	{
+	public boolean isEnd() {
+		// player 들의 상태가 어떤지 확인하고 게임이 끝났는지 확인하는 메소드.
 		int alive = 0;
 		for (int i = 0; i < players.size(); i++)
 			if (players.get(i).getPlay() == true)
