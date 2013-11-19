@@ -41,19 +41,18 @@ class LobbyWindow implements ActionListener, ItemListener {
 			if (JCB_Server.isSelected())
 				myNetworkType = new Server(); // 서버
 			else
-				myNetworkType = new Client(); // 클라
+				myNetworkType = new Client(); // 클라이언트
 
-			myNetworkType.setM_Name(JTF_Nick.getText()); // 대상 네트워크 객체에 nick
-															// name 설정.
-			myNetworkType.setPortNum(Integer.parseInt(JTF_Port.getText())); // 포트
-																			// 설정.
-			myNetworkType.Connect(JTF_IPAddr.getText()); // server 에 접속.
+			myNetworkType.setM_Name(JTF_Nick.getText()); // 대상 네트워크 객체에 nickname
+															// 설정.
+			myNetworkType.setPortNum(Integer.parseInt(JTF_Port.getText()));
+			// 포트 설정.
+			myNetworkType.Connect(JTF_IPAddr.getText());
+			// server 에 접속.
 
 			myNetworkType.myRoomWnd = new RoomWindow(
-					(JPanel) motherPane.getContentPane(), myNetworkType); // 룸윈도우
-																			// 생성하고
-																			// 네트워크와
-																			// 연결.
+					(JPanel) motherPane.getContentPane(), myNetworkType);
+			// 룸윈도우 생성하고 네트워크와 연결.
 
 			JPanel_Lobby.setVisible(false);
 			myNetworkType.myRoomWnd.JPanel_Room.setVisible(true);
@@ -63,12 +62,13 @@ class LobbyWindow implements ActionListener, ItemListener {
 			else
 				myNetworkType.SendChatMsg("접속하였습니다.");
 		}
-		if (event.getSource() == JB_Cancel)
+		if (event.getSource() == JB_Cancel) {
 			System.exit(0);
+		}
 	}
 
-	public LobbyWindow(JPanel main, JRootPane mother) // Lobby window 의 외형을 구현.
-	{
+	public LobbyWindow(JPanel main, JRootPane mother) {
+		// Lobby window 의 외형을 구현.
 		motherPane = mother;
 		JPanel_Lobby = new JPanel() {
 			public void paint(Graphics g) {
@@ -152,13 +152,14 @@ class LobbyWindow implements ActionListener, ItemListener {
 		main.add(JPanel_Lobby);
 	}
 
-	public void itemStateChanged(ItemEvent event) { // Server 항목에 체크할 경우 IP
-													// 입력필드가 비활성화됨.
+	public void itemStateChanged(ItemEvent event) { 
+		// Server 항목에 체크할 경우 IP 입력필드가 비활성화됨.
 		if (event.getSource() == JCB_Server) {
-			if (JCB_Server.isSelected())
+			if (JCB_Server.isSelected()){
 				JTF_IPAddr.setEnabled(false);
-			else
+			}else{
 				JTF_IPAddr.setEnabled(true);
+			}
 		}
 	}
 
