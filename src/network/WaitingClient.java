@@ -2,6 +2,7 @@ package network;
 
 import java.io.IOException;
 import java.net.ServerSocket;
+import java.net.Socket;
 import java.net.SocketException;
 
 import javax.swing.JOptionPane;
@@ -9,7 +10,7 @@ import javax.swing.JOptionPane;
 //Server 가 Client 의 접속을 기다릴 때 사용할 클래스.
 public class WaitingClient extends Thread {
 
-	ServerSocket servSock = null;
+	private ServerSocket serverSocket = null;
 	boolean listenning = true;
 	private Server server;
 
@@ -18,10 +19,10 @@ public class WaitingClient extends Thread {
 	}
 
 	// 서버 소켓을 portNum과 결합시킨다.
-	public void setServSock(int portNum, int maxClient) {
+	public void setServSock(int portNum) {
 		try {
 			// 지정된 포트번호로 서버 소켓을 연다.
-			servSock = new ServerSocket(portNum, maxClient);
+			serverSocket = new ServerSocket(portNum, Server.MAX_CLIENT);
 		} catch (IllegalArgumentException e) {
 			JOptionPane
 					.showMessageDialog(
@@ -30,7 +31,7 @@ public class WaitingClient extends Thread {
 									+ portNum
 									+ "\nPort 는 1 ~ 65535 사이의 값이어야 합니다.\n기본값 10000 번 포트로 연결합니다.",
 							"Port number 경고", JOptionPane.OK_OPTION);
-			setServSock(10000, maxClient);
+			setServSock(10000);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -39,32 +40,25 @@ public class WaitingClient extends Thread {
 	public void close() {
 		try {
 			listenning = false;
-			servSock.close();
+			serverSocket.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
 	public void run() { // 스레드 생성시 실제 동작시킬 내용을 적는 메소드.
-		int current = 0;
 		while (listenning) {
-			// 서버 소켓은 클라이언트가 접속할 때까지 계속 기다려야 하기 때문에 while(true).
-			if (current <= Server.maxClient) {
-				if (server.clients[current].getClientSocket().isConnected()) {
-					System.out.println("client " + current + " 접속함.");
-					current++;
-				}
-			}
-
 			try {
-				server.clients[current].setClientData(servSock.accept());
+				Socket socket = serverSocket.accept();
+				ClientData clientData = new ClientData(server, socket);
+				server.register(clientData);
+				System.out.println("client " + server.getClientNum() + " 접속함.");
 			} catch (SocketException e) {
 				listenning = false;
 				close();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			server.increaseClient();
 		}
 	}
 }

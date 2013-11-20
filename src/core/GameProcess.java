@@ -27,7 +27,7 @@ public class GameProcess {
 							// play 인원과 서버가 생성한 게임 컨트롤을 전달하고 자신부터 게임을 시작하는 메소드.
 		System.out.println("[ GameProcess : Start ]");
 		gameEnv = new Game(((Server) getNetObject()).getClientNum() + 1);
-		((Server) getNetObject()).SendOrder();
+		((Server) getNetObject()).sendOrder();
 		getNetObject().sendObject(
 				new DataHeader(DataHeader.TOTALCOUNT, gameEnv.getPlayers()
 						.size()));
@@ -54,10 +54,7 @@ public class GameProcess {
 		// 현재 player 가 다른 block 들을 클릭하지 못하도록 설정.
 		getGameWndGUI().setEnable(GameWindow.CENTER, false);
 		// center 의 block 들도 선택하지 못하도록 설정.
-		getNetObject().sendObject(
-				new DataHeader(DataHeader.PASS, ((Integer
-						.valueOf((getMyPlayOrder() + 1)) % (gameEnv
-						.getPlayers().size())))));
+		getNetObject().sendPass((getMyPlayOrder() + 1) % gameEnv.getPlayers().size());
 		// 그 후 다음 player 에게 턴을 넘김.
 	}
 

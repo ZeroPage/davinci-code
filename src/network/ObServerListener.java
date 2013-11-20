@@ -11,26 +11,24 @@ import core.GameData;
 
 class ObServerListener extends Thread // server 로 들어오는 데이터들을 받아 처리하는 클래스.
 {
-	Socket client = null;
 	boolean listenning = true;
-	ObjectInputStream OInStream = null;
+	private ObjectInputStream inStream = null;
 	private Server server;
 
 	// 전달받은 소켓 인자에 input 스트림을 연결.
-	public ObServerListener(Socket client, Server server) throws IOException {
-		this.client = client;
+	public ObServerListener(Socket clientSocket, Server server) throws IOException {
 		this.server = server;
-		OInStream = new ObjectInputStream(client.getInputStream());
+		inStream = new ObjectInputStream(clientSocket.getInputStream());
+		this.start();
 	}
 
 	public void close() {
 		try {
 			listenning = false;
-			OInStream.close(); // 객체 input 스트림을 종료.
+			inStream.close(); // 객체 input 스트림을 종료.
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		server.decreaseClient();
 	}
 
 	public void dataEvent(DataHeader data) {
@@ -65,7 +63,7 @@ class ObServerListener extends Thread // server 로 들어오는 데이터들을
 	public void run() {
 		while (listenning) {
 			try {
-				dataEvent((DataHeader) OInStream.readObject());
+				dataEvent((DataHeader) inStream.readObject());
 			} // 계속 대기하며 들어오는 데이터를 처리.
 			catch (SocketException e) {
 				listenning = false;
