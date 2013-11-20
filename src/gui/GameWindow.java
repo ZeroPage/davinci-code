@@ -194,8 +194,4 @@ public class GameWindow {
 		Center.m_Panel.setVisible(false);
 	}
 
-	public int askNum() { // block 의 숫자를 묻는 대화창을 만들어 숫자를 물어본 뒤 그 수를 반환한다.
-		AskDlg AD = new AskDlg(); // 대화상자를 열어 숫자를 선택하고
-		return AD.getNum(); // 그 숫자를 반환한다.
-	}
 }
