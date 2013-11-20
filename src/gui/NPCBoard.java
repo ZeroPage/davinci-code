@@ -49,20 +49,4 @@ public class NPCBoard extends PlayerBoard {
 			playerBlock[i].setRolloverEnabled(state);
 		}
 	}
-
-	public void actionPerformed(ActionEvent e) {
-		// center에서 선택된 block 의 index 를 넘겨 block 을 player 에게 전달하도록 한다.
-		// 가운데는 선택되면 이것은 처음에 가운데 블럭을 선택하기 위한것이다.
-		// moveblock을 호출해서 가운데것을 가져가게 하면 된다.
-		// 그리고 선택된것은 빼어버린다.(업데이트가 나으려나.)
-		gameProcess.getGameWndGUI().setEnable(GameWindow.CENTER, false);
-		// block 을 가져가고난 후에는 다시 center의 block 을 선택하지 못하게 막는다.
-		for (int i = 0; i < 26; i++) {
-			if (playerBlock[i] != null) {
-				if (e.getSource() == playerBlock[i]) {
-					gameProcess.moveBlock(i);
-				}
-			}
-		}
-	}
 }
