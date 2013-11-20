@@ -3,7 +3,6 @@ package resource;
 import java.net.URL;
 
 import gui.BlockColor;
-import gui.DavichiGUI;
 
 import javax.swing.ImageIcon;
 
