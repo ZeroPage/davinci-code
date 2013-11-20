@@ -23,9 +23,9 @@ import network.Server;
 import resource.ResourceManager;
 
 class LobbyWindow implements ActionListener, ItemListener {
-	JTextField JTF_IPAddr, JTF_Nick, JTF_Port;
-	JCheckBox JCB_Server;
-	JButton JB_Connect, JB_Cancel;
+	JTextField ipAddrTextField, nickTextField, portTextField;
+	JCheckBox serverCheckBox;
+	JButton connectButton, cancelButton;
 	JPanel lobbyPanel;
 	JRootPane motherPane;
 
@@ -35,23 +35,23 @@ class LobbyWindow implements ActionListener, ItemListener {
 						// client 인 player 일 경우 myNetworkType = Client();
 
 	public void actionPerformed(ActionEvent event) {
-		if (event.getSource() == JB_Connect || event.getSource() == JTF_IPAddr) {
-			if (JTF_Nick.getText().length() == 0) {
+		if (event.getSource() == connectButton || event.getSource() == ipAddrTextField) {
+			if (nickTextField.getText().length() == 0) {
 				JOptionPane.showMessageDialog(null, "닉네임을 입력하세요.", "알림",
 						JOptionPane.ERROR_MESSAGE);
 				return;
 			}
 
-			if (JCB_Server.isSelected())
+			if (serverCheckBox.isSelected())
 				network = new Server(); // 서버
 			else
 				network = new Client(); // 클라이언트
 
-			network.setName(JTF_Nick.getText()); // 대상 네트워크 객체에 nickname
+			network.setName(nickTextField.getText()); // 대상 네트워크 객체에 nickname
 													// 설정.
-			network.setPortNum(Integer.parseInt(JTF_Port.getText()));
+			network.setPortNum(Integer.parseInt(portTextField.getText()));
 			// 포트 설정.
-			network.Connect(JTF_IPAddr.getText());
+			network.Connect(ipAddrTextField.getText());
 			// server 에 접속.
 
 			network.setMyRoomWnd(new RoomWindow((JPanel) motherPane
@@ -66,7 +66,7 @@ class LobbyWindow implements ActionListener, ItemListener {
 			else
 				network.SendChatMsg("접속하였습니다.");
 		}
-		if (event.getSource() == JB_Cancel) {
+		if (event.getSource() == cancelButton) {
 			System.exit(0);
 		}
 	}
@@ -80,83 +80,83 @@ class LobbyWindow implements ActionListener, ItemListener {
 
 		lobbyPanel.setLayout(null);
 
-		JPanel JPanel_Connect = new JPanel();
-		JPanel_Connect.setOpaque(false);
-		JPanel_Connect.setPreferredSize(new Dimension(380, 300));
+		JPanel connectPanel = new JPanel();
+		connectPanel.setOpaque(false);
+		connectPanel.setPreferredSize(new Dimension(380, 300));
 
-		JPanel_Connect.setLayout(null);
-		JPanel_Connect.setBounds(600, 300, 380, 300);
-		JPanel_Connect.setOpaque(false);
+		connectPanel.setLayout(null);
+		connectPanel.setBounds(600, 300, 380, 300);
+		connectPanel.setOpaque(false);
 
 		JLabel temp = new JLabel("Nick Name");
 		temp.setForeground(Color.red);
 		temp.setBounds(0, 10, 100, 30);
 		temp.setHorizontalAlignment(JLabel.CENTER);
-		JPanel_Connect.add(temp);
+		connectPanel.add(temp);
 
-		JTF_Nick = new JTextField();
-		JTF_Nick.setBounds(100, 10, 100, 30);
-		JPanel_Connect.add(JTF_Nick);
+		nickTextField = new JTextField();
+		nickTextField.setBounds(100, 10, 100, 30);
+		connectPanel.add(nickTextField);
 
 		temp = new JLabel("Server");
 		temp.setForeground(Color.red);
 		temp.setBounds(200, 10, 80, 30);
 		temp.setHorizontalAlignment(JLabel.CENTER);
-		JPanel_Connect.add(temp);
+		connectPanel.add(temp);
 
-		JCB_Server = new JCheckBox();
-		JCB_Server.setBounds(280, 19, 13, 13);
-		JCB_Server.addItemListener(this);
-		JCB_Server.setMargin(new Insets(-2, -2, -2, -2));
-		JPanel_Connect.add(JCB_Server);
+		serverCheckBox = new JCheckBox();
+		serverCheckBox.setBounds(280, 19, 13, 13);
+		serverCheckBox.addItemListener(this);
+		serverCheckBox.setMargin(new Insets(-2, -2, -2, -2));
+		connectPanel.add(serverCheckBox);
 
 		temp = new JLabel("IP");
 		temp.setForeground(Color.red);
 		temp.setBounds(0, 50, 100, 30);
 		temp.setHorizontalAlignment(JLabel.CENTER);
-		JPanel_Connect.add(temp);
+		connectPanel.add(temp);
 
-		JTF_IPAddr = new JTextField();
-		JTF_IPAddr.setBounds(100, 50, 200, 30);
-		JTF_IPAddr.setText("127.0.0.1");
-		JTF_IPAddr.addActionListener(this);
-		JPanel_Connect.add(JTF_IPAddr);
+		ipAddrTextField = new JTextField();
+		ipAddrTextField.setBounds(100, 50, 200, 30);
+		ipAddrTextField.setText("127.0.0.1");
+		ipAddrTextField.addActionListener(this);
+		connectPanel.add(ipAddrTextField);
 
 		temp = new JLabel("Port");
 		temp.setForeground(Color.red);
 		temp.setBounds(0, 90, 100, 30);
 		temp.setHorizontalAlignment(JLabel.CENTER);
-		JPanel_Connect.add(temp);
+		connectPanel.add(temp);
 
-		JTF_Port = new JTextField();
-		JTF_Port.setBounds(100, 90, 50, 30);
-		JTF_Port.setText("10000");
-		JPanel_Connect.add(JTF_Port);
+		portTextField = new JTextField();
+		portTextField.setBounds(100, 90, 50, 30);
+		portTextField.setText("10000");
+		connectPanel.add(portTextField);
 
-		JB_Connect = new JButton("접속");
-		JB_Connect.setBounds(50, 130, 100, 30);
-		JB_Connect.addActionListener(this);
-		JPanel_Connect.add(JB_Connect);
+		connectButton = new JButton("접속");
+		connectButton.setBounds(50, 130, 100, 30);
+		connectButton.addActionListener(this);
+		connectPanel.add(connectButton);
 
-		JB_Cancel = new JButton("취소");
-		JB_Cancel.setBounds(200, 130, 100, 30);
-		JB_Cancel.addActionListener(this);
-		JPanel_Connect.add(JB_Cancel);
+		cancelButton = new JButton("취소");
+		cancelButton.setBounds(200, 130, 100, 30);
+		cancelButton.addActionListener(this);
+		connectPanel.add(cancelButton);
 
-		lobbyPanel.add(JPanel_Connect);
-		JTF_Nick.requestFocus();
+		lobbyPanel.add(connectPanel);
+		nickTextField.requestFocus();
 
-		lobbyPanel.add(JPanel_Connect);
+		lobbyPanel.add(connectPanel);
 		main.add(lobbyPanel);
 	}
 
 	public void itemStateChanged(ItemEvent event) {
 		// Server 항목에 체크할 경우 IP 입력필드가 비활성화됨.
-		if (event.getSource() == JCB_Server) {
-			if (JCB_Server.isSelected()) {
-				JTF_IPAddr.setEnabled(false);
+		if (event.getSource() == serverCheckBox) {
+			if (serverCheckBox.isSelected()) {
+				ipAddrTextField.setEnabled(false);
 			} else {
-				JTF_IPAddr.setEnabled(true);
+				ipAddrTextField.setEnabled(true);
 			}
 		}
 	}
