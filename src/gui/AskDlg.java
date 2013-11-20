@@ -20,15 +20,7 @@ public class AskDlg extends JDialog implements ActionListener // 추측할 숫�
 	public AskDlg() {
 		// 조커 맞추기용 대화상자
 		super((JFrame) getWindows()[0], "숫자를 선택하세요", true);
-		this.setSize(240, 300);
-		this.setLayout(new GridLayout(5, 3));
-		this.setLocation(getRootPane().getSize().width / 2, getRootPane()
-				.getSize().height / 2);
-		this.setResizable(false);
-		this.addWindowListener(new WindowAdapter() {
-			public void windowClosing(WindowEvent e) {
-			}
-		});
+		dialogSetting();
 
 		for (int i = 0; i < 13; i++) {
 			JB_Num[i] = new JButton("" + i);
@@ -40,17 +32,10 @@ public class AskDlg extends JDialog implements ActionListener // 추측할 숫�
 		this.setVisible(true);
 	}
 
-	public AskDlg(int color) { // 조커 설정용 대화상자.
+	public AskDlg(int color){
+		// 조커 설정용 대화상자.
 		super((JFrame) getWindows()[0], "조커가 대신할 숫자를 선택하세요", true);
-		this.setSize(240, 300);
-		this.setLayout(new GridLayout(5, 3));
-		this.setLocation(getRootPane().getSize().width / 2, getRootPane()
-				.getSize().height / 2);
-		this.setResizable(false);
-		this.addWindowListener(new WindowAdapter() {
-			public void windowClosing(WindowEvent e) {
-			}
-		});
+		dialogSetting();
 
 		Color bgColor = null;
 		Color frColor = null;
@@ -75,6 +60,18 @@ public class AskDlg extends JDialog implements ActionListener // 추측할 숫�
 		this.setVisible(true);
 	}
 
+	public void dialogSetting(){
+		this.setSize(240, 300);
+		this.setLayout(new GridLayout(5, 3));
+		this.setLocation(getRootPane().getSize().width / 2, getRootPane()
+				.getSize().height / 2);
+		this.setResizable(false);
+		this.addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent e) {
+			}
+		});
+	}
+	
 	public void actionPerformed(ActionEvent e) {
 		// 상태 block을 맞추는 대화상자에서 눌려진 버튼이 무엇인지 판별한 후 Num 에 저장.
 		for (int i = 0; i < 13; i++) {

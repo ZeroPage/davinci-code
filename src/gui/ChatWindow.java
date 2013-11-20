@@ -1,33 +1,32 @@
 package gui;
 
+import gui.listeners.AboutButtonListener;
+import gui.listeners.ChatSendListener;
+import gui.listeners.ClearButtonListener;
+import gui.listeners.ExitButtonListener;
+import gui.listeners.StartButtonListener;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
 
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import network.Network;
-import resource.ResourceManager;
 
-public class ChatWindow implements ActionListener {
+public class ChatWindow {//implements ActionListener {
 	private JPanel mainPanel;
 	private JButton sendBtn; // 보내기 버튼.
 	private JButton newGameButton;
 	private JButton exitButton;
-	JButton clearButton;
-	JButton aboutButton;
-	JTextArea chatTextArea; // 대화내용이 쓰여지는 필드.
-	JTextField chatInputTextField; // 사용자가 대화를 입력할 부분.
+	private JButton clearButton;
+	private JButton aboutButton;
+	private JTextArea chatTextArea; // 대화내용이 쓰여지는 필드.
+	private JTextField chatInputTextField; // 사용자가 대화를 입력할 부분.
 	private Network network;
 	private GameWindow gameWndGUI;
 	private RoomWindow roomWindow;
@@ -57,42 +56,63 @@ public class ChatWindow implements ActionListener {
 		// 채팅 입력창
 		chatInputTextField = new JTextField();
 		chatInputTextField.setBounds(0, 420, 200, 30);
-		chatInputTextField.addActionListener(this);
+		chatInputTextField.addActionListener(new ChatSendListener(getInputTextField(), getNetwork()));
 		mainPanel.add(chatInputTextField);
 
 		// 보내기 버튼
 		sendBtn = new JButton("보내기");
 		sendBtn.setBounds(0, 450, 100, 30);
-		sendBtn.addActionListener(this);
+		sendBtn.addActionListener(new ChatSendListener(getInputTextField(), getNetwork()));
 		mainPanel.add(sendBtn);
 
 		// 클리어 버튼
 		clearButton = new JButton("클리어");
 		clearButton.setBounds(100, 450, 100, 30);
-		clearButton.addActionListener(this);
+		clearButton.addActionListener(new ClearButtonListener(getChatTextArea(), getInputTextField()));
 		mainPanel.add(clearButton);
 
 		// 새게임
 		newGameButton = new JButton("시작");
 		newGameButton.setBounds(0, 480, 100, 30);
-		newGameButton.addActionListener(this);
+		newGameButton.addActionListener(new StartButtonListener(getNetwork(), getGameWndGUI()));
 		mainPanel.add(newGameButton);
 
 		// 나가기
 		exitButton = new JButton("나가기");
 		exitButton.setBounds(100, 480, 100, 30);
-		exitButton.addActionListener(this);
+		exitButton.addActionListener(new ExitButtonListener(getRoomWindow()));
 		mainPanel.add(exitButton);
 
 		// 룰 설명
 		aboutButton = new JButton("게임 방법");
 		aboutButton.setBounds(0, 510, 200, 30);
-		aboutButton.addActionListener(this);
+		aboutButton.addActionListener(new AboutButtonListener(getRoomWindow()));
 		mainPanel.add(aboutButton);
 
 		main.add(BorderLayout.EAST, mainPanel);
 	}// ChatWindow() end
+	
+	private GameWindow getGameWndGUI() {
+		return gameWndGUI;
+	}
 
+	private Network getNetwork() {
+		return network;
+	}
+
+	public RoomWindow getRoomWindow() {
+		return roomWindow;
+	}
+	
+	public JTextField getInputTextField() {
+		return chatInputTextField;
+	}
+	
+	public JTextArea getChatTextArea() {
+		return chatTextArea;
+	}
+
+	/*
 	@Override
 	public void actionPerformed(ActionEvent event) {
 		if (event.getSource() == sendBtn
@@ -133,8 +153,10 @@ public class ChatWindow implements ActionListener {
 			};
 			helpDialog.setBounds(0, 0, 100, 100);
 			helpDialog.setVisible(true);
+			
 		}
 	}
+	*/
 
 	public void StringAdd(String msg) {
 		chatTextArea.append(msg + "\n");
