@@ -18,8 +18,8 @@ import core.GameData;
 public class Client extends Network {
 	Socket clientSocket;
 	ObjectOutputStream OOutStream; // 서버로의 객체 output 스트림을 연결할 변수.
-	ObListener OInStream; // client 가 server 로부터 들어오는 데이터를 계속 받을 수 있는 input 스트림을
-							// 연결할 변수.
+	ObListener OInStream; 
+	// client 가 server 로부터 들어오는 데이터를 계속 받을 수 있는 input 스트림을 연결할 변수.
 
 	public void Connect(String ip) {
 		// 주어진 IP 와 portNum 멤버변수를 사용하여 서버에 접속하는 메소드.

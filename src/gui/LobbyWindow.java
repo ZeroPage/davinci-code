@@ -29,10 +29,10 @@ class LobbyWindow implements ActionListener, ItemListener {
 	JPanel lobbyPanel;
 	JRootPane motherPane;
 
-	Network network; // 네트워크에 접속할 때의 player의 상태를 저장할 변수.
-						// server 역할을 하는 player일 경우 myNetworkType =
-						// Server();
-						// client 인 player 일 경우 myNetworkType = Client();
+	Network network; 
+	// 네트워크에 접속할 때의 player의 상태를 저장할 변수.
+	// server 역할을 하는 player일 경우 myNetworkType = Server();
+	// client 인 player 일 경우 myNetworkType = Client();
 
 	public void actionPerformed(ActionEvent event) {
 		if (event.getSource() == connectButton || event.getSource() == ipAddrTextField) {

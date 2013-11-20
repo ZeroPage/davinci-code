@@ -6,17 +6,16 @@ import java.awt.event.ActionListener;
 
 import core.GameProcess;
 
-public class PlayerBlock extends GUIBlock implements ActionListener {
+public class CenterBlock extends GUIBlock implements ActionListener{
 
-	public PlayerBlock(GameProcess gameProcess, int playerNum, int index) {
+	public CenterBlock(GameProcess gameProcess, int playerNum, int index) {
 		super(gameProcess, playerNum, index);
 		this.addActionListener(this);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		int selectedNum = (new AskDlg()).getNum();
-		gameProcess.AskBlock(playerNum, index, selectedNum);
+		gameProcess.getGameWndGUI().setEnable(GameWindow.CENTER, false);
+		gameProcess.moveBlock(index);
 	}
-
 }

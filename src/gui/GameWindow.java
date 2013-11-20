@@ -13,8 +13,8 @@ import core.GameProcess;
 
 public class GameWindow {
 	private JPanel mainPanel;
-	private PlayerBoard[] playerBoard = new PlayerBoard[4];
-	private PlayerBoard Center;
+	private UserBoard[] playerBoard = new UserBoard[4];
+	private CenterBoard centerBoard;
 
 	public static final int CENTER = 5;
 	public static final int NORMAL = 0;
@@ -38,9 +38,9 @@ public class GameWindow {
 
 		// 플레이어 와 NPC패널의 설정
 		for (int i = 0; i < 4; i++){
-			playerBoard[i] = new PlayerBoard(i, mainPanel, gameProcess);
+			playerBoard[i] = new UserBoard(i, mainPanel, gameProcess);
 		}
-		Center = new NPCBoard(mainPanel, gameProcess);
+		centerBoard = new CenterBoard(mainPanel, gameProcess);
 
 		main.add(mainPanel);
 	}
@@ -65,7 +65,7 @@ public class GameWindow {
 		case CENTER:
 			blockState = gameProcess.GetCenterBlocksState();
 			// 바닥에 깔린 block 들의 상태를 받아와 저장.
-			Center.setEnable(blockState, state);
+			centerBoard.setEnable(blockState, state);
 			break;
 		}
 	}
@@ -84,7 +84,7 @@ public class GameWindow {
 		}
 		blockState = gameProcess.GetCenterBlocksState();
 		// 바닥에 깔린 block 들의 상태를 받아와서
-		Center.update(blockState);
+		centerBoard.update(blockState);
 	}
 
 	public void start() {
@@ -191,7 +191,7 @@ public class GameWindow {
 		mainPanel.setVisible(false);
 		for (int i = 0; i < 4; i++)
 			playerBoard[i].m_Panel.setVisible(false);
-		Center.m_Panel.setVisible(false);
+		centerBoard.m_Panel.setVisible(false);
 	}
 
 }
