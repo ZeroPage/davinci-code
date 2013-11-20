@@ -33,9 +33,7 @@ public class Server extends Network {
 	}
 
 	public void SendChatMsg(String msg) {
-		DataHeader temp = new DataHeader();
-		temp.setFlag(DataHeader.CHAT);
-		temp.setData(playerNickname + " : " + msg);
+		DataHeader temp = new DataHeader(DataHeader.CHAT, playerNickname + " : " + msg);
 		SendOb(temp);
 
 		getMyRoomWnd().AddChatString(playerNickname + " : " + msg);

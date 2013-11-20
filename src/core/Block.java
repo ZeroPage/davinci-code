@@ -20,15 +20,7 @@ public class Block implements Serializable {
 	 * 기본 생성자는 만약을 대비해서 유지하는 것이 좋겠으나, block 중에 번호가 없는 block 이 있을 수 없으므로 주석으로만
 	 * 유지하기로 한다.
 	 */
-	public // Block() // 기본 생성자
-	// {
-	// color = -1;
-	// num = -2;
-	// own = false;
-	// open = false;
-	// joker = false;
-	// }
-	Block(int color, int num) {
+	public Block(int color, int num) {
 		setColor(color);
 		setNum(num);
 		own = false; // 누군가 가졌는지 여부. 바닥에 깔린 패와 player 가 가진 패 두 가지로 나뉘므로.

@@ -45,10 +45,7 @@ public class Client extends Network {
 		// server 로 대화메시지를 보내면 서버가 다시 그 메시지를
 		// broadcasting 해주고,
 		// 그 broadcasting 되어 온 메시지는 dataEvent() 메소드에서 처리되어 채팅창에 채팅내용이 표시된다.
-		DataHeader temp = new DataHeader();
-		temp.setFlag(DataHeader.CHAT);
-		temp.setData(playerNickname + " : " + msg);
-		SendOb(temp);
+		SendOb(new DataHeader(DataHeader.CHAT, playerNickname + " : " + msg));
 	}
 
 	public void setOutOb() throws IOException {

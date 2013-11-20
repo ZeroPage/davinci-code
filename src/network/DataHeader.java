@@ -13,13 +13,10 @@ public class DataHeader implements Serializable{
 	public static final int	MYORDER     = 0x5;
 	public static final int	TOTALCOUNT  = 0x6;
 
-	public DataHeader() {	}
 	public DataHeader(int flag, Object data) {
 		this.flag = flag;		// 데이터의 종류
 		this.data = data;		// 데이터의 내용
 	}
-	public void 	setFlag(int target) 	{ flag = target; }
-	public void 	setData(Object target)	{ data = target; }
 	public int		getFlag() { return flag; }
 	public Object	getData() { return data; }
 }

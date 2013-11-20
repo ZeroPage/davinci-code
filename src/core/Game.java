@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 /**
  * 하나의 호스트에서 보여져야 할 player 들과 block 들을 게임 시작 전에 준비하는 클래스.
- * 
  * @author Teolex
  * 
  */
