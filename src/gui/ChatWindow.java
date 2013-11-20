@@ -24,10 +24,10 @@ public class ChatWindow implements ActionListener {
 	private JButton sendBtn; // 보내기 버튼.
 	private JButton newGameButton;
 	private JButton exitButton;
-	JButton clearButton;
-	JButton aboutButton;
-	JTextArea chatTextArea; // 대화내용이 쓰여지는 필드.
-	JTextField chatInputTextField; // 사용자가 대화를 입력할 부분.
+	private JButton clearButton;
+	private JButton aboutButton;
+	private JTextArea chatTextArea; // 대화내용이 쓰여지는 필드.
+	private JTextField chatInputTextField; // 사용자가 대화를 입력할 부분.
 	private Network network;
 	private GameWindow gameWndGUI;
 	private RoomWindow roomWindow;

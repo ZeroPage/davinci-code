@@ -6,17 +6,6 @@ import javax.swing.ImageIcon;
 
 public class ResourceManager {
 	private static volatile ResourceManager manager = null;
-	private ImageIcon[] cardBlack;
-	private ImageIcon[] cardBlackOpen;
-	private ImageIcon[] cardWhite;
-	private ImageIcon[] cardWhiteOpen;
-	private ImageIcon cardBlackUnknown;
-	private ImageIcon cardWhiteUnknown;
-	private ImageIcon cardBlackUnknownRollerover;
-	private ImageIcon cardWhiteUnknownRollerover;
-	private ImageIcon gameBackground;
-	private ImageIcon lobbyBackground;
-	private ImageIcon about;
 
 	public static ResourceManager getInstance() {
 		if (manager == null) {
@@ -28,6 +17,18 @@ public class ResourceManager {
 		}
 		return manager;
 	}
+	
+	private ImageIcon[] cardBlack;
+	private ImageIcon[] cardBlackOpen;
+	private ImageIcon[] cardWhite;
+	private ImageIcon[] cardWhiteOpen;
+	private ImageIcon cardBlackUnknown;
+	private ImageIcon cardWhiteUnknown;
+	private ImageIcon cardBlackUnknownRollerover;
+	private ImageIcon cardWhiteUnknownRollerover;
+	private ImageIcon gameBackground;
+	private ImageIcon lobbyBackground;
+	private ImageIcon about;
 
 	private ResourceManager() {
 		

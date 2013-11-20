@@ -1,4 +1,5 @@
 package network;
+import core.GameData;
 import core.GameProcess;
 import gui.RoomWindow;
 
@@ -40,7 +41,9 @@ abstract public class Network {
 
 	abstract public void SendChatMsg(String msg);// 접속된 네트워크에 채팅 msg를 날리는 함수
 
-	abstract public void SendOb(Object ob); // 접속된 네트워크에 채팅 오브젝트를 날리는 함수
+	abstract public void sendObject(Object ob); // 접속된 네트워크에 채팅 오브젝트를 날리는 함수
+	
+	abstract public void sendGameData(GameData gameData);
 
 	abstract public void Close(); // 모든접속을 끊는 함수. 쓰레드 종료필수
 

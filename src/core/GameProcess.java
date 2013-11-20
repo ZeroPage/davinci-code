@@ -1,4 +1,5 @@
 package core;
+
 import gui.AskDlg;
 import gui.GameWindow;
 
@@ -27,9 +28,10 @@ public class GameProcess {
 		System.out.println("[ GameProcess : Start ]");
 		gameEnv = new Game(((Server) getNetObject()).getClientNum() + 1);
 		((Server) getNetObject()).SendOrder();
-		getNetObject().SendOb(new DataHeader(DataHeader.TOTALCOUNT, gameEnv
-				.getPlayers().size()));
-		getNetObject().SendOb(new DataHeader(DataHeader.GAME, gameEnv));
+		getNetObject().sendObject(
+				new DataHeader(DataHeader.TOTALCOUNT, gameEnv.getPlayers()
+						.size()));
+		getNetObject().sendObject(new DataHeader(DataHeader.GAME, gameEnv));
 		// 모든 client 들에게 server가 생성한 게임 컨트롤을 전달한다.
 
 		if (gameEnv.getPlayers().size() == 4)
@@ -48,12 +50,14 @@ public class GameProcess {
 		// 다음 플레이어에게 턴을 넘겨준다. 게임 윈도우의 모든 입력은 블록 처리 되어 있으므로 자동으로
 		// 대기상태가 된다.
 		System.out.println("[ GameProcess : Next ]");
-		getGameWndGUI().setEnable(GameWindow.OTHERS, false); 
+		getGameWndGUI().setEnable(GameWindow.OTHERS, false);
 		// 현재 player 가 다른 block 들을 클릭하지 못하도록 설정.
 		getGameWndGUI().setEnable(GameWindow.CENTER, false);
 		// center 의 block 들도 선택하지 못하도록 설정.
-		getNetObject().SendOb(new DataHeader(DataHeader.PASS, ((Integer
-				.valueOf((getMyPlayOrder() + 1)) % (gameEnv.getPlayers().size())))));
+		getNetObject().sendObject(
+				new DataHeader(DataHeader.PASS, ((Integer
+						.valueOf((getMyPlayOrder() + 1)) % (gameEnv
+						.getPlayers().size())))));
 		// 그 후 다음 player 에게 턴을 넘김.
 	}
 
@@ -82,8 +86,7 @@ public class GameProcess {
 		me.getBlock(gameEnv.getFloorBlocks(), blockIndex);
 		// 이 block 을 player에게 전달.
 		getGameWndGUI().update();
-		getNetObject().SendOb(new DataHeader(DataHeader.GAMEDATA, new GameData(
-				gameEnv)));
+		getNetObject().sendGameData(new GameData(gameEnv));
 
 		if (me.getHand().size() <= onlyDraw) {
 			Next(); // 현재가 차례인 player 가 block 을 다 받을 때까지 block 만 가져가고 턴을 계속 돌린다.

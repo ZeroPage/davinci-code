@@ -33,8 +33,7 @@ public class Player implements Serializable {
 	} // 현재 play 중인지를 반환.
 
 	// center 에 있던 block 을 가져오는 함수. player 의 소유가 되도록 설정된다.
-	public void getBlock(ArrayList<Block> floor, int blockIndex) 
-	{
+	public void getBlock(ArrayList<Block> floor, int blockIndex) {
 		last = floor.get(blockIndex); // 바닥에 깔린 block 들 중 blockIndex 에 해당하는
 										// block 을 선택.
 		last.setOwn(true); // 해당 block 을 소유된 block 으로 설정.
@@ -60,9 +59,7 @@ public class Player implements Serializable {
 			proc.getNetObject().SendChatMsg("오답입니다."); // 오답 메시지를 채팅창에 보내고
 			last.setOpen(true); // 마지막에 가져온 block 을 공개하도록 설정하고
 			proc.getGameWndGUI().update();
-			proc.getNetObject().SendOb(
-					new DataHeader(DataHeader.GAMEDATA, new GameData(proc
-							.getGameEnv())));
+			proc.getNetObject().sendGameData(new GameData(proc.getGameEnv()));
 			proc.Next();
 		}
 	}
@@ -74,9 +71,7 @@ public class Player implements Serializable {
 		if (b_tmp.getNum() == num) { // 선택된 block 의 숫자가 num 과 같으면
 			b_tmp.setOpen(true); // 그 block 을 open 상태로 설정.
 			proc.getGameWndGUI().update(); // 게임 프로세스의 GUI 상태를 업데이트 한다.
-			proc.getNetObject().SendOb(
-					new DataHeader(DataHeader.GAMEDATA, new GameData(proc
-							.getGameEnv())));
+			proc.getNetObject().sendGameData(new GameData(proc.getGameEnv()));
 			// 게임 프로세스의 네트워크에 현재 게임상태(GameData(proc.gameControl))객체를 전달한다.
 			isPlay(proc);
 			return true;
@@ -95,9 +90,7 @@ public class Player implements Serializable {
 		play = false; // 모두 open 되었으므로 play 상태를 false로 설정.
 		proc.getNetObject().SendChatMsg("패를 모두 알아냈습니다.");
 		// 게임 프로세스의 network 타겟으로 메시지 전달.
-		proc.getNetObject().SendOb(
-				new DataHeader(DataHeader.GAMEDATA, new GameData(proc
-						.getGameEnv())));
+		proc.getNetObject().sendGameData(new GameData(proc.getGameEnv()));
 		if (proc.getGameEnv().isEnd())
 			proc.End();
 	}
