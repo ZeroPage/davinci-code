@@ -14,13 +14,12 @@ class ObServerListener extends Thread // server 로 들어오는 데이터들을
 	boolean listenning = true;
 	private ObjectInputStream inStream = null;
 	private Server server;
-	private ClientData clientData;
 
 	// 전달받은 소켓 인자에 input 스트림을 연결.
-	public ObServerListener(Socket client, Server server, ClientData clientData) throws IOException {
-		this.clientData = clientData;
+	public ObServerListener(Socket clientSocket, Server server) throws IOException {
 		this.server = server;
-		inStream = new ObjectInputStream(client.getInputStream());
+		inStream = new ObjectInputStream(clientSocket.getInputStream());
+		this.start();
 	}
 
 	public void close() {
@@ -30,7 +29,6 @@ class ObServerListener extends Thread // server 로 들어오는 데이터들을
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		server.remove(clientData);
 	}
 
 	public void dataEvent(DataHeader data) {

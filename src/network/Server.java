@@ -6,36 +6,27 @@ import java.util.ArrayList;
 
 public class Server extends Network {
 	private ArrayList<ClientData> clients;
-	//ClientData[] clients; // server 에 접속한 client 들을 저장할 변수. client 접속 소켓이
-							// 저장되어있다.
 	WaitingClient wait; // 서버 소켓이 저장될 변수.
 
-	final static int maxClient = 3; // 게임에는 server 까지 최대 4 명만 접속할 수 있다.
-	//private int clientNum;
+	final static int MAX_CLIENT = 3; // 게임에는 server 까지 최대 4 명만 접속할 수 있다.
 
 	public Server() {
 		System.out.println("[ Server : Constructor ]");
-		//clientNum = 0; // 현재 접속한 client 의 수를 초기화.
 		clients = new ArrayList<ClientData>(); // client 정보를 저장할 메모리 생성.
 		wait = new WaitingClient(this); // server 가 client 의 접속을 기다리기 시작.
-		/*for (int i = 0; i < maxClient; i++)
-			clients[i] = new ClientData(this); // client 자료구조 생성.
-		*/
 	}
 
 	public void Connect(String ip) // 서버 소켓을 열고 client 를 기다리기 시작하는 메소드.
 	{
 		// ip는 상속되는 코드와의 호환을 위해. 의미없음.
 		// 이 클래스는 서버 이므로 접속을 하지 않고 서버를 생성.
-		wait.setServSock(portNum, maxClient); // server 의 소켓을 열고 클라이언트를 기다림.
+		wait.setServSock(portNum); // server 의 소켓을 열고 클라이언트를 기다림.
 		wait.start(); // server socket 스레드 시작.
 	}
 
+	@Override
 	public void SendChatMsg(String msg) {
-		DataHeader temp = new DataHeader(DataHeader.CHAT, playerNickname
-				+ " : " + msg);
-		sendObject(temp);
-
+		super.SendChatMsg(msg);
 		getMyRoomWnd().AddChatString(playerNickname + " : " + msg);
 	}
 	

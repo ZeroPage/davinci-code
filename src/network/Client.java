@@ -36,13 +36,6 @@ public class Client extends Network {
 		}
 	}
 
-	public void SendChatMsg(String msg) {
-		// server 로 대화메시지를 보내면 서버가 다시 그 메시지를
-		// broadcasting 해주고,
-		// 그 broadcasting 되어 온 메시지는 dataEvent() 메소드에서 처리되어 채팅창에 채팅내용이 표시된다.
-		sendObject(new DataHeader(DataHeader.CHAT, playerNickname + " : " + msg));
-	}
-
 	public void setOutstream() throws IOException {
 		// server 로의 output 스트림을 연결하는 메소드.
 		outStream = new ObjectOutputStream(clientSocket.getOutputStream());

@@ -1,4 +1,5 @@
 package network;
+
 import core.GameData;
 import core.GameProcess;
 import gui.RoomWindow;
@@ -9,13 +10,13 @@ import gui.RoomWindow;
 //일단 소켓을 연결한 후 input/output 스트림이 연결되어있다면
 //서버와 클라이언트가 서로 통신하도록 하는데 매우 쉽다.
 abstract public class Network {
-	private RoomWindow myRoomWnd; // 채팅 메세지를 받으면 전달할 RoomWindow.
+	private RoomWindow roomWnd; // 채팅 메세지를 받으면 전달할 RoomWindow.
 	protected Network network;
 	protected GameProcess gameProcess; // 해당 네트워크에서 진행중인 게임 프로세스.
 	protected String playerNickname; // 해당 네트워크를 연 player 의 이름
 	protected int portNum = 10000; // 해당 네트워크가 접속되어있는 서버의 포트.
 
-	public void setM_Taget(RoomWindow target) {
+	public void setTaget(RoomWindow target) {
 		setMyRoomWnd(target);
 	}
 
@@ -39,22 +40,32 @@ abstract public class Network {
 
 	abstract public void Connect(String ip); // 지정된 ip로 접속하는 함수
 
-	abstract public void SendChatMsg(String msg);// 접속된 네트워크에 채팅 msg를 날리는 함수
-
 	abstract public void sendObject(Object ob); // 접속된 네트워크에 채팅 오브젝트를 날리는 함수
 
 	abstract public void Close(); // 모든접속을 끊는 함수. 쓰레드 종료필수
 
 	public RoomWindow getMyRoomWnd() {
-		return myRoomWnd;
+		return roomWnd;
 	}
 
 	public void setMyRoomWnd(RoomWindow myRoomWnd) {
-		this.myRoomWnd = myRoomWnd;
+		this.roomWnd = myRoomWnd;
+	}
+	
+	public void SendChatMsg(String msg) {
+		// 접속된 네트워크에 채팅 msg를 날리는 함수
+		DataHeader temp = new DataHeader(DataHeader.CHAT, playerNickname
+				+ " : " + msg);
+		sendObject(temp);
 	}
 
 	public void sendGameData(GameData gameData) {
 		DataHeader data = new DataHeader(DataHeader.GAMEDATA, gameData);
+		sendObject(data);
+	}
+
+	public void sendPass(int nextPlayer) {
+		DataHeader data = new DataHeader(DataHeader.PASS, nextPlayer);
 		sendObject(data);
 	}
 }
