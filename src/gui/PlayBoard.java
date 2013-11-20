@@ -1,8 +1,9 @@
 package gui;
 
 import java.util.ArrayList;
-
 import javax.swing.JPanel;
+
+import org.junit.Test;
 
 import core.Block;
 import core.GameProcess;
@@ -30,7 +31,7 @@ public abstract class PlayBoard {
 			playerBlock[i].update(blocks.get(i));
 		}
 	}
-	 
+	
 	public abstract void setEnable(ArrayList<Block> blockState, boolean state);
 		
 	
