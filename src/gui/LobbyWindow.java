@@ -1,7 +1,7 @@
 package gui;
+
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Graphics;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,24 +17,22 @@ import javax.swing.JPanel;
 import javax.swing.JRootPane;
 import javax.swing.JTextField;
 
-import resource.ResourceManager;
 import network.Client;
 import network.Network;
 import network.Server;
+import resource.ResourceManager;
 
 class LobbyWindow implements ActionListener, ItemListener {
 	JTextField JTF_IPAddr, JTF_Nick, JTF_Port;
 	JCheckBox JCB_Server;
 	JButton JB_Connect, JB_Cancel;
-	JPanel JPanel_Lobby;
+	JPanel lobbyPanel;
 	JRootPane motherPane;
 
 	Network network; // 네트워크에 접속할 때의 player의 상태를 저장할 변수.
-					// server 역할을 하는 player일 경우 myNetworkType =
-					// Server();
-					// client 인 player 일 경우 myNetworkType = Client();
-
-
+						// server 역할을 하는 player일 경우 myNetworkType =
+						// Server();
+						// client 인 player 일 경우 myNetworkType = Client();
 
 	public void actionPerformed(ActionEvent event) {
 		if (event.getSource() == JB_Connect || event.getSource() == JTF_IPAddr) {
@@ -50,17 +48,17 @@ class LobbyWindow implements ActionListener, ItemListener {
 				network = new Client(); // 클라이언트
 
 			network.setName(JTF_Nick.getText()); // 대상 네트워크 객체에 nickname
-															// 설정.
+													// 설정.
 			network.setPortNum(Integer.parseInt(JTF_Port.getText()));
 			// 포트 설정.
 			network.Connect(JTF_IPAddr.getText());
 			// server 에 접속.
 
-			network.setMyRoomWnd(new RoomWindow(
-					(JPanel) motherPane.getContentPane(), network));
+			network.setMyRoomWnd(new RoomWindow((JPanel) motherPane
+					.getContentPane(), network));
 			// 룸윈도우 생성하고 네트워크와 연결.
 
-			JPanel_Lobby.setVisible(false);
+			lobbyPanel.setVisible(false);
 			network.getMyRoomWnd().getJPanel_Room().setVisible(true);
 
 			if (network.isServer())
@@ -76,20 +74,11 @@ class LobbyWindow implements ActionListener, ItemListener {
 	public LobbyWindow(JPanel main, JRootPane mother) {
 		// Lobby window 의 외형을 구현.
 		motherPane = mother;
-		
-		final ImageIcon BG = ResourceManager.getInstance().getLobbyBackground(); 
-		
-		JPanel_Lobby = new JPanel() {
-			public void paint(Graphics g) {
-				g.drawImage(BG.getImage(), 0, 0, this.getWidth(),
-						this.getHeight(), null);
-				this.setOpaque(false);
-				this.setPreferredSize(new Dimension(BG.getIconWidth(), BG
-						.getIconHeight()));
-				super.paint(g);
-			}
-		};
-		JPanel_Lobby.setLayout(null);
+
+		final ImageIcon BG = ResourceManager.getInstance().getLobbyBackground();
+		lobbyPanel = new JBackgroundPanel(BG, JBackgroundPanel.MODE_STRECH);
+
+		lobbyPanel.setLayout(null);
 
 		JPanel JPanel_Connect = new JPanel();
 		JPanel_Connect.setOpaque(false);
@@ -154,19 +143,19 @@ class LobbyWindow implements ActionListener, ItemListener {
 		JB_Cancel.addActionListener(this);
 		JPanel_Connect.add(JB_Cancel);
 
-		JPanel_Lobby.add(JPanel_Connect);
+		lobbyPanel.add(JPanel_Connect);
 		JTF_Nick.requestFocus();
 
-		JPanel_Lobby.add(JPanel_Connect);
-		main.add(JPanel_Lobby);
+		lobbyPanel.add(JPanel_Connect);
+		main.add(lobbyPanel);
 	}
 
-	public void itemStateChanged(ItemEvent event) { 
+	public void itemStateChanged(ItemEvent event) {
 		// Server 항목에 체크할 경우 IP 입력필드가 비활성화됨.
 		if (event.getSource() == JCB_Server) {
-			if (JCB_Server.isSelected()){
+			if (JCB_Server.isSelected()) {
 				JTF_IPAddr.setEnabled(false);
-			}else{
+			} else {
 				JTF_IPAddr.setEnabled(true);
 			}
 		}

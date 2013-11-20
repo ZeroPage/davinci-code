@@ -1,10 +1,8 @@
 package gui;
 
 import java.awt.BorderLayout;
-import java.awt.Graphics;
 import java.util.ArrayList;
 
-import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -15,7 +13,7 @@ import core.GameProcess;
 
 public class GameWindow {
 	private JPanel mainPanel;
-	private PlayerBoard[] PlayerPane = new PlayerBoard[4];
+	private PlayerBoard[] playerBoard = new PlayerBoard[4];
 	private PlayerBoard Center;
 
 	public static final int CENTER = 5;
@@ -23,7 +21,6 @@ public class GameWindow {
 	public static final int OTHERS = 4;
 
 	private GameProcess gameProcess; // 게임 윈도우 전체 내에서 게임 진행을 맡을 클래스.
-	private ResourceManager resourceManager;
 
 	int[] PlayerNumToWindowNum;
 
@@ -31,18 +28,18 @@ public class GameWindow {
 	// PlayerNumToWindowNum[n] == 0 일때, n 은 player 자신의 게임 순서.
 
 	public GameWindow(JPanel main, Network network) {
-		mainPanel = new JBackgroundPanel(ResourceManager.getInstance().getGameBackground());
+		ResourceManager resourceManager = ResourceManager.getInstance();
+		mainPanel = new JBackgroundPanel(resourceManager.getGameBackground());
 		mainPanel.setLayout(new BorderLayout());
-
-		resourceManager = ResourceManager.getInstance();
 
 		gameProcess = new GameProcess(this, network); 
 		// 게임 윈도우가 생성되면서 게임 프로세스도 하나 생성됨.
 		network.setGameProcess(gameProcess);
 
 		// 플레이어 와 NPC패널의 설정
-		for (int i = 0; i < 4; i++)
-			PlayerPane[i] = new PlayerBoard(i, mainPanel, gameProcess);
+		for (int i = 0; i < 4; i++){
+			playerBoard[i] = new PlayerBoard(i, mainPanel, gameProcess);
+		}
 		Center = new NPCBoard(mainPanel, gameProcess);
 
 		main.add(mainPanel);
@@ -57,9 +54,9 @@ public class GameWindow {
 				if (i != gameProcess.getMyPlayOrder()) {
 					// 현재 player 를 제외하고 나머지 player들의 경우
 					blockState = gameProcess.GetPlayerBlocksState(i);
-					PlayerPane[PlayerNumToWindowNum[i]].update(blockState);
+					playerBoard[PlayerNumToWindowNum[i]].update(blockState);
 					// 플레이어 넘버와 화면번호의 매칭하여 update.
-					PlayerPane[PlayerNumToWindowNum[i]].setEnable(blockState,
+					playerBoard[PlayerNumToWindowNum[i]].setEnable(blockState,
 							state);
 					// 0이 아래 부터 시계방향 순서대로
 				}
@@ -82,7 +79,7 @@ public class GameWindow {
 			// player 수 만큼
 			blockState = gameProcess.GetPlayerBlocksState(of_Player);
 			// player #i 의 block 상태를 받아와서
-			PlayerPane[PlayerNumToWindowNum[of_Player]].update(blockState);
+			playerBoard[PlayerNumToWindowNum[of_Player]].update(blockState);
 			// 게임 윈도우에 갱신.
 		}
 		blockState = gameProcess.GetCenterBlocksState();
@@ -112,15 +109,15 @@ public class GameWindow {
 				// player 자신의 순서가 0 번이면
 				PlayerNumToWindowNum[0] = 0; // 자신은 맨 밑 위치로,
 				PlayerNumToWindowNum[1] = 2; // 상대방은 맨 위쪽으로 이동.
-				PlayerPane[0].playerOrder = 0;
-				PlayerPane[2].playerOrder = 1;
+				playerBoard[0].playerOrder = 0;
+				playerBoard[2].playerOrder = 1;
 
 			} else {
 				// player 의 play 순서가 1 번이면
 				PlayerNumToWindowNum[0] = 2; // 상대방을 위 쪽으로,
 				PlayerNumToWindowNum[1] = 0; // 자신을 아래쪽으로 설정.
-				PlayerPane[2].playerOrder = 0;
-				PlayerPane[0].playerOrder = 1;
+				playerBoard[2].playerOrder = 0;
+				playerBoard[0].playerOrder = 1;
 			}
 			break;
 		case 3: // player 수가 3 명일 경우
@@ -128,23 +125,23 @@ public class GameWindow {
 				PlayerNumToWindowNum[0] = 0;
 				PlayerNumToWindowNum[1] = 1;
 				PlayerNumToWindowNum[2] = 3;
-				PlayerPane[0].playerOrder = 0;
-				PlayerPane[1].playerOrder = 1;
-				PlayerPane[3].playerOrder = 2;
+				playerBoard[0].playerOrder = 0;
+				playerBoard[1].playerOrder = 1;
+				playerBoard[3].playerOrder = 2;
 			} else if (gameProcess.getMyPlayOrder() == 1) {
 				PlayerNumToWindowNum[0] = 3;
 				PlayerNumToWindowNum[1] = 0;
 				PlayerNumToWindowNum[2] = 1;
-				PlayerPane[3].playerOrder = 0;
-				PlayerPane[0].playerOrder = 1;
-				PlayerPane[1].playerOrder = 2;
+				playerBoard[3].playerOrder = 0;
+				playerBoard[0].playerOrder = 1;
+				playerBoard[1].playerOrder = 2;
 			} else if (gameProcess.getMyPlayOrder() == 2) {
 				PlayerNumToWindowNum[0] = 1;
 				PlayerNumToWindowNum[1] = 3;
 				PlayerNumToWindowNum[2] = 0;
-				PlayerPane[1].playerOrder = 0;
-				PlayerPane[3].playerOrder = 1;
-				PlayerPane[0].playerOrder = 2;
+				playerBoard[1].playerOrder = 0;
+				playerBoard[3].playerOrder = 1;
+				playerBoard[0].playerOrder = 2;
 			}
 			break;
 		case 4: // player 수가 4 명일 경우
@@ -153,37 +150,37 @@ public class GameWindow {
 				PlayerNumToWindowNum[1] = 1;
 				PlayerNumToWindowNum[2] = 2;
 				PlayerNumToWindowNum[3] = 3;
-				PlayerPane[0].playerOrder = 0;
-				PlayerPane[1].playerOrder = 1;
-				PlayerPane[2].playerOrder = 2;
-				PlayerPane[3].playerOrder = 3;
+				playerBoard[0].playerOrder = 0;
+				playerBoard[1].playerOrder = 1;
+				playerBoard[2].playerOrder = 2;
+				playerBoard[3].playerOrder = 3;
 			} else if (gameProcess.getMyPlayOrder() == 1) {
 				PlayerNumToWindowNum[0] = 3;
 				PlayerNumToWindowNum[1] = 0;
 				PlayerNumToWindowNum[2] = 1;
 				PlayerNumToWindowNum[3] = 2;
-				PlayerPane[3].playerOrder = 0;
-				PlayerPane[0].playerOrder = 1;
-				PlayerPane[1].playerOrder = 2;
-				PlayerPane[2].playerOrder = 3;
+				playerBoard[3].playerOrder = 0;
+				playerBoard[0].playerOrder = 1;
+				playerBoard[1].playerOrder = 2;
+				playerBoard[2].playerOrder = 3;
 			} else if (gameProcess.getMyPlayOrder() == 2) {
 				PlayerNumToWindowNum[0] = 2;
 				PlayerNumToWindowNum[1] = 3;
 				PlayerNumToWindowNum[2] = 0;
 				PlayerNumToWindowNum[3] = 1;
-				PlayerPane[2].playerOrder = 0;
-				PlayerPane[3].playerOrder = 1;
-				PlayerPane[0].playerOrder = 2;
-				PlayerPane[1].playerOrder = 3;
+				playerBoard[2].playerOrder = 0;
+				playerBoard[3].playerOrder = 1;
+				playerBoard[0].playerOrder = 2;
+				playerBoard[1].playerOrder = 3;
 			} else if (gameProcess.getMyPlayOrder() == 3) {
 				PlayerNumToWindowNum[0] = 1;
 				PlayerNumToWindowNum[1] = 2;
 				PlayerNumToWindowNum[2] = 3;
 				PlayerNumToWindowNum[3] = 0;
-				PlayerPane[1].playerOrder = 0;
-				PlayerPane[2].playerOrder = 1;
-				PlayerPane[3].playerOrder = 2;
-				PlayerPane[0].playerOrder = 3;
+				playerBoard[1].playerOrder = 0;
+				playerBoard[2].playerOrder = 1;
+				playerBoard[3].playerOrder = 2;
+				playerBoard[0].playerOrder = 3;
 			}
 			break;
 		}
@@ -193,7 +190,7 @@ public class GameWindow {
 		// 게임 윈도우를 모두 보이지 않게 하는 메소드.
 		mainPanel.setVisible(false);
 		for (int i = 0; i < 4; i++)
-			PlayerPane[i].m_Panel.setVisible(false);
+			playerBoard[i].m_Panel.setVisible(false);
 		Center.m_Panel.setVisible(false);
 	}
 

@@ -1,7 +1,5 @@
 package resource;
 
-import java.net.URL;
-
 import gui.BlockColor;
 
 import javax.swing.ImageIcon;
