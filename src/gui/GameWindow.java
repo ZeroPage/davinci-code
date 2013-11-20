@@ -1,21 +1,15 @@
 package gui;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Graphics;
-import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import resource.ResourceManager;
 import network.Network;
+import resource.ResourceManager;
 import core.Block;
 import core.GameProcess;
 
@@ -37,25 +31,14 @@ public class GameWindow {
 	// PlayerNumToWindowNum[n] == 0 일때, n 은 player 자신의 게임 순서.
 
 	public GameWindow(JPanel main, Network network) {
-		mainPanel = new JPanel() {
-			private ImageIcon BG = ResourceManager.getInstance()
-					.getGameBackground();
-
-			public void paint(Graphics g) {
-				g.drawImage(BG.getImage(), 0, 0, BG.getIconWidth(),
-						BG.getIconHeight(), null);
-				this.setOpaque(false);
-				super.paint(g);
-			}
-		};
+		mainPanel = new JBackgroundPanel(ResourceManager.getInstance().getGameBackground());
 		mainPanel.setLayout(new BorderLayout());
 
 		resourceManager = ResourceManager.getInstance();
 
-		gameProcess = new GameProcess(this, network); // 게임 윈도우가 생성되면서 게임 프로세스도
-														// 하나
-														// 생성됨.
-		network.setM_Game(gameProcess);
+		gameProcess = new GameProcess(this, network); 
+		// 게임 윈도우가 생성되면서 게임 프로세스도 하나 생성됨.
+		network.setGameProcess(gameProcess);
 
 		// 플레이어 와 NPC패널의 설정
 		for (int i = 0; i < 4; i++)

@@ -22,7 +22,7 @@ abstract public class Network {
 		this.m_net = m_net;
 	}
 
-	public void setM_Game(GameProcess game) {
+	public void setGameProcess(GameProcess game) {
 		gameProcess = game;
 	}
 

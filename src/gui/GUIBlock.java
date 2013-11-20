@@ -1,6 +1,5 @@
 package gui;
 
-import java.awt.Dimension;
 import java.awt.Insets;
 
 import resource.ResourceManager;

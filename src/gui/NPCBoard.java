@@ -1,15 +1,12 @@
 package gui;
 
 import java.awt.BorderLayout;
-import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
 import core.Block;
 import core.GameProcess;
-
-
 
 public class NPCBoard extends PlayerBoard {
 	public NPCBoard(JPanel mainPanel, GameProcess gameProcess) {
@@ -24,9 +21,9 @@ public class NPCBoard extends PlayerBoard {
 
 	public void update(ArrayList<Block> blocks) {
 		System.out.println("[ NPC : update ]");
-		for(int i = 0; i < blocks.size(); i++){
-			if(playerBlock[i] == null){
-				//TODO maybe apply abstract factory
+		for (int i = 0; i < blocks.size(); i++) {
+			if (playerBlock[i] == null) {
+				// TODO maybe apply abstract factory
 				playerBlock[i] = new NPCBlock(gameProcess, playerOrder, i);
 				m_Panel.add(playerBlock[i]);
 			}
