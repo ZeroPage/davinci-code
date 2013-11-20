@@ -32,12 +32,12 @@ public class GameWindow {
 		mainPanel = new JBackgroundPanel(resourceManager.getGameBackground());
 		mainPanel.setLayout(new BorderLayout());
 
-		gameProcess = new GameProcess(this, network); 
+		gameProcess = new GameProcess(this, network);
 		// 게임 윈도우가 생성되면서 게임 프로세스도 하나 생성됨.
 		network.setGameProcess(gameProcess);
 
 		// 플레이어 와 NPC패널의 설정
-		for (int i = 0; i < 4; i++){
+		for (int i = 0; i < 4; i++) {
 			playerBoard[i] = new UserBoard(i, mainPanel, gameProcess);
 		}
 		centerBoard = new CenterBoard(mainPanel, gameProcess);
@@ -76,11 +76,9 @@ public class GameWindow {
 		ArrayList<Block> blockState;
 		int playerNum = gameProcess.getNumOfPlayer();
 		for (int of_Player = 0; of_Player < playerNum; of_Player++) {
-			// player 수 만큼
+			// player 수 만큼 player #i 의 block 상태를 받아와서 게임 윈도우에 갱신.
 			blockState = gameProcess.GetPlayerBlocksState(of_Player);
-			// player #i 의 block 상태를 받아와서
 			playerBoard[PlayerNumToWindowNum[of_Player]].update(blockState);
-			// 게임 윈도우에 갱신.
 		}
 		blockState = gameProcess.GetCenterBlocksState();
 		// 바닥에 깔린 block 들의 상태를 받아와서

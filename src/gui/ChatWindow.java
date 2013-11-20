@@ -112,51 +112,6 @@ public class ChatWindow {//implements ActionListener {
 		return chatTextArea;
 	}
 
-	/*
-	@Override
-	public void actionPerformed(ActionEvent event) {
-		if (event.getSource() == sendBtn
-				|| event.getSource() == chatInputTextField) {
-			// 텍스트 전송
-			if (chatInputTextField.getText().length() != 0) {
-				network.SendChatMsg(chatInputTextField.getText());
-				chatInputTextField.setText("");
-				chatInputTextField.requestFocus();
-			}
-		}
-		if (event.getSource() == clearButton) { // 클리어
-			chatTextArea.setText("");
-			chatInputTextField.requestFocus();
-		}
-		if (event.getSource() == newGameButton) { // 새게임 시작
-			network.SendChatMsg("게임을 새로 시작합니다.");
-			// TODO 클라이언트들의 현재 상태를 종료한 후 새로 시작해야 한다.
-			gameWndGUI.start();
-		}
-		if (event.getSource() == exitButton) { // 종료코드
-			roomWindow.getWindowListeners()[0].windowClosing(new WindowEvent(
-					roomWindow.getWindows()[0], 0));
-		}
-		if (event.getSource() == aboutButton) { // 게임 설명
-			JDialog helpDialog = new JDialog(roomWindow.getFrames()[0], "게임설명",
-					true) {
-				private static final long serialVersionUID = 1L;
-				ImageIcon BG = ResourceManager.getInstance().getHelp();
-
-				public void paint(Graphics g) {
-					this.setSize(BG.getIconWidth(), BG.getIconHeight());
-					g.drawImage(BG.getImage(), 0, 20, this.getWidth(),
-							this.getHeight(), null);
-					// this.getContentPane().
-					// super.paint(g);
-				}
-			};
-			helpDialog.setBounds(0, 0, 100, 100);
-			helpDialog.setVisible(true);
-			
-		}
-	}
-	*/
 
 	public void StringAdd(String msg) {
 		chatTextArea.append(msg + "\n");
