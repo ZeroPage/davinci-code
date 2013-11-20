@@ -27,7 +27,7 @@ public class GameProcess {
 							// play 인원과 서버가 생성한 게임 컨트롤을 전달하고 자신부터 게임을 시작하는 메소드.
 		System.out.println("[ GameProcess : Start ]");
 		gameEnv = new Game(((Server) getNetObject()).getClientNum() + 1);
-		((Server) getNetObject()).SendOrder();
+		((Server) getNetObject()).sendOrder();
 		getNetObject().sendObject(
 				new DataHeader(DataHeader.TOTALCOUNT, gameEnv.getPlayers()
 						.size()));

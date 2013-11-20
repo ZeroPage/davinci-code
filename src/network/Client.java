@@ -8,13 +8,11 @@ import java.net.UnknownHostException;
 
 import javax.swing.JOptionPane;
 
-import core.GameData;
-
 //import sun.java2d.Disposer;
 
 public class Client extends Network {
 	private Socket clientSocket;
-	private ObjectOutputStream OOutStream; // 서버로의 객체 output 스트림을 연결할 변수.
+	private ObjectOutputStream outStream; // 서버로의 객체 output 스트림을 연결할 변수.
 	private ObListener reciver; // client 가 server 로부터 들어오는 데이터를 계속 받을 수 있는 input 스트림을
 							// 연결할 변수.
 
@@ -22,7 +20,7 @@ public class Client extends Network {
 		// 주어진 IP 와 portNum 멤버변수를 사용하여 서버에 접속하는 메소드.
 		try {
 			clientSocket = new Socket(ip, portNum); // 서버 소켓에 연결.
-			setOutOb(); // output 스트림을 설정하여 서버에 데이터를 전송할 수 있게 준비한다.
+			setOutstream(); // output 스트림을 설정하여 서버에 데이터를 전송할 수 있게 준비한다.
 			setListen(); // input 스트림을 설정하여 서버에서 데이터를 수신할 수 있도록 준비한다.
 		} catch (ConnectException e) {
 			JOptionPane.showMessageDialog(null, "IP\t: " + ip + "\nPort\t: "
@@ -44,16 +42,10 @@ public class Client extends Network {
 		// 그 broadcasting 되어 온 메시지는 dataEvent() 메소드에서 처리되어 채팅창에 채팅내용이 표시된다.
 		sendObject(new DataHeader(DataHeader.CHAT, playerNickname + " : " + msg));
 	}
-	
-	@Override
-	public void sendGameData(GameData gameData) {
-		DataHeader data = new DataHeader(DataHeader.GAMEDATA, gameData);
-		sendObject(data);
-	}
 
-	public void setOutOb() throws IOException {
+	public void setOutstream() throws IOException {
 		// server 로의 output 스트림을 연결하는 메소드.
-		OOutStream = new ObjectOutputStream(clientSocket.getOutputStream());
+		outStream = new ObjectOutputStream(clientSocket.getOutputStream());
 	}
 
 	public void setListen() throws IOException {
@@ -66,8 +58,8 @@ public class Client extends Network {
 		// 인자로 받은 객체를 서버로 전송하는 메소드.
 		System.out.println("[ Client : SendOb ]");
 		try {
-			OOutStream.writeObject(ob); // 객체 output 스트림에 객체를 실어 보냄.
-			OOutStream.flush(); // 객체 output 스트림을 깨끗이 치운다.
+			outStream.writeObject(ob); // 객체 output 스트림에 객체를 실어 보냄.
+			outStream.flush(); // 객체 output 스트림을 깨끗이 치운다.
 		} catch (SocketException e) {
 			System.out.println("Server 와의 연결이 종료되었습니다.");
 		} catch (IOException e) {
@@ -88,7 +80,7 @@ public class Client extends Network {
 		try {
 			SendChatMsg("게임에서 나갑니다.");
 			reciver.close();
-			OOutStream.close(); // 객체 output 스트림 종료.
+			outStream.close(); // 객체 output 스트림 종료.
 			clientSocket.close();
 		} catch (SocketException e) {
 			e.printStackTrace();
