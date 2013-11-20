@@ -10,7 +10,7 @@ import gui.RoomWindow;
 //서버와 클라이언트가 서로 통신하도록 하는데 매우 쉽다.
 abstract public class Network {
 	private RoomWindow myRoomWnd; // 채팅 메세지를 받으면 전달할 RoomWindow.
-	protected Network m_net;
+	protected Network network;
 	protected GameProcess gameProcess; // 해당 네트워크에서 진행중인 게임 프로세스.
 	protected String playerNickname; // 해당 네트워크를 연 player 의 이름
 	protected int portNum = 10000; // 해당 네트워크가 접속되어있는 서버의 포트.
@@ -19,8 +19,8 @@ abstract public class Network {
 		setMyRoomWnd(target);
 	}
 
-	public void setM_net(Network m_net) {
-		this.m_net = m_net;
+	public void setNetwork(Network network) {
+		this.network = network;
 	}
 
 	public void setGameProcess(GameProcess game) {

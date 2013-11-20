@@ -35,11 +35,7 @@ class ObListener extends Thread {
 
 	public void dataEvent(DataHeader data) {
 		// 입력된 데이터의 처리는 여기에 추가할것.
-		// if( data.getSender().equals(playerNickname)) { // 내가 보냈던 데이터가
-		// server 에 의해 재전송되어오는 경우 이를 막는다.
-		// System.out.println("재전송된 데이터 막힘.");
-		// return;
-		// }
+		
 		System.out.println("[ Client : dataEvent ]");
 		int flag = data.getFlag();
 		switch (flag) {
