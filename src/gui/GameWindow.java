@@ -13,8 +13,8 @@ import core.GameProcess;
 
 public class GameWindow {
 	private JPanel mainPanel;
-	private PlayerBoard[] playerBoard = new PlayerBoard[4];
-	private PlayerBoard Center;
+	private UserBoard[] playerBoard = new UserBoard[4];
+	private CenterBoard centerBoard;
 
 	public static final int CENTER = 5;
 	public static final int NORMAL = 0;
@@ -32,15 +32,15 @@ public class GameWindow {
 		mainPanel = new JBackgroundPanel(resourceManager.getGameBackground());
 		mainPanel.setLayout(new BorderLayout());
 
-		gameProcess = new GameProcess(this, network); 
+		gameProcess = new GameProcess(this, network);
 		// 게임 윈도우가 생성되면서 게임 프로세스도 하나 생성됨.
 		network.setGameProcess(gameProcess);
 
 		// 플레이어 와 NPC패널의 설정
-		for (int i = 0; i < 4; i++){
-			playerBoard[i] = new PlayerBoard(i, mainPanel, gameProcess);
+		for (int i = 0; i < 4; i++) {
+			playerBoard[i] = new UserBoard(i, mainPanel, gameProcess);
 		}
-		Center = new NPCBoard(mainPanel, gameProcess);
+		centerBoard = new CenterBoard(mainPanel, gameProcess);
 
 		main.add(mainPanel);
 	}
@@ -65,7 +65,7 @@ public class GameWindow {
 		case CENTER:
 			blockState = gameProcess.GetCenterBlocksState();
 			// 바닥에 깔린 block 들의 상태를 받아와 저장.
-			Center.setEnable(blockState, state);
+			centerBoard.setEnable(blockState, state);
 			break;
 		}
 	}
@@ -76,15 +76,13 @@ public class GameWindow {
 		ArrayList<Block> blockState;
 		int playerNum = gameProcess.getNumOfPlayer();
 		for (int of_Player = 0; of_Player < playerNum; of_Player++) {
-			// player 수 만큼
+			// player 수 만큼 player #i 의 block 상태를 받아와서 게임 윈도우에 갱신.
 			blockState = gameProcess.GetPlayerBlocksState(of_Player);
-			// player #i 의 block 상태를 받아와서
 			playerBoard[PlayerNumToWindowNum[of_Player]].update(blockState);
-			// 게임 윈도우에 갱신.
 		}
 		blockState = gameProcess.GetCenterBlocksState();
 		// 바닥에 깔린 block 들의 상태를 받아와서
-		Center.update(blockState);
+		centerBoard.update(blockState);
 	}
 
 	public void start() {
@@ -191,7 +189,7 @@ public class GameWindow {
 		mainPanel.setVisible(false);
 		for (int i = 0; i < 4; i++)
 			playerBoard[i].m_Panel.setVisible(false);
-		Center.m_Panel.setVisible(false);
+		centerBoard.m_Panel.setVisible(false);
 	}
 
 }

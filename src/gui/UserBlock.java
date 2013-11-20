@@ -1,14 +1,13 @@
 package gui;
 
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import core.GameProcess;
 
-public class PlayerBlock extends GUIBlock implements ActionListener {
+public class UserBlock extends GUIBlock implements ActionListener {
 
-	public PlayerBlock(GameProcess gameProcess, int playerNum, int index) {
+	public UserBlock(GameProcess gameProcess, int playerNum, int index) {
 		super(gameProcess, playerNum, index);
 		this.addActionListener(this);
 	}

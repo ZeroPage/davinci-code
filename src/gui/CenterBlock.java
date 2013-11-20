@@ -5,9 +5,9 @@ import java.awt.event.ActionListener;
 
 import core.GameProcess;
 
-public class NPCBlock extends GUIBlock implements ActionListener{
+public class CenterBlock extends GUIBlock implements ActionListener{
 
-	public NPCBlock(GameProcess gameProcess, int playerNum, int index) {
+	public CenterBlock(GameProcess gameProcess, int playerNum, int index) {
 		super(gameProcess, playerNum, index);
 		this.addActionListener(this);
 	}

@@ -22,6 +22,8 @@ public class GUIBlock extends JStyleButton {
 	}
 
 	public void update(Block block) {
+		System.out.println("Button is clicked");
+		
 		ResourceManager resourceManager = ResourceManager.getInstance();
 		num = block.getNum();
 		color = null;

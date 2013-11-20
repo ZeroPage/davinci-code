@@ -11,6 +11,7 @@ import javax.swing.JOptionPane;
 //import sun.java2d.Disposer;
 
 public class Client extends Network {
+
 	private Socket clientSocket;
 	private ObjectOutputStream outStream; // 서버로의 객체 output 스트림을 연결할 변수.
 	private ObListener reciver; // client 가 server 로부터 들어오는 데이터를 계속 받을 수 있는 input 스트림을
