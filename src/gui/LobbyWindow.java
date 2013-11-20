@@ -61,7 +61,7 @@ class LobbyWindow implements ActionListener, ItemListener {
 			// 룸윈도우 생성하고 네트워크와 연결.
 
 			JPanel_Lobby.setVisible(false);
-			network.getMyRoomWnd().JPanel_Room.setVisible(true);
+			network.getMyRoomWnd().getJPanel_Room().setVisible(true);
 
 			if (network.isServer())
 				network.SendChatMsg("서버를 개설하였습니다,");

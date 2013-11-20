@@ -17,27 +17,28 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import resource.ResourceManager;
 import network.Network;
 
 public class RoomWindow extends JFrame {
-	JPanel JPanel_Room = null;
-	Network myNetwork;
-	ChatWindow chatWnd = null; // 게임 우측 채팅 윈도우
-	GameWindow gameWndGUI = null; // 게임 좌측 실제 게임 윈도우.
+	private JPanel JPanel_Room = null;
+	private Network myNetwork;
+	private ChatWindow chatWnd = null; // 게임 우측 채팅 윈도우
+	private GameWindow gameWndGUI = null; // 게임 좌측 실제 게임 윈도우.
 
-	public RoomWindow(JPanel main, Network n) { // player 에 따른 네트워크 설정과 room 윈도우
-												// 설정.
+	public RoomWindow(JPanel main, Network n) { 
+		// player 에 따른 네트워크 설정과 room 윈도우 설정.
 		myNetwork = n;
 
-		JPanel_Room = new JPanel();
-		JPanel_Room.setLayout(new BorderLayout());
+		setJPanel_Room(new JPanel());
+		getJPanel_Room().setLayout(new BorderLayout());
 
-		gameWndGUI = new GameWindow(JPanel_Room, myNetwork);
-		chatWnd = new ChatWindow(JPanel_Room); // 채팅윈도우를 생성하여 JPanel_Room 에 붙인다.
+		gameWndGUI = new GameWindow(getJPanel_Room(), myNetwork);
+		chatWnd = new ChatWindow(getJPanel_Room()); // 채팅윈도우를 생성하여 JPanel_Room 에 붙인다.
 		chatWnd.SetButton(myNetwork.isServer());
 
-		this.addWindowListener(new myWindowListener());
-		main.add(BorderLayout.CENTER, JPanel_Room);
+		this.addWindowListener(new CloseListener());
+		main.add(BorderLayout.CENTER, getJPanel_Room());
 	}
 
 	class ChatWindow implements ActionListener {
@@ -133,8 +134,7 @@ public class RoomWindow extends JFrame {
 			if (event.getSource() == JB_About) { // 게임 설명
 				JDialog some = new JDialog((Frame) getWindows()[0], "게임설명",
 						true) {
-					ImageIcon BG = new ImageIcon(
-							DavichiGUI.class.getResource("About.jpg"));
+					ImageIcon BG = ResourceManager.getInstance().getHelp();
 
 					public void paint(Graphics g) {
 						this.setSize(BG.getIconWidth(), BG.getIconHeight());
@@ -144,6 +144,7 @@ public class RoomWindow extends JFrame {
 						// super.paint(g);
 					}
 				};
+				some.setBounds(0, 0, 100, 100);
 				some.setVisible(true);
 			}
 		}
@@ -162,5 +163,13 @@ public class RoomWindow extends JFrame {
 
 	public void AddChatString(String msg) {
 		chatWnd.StringAdd(msg); // 현재 player 의 채팅창에만 메시지를 출력한다.
+	}
+
+	public JPanel getJPanel_Room() {
+		return JPanel_Room;
+	}
+
+	public void setJPanel_Room(JPanel jPanel_Room) {
+		JPanel_Room = jPanel_Room;
 	}
 }

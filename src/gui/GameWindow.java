@@ -38,7 +38,7 @@ public class GameWindow {
 
 	public GameWindow(JPanel main, Network network) {
 		mainPanel = new JPanel() {
-			ImageIcon BG = ResourceManager.getInstance().getGameBackground();
+			private ImageIcon BG = ResourceManager.getInstance().getGameBackground();
 
 			public void paint(Graphics g) {
 				g.drawImage(BG.getImage(), 0, 0, BG.getIconWidth(),
@@ -212,12 +212,14 @@ public class GameWindow {
 		Center.m_Panel.setVisible(false);
 	}
 
-	class PlayerWindow implements ActionListener {
-		JButton[] playerBlock;
+	class PlayerWindow {
+		
+		GUIBlock [] playerBlock;
+		
 		JPanel m_Panel;
 		int m_WindowNum;
 		int playerOrder;
-		final int Size = 100;
+		final int windowSize = 100;
 
 		protected PlayerWindow() { // 하위클래스에서 필요한것 바깥에서는 위험하므로 쓰지말것.
 		} // 내용 없음.
@@ -226,26 +228,28 @@ public class GameWindow {
 			m_Panel = new JPanel(); // 게임 내에서 player 의 block 이 놓이는 위치
 			FlowLayout layout = new FlowLayout(FlowLayout.CENTER, -1, -1);
 			playerOrder = PlayerNum;
-			playerBlock = new JButton[13]; // 해당 player 의 block 역할을 하게 될 버튼 13개.
+
+			playerBlock = new PlayerBlock[13];
+			
 			String lo = "";
 			switch (PlayerNum) {
 			// PlayerNum 에 따라 다른 사람들과 자신의 block 이 놓일 위치를 설정한다.
 			case 0:
 				lo = BorderLayout.SOUTH;
-				m_Panel.setPreferredSize(new Dimension(0, Size));
+				m_Panel.setPreferredSize(new Dimension(0, windowSize));
 				break;
 			case 1:
 				lo = BorderLayout.WEST;
-				m_Panel.setPreferredSize(new Dimension(Size, 0));
+				m_Panel.setPreferredSize(new Dimension(windowSize, 0));
 				layout.setAlignment(FlowLayout.LEADING);
 				break;
 			case 2:
 				lo = BorderLayout.NORTH;
-				m_Panel.setPreferredSize(new Dimension(0, Size));
+				m_Panel.setPreferredSize(new Dimension(0, windowSize));
 				break;
 			case 3:
 				lo = BorderLayout.EAST;
-				m_Panel.setPreferredSize(new Dimension(Size, 0));
+				m_Panel.setPreferredSize(new Dimension(windowSize, 0));
 				layout.setAlignment(FlowLayout.TRAILING);
 				break;
 			default:
@@ -262,69 +266,21 @@ public class GameWindow {
 			// NPC에 같은 함수 같이 변경해야 함
 			for (int i = 0; playerBlock[i] != null; i++) {
 				playerBlock[i].setEnabled(state);
-				playerBlock[i].setRolloverEnabled(state);
-
+				
 				if (blockState.get(i).isOpen()) { // 이미 open 된 카드일 경우,
 					playerBlock[i].setEnabled(false); // 카드 선택이 불가능하도록 설정.
-					playerBlock[i].setRolloverEnabled(false); // 마우스 오버해도 표시되지
-																// 않도록 설정.
 				}
 			}
 		}
 
 		public void update(ArrayList<Block> blocks) {
-			// block 의 상태에 따라 색깔과 open,unknown 상태에 맞는 이미지로 block 을 갱신해준다.
-			for (int i = 0; i < blocks.size(); i++) // 블럭을 업데이트 한다.
-			{
-				if (playerBlock[i] == null) {
-					// 아직 block 이 생성된 적이 없으면 새로 생성.
-					playerBlock[i] = new JStyleButton();
-					playerBlock[i].addActionListener(this);
+			
+			for(int i = 0; i < blocks.size(); i++){
+				if(playerBlock[i] == null){
+					playerBlock[i] = new PlayerBlock(Process, playerOrder, i);
 					m_Panel.add(playerBlock[i]);
-					playerBlock[i].setMargin(new Insets(0, 0, 0, 0));
-					// 버튼사이에 여백을 넣는 문구. 이 문장이 없을 경우 여백크기가 기본크기로 들어가는데, 그 크기가 너무
-					// 크다.
 				}
-				int num = blocks.get(i).getNum();
-				if (blocks.get(i).getColor() == 0) // i 번째 block 이 검정 일 경우
-				{
-					if (blocks.get(i).isOpen() || blocks.get(i).isOwned()) {
-						ImageIcon img = resourceManager.getCardImage(
-								BlockColor.Black, num, blocks.get(i).isOpen());
-						playerBlock[i].setIcon(img);
-					} else { // open 되어있지 않고 소유되지도 않은 경우
-						playerBlock[i].setIcon(resourceManager.getCardImage(
-								BlockColor.Black, false));
-						// 소유되어있지 않은 block일 경우에는 알려지지 않았다는 이미지를 보여준다.
-						playerBlock[i].setRolloverIcon(resourceManager
-								.getCardImage(BlockColor.Black, true));
-					}
-				} else { // 흰색 block 일 경우
-					if (blocks.get(i).isOpen() || blocks.get(i).isOwned()) {
-						ImageIcon img = resourceManager.getCardImage(
-								BlockColor.White, num, blocks.get(i).isOpen());
-						playerBlock[i].setIcon(img);
-					} else { // 소유되어있지 않은 경우 뒷면을 보여준다.
-						playerBlock[i].setIcon(resourceManager.getCardImage(
-								BlockColor.White, false));
-						playerBlock[i].setRolloverIcon(resourceManager
-								.getCardImage(BlockColor.White, true));
-					}
-				}
-				playerBlock[i].setRolloverEnabled(false);
-				// 기본적으로는 마우스오버해도 아무것도 안보이게 설정한다.
-			}
-		}
-
-		public void actionPerformed(ActionEvent e) {
-			// 해당 PlayerWindow 의 block 이 선택된 것이다.
-			// 선택이 된다는 것은 이 playerWindow 에 해당하는 player 의 block 을 물어보는 것이기 때문에
-			// askblock을 호출한다.
-			for (int btnIndex = 0; playerBlock[btnIndex] != null; btnIndex++) {
-				if (e.getSource() == playerBlock[btnIndex]) {
-					Process.AskBlock(playerOrder, btnIndex, askNum());
-					break;
-				}
+				playerBlock[i].update(blocks.get(i));
 			}
 		}
 	}
@@ -334,16 +290,23 @@ public class GameWindow {
 			super();
 			m_Panel = new JPanel();
 			m_WindowNum = 5;
-			playerBlock = new JButton[27]; // 모두 27개의 block 들.
+			playerBlock = new NPCBlock[27]; // 모두 27개의 block 들.
 			mainPanel.add(BorderLayout.CENTER, m_Panel);
 			m_Panel.setOpaque(false);
 		}
 
-		public void update(ArrayList<Block> blockState) {
+		public void update(ArrayList<Block> blocks) {
 			System.out.println("[ NPC : update ]");
-			super.update(blockState);
+			for(int i = 0; i < blocks.size(); i++){
+				if(playerBlock[i] == null){
+					//TODO maybe apply abstract factory
+					playerBlock[i] = new NPCBlock(Process, playerOrder, i);
+					m_Panel.add(playerBlock[i]);
+				}
+				playerBlock[i].update(blocks.get(i));
+			}
 			// center 가 가진 block 들은 아무것도 소유되어진 것이 없기 때문에 모두 뒷면으로 이미지가 설정된다.
-			for (int i = blockState.size(); playerBlock[i] != null; i++) {
+			for (int i = blocks.size(); playerBlock[i] != null; i++) {
 				// playerBlock[i].removeAll();
 				m_Panel.remove(playerBlock[i]);
 				m_Panel.repaint();
@@ -360,6 +323,7 @@ public class GameWindow {
 			}
 		}
 
+		//TODO 이걸 분리 해야 함.
 		public void actionPerformed(ActionEvent e) {
 			// center에서 선택된 block 의 index 를 넘겨 block 을 player 에게 전달하도록 한다.
 			// 가운데는 선택되면 이것은 처음에 가운데 블럭을 선택하기 위한것이다.

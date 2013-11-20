@@ -3,6 +3,7 @@ package resource;
 import java.net.URL;
 
 import gui.BlockColor;
+import gui.DavichiGUI;
 
 import javax.swing.ImageIcon;
 
@@ -18,6 +19,7 @@ public class ResourceManager {
 	private ImageIcon cardWhiteUnknownRollerover;
 	private ImageIcon gameBackground;
 	private ImageIcon lobbyBackground;
+	private ImageIcon about;
 
 	public static ResourceManager getInstance() {
 		if (manager == null) {
@@ -41,6 +43,7 @@ public class ResourceManager {
 		
 		gameBackground = new ImageIcon(clazz.getResource("img/board.jpg"));
 		lobbyBackground = new ImageIcon(clazz.getResource("img/cover.gif"));
+		about = new ImageIcon(clazz.getResource("img/About.jpg"));
 		
 		for (int i = 0; i < 13; i++) {
 			cardBlack[i] = new ImageIcon(clazz.getResource("img/card/b" + i + ".gif"));
@@ -78,7 +81,9 @@ public class ResourceManager {
 	}
 
 	public ImageIcon getLobbyBackground() {
-		// TODO Auto-generated method stub
 		return lobbyBackground;
+	}
+	public ImageIcon getHelp(){
+		return about;
 	}
 }

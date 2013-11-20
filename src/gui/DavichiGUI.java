@@ -16,7 +16,7 @@ public class DavichiGUI extends JFrame {
 
 		lobbyWnd = new LobbyWindow((JPanel) this.getContentPane(),
 				this.getRootPane()); // 접속을 위한 window 생성
-		this.addWindowListener(new myWindowListener()); // 이벤트 리스너 등록.
+		this.addWindowListener(new CloseListener()); // 이벤트 리스너 등록.
 	}
 
 	public static void main(String[] args) {
