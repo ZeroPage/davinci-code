@@ -14,6 +14,8 @@ public class RoomWindow extends JFrame {
 	public RoomWindow(JPanel main, Network network) { 
 		// player 에 따른 네트워크 설정과 room 윈도우 설정.
 
+		//TODO maybe apply observer
+		network.setTaget(this);
 		setJPanel_Room(new JPanel());
 		getJPanel_Room().setLayout(new BorderLayout());
 

@@ -50,7 +50,7 @@ public class WaitingClient extends Thread {
 		while (listenning) {
 			try {
 				Socket socket = serverSocket.accept();
-				ClientData clientData = new ClientData(server, socket);
+				ClientHandler clientData = new ClientHandler(server, socket);
 				server.register(clientData);
 				System.out.println("client " + server.getClientNum() + " 접속함.");
 			} catch (SocketException e) {

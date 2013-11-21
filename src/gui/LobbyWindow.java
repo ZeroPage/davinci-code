@@ -29,13 +29,15 @@ class LobbyWindow implements ActionListener, ItemListener {
 	JPanel lobbyPanel;
 	JRootPane motherPane;
 
-	Network network; 
+	Network network;
+
 	// 네트워크에 접속할 때의 player의 상태를 저장할 변수.
 	// server 역할을 하는 player일 경우 myNetworkType = Server();
 	// client 인 player 일 경우 myNetworkType = Client();
 
 	public void actionPerformed(ActionEvent event) {
-		if (event.getSource() == connectButton || event.getSource() == ipAddrTextField) {
+		if (event.getSource() == connectButton
+				|| event.getSource() == ipAddrTextField) {
 			if (nickTextField.getText().length() == 0) {
 				JOptionPane.showMessageDialog(null, "닉네임을 입력하세요.", "알림",
 						JOptionPane.ERROR_MESSAGE);
@@ -48,15 +50,13 @@ class LobbyWindow implements ActionListener, ItemListener {
 				network = new Client(); // 클라이언트
 
 			network.setName(nickTextField.getText()); // 대상 네트워크 객체에 nickname
-													// 설정.
+														// 설정.
 			network.setPortNum(Integer.parseInt(portTextField.getText()));
 			// 포트 설정.
 			network.Connect(ipAddrTextField.getText());
 			// server 에 접속.
 
-			network.setMyRoomWnd(new RoomWindow((JPanel) motherPane
-					.getContentPane(), network));
-			// 룸윈도우 생성하고 네트워크와 연결.
+			new RoomWindow((JPanel) motherPane.getContentPane(), network);
 
 			lobbyPanel.setVisible(false);
 			network.getMyRoomWnd().getJPanel_Room().setVisible(true);

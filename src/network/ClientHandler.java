@@ -4,14 +4,14 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-class ClientData // server 가 관리할 client 들의 소켓정보와 input/output 정보를
+class ClientHandler
 {
 	private Socket clientSocket = null;
 	private ObjectOutputStream outStream = null;
 	private NetworkListener inOb = null;
 	private Server server;
 
-	public ClientData(Server server, Socket socket) throws IOException { // 임의의 소켓 메모리 생성.
+	public ClientHandler(Server server, Socket socket) throws IOException { // 임의의 소켓 메모리 생성.
 		this.server = server;
 		clientSocket = new Socket();
 		clientSocket = socket; // 인자로 전달받은 client 의 소켓을 저장.

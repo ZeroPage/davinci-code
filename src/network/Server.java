@@ -5,14 +5,14 @@ import java.net.SocketException;
 import java.util.ArrayList;
 
 public class Server extends Network {
-	private ArrayList<ClientData> clients;
+	private ArrayList<ClientHandler> clients;
 	WaitingClient wait; // 서버 소켓이 저장될 변수.
 
 	final static int MAX_CLIENT = 3; // 게임에는 server 까지 최대 4 명만 접속할 수 있다.
 
 	public Server() {
 		System.out.println("[ Server : Constructor ]");
-		clients = new ArrayList<ClientData>(); // client 정보를 저장할 메모리 생성.
+		clients = new ArrayList<ClientHandler>(); // client 정보를 저장할 메모리 생성.
 		wait = new WaitingClient(this); // server 가 client 의 접속을 기다리기 시작.
 	}
 
@@ -80,10 +80,10 @@ public class Server extends Network {
 						.println("Class : Server\t :: SendOrder() : IOException");
 			}
 	}
-	public void remove(ClientData clientData) {
+	public void remove(ClientHandler clientData) {
 		clients.remove(clientData);
 	}
-	public void register(ClientData clientData){
+	public void register(ClientHandler clientData){
 		clients.add(clientData);
 	}
 
