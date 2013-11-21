@@ -9,14 +9,15 @@ import java.net.SocketException;
 import core.Game;
 import core.GameData;
 
-class ObServerListener extends Thread // server 로 들어오는 데이터들을 받아 처리하는 클래스.
-{
+class ObServerListener extends Thread {
+	// server 로 들어오는 데이터들을 받아 처리하는 클래스.
 	boolean listenning = true;
 	private ObjectInputStream inStream = null;
 	private Server server;
 
 	// 전달받은 소켓 인자에 input 스트림을 연결.
-	public ObServerListener(Socket clientSocket, Server server) throws IOException {
+	public ObServerListener(Socket clientSocket, Server server)
+			throws IOException {
 		this.server = server;
 		inStream = new ObjectInputStream(clientSocket.getInputStream());
 		this.start();
@@ -40,23 +41,20 @@ class ObServerListener extends Thread // server 로 들어오는 데이터들을
 		int flag = data.getFlag();
 		switch (flag) {
 		case DataHeader.CHAT: // 데이터 헤더가 대화 이벤트일 경우.
-			server.getMyRoomWnd().AddChatString((String) data.getData());
+			server.onChat((String) data.getData());
 			break;
 		case DataHeader.GAME:
-			// if(gameProcess.gameControl == null ||
-			// !gameProcess.gameControl.equals((Game)data.getData()))
-			server.gameProcess.setGameEnv((Game) data.getData());
+			server.onGameData((Game) data.getData());
 			break;
 		case DataHeader.GAMEDATA:
-			server.gameProcess.setGameEnv((GameData) data.getData());
+			server.onGameData((GameData) data.getData());
 			break;
-		case DataHeader.PASS: // 턴 넘김 메시지를 받고서, client 자신이 플레이할 차례가 되면 턴을
-								// 시행한다.
-			if (server.gameProcess.getPlayOrder() == ((Integer) data.getData())
-					.intValue())
-				server.gameProcess.turn();
+		case DataHeader.PASS:
+			server.onPass((Integer) data.getData());
 			break;
 		}
+		
+		//TODO 이거 한줄뺴고 똑같음
 		server.sendObject(data);
 	}
 

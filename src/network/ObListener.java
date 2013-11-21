@@ -43,9 +43,6 @@ class ObListener extends Thread {
 			client.onChat((String) data.getData());
 			break;
 		case DataHeader.GAME:
-			// if(gameProcess.gameControl == null ||
-			// !gameProcess.gameControl.equals((Game)data.getData()))
-			//client.gameProcess.setGameEnv((Game) data.getData());
 			client.onGameData((Game)data.getData());
 			break;
 		case DataHeader.GAMEDATA:

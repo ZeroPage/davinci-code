@@ -9,9 +9,6 @@ import java.net.UnknownHostException;
 
 import javax.swing.JOptionPane;
 
-import core.Game;
-import core.GameData;
-
 //import sun.java2d.Disposer;
 
 public class Client extends Network {
@@ -95,29 +92,11 @@ public class Client extends Network {
 		return false;
 	}
 
-	public void onGameData(GameData gameData) {
-		gameProcess.setGameEnv(gameData);
-	}
-
-	public void onPass(int order) {
-
-		if (gameProcess.getPlayOrder() == order)
-			gameProcess.turn();
-	}
-
 	public void onMyOrder(int order) {
 		gameProcess.setPlayOrder(order);
 	}
 
 	public void onTotalCount(int playerNum) {
 		gameProcess.setting(playerNum);
-	}
-
-	public void onChat(String message) {
-		getMyRoomWnd().AddChatString(message);
-	}
-
-	public void onGameData(Game data) {
-		gameProcess.setGameEnv(data);
 	}
 }

@@ -1,5 +1,6 @@
 package network;
 
+import core.Game;
 import core.GameData;
 import core.GameProcess;
 import gui.RoomWindow;
@@ -67,5 +68,23 @@ abstract public class Network {
 	public void sendPass(int nextPlayer) {
 		DataHeader data = new DataHeader(DataHeader.PASS, nextPlayer);
 		sendObject(data);
+	}
+
+	public void onGameData(GameData gameData) {
+		gameProcess.setGameEnv(gameData);
+	}
+
+	public void onGameData(Game data) {
+		gameProcess.setGameEnv(data);
+	}
+
+	public void onChat(String message) {
+		getMyRoomWnd().AddChatString(message);
+	}
+
+	public void onPass(int order) {
+		// 턴 넘김 메시지를 받고서, 자신이 플레이할 차례가 되면 턴을 시행한다.
+		if (gameProcess.getPlayOrder() == order)
+			gameProcess.turn();
 	}
 }
