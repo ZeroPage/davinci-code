@@ -18,6 +18,7 @@ import javax.swing.JTextField;
 
 import network.Client;
 import network.Network;
+import network.PortNumberException;
 import network.Server;
 import resource.ResourceManager;
 
@@ -29,8 +30,8 @@ class LobbyWindow implements ActionListener, ItemListener {
 
 	private Network network;
 	private DaVinciGUI gui;
-	
-	public LobbyWindow(DaVinciGUI daVinciGUI){
+
+	public LobbyWindow(DaVinciGUI daVinciGUI) {
 		this.gui = daVinciGUI;
 		// Lobby window 의 외형을 구현.
 		ImageIcon BG = ResourceManager.getInstance().getLobbyBackground();
@@ -109,6 +110,7 @@ class LobbyWindow implements ActionListener, ItemListener {
 	}
 
 	public void actionPerformed(ActionEvent event) {
+		//TODO maybe apply Strategy pattern
 		if (event.getSource() == connectButton
 				|| event.getSource() == ipAddrTextField) {
 			if (nickTextField.getText().length() == 0) {
@@ -117,17 +119,35 @@ class LobbyWindow implements ActionListener, ItemListener {
 				return;
 			}
 
-			if (serverCheckBox.isSelected())
-				network = new Server(); // 서버
-			else
-				network = new Client(); // 클라이언트
-
-			network.setName(nickTextField.getText()); // 대상 네트워크 객체에 nickname
-														// 설정.
-			network.setPortNum(Integer.parseInt(portTextField.getText()));
-			// 포트 설정.
-			network.Connect(ipAddrTextField.getText());
-			// server 에 접속.
+			if (serverCheckBox.isSelected()) {
+				Server server = new Server(); // 서버
+				server.setName(nickTextField.getText());
+				server.setPortNum(Integer.parseInt(portTextField.getText()));
+				try {
+					server.listen();
+				} catch (PortNumberException e) {
+					String msg = "입력하신 Port number : " + e.getPortNum()
+							+ "\nPort 는 1 ~ 65535 사이의 값이어야 합니다.\n"
+							+ "기본값 10000 번 포트로 연결합니다.";
+					String title = "Port number 경고";
+					JOptionPane.showMessageDialog(null, msg, title,
+							JOptionPane.OK_OPTION);
+					server.setPortNum(10000);
+					try {
+						server.listen();
+					} catch (PortNumberException e1) {
+						e1.printStackTrace();
+						return;
+					}
+				}
+				this.network = server;
+			} else {
+				Client client = new Client(); // 클라이언트
+				client.setName(nickTextField.getText());
+				client.setPortNum(Integer.parseInt(portTextField.getText()));
+				client.connect(ipAddrTextField.getText());
+				this.network = client;
+			}
 
 			new RoomWindow(gui, network);
 

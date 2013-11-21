@@ -15,15 +15,11 @@ public class Server extends Network {
 		clients = new ArrayList<ClientHandler>(); // client 정보를 저장할 메모리 생성.
 		wait = new ClientListener(this); // server 가 client 의 접속을 기다리기 시작.
 	}
-
-	public void Connect(String ip) // 서버 소켓을 열고 client 를 기다리기 시작하는 메소드.
-	{
-		// ip는 상속되는 코드와의 호환을 위해. 의미없음.
-		// 이 클래스는 서버 이므로 접속을 하지 않고 서버를 생성.
-		wait.setServerSock(portNum); // server 의 소켓을 열고 클라이언트를 기다림.
-		wait.start(); // server socket 스레드 시작.
+	public void listen() throws PortNumberException {
+		wait.startServerSock(portNum); // server 의 소켓을 열고 클라이언트를 기다림.
+		wait.start(); // server socket 스레드 시작.		
 	}
-
+	
 	@Override
 	public void sendChatMessage(String msg) {
 		super.sendChatMessage(msg);
@@ -96,5 +92,6 @@ public class Server extends Network {
 		super.dataEvent(data);
 		this.sendObject(data);
 	}
+
 	
 }

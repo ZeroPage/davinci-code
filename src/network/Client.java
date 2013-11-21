@@ -20,7 +20,7 @@ public class Client extends Network {
 
 	// 연결할 변수.
 
-	public void Connect(String ip) {
+	public void connect(String ip) {
 		// 주어진 IP 와 portNum 멤버변수를 사용하여 서버에 접속하는 메소드.
 		try {
 			clientSocket = new Socket(ip, portNum); // 서버 소켓에 연결.

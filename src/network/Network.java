@@ -39,8 +39,6 @@ abstract public class Network {
 
 	abstract public boolean isServer(); // 서버인지 아닌지 리턴.
 
-	abstract public void Connect(String ip); // 지정된 ip로 접속하는 함수
-
 	abstract public void sendObject(Object ob); // 접속된 네트워크에 채팅 오브젝트를 날리는 함수
 
 	abstract public void Close(); // 모든접속을 끊는 함수. 쓰레드 종료필수
