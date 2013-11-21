@@ -1,26 +1,40 @@
 package gui;
+
+import java.awt.event.WindowEvent;
+
+import javax.swing.JComponent;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
-public class DaVinciGUI extends JFrame {
-	RoomWindow roomWnd = null;
-	LobbyWindow lobbyWnd = null;
+
+public class DaVinciGUI{
+	private JFrame window;
+	private CloseListener listener;
 
 	public DaVinciGUI() {
-		super("다빈치 코드 - 천사와 악마 Ver 1.9");
-
-		this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-		this.setSize(1000, 600); // 크기 설정.
-		this.setResizable(false); // 크기변경 불가능.
-
-		lobbyWnd = new LobbyWindow((JPanel) this.getContentPane(),
-				this.getRootPane()); // 접속을 위한 window 생성
-		this.addWindowListener(new CloseListener()); // 이벤트 리스너 등록.
+		window  = new JFrame("다빈치 코드 - 천사와 악마 Ver 2.0");
+		
+		window.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+		window.setSize(1000, 600); // 크기 설정.
+		window.setResizable(false); // 크기변경 불가능.
+		
+		new LobbyWindow(this);
+		this.listener = new CloseListener();
+		window.addWindowListener(this.listener); // 이벤트 리스너 등록.
+		window.setVisible(true);
 	}
-
+	public void append(JComponent component){
+		window.getContentPane().add(component);
+	}
+	public JFrame getWindow(){
+		return window;
+	}
+	
 	public static void main(String[] args) {
-		DaVinciGUI obj = new DaVinciGUI();
-		obj.setVisible(true);
+		new DaVinciGUI();
 	}
+	public void fireClosingEvent() {
+		this.listener.windowClosing(new WindowEvent(window, 0));
+	}
+	
 }

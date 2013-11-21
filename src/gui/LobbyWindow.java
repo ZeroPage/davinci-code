@@ -1,6 +1,7 @@
 package gui;
 
 import java.awt.Color;
+import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
@@ -11,11 +12,13 @@ import java.awt.event.ItemListener;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRootPane;
 import javax.swing.JTextField;
+import javax.swing.WindowConstants;
 
 import network.Client;
 import network.Network;
@@ -23,59 +26,23 @@ import network.Server;
 import resource.ResourceManager;
 
 class LobbyWindow implements ActionListener, ItemListener {
-	JTextField ipAddrTextField, nickTextField, portTextField;
-	JCheckBox serverCheckBox;
-	JButton connectButton, cancelButton;
-	JPanel lobbyPanel;
-	JRootPane motherPane;
+	private JTextField ipAddrTextField, nickTextField, portTextField;
+	private JCheckBox serverCheckBox;
+	private JButton connectButton, cancelButton;
+	private JPanel lobbyPanel;
 
-	Network network;
+	private Network network;
+	private DaVinciGUI gui;
 
 	// 네트워크에 접속할 때의 player의 상태를 저장할 변수.
 	// server 역할을 하는 player일 경우 myNetworkType = Server();
 	// client 인 player 일 경우 myNetworkType = Client();
 
-	public void actionPerformed(ActionEvent event) {
-		if (event.getSource() == connectButton
-				|| event.getSource() == ipAddrTextField) {
-			if (nickTextField.getText().length() == 0) {
-				JOptionPane.showMessageDialog(null, "닉네임을 입력하세요.", "알림",
-						JOptionPane.ERROR_MESSAGE);
-				return;
-			}
-
-			if (serverCheckBox.isSelected())
-				network = new Server(); // 서버
-			else
-				network = new Client(); // 클라이언트
-
-			network.setName(nickTextField.getText()); // 대상 네트워크 객체에 nickname
-														// 설정.
-			network.setPortNum(Integer.parseInt(portTextField.getText()));
-			// 포트 설정.
-			network.Connect(ipAddrTextField.getText());
-			// server 에 접속.
-
-			new RoomWindow((JPanel) motherPane.getContentPane(), network);
-
-			lobbyPanel.setVisible(false);
-			network.getMyRoomWnd().getJPanel_Room().setVisible(true);
-
-			if (network.isServer())
-				network.sendChatMessage("서버를 개설하였습니다,");
-			else
-				network.sendChatMessage("접속하였습니다.");
-		}
-		if (event.getSource() == cancelButton) {
-			System.exit(0);
-		}
-	}
-
-	public LobbyWindow(JPanel main, JRootPane mother) {
+	
+	public LobbyWindow(DaVinciGUI daVinciGUI){
+		this.gui = daVinciGUI;
 		// Lobby window 의 외형을 구현.
-		motherPane = mother;
-
-		final ImageIcon BG = ResourceManager.getInstance().getLobbyBackground();
+		ImageIcon BG = ResourceManager.getInstance().getLobbyBackground();
 		lobbyPanel = new JBackgroundPanel(BG, JBackgroundPanel.MODE_STRECH);
 
 		lobbyPanel.setLayout(null);
@@ -147,7 +114,43 @@ class LobbyWindow implements ActionListener, ItemListener {
 		nickTextField.requestFocus();
 
 		lobbyPanel.add(connectPanel);
-		main.add(lobbyPanel);
+		daVinciGUI.append(lobbyPanel);
+	}
+
+	public void actionPerformed(ActionEvent event) {
+		if (event.getSource() == connectButton
+				|| event.getSource() == ipAddrTextField) {
+			if (nickTextField.getText().length() == 0) {
+				JOptionPane.showMessageDialog(null, "닉네임을 입력하세요.", "알림",
+						JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+
+			if (serverCheckBox.isSelected())
+				network = new Server(); // 서버
+			else
+				network = new Client(); // 클라이언트
+
+			network.setName(nickTextField.getText()); // 대상 네트워크 객체에 nickname
+														// 설정.
+			network.setPortNum(Integer.parseInt(portTextField.getText()));
+			// 포트 설정.
+			network.Connect(ipAddrTextField.getText());
+			// server 에 접속.
+
+			RoomWindow roomWindow = new RoomWindow(gui, network);
+
+			lobbyPanel.setVisible(false);
+			roomWindow.enable();
+
+			if (network.isServer())
+				network.sendChatMessage("서버를 개설하였습니다,");
+			else
+				network.sendChatMessage("접속하였습니다.");
+		}
+		if (event.getSource() == cancelButton) {
+			System.exit(0);
+		}
 	}
 
 	public void itemStateChanged(ItemEvent event) {
@@ -159,9 +162,5 @@ class LobbyWindow implements ActionListener, ItemListener {
 				ipAddrTextField.setEnabled(true);
 			}
 		}
-	}
-
-	public void AddChatString(String msg) { // DavichiGUI 에서 종료메시지를 보내기 위해 작성됨.
-		network.sendChatMessage(msg); // 모든 player 들에게 메시지를 전송한다.
 	}
 }

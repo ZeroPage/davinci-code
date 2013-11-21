@@ -75,7 +75,7 @@ abstract public class Network {
 	}
 
 	public void onChat(String message) {
-		getMyRoomWnd().AddChatString(message);
+		getMyRoomWnd().addChatString(message);
 	}
 
 	public void onPass(int order) {

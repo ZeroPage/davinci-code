@@ -27,7 +27,7 @@ public class Server extends Network {
 	@Override
 	public void sendChatMessage(String msg) {
 		super.sendChatMessage(msg);
-		getMyRoomWnd().AddChatString(playerNickname + " : " + msg);
+		getMyRoomWnd().addChatString(playerNickname + " : " + msg);
 	}
 	
 	@Override

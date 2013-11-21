@@ -1,22 +1,20 @@
 package gui.listeners;
 
-import gui.RoomWindow;
+import gui.DaVinciGUI;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
 
 public class ExitButtonListener implements ActionListener {
-	private RoomWindow roomWindow;
+	private DaVinciGUI gui;
 
-	public ExitButtonListener(RoomWindow roomWindow) {
-		this.roomWindow = roomWindow;
+	public ExitButtonListener(DaVinciGUI gui) {
+		this.gui = gui;
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		roomWindow.getWindowListeners()[0].windowClosing(new WindowEvent(
-				RoomWindow.getWindows()[0], 0));
+		gui.fireClosingEvent();
 	}
 
 }
