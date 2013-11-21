@@ -15,19 +15,21 @@ public class Server extends Network {
 		clients = new ArrayList<ClientHandler>(); // client 정보를 저장할 메모리 생성.
 		wait = new ClientListener(this); // server 가 client 의 접속을 기다리기 시작.
 	}
+
 	public void listen() throws PortNumberException {
 		wait.startServerSock(portNum); // server 의 소켓을 열고 클라이언트를 기다림.
-		wait.start(); // server socket 스레드 시작.		
+		wait.start(); // server socket 스레드 시작.
 	}
-	
+
 	@Override
 	public void sendChatMessage(String msg) {
 		super.sendChatMessage(msg);
-		chatWindow.chatMessage(msg);
+		chatWindow.chatMessage(playerNickname + " : " + msg);
 	}
-	
+
 	@Override
-	public void sendObject(Object object) // 전달받은 객체를 server 에 접속한 모든 객체에 전달하는 메소드.
+	public void sendObject(Object object) // 전달받은 객체를 server 에 접속한 모든 객체에 전달하는
+											// 메소드.
 	{
 		System.out.println("[ Server : SendOb ]");
 		for (int i = 0; i < clients.size(); i++) {
@@ -68,30 +70,32 @@ public class Server extends Network {
 		System.out.println("[ Server : SendOrder ]");
 		for (int i = 0; i < clients.size(); i++)
 			try {
-				clients.get(i).sendObject(new DataHeader(DataHeader.MYORDER, Integer
-						.valueOf(i + 1)));
+				clients.get(i).sendObject(
+						new DataHeader(DataHeader.MYORDER, Integer
+								.valueOf(i + 1)));
 			} catch (IOException e) {
 				e.printStackTrace();
 				System.out
 						.println("Class : Server\t :: SendOrder() : IOException");
 			}
 	}
+
 	public void remove(ClientHandler clientData) {
 		clients.remove(clientData);
 	}
-	public void register(ClientHandler clientData){
+
+	public void register(ClientHandler clientData) {
 		clients.add(clientData);
 	}
 
 	public boolean isServer() {
 		return true;
 	}
-	
+
 	@Override
 	public void dataEvent(DataHeader data) {
 		super.dataEvent(data);
 		this.sendObject(data);
 	}
 
-	
 }
