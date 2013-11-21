@@ -3,7 +3,6 @@ package gui;
 import java.awt.BorderLayout;
 import java.util.ArrayList;
 
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import network.Network;
@@ -27,9 +26,10 @@ public class GameWindow {
 	// index 는 player 게임 순서, 값은 player 가 윈도우 상에 나타날 위치를 기록하는 배열.
 	// PlayerNumToWindowNum[n] == 0 일때, n 은 player 자신의 게임 순서.
 
-	public GameWindow(JPanel main, Network network, GameProcess gameProcess) {
+	public GameWindow(RoomWindow roomWindow, Network network,
+			GameProcess gameProcess) {
 		this.gameProcess = gameProcess;
-		
+
 		ResourceManager resourceManager = ResourceManager.getInstance();
 		mainPanel = new JBackgroundPanel(resourceManager.getGameBackground());
 		mainPanel.setLayout(new BorderLayout());
@@ -42,7 +42,7 @@ public class GameWindow {
 		}
 		centerBoard = new CenterBoard(mainPanel, gameProcess);
 
-		main.add(mainPanel);
+		roomWindow.add(mainPanel);
 	}
 
 	public void setEnable(int target, boolean state) {

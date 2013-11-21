@@ -1,7 +1,6 @@
 package gui;
 
 import java.awt.Color;
-import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
@@ -12,13 +11,10 @@ import java.awt.event.ItemListener;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JRootPane;
 import javax.swing.JTextField;
-import javax.swing.WindowConstants;
 
 import network.Client;
 import network.Network;
@@ -33,11 +29,6 @@ class LobbyWindow implements ActionListener, ItemListener {
 
 	private Network network;
 	private DaVinciGUI gui;
-
-	// 네트워크에 접속할 때의 player의 상태를 저장할 변수.
-	// server 역할을 하는 player일 경우 myNetworkType = Server();
-	// client 인 player 일 경우 myNetworkType = Client();
-
 	
 	public LobbyWindow(DaVinciGUI daVinciGUI){
 		this.gui = daVinciGUI;
@@ -138,7 +129,7 @@ class LobbyWindow implements ActionListener, ItemListener {
 			network.Connect(ipAddrTextField.getText());
 			// server 에 접속.
 
-			RoomWindow roomWindow = new RoomWindow(gui, network);
+			new RoomWindow(gui, network);
 
 			lobbyPanel.setVisible(false);
 

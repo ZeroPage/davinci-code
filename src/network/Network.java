@@ -1,10 +1,9 @@
 package network;
 
+import gui.ChatWindow;
 import core.Game;
 import core.GameData;
 import core.GameProcess;
-import gui.ChatWindow;
-import gui.RoomWindow;
 
 //서버와 클라이언트가 각각 서버소켓과 소켓을 사용하여 서로 통신할 때,
 //소켓을 통해 output 스트림과 input 스트림을 연결해놓으면,

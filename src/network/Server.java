@@ -1,7 +1,5 @@
 package network;
 
-import gui.ChatWindow;
-
 import java.io.IOException;
 import java.net.SocketException;
 import java.util.ArrayList;

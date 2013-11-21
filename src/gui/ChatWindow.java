@@ -29,7 +29,7 @@ public class ChatWindow {// implements ActionListener {
 	private JTextArea chatTextArea; // 대화내용이 쓰여지는 필드.
 	private JTextField chatInputTextField; // 사용자가 대화를 입력할 부분.
 
-	public ChatWindow(JPanel main, Network network, GameProcess gameProcess,
+	public ChatWindow(RoomWindow roomWindow, Network network, GameProcess gameProcess,
 			DaVinciGUI gui) {
 		
 		mainPanel = new JPanel();
@@ -89,7 +89,7 @@ public class ChatWindow {// implements ActionListener {
 		aboutButton.addActionListener(new AboutButtonListener(gui));
 		mainPanel.add(aboutButton);
 
-		main.add(BorderLayout.EAST, mainPanel);
+		roomWindow.add(BorderLayout.EAST, mainPanel);
 		
 		//TODO maybe apply observer
 		network.setTaget(this);
