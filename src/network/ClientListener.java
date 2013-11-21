@@ -8,22 +8,23 @@ import java.net.SocketException;
 import javax.swing.JOptionPane;
 
 //Server 가 Client 의 접속을 기다릴 때 사용할 클래스.
-public class WaitingClient extends Thread {
+public class ClientListener extends Thread {
 
 	private ServerSocket serverSocket = null;
 	boolean listenning = true;
 	private Server server;
 
-	public WaitingClient(Server server) {
+	public ClientListener(Server server) {
 		this.server = server;
 	}
 
 	// 서버 소켓을 portNum과 결합시킨다.
-	public void setServSock(int portNum) {
+	public void setServerSock(int portNum) {
 		try {
 			// 지정된 포트번호로 서버 소켓을 연다.
 			serverSocket = new ServerSocket(portNum, Server.MAX_CLIENT);
 		} catch (IllegalArgumentException e) {
+			//TODO 외부로 빼야 한다.
 			JOptionPane
 					.showMessageDialog(
 							null,
@@ -31,7 +32,7 @@ public class WaitingClient extends Thread {
 									+ portNum
 									+ "\nPort 는 1 ~ 65535 사이의 값이어야 합니다.\n기본값 10000 번 포트로 연결합니다.",
 							"Port number 경고", JOptionPane.OK_OPTION);
-			setServSock(10000);
+			setServerSock(10000);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

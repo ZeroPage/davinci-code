@@ -101,7 +101,6 @@ abstract public class Network {
 			break;
 		case DataHeader.GAMEDATA:
 			onGameData((GameData)data.getData());
-			//client.gameProcess.setGameEnv((GameData) data.getData());
 			break;
 		case DataHeader.PASS: 
 			onPass((Integer) data.getData());

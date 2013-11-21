@@ -6,21 +6,21 @@ import java.util.ArrayList;
 
 public class Server extends Network {
 	private ArrayList<ClientHandler> clients;
-	WaitingClient wait; // 서버 소켓이 저장될 변수.
+	ClientListener wait; // 서버 소켓이 저장될 변수.
 
 	final static int MAX_CLIENT = 3; // 게임에는 server 까지 최대 4 명만 접속할 수 있다.
 
 	public Server() {
 		System.out.println("[ Server : Constructor ]");
 		clients = new ArrayList<ClientHandler>(); // client 정보를 저장할 메모리 생성.
-		wait = new WaitingClient(this); // server 가 client 의 접속을 기다리기 시작.
+		wait = new ClientListener(this); // server 가 client 의 접속을 기다리기 시작.
 	}
 
 	public void Connect(String ip) // 서버 소켓을 열고 client 를 기다리기 시작하는 메소드.
 	{
 		// ip는 상속되는 코드와의 호환을 위해. 의미없음.
 		// 이 클래스는 서버 이므로 접속을 하지 않고 서버를 생성.
-		wait.setServSock(portNum); // server 의 소켓을 열고 클라이언트를 기다림.
+		wait.setServerSock(portNum); // server 의 소켓을 열고 클라이언트를 기다림.
 		wait.start(); // server socket 스레드 시작.
 	}
 
