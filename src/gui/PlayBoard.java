@@ -1,7 +1,6 @@
 package gui;
 
 import java.util.ArrayList;
-
 import javax.swing.JPanel;
 
 import core.Block;
