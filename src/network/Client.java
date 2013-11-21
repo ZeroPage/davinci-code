@@ -15,7 +15,7 @@ public class Client extends Network {
 
 	private Socket clientSocket;
 	private ObjectOutputStream outStream; // 서버로의 객체 output 스트림을 연결할 변수.
-	private ObListener reciver; // client 가 server 로부터 들어오는 데이터를 계속 받을 수 있는
+	private NetworkListener reciver; // client 가 server 로부터 들어오는 데이터를 계속 받을 수 있는
 								// input 스트림을
 
 	// 연결할 변수.
@@ -47,9 +47,9 @@ public class Client extends Network {
 
 	public void setListen() throws IOException {
 		// input 스트림으로 데이터를 읽기 시작하도록 하는 메소드.
-		reciver = new ObListener(clientSocket, this); // input 스트림을 계속 읽을 스레드 객체
+		reciver = new NetworkListener(clientSocket, this); // input 스트림을 계속 읽을 스레드 객체
 														// 메모리 생성.
-		reciver.start(); // 스레드 실행.
+		
 	}
 
 	public void sendObject(Object ob) {
@@ -90,13 +90,5 @@ public class Client extends Network {
 	@Override
 	public boolean isServer() {
 		return false;
-	}
-
-	public void onMyOrder(int order) {
-		gameProcess.setPlayOrder(order);
-	}
-
-	public void onTotalCount(int playerNum) {
-		gameProcess.setting(playerNum);
 	}
 }

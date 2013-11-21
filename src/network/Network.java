@@ -87,4 +87,39 @@ abstract public class Network {
 		if (gameProcess.getPlayOrder() == order)
 			gameProcess.turn();
 	}
+	public void onMyOrder(int order) {
+		gameProcess.setPlayOrder(order);
+	}
+
+	public void onTotalCount(int playerNum) {
+		gameProcess.setting(playerNum);
+	}
+
+	public void dataEvent(DataHeader data) {
+		// 입력된 데이터의 처리는 여기에 추가할것.
+		
+		System.out.println("[ Client : dataEvent ]");
+		int flag = data.getFlag();
+		switch (flag) {
+		case DataHeader.CHAT: // 데이터 헤더가 대화 이벤트일 경우.
+			onChat((String) data.getData());
+			break;
+		case DataHeader.GAME:
+			onGameData((Game)data.getData());
+			break;
+		case DataHeader.GAMEDATA:
+			onGameData((GameData)data.getData());
+			//client.gameProcess.setGameEnv((GameData) data.getData());
+			break;
+		case DataHeader.PASS: 
+			onPass((Integer) data.getData());
+			break;
+		case DataHeader.MYORDER: // 해당 client 의 순서를 전달받으면 그 순서로 세팅.
+			onMyOrder((Integer) data.getData());
+			break;
+		case DataHeader.TOTALCOUNT: // 총 인원수를 전달받으면 그 숫자대로 게임 GUI 를 세팅.
+			onTotalCount((Integer) data.getData());
+			break;
+		}
+	}
 }

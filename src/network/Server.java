@@ -90,4 +90,11 @@ public class Server extends Network {
 	public boolean isServer() {
 		return true;
 	}
+	
+	@Override
+	public void dataEvent(DataHeader data) {
+		super.dataEvent(data);
+		this.sendObject(data);
+	}
+	
 }
