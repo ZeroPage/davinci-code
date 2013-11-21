@@ -3,6 +3,7 @@ package network;
 import core.Game;
 import core.GameData;
 import core.GameProcess;
+import gui.ChatWindow;
 import gui.RoomWindow;
 
 //서버와 클라이언트가 각각 서버소켓과 소켓을 사용하여 서로 통신할 때,
@@ -11,14 +12,14 @@ import gui.RoomWindow;
 //일단 소켓을 연결한 후 input/output 스트림이 연결되어있다면
 //서버와 클라이언트가 서로 통신하도록 하는데 매우 쉽다.
 abstract public class Network {
-	private RoomWindow roomWindow; // 채팅 메세지를 받으면 전달할 RoomWindow.
+	protected ChatWindow chatWindow; // 채팅 메세지를 받으면 전달할 RoomWindow.
 	protected Network network;
 	protected GameProcess gameProcess; // 해당 네트워크에서 진행중인 게임 프로세스.
 	protected String playerNickname; // 해당 네트워크를 연 player 의 이름
 	protected int portNum = 10000; // 해당 네트워크가 접속되어있는 서버의 포트.
 
-	public void setTaget(RoomWindow target) {
-		this.roomWindow = target;
+	public void setTaget(ChatWindow chatWindow) {
+		this.chatWindow = chatWindow;
 	}
 
 	public void setNetwork(Network network) {
@@ -44,10 +45,6 @@ abstract public class Network {
 	abstract public void sendObject(Object ob); // 접속된 네트워크에 채팅 오브젝트를 날리는 함수
 
 	abstract public void Close(); // 모든접속을 끊는 함수. 쓰레드 종료필수
-
-	public RoomWindow getMyRoomWnd() {
-		return roomWindow;
-	}
 
 	public void sendChatMessage(String msg) {
 		// 접속된 네트워크에 채팅 msg를 날리는 함수
@@ -75,7 +72,7 @@ abstract public class Network {
 	}
 
 	public void onChat(String message) {
-		getMyRoomWnd().addChatString(message);
+		chatWindow.chatMessage(message);
 	}
 
 	public void onPass(int order) {

@@ -5,38 +5,51 @@ import gui.GameWindow;
 
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
+
 import network.DataHeader;
 import network.Network;
 import network.Server;
 
 public class GameProcess {
-	private GameWindow gameWindow;
+	private GameWindow gameWindow = null;
 	private Network network;
 	private int myPlayOrder = 0; // 자신의 플레이 순서.
 	private int onlyDraw = 4; // player 들은 block 을 4 개를 먼저 가지고 시작한다.
 
 	private Game game;
 
-	public GameProcess(GameWindow gameWindow, Network network) {
+	public GameProcess(Network network) {
 		// 게임 프로세스 객체에 게임 GUI와 네트워크를 설정.
-		this.gameWindow = gameWindow; // 프로세스를 생성한 game window를 가리키기위한 변수.
 		this.network = network;
+		network.setGameProcess(this);
+	}
+	public void setGameWindow(GameWindow gameWindow){
+		this.gameWindow = gameWindow;
 	}
 
-	public void Start() { // server 가 게임을 시작할 때, 자신의 게임 컨트롤를 생성하고, client 들에게 총
-							// play 인원과 서버가 생성한 게임 컨트롤을 전달하고 자신부터 게임을 시작하는 메소드.
+	public void start() {
+		if(!isServer()){
+			//FIXME GameWindow로 옯길것
+			JOptionPane.showMessageDialog(null, "방장이 아닙니다.", "알림", 2);
+		}
+		network.sendChatMessage("게임을 새로 시작합니다.");
+		// server 가 게임을 시작할 때, 자신의 게임 컨트롤를 생성하고, client 들에게 총
+		// play 인원과 서버가 생성한 게임 컨트롤을 전달하고 자신부터 게임을 시작하는 메소드.
 		System.out.println("[ GameProcess : Start ]");
 		game = new Game(((Server) network).getClientNum() + 1);
 		((Server) network).sendOrder();
-		network.sendObject(
-				new DataHeader(DataHeader.TOTALCOUNT, game.getPlayers()
-						.size()));
+		network.sendObject(new DataHeader(DataHeader.TOTALCOUNT, game
+				.getPlayers().size()));
 		network.sendObject(new DataHeader(DataHeader.GAME, game));
 		// 모든 client 들에게 server가 생성한 게임 컨트롤을 전달한다.
 
-		//TODO Maybe use strategy
+		// TODO Maybe use strategy
 		if (game.getPlayers().size() == 4)
 			onlyDraw = 3; // player 수가 4 명일 경우, 3 개만 가지고 게임을 시작.
+		
+		gameWindow.setting(getNumOfPlayer());
+		turn();
 	}
 
 	public void turn() {
@@ -70,9 +83,9 @@ public class GameProcess {
 	public void centerBlockSelete(int blockIndex) {
 		// center 에 있는 block 들을 player 에게 옮기는함수.
 		System.out.println("[ GameProcess : moveBlock ]");
-		//disable center Panel
+		// disable center Panel
 		gameWindow.setEnable(GameWindow.CENTER, false);
-		
+
 		Player me = game.getPlayer(getMyPlayOrder());
 
 		if (game.getFloorBlocks().get(blockIndex).getNum() == 12) {
@@ -171,6 +184,7 @@ public class GameProcess {
 	public void sendGameData() {
 		network.sendGameData(new GameData(game));
 	}
+
 	public void sendChatMsg(String msg) {
 		network.sendChatMessage(msg);
 	}

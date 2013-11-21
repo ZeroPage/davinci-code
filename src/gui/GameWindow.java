@@ -27,14 +27,14 @@ public class GameWindow {
 	// index 는 player 게임 순서, 값은 player 가 윈도우 상에 나타날 위치를 기록하는 배열.
 	// PlayerNumToWindowNum[n] == 0 일때, n 은 player 자신의 게임 순서.
 
-	public GameWindow(JPanel main, Network network) {
+	public GameWindow(JPanel main, Network network, GameProcess gameProcess) {
+		this.gameProcess = gameProcess;
+		
 		ResourceManager resourceManager = ResourceManager.getInstance();
 		mainPanel = new JBackgroundPanel(resourceManager.getGameBackground());
 		mainPanel.setLayout(new BorderLayout());
 
-		gameProcess = new GameProcess(this, network);
-		// 게임 윈도우가 생성되면서 게임 프로세스도 하나 생성됨.
-		network.setGameProcess(gameProcess);
+		gameProcess.setGameWindow(this);
 
 		// 플레이어 와 NPC패널의 설정
 		for (int i = 0; i < 4; i++) {
@@ -83,19 +83,6 @@ public class GameWindow {
 		blockState = gameProcess.GetCenterBlocksState();
 		// 바닥에 깔린 block 들의 상태를 받아와서
 		centerBoard.update(blockState);
-	}
-
-	public void start() {
-		// player 수만큼 게임 윈도우에서 player 들의 위치를 설정하고 server 부터 게임을 시작하는 메소드.
-		// 채팅창에 있는 게임 시작 버튼의 동작을 받기위한 것.
-		if (gameProcess.isServer()) {
-			gameProcess.Start(); // 게임 프로세스를 시작
-			setting(gameProcess.getNumOfPlayer());
-			// 게임 윈도우 내에서 player 들의 위치를 설정한다.
-			gameProcess.turn(); // server 부터 게임 시작.
-		} else {
-			JOptionPane.showMessageDialog(null, "방장이 아닙니다.", "알림", 2);
-		}
 	}
 
 	public void setting(int PlayerNum) {
@@ -190,6 +177,10 @@ public class GameWindow {
 		for (int i = 0; i < 4; i++)
 			playerBoard[i].boardPanel.setVisible(false);
 		centerBoard.boardPanel.setVisible(false);
+	}
+
+	public GameProcess getGameProcess() {
+		return gameProcess;
 	}
 
 }

@@ -16,6 +16,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import core.GameProcess;
 import network.Network;
 
 public class ChatWindow {// implements ActionListener {
@@ -27,11 +28,10 @@ public class ChatWindow {// implements ActionListener {
 	private JButton aboutButton;
 	private JTextArea chatTextArea; // 대화내용이 쓰여지는 필드.
 	private JTextField chatInputTextField; // 사용자가 대화를 입력할 부분.
-	private GameWindow gameWndGUI;	
 
-	public ChatWindow(JPanel main, Network network, GameWindow gameWindow,
+	public ChatWindow(JPanel main, Network network, GameProcess gameProcess,
 			DaVinciGUI gui) {
-		this.gameWndGUI = gameWindow;
+		
 		mainPanel = new JPanel();
 		mainPanel.setLayout(null);
 		mainPanel.setPreferredSize(new Dimension(200, 500));
@@ -74,7 +74,7 @@ public class ChatWindow {// implements ActionListener {
 		newGameButton = new JButton("시작");
 		newGameButton.setBounds(0, 480, 100, 30);
 		newGameButton.addActionListener(new StartButtonListener(network,
-				gameWndGUI));
+				gameProcess));
 		mainPanel.add(newGameButton);
 
 		// 나가기
@@ -90,16 +90,17 @@ public class ChatWindow {// implements ActionListener {
 		mainPanel.add(aboutButton);
 
 		main.add(BorderLayout.EAST, mainPanel);
-	}// ChatWindow() end
-
-	public void stringAdd(String msg) {
-		chatTextArea.append(msg + "\n");
-		chatTextArea.setCaretPosition(chatTextArea.getDocument().getLength());
-	}
-
-	public void SetButton(boolean server) {
-		if (!server) {
+		
+		//TODO maybe apply observer
+		network.setTaget(this);
+		
+		if (!network.isServer()) {
 			newGameButton.setText("대기중");
 		}
+	}
+
+	public void chatMessage(String msg) {
+		chatTextArea.append(msg + "\n");
+		chatTextArea.setCaretPosition(chatTextArea.getDocument().getLength());
 	}
 }

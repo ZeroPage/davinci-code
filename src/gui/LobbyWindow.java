@@ -141,7 +141,6 @@ class LobbyWindow implements ActionListener, ItemListener {
 			RoomWindow roomWindow = new RoomWindow(gui, network);
 
 			lobbyPanel.setVisible(false);
-			roomWindow.enable();
 
 			if (network.isServer())
 				network.sendChatMessage("서버를 개설하였습니다,");

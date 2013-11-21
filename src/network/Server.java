@@ -1,5 +1,7 @@
 package network;
 
+import gui.ChatWindow;
+
 import java.io.IOException;
 import java.net.SocketException;
 import java.util.ArrayList;
@@ -27,7 +29,7 @@ public class Server extends Network {
 	@Override
 	public void sendChatMessage(String msg) {
 		super.sendChatMessage(msg);
-		getMyRoomWnd().addChatString(playerNickname + " : " + msg);
+		chatWindow.chatMessage(msg);
 	}
 	
 	@Override
