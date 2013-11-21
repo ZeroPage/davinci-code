@@ -52,7 +52,7 @@ abstract public class Network {
 		this.roomWnd = myRoomWnd;
 	}
 	
-	public void SendChatMsg(String msg) {
+	public void sendChatMessage(String msg) {
 		// 접속된 네트워크에 채팅 msg를 날리는 함수
 		DataHeader temp = new DataHeader(DataHeader.CHAT, playerNickname
 				+ " : " + msg);

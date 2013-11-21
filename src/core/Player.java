@@ -7,8 +7,6 @@ import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
-import network.DataHeader;
-
 public class Player implements Serializable {
 	ArrayList<Block> hand = null; // 자신이 가진 블록을 저장하는 배열
 	private Block last = null; // 마지막에 가져온 block. 상대방의 block 을 추리한 게 틀릴 경우 이
@@ -28,7 +26,7 @@ public class Player implements Serializable {
 		return hand;
 	} // player 가 가지고 있는 block 들을 반환.
 
-	public boolean getPlay() {
+	public boolean isPlaying() {
 		return play;
 	} // 현재 play 중인지를 반환.
 
@@ -43,43 +41,42 @@ public class Player implements Serializable {
 
 	}
 
-	public void askBlock(Player targetPlayer, GameProcess proc,
+	public void askBlock(Player targetPlayer, GameProcess process,
 			int selectedBlockIndex, int selectedNum) {
 		System.out.println("[ Player : askBlock ]");
-		if (targetPlayer.checkBlock(proc, selectedBlockIndex, selectedNum)) {
+		if (targetPlayer.checkBlock(process, selectedBlockIndex, selectedNum)) {
 			// 추측이 맞으면
 			if (JOptionPane.showConfirmDialog(null, "빙고! 계속하시겠습니까?", "확인",
-					JOptionPane.YES_NO_OPTION) == 0)
-				proc.getGameWndGUI().setEnable(GameWindow.OTHERS, true);
-			// 계속할 경우 다른 플레이어들의 block 을 선택가능하게 설정.
-			else
-				proc.Next(); // 그만둘 경우 다음 player 에게 턴 넘김.
+					JOptionPane.YES_NO_OPTION) == 0) {
+				process.enableOthers();
+			} else {// 계속할 경우 다른 플레이어들의 block 을 선택가능하게 설정.
+				process.Next(); // 그만둘 경우 다음 player 에게 턴 넘김.
+			}
 		} else { // 틀렸을 경우
 			System.out.println("last = " + last.getNum());
-			proc.getNetObject().SendChatMsg("오답입니다."); // 오답 메시지를 채팅창에 보내고
+			process.sendChatMsg("오답입니다."); // 오답 메시지를 채팅창에 보내고
 			last.setOpen(true); // 마지막에 가져온 block 을 공개하도록 설정하고
-			proc.getGameWndGUI().update();
-			proc.getNetObject().sendGameData(new GameData(proc.getGameEnv()));
-			proc.Next();
+			process.updateBlock();
+			process.sendGameData();
+			process.Next();
 		}
 	}
 
-	public boolean checkBlock(GameProcess proc, int selectedBlockIndex, int num) {
+	public boolean checkBlock(GameProcess process, int selectedBlockIndex, int num) {
 		// 다른 player 가 추측한 num 과 내 block의 숫자가 같은지 체크하는 함수.
 		System.out.println("[ Player : cheeckBlock ]");
-		Block b_tmp = hand.get(selectedBlockIndex);
-		if (b_tmp.getNum() == num) { // 선택된 block 의 숫자가 num 과 같으면
-			b_tmp.setOpen(true); // 그 block 을 open 상태로 설정.
-			proc.getGameWndGUI().update(); // 게임 프로세스의 GUI 상태를 업데이트 한다.
-			proc.getNetObject().sendGameData(new GameData(proc.getGameEnv()));
-			// 게임 프로세스의 네트워크에 현재 게임상태(GameData(proc.gameControl))객체를 전달한다.
-			isPlay(proc);
+		Block block = hand.get(selectedBlockIndex);
+		if (block.getNum() == num) { // 선택된 block 의 숫자가 num 과 같으면
+			block.setOpen(true); // 그 block 을 open 상태로 설정.
+			process.updateBlock(); // 게임 프로세스의 GUI 상태를 업데이트 한다.
+			process.sendGameData();
+			checkMyTurn(process);
 			return true;
 		}
 		return false;
 	}
 
-	public void isPlay(GameProcess proc) {
+	public void checkMyTurn(GameProcess process) {
 		// player가 계속 play 할수 있는 상태인지를 확인하고 그에
 		// 따른 동작을 수행한다.
 		for (int i = 0; i < hand.size(); i++)
@@ -88,11 +85,11 @@ public class Player implements Serializable {
 				return; // 함수 종료.
 
 		play = false; // 모두 open 되었으므로 play 상태를 false로 설정.
-		proc.getNetObject().SendChatMsg("패를 모두 알아냈습니다.");
+		process.sendChatMsg("패를 모두 알아냈습니다.");
 		// 게임 프로세스의 network 타겟으로 메시지 전달.
-		proc.getNetObject().sendGameData(new GameData(proc.getGameEnv()));
-		if (proc.getGameEnv().isEnd())
-			proc.End();
+		process.sendGameData();
+		if (process.getGameEnv().isEnd())
+			process.End();
 	}
 
 	public void swapBlock(ArrayList<Block> blocks, int n1, int n2) {

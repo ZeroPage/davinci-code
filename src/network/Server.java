@@ -25,8 +25,8 @@ public class Server extends Network {
 	}
 
 	@Override
-	public void SendChatMsg(String msg) {
-		super.SendChatMsg(msg);
+	public void sendChatMessage(String msg) {
+		super.sendChatMessage(msg);
 		getMyRoomWnd().AddChatString(playerNickname + " : " + msg);
 	}
 	
@@ -47,7 +47,7 @@ public class Server extends Network {
 	}
 
 	public void Close() {
-		SendChatMsg("서버가 종료되었습니다.");
+		sendChatMessage("서버가 종료되었습니다.");
 		wait.listenning = false;
 		for (int i = 0; i < clients.size(); i++) {
 			if (clients.get(i).isConnected()) {

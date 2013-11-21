@@ -68,7 +68,7 @@ public class Game implements Serializable {
 		// player 들의 상태가 어떤지 확인하고 게임이 끝났는지 확인하는 메소드.
 		int alive = 0;
 		for (int i = 0; i < players.size(); i++)
-			if (players.get(i).getPlay() == true)
+			if (players.get(i).isPlaying() == true)
 				alive++;
 		return alive == 1; // 남아있는 것이 혼자이면 게임이 끝난 것.
 	}

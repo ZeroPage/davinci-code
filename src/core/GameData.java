@@ -2,8 +2,6 @@ package core;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import javax.swing.JOptionPane;
-
 public class GameData implements Serializable {
 	// 객체가 생성되면 바닥에 깔린 block 들과 각 player 들이 가지고 있는 block 들의 정보를 저장한다.
 	private ArrayList<Block> floor; // 바닥에 깔려있는 block 들.

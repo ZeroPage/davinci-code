@@ -1,4 +1,5 @@
 package network;
+
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.ConnectException;
@@ -8,14 +9,19 @@ import java.net.UnknownHostException;
 
 import javax.swing.JOptionPane;
 
+import core.Game;
+import core.GameData;
+
 //import sun.java2d.Disposer;
 
 public class Client extends Network {
 
 	private Socket clientSocket;
 	private ObjectOutputStream outStream; // 서버로의 객체 output 스트림을 연결할 변수.
-	private ObListener reciver; // client 가 server 로부터 들어오는 데이터를 계속 받을 수 있는 input 스트림을
-							// 연결할 변수.
+	private ObListener reciver; // client 가 server 로부터 들어오는 데이터를 계속 받을 수 있는
+								// input 스트림을
+
+	// 연결할 변수.
 
 	public void Connect(String ip) {
 		// 주어진 IP 와 portNum 멤버변수를 사용하여 서버에 접속하는 메소드.
@@ -44,7 +50,8 @@ public class Client extends Network {
 
 	public void setListen() throws IOException {
 		// input 스트림으로 데이터를 읽기 시작하도록 하는 메소드.
-		reciver = new ObListener(clientSocket, this); // input 스트림을 계속 읽을 스레드 객체 메모리 생성.
+		reciver = new ObListener(clientSocket, this); // input 스트림을 계속 읽을 스레드 객체
+														// 메모리 생성.
 		reciver.start(); // 스레드 실행.
 	}
 
@@ -72,7 +79,7 @@ public class Client extends Network {
 		// 위 5 개의 순서대로 프로그램을 종료해서 server 에 연결된 다른 client 들의 상태에
 		// 영향을 주지 않고, 게임이 진행되거나 종료되도록 해야 한다.
 		try {
-			SendChatMsg("게임에서 나갑니다.");
+			sendChatMessage("게임에서 나갑니다.");
 			reciver.close();
 			outStream.close(); // 객체 output 스트림 종료.
 			clientSocket.close();
@@ -83,10 +90,34 @@ public class Client extends Network {
 		}
 	}
 
-	
-
 	@Override
 	public boolean isServer() {
 		return false;
+	}
+
+	public void onGameData(GameData gameData) {
+		gameProcess.setGameEnv(gameData);
+	}
+
+	public void onPass(int order) {
+
+		if (gameProcess.getPlayOrder() == order)
+			gameProcess.turn();
+	}
+
+	public void onMyOrder(int order) {
+		gameProcess.setPlayOrder(order);
+	}
+
+	public void onTotalCount(int playerNum) {
+		gameProcess.setting(playerNum);
+	}
+
+	public void onChat(String message) {
+		getMyRoomWnd().AddChatString(message);
+	}
+
+	public void onGameData(Game data) {
+		gameProcess.setGameEnv(data);
 	}
 }

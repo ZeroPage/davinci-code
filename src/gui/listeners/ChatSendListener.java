@@ -19,7 +19,7 @@ public class ChatSendListener implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (chatInputTextField.getText().length() != 0) {
-			network.SendChatMsg(chatInputTextField.getText());
+			network.sendChatMessage(chatInputTextField.getText());
 			chatInputTextField.setText("");
 			chatInputTextField.requestFocus();
 		}

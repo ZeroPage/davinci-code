@@ -88,9 +88,9 @@ public class GameWindow {
 	public void start() {
 		// player 수만큼 게임 윈도우에서 player 들의 위치를 설정하고 server 부터 게임을 시작하는 메소드.
 		// 채팅창에 있는 게임 시작 버튼의 동작을 받기위한 것.
-		if (gameProcess.getNetObject().isServer()) {
+		if (gameProcess.isServer()) {
 			gameProcess.Start(); // 게임 프로세스를 시작
-			Setting(gameProcess.getNumOfPlayer());
+			setting(gameProcess.getNumOfPlayer());
 			// 게임 윈도우 내에서 player 들의 위치를 설정한다.
 			gameProcess.turn(); // server 부터 게임 시작.
 		} else {
@@ -98,7 +98,7 @@ public class GameWindow {
 		}
 	}
 
-	public void Setting(int PlayerNum) {
+	public void setting(int PlayerNum) {
 		// player 의 화면에서 자신은 맨 아래, 나머지는 다른 위치에 맞게 배열하도록 하는 메소드.
 		PlayerNumToWindowNum = new int[PlayerNum]; // 게임중인 player 수만큼 배열 생성.
 		switch (PlayerNum) {
@@ -188,8 +188,8 @@ public class GameWindow {
 		// 게임 윈도우를 모두 보이지 않게 하는 메소드.
 		mainPanel.setVisible(false);
 		for (int i = 0; i < 4; i++)
-			playerBoard[i].m_Panel.setVisible(false);
-		centerBoard.m_Panel.setVisible(false);
+			playerBoard[i].boardPanel.setVisible(false);
+		centerBoard.boardPanel.setVisible(false);
 	}
 
 }

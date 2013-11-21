@@ -1,6 +1,5 @@
 package gui.listeners;
 
-import gui.ChatWindow;
 import gui.RoomWindow;
 
 import java.awt.Graphics;

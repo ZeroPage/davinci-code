@@ -62,9 +62,9 @@ class LobbyWindow implements ActionListener, ItemListener {
 			network.getMyRoomWnd().getJPanel_Room().setVisible(true);
 
 			if (network.isServer())
-				network.SendChatMsg("서버를 개설하였습니다,");
+				network.sendChatMessage("서버를 개설하였습니다,");
 			else
-				network.SendChatMsg("접속하였습니다.");
+				network.sendChatMessage("접속하였습니다.");
 		}
 		if (event.getSource() == cancelButton) {
 			System.exit(0);
@@ -162,6 +162,6 @@ class LobbyWindow implements ActionListener, ItemListener {
 	}
 
 	public void AddChatString(String msg) { // DavichiGUI 에서 종료메시지를 보내기 위해 작성됨.
-		network.SendChatMsg(msg); // 모든 player 들에게 메시지를 전송한다.
+		network.sendChatMessage(msg); // 모든 player 들에게 메시지를 전송한다.
 	}
 }

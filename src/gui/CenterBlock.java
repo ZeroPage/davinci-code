@@ -14,7 +14,6 @@ public class CenterBlock extends GUIBlock implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		gameProcess.getGameWndGUI().setEnable(GameWindow.CENTER, false);
-		gameProcess.moveBlock(index);
+		gameProcess.centerBlockSelete(index);
 	}
 }

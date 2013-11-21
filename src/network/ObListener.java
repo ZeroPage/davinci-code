@@ -40,28 +40,26 @@ class ObListener extends Thread {
 		int flag = data.getFlag();
 		switch (flag) {
 		case DataHeader.CHAT: // 데이터 헤더가 대화 이벤트일 경우.
-			client.getMyRoomWnd().AddChatString((String) data.getData());
+			client.onChat((String) data.getData());
 			break;
 		case DataHeader.GAME:
 			// if(gameProcess.gameControl == null ||
 			// !gameProcess.gameControl.equals((Game)data.getData()))
-			client.gameProcess.setGameEnv((Game) data.getData());
+			//client.gameProcess.setGameEnv((Game) data.getData());
+			client.onGameData((Game)data.getData());
 			break;
 		case DataHeader.GAMEDATA:
-			client.gameProcess.setGameEnv((GameData) data.getData());
+			client.onGameData((GameData)data.getData());
+			//client.gameProcess.setGameEnv((GameData) data.getData());
 			break;
-		case DataHeader.PASS: // 턴 넘김 메시지를 받고서, client 자신이 플레이할 차례가 되면 턴을
-								// 시행한다.
-			if (client.gameProcess.getPlayOrder() == ((Integer) data.getData())
-					.intValue())
-				client.gameProcess.turn();
+		case DataHeader.PASS: 
+			client.onPass((Integer) data.getData());
 			break;
 		case DataHeader.MYORDER: // 해당 client 의 순서를 전달받으면 그 순서로 세팅.
-			client.gameProcess.setPlayOrder(((Integer) data.getData()).intValue());
+			client.onMyOrder((Integer) data.getData());
 			break;
 		case DataHeader.TOTALCOUNT: // 총 인원수를 전달받으면 그 숫자대로 게임 GUI 를 세팅.
-			client.gameProcess.getGameWndGUI().Setting(((Integer) data.getData())
-					.intValue());
+			client.onTotalCount((Integer) data.getData());
 			break;
 		}
 	}
