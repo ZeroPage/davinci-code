@@ -44,8 +44,8 @@ public class GameProcess {
 		server.sendOrder();
 		server.sendTotalCount(playerNum);
 		
-		//server.sendGameData(new GameData(game));
-		server.sendObject(new DataHeader(DataHeader.GAME, game));
+		server.sendGameData(new GameData(game));
+		//server.sendObject(new DataHeader(DataHeader.GAME, game));
 		// 모든 client 들에게 server가 생성한 게임 컨트롤을 전달한다.
 
 		// TODO Maybe use strategy
@@ -138,12 +138,6 @@ public class GameProcess {
 		gameWindow.update();
 	}
 
-	public void setGame(Game game) {
-		System.out.println("[ GameProcess : setGameEnv(Game gc) ]");
-		this.game = game;
-		gameWindow.update();
-	}
-
 	public void setPlayOrder(int order) {
 		this.myPlayOrder = order;
 	}
@@ -155,9 +149,9 @@ public class GameProcess {
 	public void setGameEnv(GameData gameState) {
 		// 전달받은 인자에 새로운 block 들의 분배 정보가 들어있어, 그 정보로 현재의 block 게임 컨트롤의 block 상태를
 		// 갱신하는 메소드.
-		/*if(game == null){//처음 시작할경우
-			game = new Game(numOfPlayer)
-		}*/
+		if(game == null){//처음 시작할경우
+			game = new Game(gameState.getPlayers().size());
+		}
 		System.out
 				.println("[ GameProcess : setGameEnv(GameData newBlockState ]");
 		game.setFloor(gameState.getFloor()); // center block 들을 새로 설정함.

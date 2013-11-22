@@ -102,5 +102,4 @@ public class Server extends Network {
 	public void sendTotalCount(int playerNum) {
 		this.sendObject(new DataHeader(DataHeader.TOTALCOUNT, playerNum));
 	}
-
 }

@@ -7,11 +7,10 @@ public class DataHeader implements Serializable{
 	private Object	data = null;
 	
 	public static final int	CHAT        = 0x1;
-	public static final int	GAME        = 0x2;
-	public static final int	GAMEDATA    = 0x3;
-	public static final int	PASS        = 0x4;
-	public static final int	MYORDER     = 0x5;
-	public static final int	TOTALCOUNT  = 0x6;
+	public static final int	GAMEDATA    = 0x2;
+	public static final int	PASS        = 0x3;
+	public static final int	MYORDER     = 0x4;
+	public static final int	TOTALCOUNT  = 0x5;
 
 	public DataHeader(int flag, Object data) {
 		this.flag = flag;		// 데이터의 종류

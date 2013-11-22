@@ -2,7 +2,6 @@ package network;
 
 import java.util.ArrayList;
 
-import core.Game;
 import core.GameData;
 import core.GameProcess;
 
@@ -57,10 +56,6 @@ abstract public class Network {
 		gameProcess.setGameEnv(gameData);
 	}
 
-	public void onGameData(Game data) {
-		gameProcess.setGame(data);
-	}
-
 	public void onChat(String message) {
 		for(ChatListener element : chatListeners){
 			element.onChatMessage(message);
@@ -87,9 +82,6 @@ abstract public class Network {
 		switch (flag) {
 		case DataHeader.CHAT: // 데이터 헤더가 대화 이벤트일 경우.
 			onChat((String) data.getData());
-			break;
-		case DataHeader.GAME:
-			onGameData((Game)data.getData());
 			break;
 		case DataHeader.GAMEDATA:
 			onGameData((GameData)data.getData());
