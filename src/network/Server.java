@@ -24,7 +24,8 @@ public class Server extends Network {
 	@Override
 	public void sendChatMessage(String msg) {
 		super.sendChatMessage(msg);
-		chatWindow.chatMessage(playerNickname + " : " + msg);
+		onChat(playerNickname + " : " + msg);
+		//chatWindow.chatMessage();
 	}
 
 	@Override

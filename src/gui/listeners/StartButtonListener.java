@@ -1,12 +1,10 @@
 package gui.listeners;
 
-import gui.GameWindow;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import core.GameProcess;
 import network.Network;
+import core.GameProcess;
 
 public class StartButtonListener implements ActionListener {
 	private GameProcess gameProcess;

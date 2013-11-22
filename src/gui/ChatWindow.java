@@ -17,9 +17,10 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import core.GameProcess;
+import network.ChatListener;
 import network.Network;
 
-public class ChatWindow {// implements ActionListener {
+public class ChatWindow implements ChatListener {
 	private JPanel mainPanel;
 	private JButton sendBtn; // 보내기 버튼.
 	private JButton newGameButton;
@@ -92,15 +93,16 @@ public class ChatWindow {// implements ActionListener {
 		roomWindow.add(BorderLayout.EAST, mainPanel);
 		
 		//TODO maybe apply observer
-		network.setTaget(this);
+		network.registerChatListener(this);
 		
 		if (!network.isServer()) {
 			newGameButton.setText("대기중");
 		}
 	}
 
-	public void chatMessage(String msg) {
-		chatTextArea.append(msg + "\n");
+	@Override
+	public void onChatMessage(String message) {
+		chatTextArea.append(message + "\n");
 		chatTextArea.setCaretPosition(chatTextArea.getDocument().getLength());
 	}
 }

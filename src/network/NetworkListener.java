@@ -15,9 +15,9 @@ class NetworkListener extends Thread {
 	boolean isListening = true;
 	Network network;
 
-	public NetworkListener(Socket clientSocket, Network server) throws IOException {
+	public NetworkListener(Socket socket, Network server) throws IOException {
 		this.network = server;
-		inputStream = new ObjectInputStream(clientSocket.getInputStream());
+		inputStream = new ObjectInputStream(socket.getInputStream());
 		this.start();
 	}
 

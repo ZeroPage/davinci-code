@@ -1,6 +1,7 @@
 package network;
 
-import gui.ChatWindow;
+import java.util.ArrayList;
+
 import core.Game;
 import core.GameData;
 import core.GameProcess;
@@ -11,19 +12,11 @@ import core.GameProcess;
 //일단 소켓을 연결한 후 input/output 스트림이 연결되어있다면
 //서버와 클라이언트가 서로 통신하도록 하는데 매우 쉽다.
 abstract public class Network {
-	protected ChatWindow chatWindow; // 채팅 메세지를 받으면 전달할 RoomWindow.
-	protected Network network;
 	protected GameProcess gameProcess; // 해당 네트워크에서 진행중인 게임 프로세스.
 	protected String playerNickname; // 해당 네트워크를 연 player 의 이름
 	protected int portNum = 10000; // 해당 네트워크가 접속되어있는 서버의 포트.
-
-	public void setTaget(ChatWindow chatWindow) {
-		this.chatWindow = chatWindow;
-	}
-
-	public void setNetwork(Network network) {
-		this.network = network;
-	}
+	
+	private ArrayList<ChatListener> chatListeners;
 
 	public void setGameProcess(GameProcess game) {
 		gameProcess = game;
@@ -69,7 +62,9 @@ abstract public class Network {
 	}
 
 	public void onChat(String message) {
-		chatWindow.chatMessage(message);
+		for(ChatListener element : chatListeners){
+			element.onChatMessage(message);
+		}
 	}
 
 	public void onPass(int order) {
@@ -88,7 +83,7 @@ abstract public class Network {
 	public void dataEvent(DataHeader data) {
 		// 입력된 데이터의 처리는 여기에 추가할것.
 		
-		System.out.println("[ Client : dataEvent ]");
+		System.out.println("[ Network : dataEvent ]");
 		int flag = data.getFlag();
 		switch (flag) {
 		case DataHeader.CHAT: // 데이터 헤더가 대화 이벤트일 경우.
@@ -110,5 +105,11 @@ abstract public class Network {
 			onTotalCount((Integer) data.getData());
 			break;
 		}
+	}
+	public void registerChatListener(ChatListener chatListener){
+		chatListeners.add(chatListener);
+	}
+	public void removeChatListener(ChatListener chatListener){
+		chatListeners.remove(chatListener);
 	}
 }
