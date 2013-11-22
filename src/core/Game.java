@@ -12,7 +12,7 @@ public class Game implements Serializable {
 	private ArrayList<Player> players; // 게임 내의 player 들을 저장할 리스트.
 	private ArrayList<Block> floor; // 게임중 바닥에 깔려있을 block 들을 저장할 리스트.
 
-	Game(int numOfPlayer) {
+	public Game(int numOfPlayer) {
 		players = new ArrayList<Player>(); // player 들을 저장할 리스트.
 		floor = new ArrayList<Block>(); // 모든 block 들을 저장할 리스트.
 		setPlayers(numOfPlayer); // playerNum 명의 player 를 생성함.

@@ -29,19 +29,23 @@ public class GameProcess {
 	}
 
 	public void start() {
-		if(!isServer()){
+		if(!network.isServer()){
 			//FIXME GameWindow로 옯길것
 			JOptionPane.showMessageDialog(null, "방장이 아닙니다.", "알림", 2);
 		}
-		network.sendChatMessage("게임을 새로 시작합니다.");
+		Server server = (Server) network;
+		server.sendChatMessage("게임을 새로 시작합니다.");
 		// server 가 게임을 시작할 때, 자신의 게임 컨트롤를 생성하고, client 들에게 총
 		// play 인원과 서버가 생성한 게임 컨트롤을 전달하고 자신부터 게임을 시작하는 메소드.
 		System.out.println("[ GameProcess : Start ]");
-		game = new Game(((Server) network).getClientNum() + 1);
-		((Server) network).sendOrder();
-		network.sendObject(new DataHeader(DataHeader.TOTALCOUNT, game
-				.getPlayers().size()));
-		network.sendObject(new DataHeader(DataHeader.GAME, game));
+		int playerNum = server.getClientNum() + 1; 
+		
+		game = new Game(playerNum);
+		server.sendOrder();
+		server.sendTotalCount(playerNum);
+		
+		//server.sendGameData(new GameData(game));
+		server.sendObject(new DataHeader(DataHeader.GAME, game));
 		// 모든 client 들에게 server가 생성한 게임 컨트롤을 전달한다.
 
 		// TODO Maybe use strategy
@@ -60,7 +64,7 @@ public class GameProcess {
 		network.sendChatMessage("턴 입니다.");
 	}
 
-	public void Next() {
+	public void next() {
 		// 다음 플레이어에게 턴을 넘겨준다. 게임 윈도우의 모든 입력은 블록 처리 되어 있으므로 자동으로
 		// 대기상태가 된다.
 		System.out.println("[ GameProcess : Next ]");
@@ -103,7 +107,7 @@ public class GameProcess {
 		network.sendGameData(new GameData(game));
 
 		if (me.getHand().size() <= onlyDraw) {
-			Next(); // 현재가 차례인 player 가 block 을 다 받을 때까지 block 만 가져가고 턴을 계속 돌린다.
+			next(); // 현재가 차례인 player 가 block 을 다 받을 때까지 block 만 가져가고 턴을 계속 돌린다.
 		} else {
 			// player 가 block 을 다 가져가고나면 상대방의 block 을 추측하기 시작한다.
 			gameWindow.setEnable(GameWindow.OTHERS, true);
@@ -134,9 +138,9 @@ public class GameProcess {
 		gameWindow.update();
 	}
 
-	public void setGameEnv(Game gc) {
+	public void setGame(Game game) {
 		System.out.println("[ GameProcess : setGameEnv(Game gc) ]");
-		game = gc;
+		this.game = game;
 		gameWindow.update();
 	}
 
@@ -147,30 +151,29 @@ public class GameProcess {
 	public int getPlayOrder() {
 		return getMyPlayOrder();
 	}
-
-	public Game getGameEnv() {
-		return game;
-	}
-
-	public void setGameEnv(GameData newBlockState) {
+	
+	public void setGameEnv(GameData gameState) {
 		// 전달받은 인자에 새로운 block 들의 분배 정보가 들어있어, 그 정보로 현재의 block 게임 컨트롤의 block 상태를
 		// 갱신하는 메소드.
+		/*if(game == null){//처음 시작할경우
+			game = new Game(numOfPlayer)
+		}*/
 		System.out
 				.println("[ GameProcess : setGameEnv(GameData newBlockState ]");
-		game.setFloor(newBlockState.getFloor()); // center block 들을 새로 설정함.
+		game.setFloor(gameState.getFloor()); // center block 들을 새로 설정함.
 
-		for (int i = 0; i < newBlockState.getPlayers().size(); i++) {
+		for (int i = 0; i < gameState.getPlayers().size(); i++) {
 			// 인자로 받은 게임 컨트롤러의 player 수만큼 돌며
 			if (i == getMyPlayOrder()) {
-				for (int j = 0; j < newBlockState.getBlocksOfPlayer(i).size(); j++) {
-					newBlockState.getBlocksOfPlayer(i).get(j).setOwn(true);
+				for (int j = 0; j < gameState.getBlocksOfPlayer(i).size(); j++) {
+					gameState.getBlocksOfPlayer(i).get(j).setOwn(true);
 				}
 			} else {
-				for (int j = 0; j < newBlockState.getBlocksOfPlayer(i).size(); j++) {
-					newBlockState.getBlocksOfPlayer(i).get(j).setOwn(false);
+				for (int j = 0; j < gameState.getBlocksOfPlayer(i).size(); j++) {
+					gameState.getBlocksOfPlayer(i).get(j).setOwn(false);
 				}
 			}
-			game.getPlayer(i).hand = newBlockState.getBlocksOfPlayer(i);
+			game.getPlayer(i).hand = gameState.getBlocksOfPlayer(i);
 		}
 		for (int i = 0; i < game.getPlayers().size(); i++)
 			game.getPlayer(i).sortBlock();
@@ -179,10 +182,6 @@ public class GameProcess {
 
 	public int getMyPlayOrder() {
 		return myPlayOrder;
-	}
-
-	public void sendGameData() {
-		network.sendGameData(new GameData(game));
 	}
 
 	public void sendChatMsg(String msg) {
@@ -195,6 +194,7 @@ public class GameProcess {
 
 	public void updateBlock() {
 		gameWindow.update();
+		network.sendGameData(new GameData(game));
 	}
 
 	public void enableOthers() {
@@ -203,5 +203,11 @@ public class GameProcess {
 
 	public void setting(int playerNum) {
 		gameWindow.setting(playerNum);
+	}
+	public void sendGameData() {
+		network.sendGameData(new GameData(game));
+	}
+	public boolean isEnd() {
+		return game.isEnd();
 	}
 }

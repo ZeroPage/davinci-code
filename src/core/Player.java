@@ -1,7 +1,5 @@
 package core;
 
-import gui.GameWindow;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -50,15 +48,14 @@ public class Player implements Serializable {
 					JOptionPane.YES_NO_OPTION) == 0) {
 				process.enableOthers();
 			} else {// 계속할 경우 다른 플레이어들의 block 을 선택가능하게 설정.
-				process.Next(); // 그만둘 경우 다음 player 에게 턴 넘김.
+				process.next(); // 그만둘 경우 다음 player 에게 턴 넘김.
 			}
 		} else { // 틀렸을 경우
 			System.out.println("last = " + last.getNum());
 			process.sendChatMsg("오답입니다."); // 오답 메시지를 채팅창에 보내고
 			last.setOpen(true); // 마지막에 가져온 block 을 공개하도록 설정하고
 			process.updateBlock();
-			process.sendGameData();
-			process.Next();
+			process.next();
 		}
 	}
 
@@ -69,7 +66,6 @@ public class Player implements Serializable {
 		if (block.getNum() == num) { // 선택된 block 의 숫자가 num 과 같으면
 			block.setOpen(true); // 그 block 을 open 상태로 설정.
 			process.updateBlock(); // 게임 프로세스의 GUI 상태를 업데이트 한다.
-			process.sendGameData();
 			checkMyTurn(process);
 			return true;
 		}
@@ -88,7 +84,7 @@ public class Player implements Serializable {
 		process.sendChatMsg("패를 모두 알아냈습니다.");
 		// 게임 프로세스의 network 타겟으로 메시지 전달.
 		process.sendGameData();
-		if (process.getGameEnv().isEnd())
+		if (process.isEnd())
 			process.End();
 	}
 

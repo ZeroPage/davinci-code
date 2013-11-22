@@ -16,7 +16,7 @@ abstract public class Network {
 	protected String playerNickname; // 해당 네트워크를 연 player 의 이름
 	protected int portNum = 10000; // 해당 네트워크가 접속되어있는 서버의 포트.
 	
-	private ArrayList<ChatListener> chatListeners;
+	private ArrayList<ChatListener> chatListeners = new ArrayList<ChatListener>();
 
 	public void setGameProcess(GameProcess game) {
 		gameProcess = game;
@@ -58,7 +58,7 @@ abstract public class Network {
 	}
 
 	public void onGameData(Game data) {
-		gameProcess.setGameEnv(data);
+		gameProcess.setGame(data);
 	}
 
 	public void onChat(String message) {
@@ -82,7 +82,6 @@ abstract public class Network {
 
 	public void dataEvent(DataHeader data) {
 		// 입력된 데이터의 처리는 여기에 추가할것.
-		
 		System.out.println("[ Network : dataEvent ]");
 		int flag = data.getFlag();
 		switch (flag) {

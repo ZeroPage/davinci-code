@@ -99,4 +99,8 @@ public class Server extends Network {
 		this.sendObject(data);
 	}
 
+	public void sendTotalCount(int playerNum) {
+		this.sendObject(new DataHeader(DataHeader.TOTALCOUNT, playerNum));
+	}
+
 }
