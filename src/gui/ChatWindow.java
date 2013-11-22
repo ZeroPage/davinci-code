@@ -92,7 +92,6 @@ public class ChatWindow implements ChatListener {
 
 		roomWindow.add(BorderLayout.EAST, mainPanel);
 		
-		//TODO maybe apply observer
 		network.registerChatListener(this);
 		
 		if (!network.isServer()) {

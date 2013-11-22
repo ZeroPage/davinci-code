@@ -7,7 +7,6 @@ import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
-import network.DataHeader;
 import network.Network;
 import network.Server;
 
@@ -45,8 +44,6 @@ public class GameProcess {
 		server.sendTotalCount(playerNum);
 		
 		server.sendGameData(new GameData(game));
-		//server.sendObject(new DataHeader(DataHeader.GAME, game));
-		// 모든 client 들에게 server가 생성한 게임 컨트롤을 전달한다.
 
 		// TODO Maybe use strategy
 		if (game.getPlayers().size() == 4)
