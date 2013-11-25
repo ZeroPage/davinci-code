@@ -23,13 +23,14 @@ public class GameProcess {
 		this.network = network;
 		network.setGameProcess(this);
 	}
-	public void setGameWindow(GameWindow gameWindow){
+
+	public void setGameWindow(GameWindow gameWindow) {
 		this.gameWindow = gameWindow;
 	}
 
 	public void start() {
-		if(!network.isServer()){
-			//FIXME GameWindow로 옯길것
+		if (!network.isServer()) {
+			// FIXME GameWindow로 옯길것
 			JOptionPane.showMessageDialog(null, "방장이 아닙니다.", "알림", 2);
 		}
 		Server server = (Server) network;
@@ -37,18 +38,18 @@ public class GameProcess {
 		// server 가 게임을 시작할 때, 자신의 게임 컨트롤를 생성하고, client 들에게 총
 		// play 인원과 서버가 생성한 게임 컨트롤을 전달하고 자신부터 게임을 시작하는 메소드.
 		System.out.println("[ GameProcess : Start ]");
-		int playerNum = server.getClientNum() + 1; 
-		
+		int playerNum = server.getClientNum() + 1;
+
 		game = new Game(playerNum);
 		server.sendOrder();
 		server.sendTotalCount(playerNum);
-		
+
 		server.sendGameData(new GameData(game));
 
 		// TODO Maybe use strategy
-		if (game.getPlayers().size() == 4)
+		if (game.getPlayers().size() == 4) {
 			onlyDraw = 3; // player 수가 4 명일 경우, 3 개만 가지고 게임을 시작.
-		
+		}
 		gameWindow.setting(getNumOfPlayer());
 		turn();
 	}
@@ -107,8 +108,8 @@ public class GameProcess {
 			next(); // 현재가 차례인 player 가 block 을 다 받을 때까지 block 만 가져가고 턴을 계속 돌린다.
 		} else {
 			// player 가 block 을 다 가져가고나면 상대방의 block 을 추측하기 시작한다.
-			gameWindow.setEnable(GameWindow.OTHERS, true);
 			// 추측하기 위해 다른 player들의 block 을 선택가능하게 설정한다.
+			gameWindow.setEnable(GameWindow.OTHERS, true);
 		}
 	}
 
@@ -122,7 +123,7 @@ public class GameProcess {
 
 	public int getNumOfPlayer() {
 		return game.getPlayers().size();
-	} // play 중인 player 들의 수를 반환한다.
+	}
 
 	public void AskBlock(int playerOrder, int index, int num) {
 		// 해당 player 에게 block 의 숫자를 물어보는 메소드.
@@ -130,8 +131,8 @@ public class GameProcess {
 		Player me = game.getPlayer(getMyPlayOrder());
 		Player target = game.getPlayer(playerOrder);
 
-		me.askBlock(target, this, index, num); // 현재 player 가 대상이 되는 Player 에게
-												// block 을 물어봄.
+		me.askBlock(target, this, index, num);
+		// 현재 player 가 대상이 되는 Player 에게 block 을 물어봄.
 		gameWindow.update();
 	}
 
@@ -142,15 +143,14 @@ public class GameProcess {
 	public int getPlayOrder() {
 		return getMyPlayOrder();
 	}
-	
+
 	public void setGameEnv(GameData gameState) {
-		// 전달받은 인자에 새로운 block 들의 분배 정보가 들어있어, 그 정보로 현재의 block 게임 컨트롤의 block 상태를
-		// 갱신하는 메소드.
-		if(game == null){//처음 시작할경우
+		// 전달받은 인자에 새로운 block 들의 분배 정보가 들어있어, 
+		// 그 정보로 현재의 block 게임 컨트롤의 block 상태를 갱신하는 메소드.
+		if (game == null) {// 처음 시작할경우
 			game = new Game(gameState.getPlayers().size());
 		}
-		System.out
-				.println("[ GameProcess : setGameEnv(GameData newBlockState ]");
+		System.out.println("[ GameProcess : setGameEnv(GameData blockState ]");
 		game.setFloor(gameState.getFloor()); // center block 들을 새로 설정함.
 
 		for (int i = 0; i < gameState.getPlayers().size(); i++) {
@@ -195,9 +195,11 @@ public class GameProcess {
 	public void setting(int playerNum) {
 		gameWindow.setting(playerNum);
 	}
+
 	public void sendGameData() {
 		network.sendGameData(new GameData(game));
 	}
+
 	public boolean isEnd() {
 		return game.isEnd();
 	}
