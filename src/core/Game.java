@@ -26,7 +26,14 @@ public class Game implements Serializable {
 
 	public void setPlayers(int numOfPlayer) {
 		for (int i = 0; i < numOfPlayer; i++)
-			players.add(new Player());
+			players.add(new Player(new Human()));
+			/*
+			if ( i == 0 ) {
+				players.add(new Player(new Human()));
+			} else {
+				players.add(new Player(new Computer()));
+			}
+			*/
 	}// 주어진 인자 만큼의 player 를 생성한다.
 
 	public ArrayList<Player> getPlayers() {

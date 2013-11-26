@@ -18,13 +18,13 @@ public abstract class PlayBoard {
 		boardPanel = new JPanel(); // 게임 내에서 player 의 block 이 놓이는 위치
 	}
 
-	public abstract GUIBlock makeBoard(GameProcess gameProcess, int playerNum,
+	public abstract GUIBlock makeBlock(GameProcess gameProcess, int playerNum,
 			int index);
 
 	public void update(ArrayList<Block> blocks) {
 		for (int i = 0; i < blocks.size(); i++) {
 			if (playerBlock[i] == null) {
-				playerBlock[i] = makeBoard(gameProcess, playerOrder, i);
+				playerBlock[i] = makeBlock(gameProcess, playerOrder, i);
 				boardPanel.add(playerBlock[i]);
 			}
 			playerBlock[i].update(blocks.get(i));
