@@ -1,5 +1,4 @@
 package core;
-import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -7,7 +6,7 @@ import java.util.ArrayList;
  * @author Teolex
  * 
  */
-public class Game implements Serializable {
+public class Game  {
 	// 게임의 시작을 위한 초기 작업을 수행한다.
 	private ArrayList<Player> players; // 게임 내의 player 들을 저장할 리스트.
 	private ArrayList<Block> floor; // 게임중 바닥에 깔려있을 block 들을 저장할 리스트.

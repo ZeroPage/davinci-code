@@ -1,16 +1,11 @@
 package gui.lobby;
 
-import gui.RoomWindow;
-import gui.lobby.ConnectPanel;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JOptionPane;
 
 import network.Client;
-import network.PortNumberException;
-import network.Server;
 
 public class ConnectAction implements ActionListener {
 

@@ -3,7 +3,6 @@ package gui.lobby;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.print.attribute.standard.Severity;
 import javax.swing.JOptionPane;
 
 import network.PortNumberException;

@@ -1,4 +1,5 @@
 package gui;
+
 import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -12,8 +13,8 @@ import javax.swing.JFrame;
 
 import core.Block;
 
-public class AskDlg extends JDialog implements ActionListener // 추측할 숫자를 생성하는 대화상자
-{
+public class AskDlg extends JDialog implements ActionListener {
+	// 추측할 숫자를 생성하는 대화상자
 	JButton[] JB_Num = new JButton[13];
 	int Num;
 
@@ -32,7 +33,7 @@ public class AskDlg extends JDialog implements ActionListener // 추측할 숫�
 		this.setVisible(true);
 	}
 
-	public AskDlg(int color){
+	public AskDlg(int color) {
 		// 조커 설정용 대화상자.
 		super((JFrame) getWindows()[0], "조커가 대신할 숫자를 선택하세요", true);
 		dialogSetting();
@@ -60,7 +61,7 @@ public class AskDlg extends JDialog implements ActionListener // 추측할 숫�
 		this.setVisible(true);
 	}
 
-	public void dialogSetting(){
+	public void dialogSetting() {
 		this.setSize(240, 300);
 		this.setLayout(new GridLayout(5, 3));
 		this.setLocation(getRootPane().getSize().width / 2, getRootPane()
@@ -71,7 +72,7 @@ public class AskDlg extends JDialog implements ActionListener // 추측할 숫�
 			}
 		});
 	}
-	
+
 	public void actionPerformed(ActionEvent e) {
 		// 상태 block을 맞추는 대화상자에서 눌려진 버튼이 무엇인지 판별한 후 Num 에 저장.
 		for (int i = 0; i < 13; i++) {
