@@ -145,7 +145,7 @@ public class GameProcess {
 	}
 
 	public void setGameEnv(GameData gameState) {
-		// 전달받은 인자에 새로운 block 들의 분배 정보가 들어있어, 
+		// 전달받은 인자에 새로운 block 들의 분배 정보가 들어있어,
 		// 그 정보로 현재의 block 게임 컨트롤의 block 상태를 갱신하는 메소드.
 		if (game == null) {// 처음 시작할경우
 			game = new Game(gameState.getPlayers().size());
