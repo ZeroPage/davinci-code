@@ -10,10 +10,17 @@ public class Player implements Serializable {
 	private Block last = null; // 마지막에 가져온 block. 상대방의 block 을 추리한 게 틀릴 경우 이
 								// block 을 공개해야 한다.
 	private boolean play = false; // 플레이 여부를 결정
+	private PlayerStrategy strategy;
 
 	Player() {
 		hand = new ArrayList<Block>();
 		play = true;
+	}
+
+	public Player(PlayerStrategy strategy) {
+		hand = new ArrayList<Block>();
+		play = true;
+		this.strategy = strategy;
 	}
 
 	public Block getLast() {
@@ -30,18 +37,21 @@ public class Player implements Serializable {
 
 	// center 에 있던 block 을 가져오는 함수. player 의 소유가 되도록 설정된다.
 	public void getBlock(ArrayList<Block> floor, int blockIndex) {
+		/*
 		last = floor.get(blockIndex); // 바닥에 깔린 block 들 중 blockIndex 에 해당하는
 										// block 을 선택.
 		last.setOwn(true); // 해당 block 을 소유된 block 으로 설정.
 		hand.add(last); // player 의 block 에 추가한다.
 		floor.remove(blockIndex); // 바닥에서 그 block 을 제거한다.
 		sortBlock(); // 현재 가지고 있는 block 을 정렬한다.
-
+		*/
+		this.strategy.getBlock(this, floor, blockIndex);
 	}
 
 	public void askBlock(Player targetPlayer, GameProcess process,
 			int selectedBlockIndex, int selectedNum) {
 		System.out.println("[ Player : askBlock ]");
+		/*
 		if (targetPlayer.checkBlock(process, selectedBlockIndex, selectedNum)) {
 			// 추측이 맞으면
 			if (JOptionPane.showConfirmDialog(null, "빙고! 계속하시겠습니까?", "확인",
@@ -57,6 +67,8 @@ public class Player implements Serializable {
 			process.updateBlock();
 			process.next();
 		}
+		*/
+		this.strategy.askBlock(this, targetPlayer, process, selectedBlockIndex, selectedNum);
 	}
 
 	public boolean checkBlock(GameProcess process, int selectedBlockIndex, int num) {
@@ -117,5 +129,21 @@ public class Player implements Serializable {
 												// 왼쪽에 놓는다.
 			}
 		}
+	}
+
+	public void setLast(Block block) {
+		this.last = block;
+	}
+
+	public void doAction(GameProcess gameProcess, ArrayList<Block> floorBlocks) {
+		strategy.doAction(hand.size(), gameProcess, floorBlocks);
+	}
+
+	public int handleJoker(Block target, int color) {
+		return strategy.handleJoker(target, color);
+	}
+
+	public void selectCard(GameProcess gameProcess) {
+		strategy.selectCard(gameProcess);
 	}
 }

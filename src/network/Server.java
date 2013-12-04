@@ -25,7 +25,7 @@ public class Server extends Network {
 	public void sendChatMessage(String msg) {
 		super.sendChatMessage(msg);
 		onChat(playerNickname + " : " + msg);
-		//chatWindow.chatMessage();
+		// chatWindow.chatMessage();
 	}
 
 	@Override
@@ -66,10 +66,10 @@ public class Server extends Network {
 		return clients.size();
 	}
 
-	public void sendOrder() // player 들에게 자신들의 게임 순서를 전송한다.
-	{
+	public void sendOrder() {
+		// player 들에게 자신들의 게임 순서를 전송한다.
 		System.out.println("[ Server : SendOrder ]");
-		for (int i = 0; i < clients.size(); i++)
+		for (int i = 0; i < clients.size(); i++) {
 			try {
 				clients.get(i).sendObject(
 						new DataHeader(DataHeader.MYORDER, Integer
@@ -79,6 +79,7 @@ public class Server extends Network {
 				System.out
 						.println("Class : Server\t :: SendOrder() : IOException");
 			}
+		}
 	}
 
 	public void remove(ClientHandler clientData) {
