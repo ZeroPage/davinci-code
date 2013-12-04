@@ -41,7 +41,7 @@ public class CenterBoard extends PlayBoard {
 	}
 
 	@Override
-	public GUIBlock makeBoard(GameProcess gameProcess, int playerNum, int index) {
+	public GUIBlock makeBlock(GameProcess gameProcess, int playerNum, int index) {
 		return new CenterBlock(gameProcess, playerNum, index);
 	}
 }

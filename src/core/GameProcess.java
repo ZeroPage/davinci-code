@@ -60,6 +60,9 @@ public class GameProcess {
 		gameWindow.setEnable(GameWindow.CENTER, true);
 		// player 자신의 턴이 되기 전까지는 center block 을 가져올 수 없다.
 		network.sendChatMessage("턴 입니다.");
+		
+		Player currentPlayer = game.getPlayer(getMyPlayOrder());
+		currentPlayer.doAction(this, game.getFloorBlocks());
 	}
 
 	public void next() {
@@ -82,7 +85,7 @@ public class GameProcess {
 		game = null;
 	}
 
-	public void centerBlockSelete(int blockIndex) {
+	public void centerBlockSelect(int blockIndex) {
 		// center 에 있는 block 들을 player 에게 옮기는함수.
 		System.out.println("[ GameProcess : moveBlock ]");
 		// disable center Panel
@@ -90,6 +93,7 @@ public class GameProcess {
 
 		Player me = game.getPlayer(getMyPlayOrder());
 
+		/*
 		if (game.getFloorBlocks().get(blockIndex).getNum() == 12) {
 			// 선택한 block이 Joker일 경우 diag 대화상자의 버튼 색을 변경하고, joker를 놓을 장소를
 			// player에게 물어본다.
@@ -97,6 +101,11 @@ public class GameProcess {
 			AskDlg diag = new AskDlg(target.getColor());
 			int num = diag.getNum();
 			target.setSortingNum(num);
+		}
+		*/
+		if ( jokerIsSelected(blockIndex) ) {
+			Block target = game.getFloorBlocks().get(blockIndex);
+			target.setSortingNum(me.handleJoker(target, target.getColor()));
 		}
 
 		me.getBlock(game.getFloorBlocks(), blockIndex);
@@ -110,7 +119,13 @@ public class GameProcess {
 			// player 가 block 을 다 가져가고나면 상대방의 block 을 추측하기 시작한다.
 			// 추측하기 위해 다른 player들의 block 을 선택가능하게 설정한다.
 			gameWindow.setEnable(GameWindow.OTHERS, true);
+			
+			me.selectCard(this);
 		}
+	}
+
+	private boolean jokerIsSelected(int blockIndex) {
+		return game.getFloorBlocks().get(blockIndex).getNum() == 12;
 	}
 
 	public ArrayList<Block> GetPlayerBlocksState(int playerNum) {
@@ -202,5 +217,9 @@ public class GameProcess {
 
 	public boolean isEnd() {
 		return game.isEnd();
+	}
+
+	public Player selectPlayer(int index) {
+		return game.getPlayer(index);
 	}
 }
