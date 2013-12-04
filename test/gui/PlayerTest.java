@@ -71,10 +71,8 @@ public class PlayerTest {
 	}
 	
 	@Test
-	public void testGetBlcok(){
+	public void testGetBlock(){
 		// Given
-		Network network = new MockNetwork();
-		GameProcess gameProcess = new GameProcess(network);
 		MockPlayerStrategy mockStrategy = new MockPlayerStrategy();
 		Player player1 = new Player(mockStrategy);
 		ArrayList<Block> arrayBlock = new ArrayList<Block>();
