@@ -62,7 +62,7 @@ public class Computer implements PlayerStrategy {
 		//AskDlg diag = new AskDlg(target.getColor());
 		//return diag.getNum();
 		return random.nextInt(MAX_CARD_NUMBER);
-	}
+	}//100번 돌려서 13안에 들어가는지 등..
 
 	@Override
 	public void selectCard(GameProcess gameProcess) {
