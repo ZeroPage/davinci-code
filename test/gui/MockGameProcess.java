@@ -14,7 +14,7 @@ public class MockGameProcess extends GameProcess{
 	private MockPlayer mockPlayer;
 	public MockGameProcess(Network network) {
 		super(network);
-		// TODO Auto-generated constructor stub
+		
 	}
 	
 	public void centerBlockSelect(int blockIndex) {
