@@ -18,7 +18,7 @@ public class Computer implements PlayerStrategy {
 		//process.centerBlockSelect(blockIndex);
 		
 		player.setLast(floor.get(blockIndex)); // 바닥에 깔린 block 들 중 blockIndex 에 해당하는
-		// block 을 선택.
+		// block 을 선택.    //floor의 갯수를 세서 테스트.
 		player.getLast().setOwn(true); // 해당 block 을 소유된 block 으로 설정.
 		player.hand.add(player.getLast()); // player 의 block 에 추가한다.
 		floor.remove(blockIndex); // 바닥에서 그 block 을 제거한다.
