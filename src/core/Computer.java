@@ -1,14 +1,9 @@
 package core;
 
-import gui.AskDlg;
-
 import java.util.ArrayList;
 import java.util.Random;
 
-import javax.swing.JOptionPane;
-
 public class Computer implements PlayerStrategy {
-	private static final int ONLY_DRAW = 4;
 	private static final int MAX_CARD_NUMBER = 11;
 	private Random random = new Random();
 

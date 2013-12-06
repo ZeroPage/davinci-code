@@ -6,8 +6,6 @@ import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
-import sun.security.action.GetLongAction;
-
 public class Human implements PlayerStrategy {
 
 	@Override

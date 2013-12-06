@@ -16,10 +16,6 @@ public class Block implements Serializable {
 	public static final int BLACK = 0;
 	public static final int WHITE = 1;
 
-	/**
-	 * 기본 생성자는 만약을 대비해서 유지하는 것이 좋겠으나, block 중에 번호가 없는 block 이 있을 수 없으므로 주석으로만
-	 * 유지하기로 한다.
-	 */
 	public Block(int color, int num) {
 		setColor(color);
 		setNum(num);

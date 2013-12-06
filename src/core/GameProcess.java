@@ -1,6 +1,5 @@
 package core;
 
-import gui.AskDlg;
 import gui.GameWindow;
 
 import java.util.ArrayList;

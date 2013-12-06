@@ -1,11 +1,8 @@
 package core;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
-import javax.swing.JOptionPane;
-
-public class Player implements Serializable {
+public class Player {
 	ArrayList<Block> hand = null; // 자신이 가진 블록을 저장하는 배열
 	private Block last = null; // 마지막에 가져온 block. 상대방의 block 을 추리한 게 틀릴 경우 이
 								// block 을 공개해야 한다.
