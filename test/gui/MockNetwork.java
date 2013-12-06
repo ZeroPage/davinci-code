@@ -9,21 +9,21 @@ public class MockNetwork extends Network{
 	@Override
 	public boolean isServer() {
 		isCallIsServer = true;
-		// TODO Auto-generated method stub
+		
 		return false;
 	}
 
 	@Override
 	public void sendObject(Object ob) {
 		isCallSendObject = true;
-		// TODO Auto-generated method stub
+		
 		
 	}
 
 	@Override
 	public void Close() {
 		isCallClose = true;
-		// TODO Auto-generated method stub
+		
 		
 	}
 

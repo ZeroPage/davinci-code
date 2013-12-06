@@ -16,34 +16,32 @@ public class MockPlayerStrategy implements PlayerStrategy{
 	
 	@Override
 	public void getBlock(Player player, ArrayList<Block> floor, int blockIndex) {
-		// TODO Auto-generated method stub
+		
 		isCallGetBlock = true;
 	}
 
 	@Override
 	public void askBlock(Player player, Player targetPlayer,
 			GameProcess process, int selectedBlockIndex, int selectedNum) {
-		// TODO Auto-generated method stub
+		
 		isCalledAskBlock = true;
 	}
 
 	@Override
 	public void doAction(int handSize, GameProcess gameProcess,
 			ArrayList<Block> floorBlocks) {
-		// TODO Auto-generated method stub
+		
 		isCallDoAction = true;
 	}
 
 	@Override
 	public int handleJoker(Block target, int color) {
-		// TODO Auto-generated method stub
 		isCallHandleJoker = true;
 		return 3;
 	}
 
 	@Override
 	public void selectCard(GameProcess gameProcess) {
-		// TODO Auto-generated method stub
 		isCallSelectCard = true;
 	}
 
