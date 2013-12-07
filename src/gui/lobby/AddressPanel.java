@@ -11,7 +11,7 @@ public class AddressPanel {
 
 	private JTextField portTextField;
 	private JTextField ipAddrTextField;
-	//Null Object
+	// Null Object
 	private ActionListener listener = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {

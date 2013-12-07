@@ -10,10 +10,11 @@ public class Computer implements PlayerStrategy {
 	@Override
 	public void getBlock(Player player, ArrayList<Block> floor, int blockIndex) {
 		blockIndex = random.nextInt(floor.size());
-		//process.centerBlockSelect(blockIndex);
-		
-		player.setLast(floor.get(blockIndex)); // 바닥에 깔린 block 들 중 blockIndex 에 해당하는
-		// block 을 선택.    //floor의 갯수를 세서 테스트.
+		// process.centerBlockSelect(blockIndex);
+
+		player.setLast(floor.get(blockIndex)); // 바닥에 깔린 block 들 중 blockIndex 에
+												// 해당하는
+		// block 을 선택. //floor의 갯수를 세서 테스트.
 		player.getLast().setOwn(true); // 해당 block 을 소유된 block 으로 설정.
 		player.hand.add(player.getLast()); // player 의 block 에 추가한다.
 		floor.remove(blockIndex); // 바닥에서 그 block 을 제거한다.
@@ -25,10 +26,10 @@ public class Computer implements PlayerStrategy {
 			GameProcess process, int selectedBlockIndex, int selectedNum) {
 		selectedBlockIndex = random.nextInt(targetPlayer.hand.size());
 		selectedNum = random.nextInt(10);
-		
+
 		if (targetPlayer.checkBlock(process, selectedBlockIndex, selectedNum)) {
 			// 추측이 맞으면
-			if ( random.nextBoolean() ) {
+			if (random.nextBoolean()) {
 				process.enableOthers();
 			} else {// 계속할 경우 다른 플레이어들의 block 을 선택가능하게 설정.
 				process.next(); // 그만둘 경우 다음 player 에게 턴 넘김.
@@ -43,8 +44,9 @@ public class Computer implements PlayerStrategy {
 	}
 
 	@Override
-	public void doAction(int handSize, GameProcess gameProcess, ArrayList<Block> floorBlocks) {
-		if ( !floorBlocks.isEmpty() ) {
+	public void doAction(int handSize, GameProcess gameProcess,
+			ArrayList<Block> floorBlocks) {
+		if (!floorBlocks.isEmpty()) {
 			int blockIndex = random.nextInt(floorBlocks.size());
 			gameProcess.centerBlockSelect(blockIndex);
 		} else {
@@ -54,18 +56,19 @@ public class Computer implements PlayerStrategy {
 
 	@Override
 	public int handleJoker(Block target, int color) {
-		//AskDlg diag = new AskDlg(target.getColor());
-		//return diag.getNum();
+		// AskDlg diag = new AskDlg(target.getColor());
+		// return diag.getNum();
 		return random.nextInt(MAX_CARD_NUMBER);
-	}//100번 돌려서 13안에 들어가는지 등..
+	}
 
 	@Override
 	public void selectCard(GameProcess gameProcess) {
 		int playerNumber = random.nextInt(gameProcess.getNumOfPlayer());
 		int blockNumberChoice = random.nextInt(MAX_CARD_NUMBER);
-		Player target = gameProcess.selectPlayer(random.nextInt(gameProcess.getNumOfPlayer()));
+		Player target = gameProcess.selectPlayer(random.nextInt(gameProcess
+				.getNumOfPlayer()));
 		int askCardIndex = random.nextInt(target.getHand().size());
-		
+
 		gameProcess.AskBlock(playerNumber, askCardIndex, blockNumberChoice);
 	}
 }

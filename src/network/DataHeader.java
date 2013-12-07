@@ -3,6 +3,8 @@ import java.io.Serializable;
 
 // 네트워크로 오갈 데이터의 헤더. 필요한 정보들을 입력한다.
 public class DataHeader implements Serializable{
+	private static final long serialVersionUID = -4764076667673267224L;
+	
 	private int		flag;
 	private Object	data = null;
 	

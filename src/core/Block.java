@@ -1,8 +1,10 @@
 package core;
+
 import java.io.Serializable;
 
 public class Block implements Serializable {
-	
+	private static final long serialVersionUID = 3629288075327662903L;
+
 	private int color; // 블럭의 색깔. 검정 == 0, 하양 == 1
 	private int num; // 블럭의 숫자. 조커는 12.
 	private boolean joker;

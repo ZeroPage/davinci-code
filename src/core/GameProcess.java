@@ -45,8 +45,18 @@ public class GameProcess {
 
 		server.sendGameData(new GameData(game));
 
-		// TODO Maybe use strategy
-		if (game.getPlayers().size() == 4) {
+		if (getNumOfPlayer() == 4) {
+			onlyDraw = 3; // player 수가 4 명일 경우, 3 개만 가지고 게임을 시작.
+		}
+		gameWindow.setting(getNumOfPlayer());
+		turn();
+	}
+
+	public void startSingle() {
+		network.sendChatMessage("게임을 새로 시작합니다.");
+		game = new Game(0, 3);
+
+		if (getNumOfPlayer() == 4) {
 			onlyDraw = 3; // player 수가 4 명일 경우, 3 개만 가지고 게임을 시작.
 		}
 		gameWindow.setting(getNumOfPlayer());
@@ -59,7 +69,7 @@ public class GameProcess {
 		gameWindow.setEnable(GameWindow.CENTER, true);
 		// player 자신의 턴이 되기 전까지는 center block 을 가져올 수 없다.
 		network.sendChatMessage("턴 입니다.");
-		
+
 		Player currentPlayer = game.getPlayer(getMyPlayOrder());
 		currentPlayer.doAction(this, game.getFloorBlocks());
 	}
@@ -72,6 +82,10 @@ public class GameProcess {
 		// 현재 player 가 다른 block 들을 클릭하지 못하도록 설정.
 		gameWindow.setEnable(GameWindow.CENTER, false);
 		// center 의 block 들도 선택하지 못하도록 설정.
+		int nextOrder = (getMyPlayOrder() + 1) % getNumOfPlayer();
+		if (game.getPlayer(nextOrder).isComputer()) {
+			turn();
+		}
 		network.sendPass((getMyPlayOrder() + 1) % game.getPlayers().size());
 		// 그 후 다음 player 에게 턴을 넘김.
 	}
@@ -92,17 +106,7 @@ public class GameProcess {
 
 		Player me = game.getPlayer(getMyPlayOrder());
 
-		/*
-		if (game.getFloorBlocks().get(blockIndex).getNum() == 12) {
-			// 선택한 block이 Joker일 경우 diag 대화상자의 버튼 색을 변경하고, joker를 놓을 장소를
-			// player에게 물어본다.
-			Block target = game.getFloorBlocks().get(blockIndex);
-			AskDlg diag = new AskDlg(target.getColor());
-			int num = diag.getNum();
-			target.setSortingNum(num);
-		}
-		*/
-		if ( jokerIsSelected(blockIndex) ) {
+		if (jokerIsSelected(blockIndex)) {
 			Block target = game.getFloorBlocks().get(blockIndex);
 			target.setSortingNum(me.handleJoker(target, target.getColor()));
 		}
@@ -118,7 +122,7 @@ public class GameProcess {
 			// player 가 block 을 다 가져가고나면 상대방의 block 을 추측하기 시작한다.
 			// 추측하기 위해 다른 player들의 block 을 선택가능하게 설정한다.
 			gameWindow.setEnable(GameWindow.OTHERS, true);
-			
+
 			me.selectCard(this);
 		}
 	}
@@ -221,4 +225,5 @@ public class GameProcess {
 	public Player selectPlayer(int index) {
 		return game.getPlayer(index);
 	}
+
 }

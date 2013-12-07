@@ -10,13 +10,12 @@ import javax.swing.JButton;
 
 public class ButtonPanel {
 	private JButton connectButton;
-	//null Object
+	// null Object
 	private ActionListener listener = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 		}
 	};
-	
 
 	public ButtonPanel(ConnectPanel connectPanel, DaVinciGUI gui) {
 

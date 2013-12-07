@@ -4,14 +4,14 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-class ClientHandler
-{
+class ClientHandler {
 	private Socket clientSocket = null;
 	private ObjectOutputStream outStream = null;
 	private NetworkListener inOb = null;
 	private Server server;
 
-	public ClientHandler(Server server, Socket socket) throws IOException { // 임의의 소켓 메모리 생성.
+	public ClientHandler(Server server, Socket socket) throws IOException {
+		// 임의의 소켓 메모리 생성.
 		this.server = server;
 		clientSocket = new Socket();
 		clientSocket = socket; // 인자로 전달받은 client 의 소켓을 저장.
@@ -20,7 +20,7 @@ class ClientHandler
 		inOb = new NetworkListener(socket, server); // client 에게서 전송받음.
 	}
 
-	public boolean isConnected(){
+	public boolean isConnected() {
 		return clientSocket.isConnected();
 	}
 

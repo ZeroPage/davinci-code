@@ -34,41 +34,19 @@ public class Player {
 
 	// center 에 있던 block 을 가져오는 함수. player 의 소유가 되도록 설정된다.
 	public void getBlock(ArrayList<Block> floor, int blockIndex) {
-		/*
-		last = floor.get(blockIndex); // 바닥에 깔린 block 들 중 blockIndex 에 해당하는
-										// block 을 선택.
-		last.setOwn(true); // 해당 block 을 소유된 block 으로 설정.
-		hand.add(last); // player 의 block 에 추가한다.
-		floor.remove(blockIndex); // 바닥에서 그 block 을 제거한다.
-		sortBlock(); // 현재 가지고 있는 block 을 정렬한다.
-		*/
+		System.out.println("[ Player : getBlock ]");
 		this.strategy.getBlock(this, floor, blockIndex);
 	}
 
 	public void askBlock(Player targetPlayer, GameProcess process,
 			int selectedBlockIndex, int selectedNum) {
 		System.out.println("[ Player : askBlock ]");
-		/*
-		if (targetPlayer.checkBlock(process, selectedBlockIndex, selectedNum)) {
-			// 추측이 맞으면
-			if (JOptionPane.showConfirmDialog(null, "빙고! 계속하시겠습니까?", "확인",
-					JOptionPane.YES_NO_OPTION) == 0) {
-				process.enableOthers();
-			} else {// 계속할 경우 다른 플레이어들의 block 을 선택가능하게 설정.
-				process.next(); // 그만둘 경우 다음 player 에게 턴 넘김.
-			}
-		} else { // 틀렸을 경우
-			System.out.println("last = " + last.getNum());
-			process.sendChatMsg("오답입니다."); // 오답 메시지를 채팅창에 보내고
-			last.setOpen(true); // 마지막에 가져온 block 을 공개하도록 설정하고
-			process.updateBlock();
-			process.next();
-		}
-		*/
-		this.strategy.askBlock(this, targetPlayer, process, selectedBlockIndex, selectedNum);
+		this.strategy.askBlock(this, targetPlayer, process, selectedBlockIndex,
+				selectedNum);
 	}
 
-	public boolean checkBlock(GameProcess process, int selectedBlockIndex, int num) {
+	public boolean checkBlock(GameProcess process, int selectedBlockIndex,
+			int num) {
 		// 다른 player 가 추측한 num 과 내 block의 숫자가 같은지 체크하는 함수.
 		System.out.println("[ Player : cheeckBlock ]");
 		Block block = hand.get(selectedBlockIndex);
@@ -122,8 +100,8 @@ public class Player {
 					swapBlock(hand, j, j + 1); // 앞의 것이 더 숫자가 크면 순서교환.
 				else if ((preNum == pstNum) && (preCol == Block.WHITE)
 						&& (pstCol == Block.BLACK))
-					swapBlock(hand, j, j + 1); // 두 block 의 숫자가 같을 경우에는 검은색 블럭을
-												// 왼쪽에 놓는다.
+					swapBlock(hand, j, j + 1);
+				// 두 block 의 숫자가 같을 경우에는 검은색 블럭을 왼쪽에 놓는다.
 			}
 		}
 	}
@@ -142,5 +120,9 @@ public class Player {
 
 	public void selectCard(GameProcess gameProcess) {
 		strategy.selectCard(gameProcess);
+	}
+
+	public boolean isComputer() {
+		return strategy instanceof Computer;
 	}
 }

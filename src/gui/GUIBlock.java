@@ -7,10 +7,9 @@ import core.Block;
 import core.GameProcess;
 
 public class GUIBlock extends JStyleButton {
-
+	private static final long serialVersionUID = -5740660089413594516L;
 	protected GameProcess gameProcess;
 	private BlockColor color = null;
-	private int num;
 	protected int index;
 	protected int playerNum;
 
@@ -23,7 +22,6 @@ public class GUIBlock extends JStyleButton {
 
 	public void update(Block block) {
 		ResourceManager resourceManager = ResourceManager.getInstance();
-		num = block.getNum();
 		color = null;
 
 		if (block.getColor() == 0) {

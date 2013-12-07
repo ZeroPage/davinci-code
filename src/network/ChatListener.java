@@ -1,5 +1,5 @@
 package network;
 
 public interface ChatListener {
-	public void onChatMessage(String message); 
+	public void onChatMessage(String message);
 }

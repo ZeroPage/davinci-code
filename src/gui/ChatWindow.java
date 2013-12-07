@@ -4,6 +4,7 @@ import gui.listeners.AboutButtonListener;
 import gui.listeners.ChatSendListener;
 import gui.listeners.ClearButtonListener;
 import gui.listeners.ExitButtonListener;
+import gui.listeners.SingleButtonListener;
 import gui.listeners.StartButtonListener;
 
 import java.awt.BorderLayout;
@@ -29,10 +30,11 @@ public class ChatWindow implements ChatListener {
 	private JButton aboutButton;
 	private JTextArea chatTextArea; // 대화내용이 쓰여지는 필드.
 	private JTextField chatInputTextField; // 사용자가 대화를 입력할 부분.
+	private JButton singleButton;
 
-	public ChatWindow(RoomWindow roomWindow, Network network, GameProcess gameProcess,
-			DaVinciGUI gui) {
-		
+	public ChatWindow(RoomWindow roomWindow, Network network,
+			GameProcess gameProcess, DaVinciGUI gui) {
+
 		mainPanel = new JPanel();
 		mainPanel.setLayout(null);
 		mainPanel.setPreferredSize(new Dimension(200, 500));
@@ -74,8 +76,7 @@ public class ChatWindow implements ChatListener {
 		// 새게임
 		newGameButton = new JButton("시작");
 		newGameButton.setBounds(0, 480, 100, 30);
-		newGameButton.addActionListener(new StartButtonListener(network,
-				gameProcess));
+		newGameButton.addActionListener(new StartButtonListener(gameProcess));
 		mainPanel.add(newGameButton);
 
 		// 나가기
@@ -86,14 +87,20 @@ public class ChatWindow implements ChatListener {
 
 		// 룰 설명
 		aboutButton = new JButton("게임 방법");
-		aboutButton.setBounds(0, 510, 200, 30);
+		aboutButton.setBounds(0, 510, 100, 30);
 		aboutButton.addActionListener(new AboutButtonListener(gui));
 		mainPanel.add(aboutButton);
 
+		// single
+		singleButton = new JButton("혼자 하기");
+		singleButton.setBounds(100, 510, 100, 30);
+		singleButton.addActionListener(new SingleButtonListener(gameProcess));
+		mainPanel.add(singleButton);
+
 		roomWindow.add(BorderLayout.EAST, mainPanel);
-		
+
 		network.registerChatListener(this);
-		
+
 		if (!network.isServer()) {
 			newGameButton.setText("대기중");
 		}

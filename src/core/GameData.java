@@ -1,8 +1,11 @@
 package core;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
 public class GameData implements Serializable {
+	private static final long serialVersionUID = -6842226762193142274L;
+
 	// 객체가 생성되면 바닥에 깔린 block 들과 각 player 들이 가지고 있는 block 들의 정보를 저장한다.
 	private ArrayList<Block> floor; // 바닥에 깔려있는 block 들.
 	private ArrayList<ArrayList<Block>> blocks; // 각 선수들이 가지고 있는 block 들.

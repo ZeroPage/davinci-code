@@ -37,10 +37,10 @@ public class ConnectPanel {
 		serverCheckPanel = new ServerCheckPanel(this);
 		addressPanel = new AddressPanel(this);
 		buttonPanel = new ButtonPanel(this, gui);
-		
-		//update gui mode
+
+		// update gui mode
 		serverCheckPanel.itemStateChanged(null);
-		
+
 		lobbyWindow.append(connectPanel);
 	}
 

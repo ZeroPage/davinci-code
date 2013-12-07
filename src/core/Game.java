@@ -1,12 +1,14 @@
 package core;
+
 import java.util.ArrayList;
 
 /**
  * 하나의 호스트에서 보여져야 할 player 들과 block 들을 게임 시작 전에 준비하는 클래스.
+ * 
  * @author Teolex
  * 
  */
-public class Game  {
+public class Game {
 	// 게임의 시작을 위한 초기 작업을 수행한다.
 	private ArrayList<Player> players; // 게임 내의 player 들을 저장할 리스트.
 	private ArrayList<Block> floor; // 게임중 바닥에 깔려있을 block 들을 저장할 리스트.
@@ -15,6 +17,20 @@ public class Game  {
 		players = new ArrayList<Player>(); // player 들을 저장할 리스트.
 		floor = new ArrayList<Block>(); // 모든 block 들을 저장할 리스트.
 		setPlayers(numOfPlayer); // playerNum 명의 player 를 생성함.
+		makeFloorBlocks(); // block 들을 생성함.
+		mixBlocks(floor); // 생성한 block 들을 섞음.
+	}
+
+	public Game(int numOfPlayer, int numberOfComputer) {
+		players = new ArrayList<Player>(); // player 들을 저장할 리스트.
+		floor = new ArrayList<Block>(); // 모든 block 들을 저장할 리스트.
+		for (int i = 0; i < 4; i++) {
+			if (i == 0) {
+				players.add(new Player(new Human()));
+			} else {
+				players.add(new Player(new Computer()));
+			}
+		}
 		makeFloorBlocks(); // block 들을 생성함.
 		mixBlocks(floor); // 생성한 block 들을 섞음.
 	}

@@ -5,16 +5,17 @@ import java.awt.event.ActionListener;
 
 import core.GameProcess;
 
-public class StartButtonListener implements ActionListener {
+public class SingleButtonListener implements ActionListener {
+
 	private GameProcess gameProcess;
 
-	public StartButtonListener(GameProcess gameProcess) {
+	public SingleButtonListener(GameProcess gameProcess) {
 		this.gameProcess = gameProcess;
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		gameProcess.start();
+		gameProcess.startSingle();
 	}
 
 }

@@ -5,7 +5,8 @@ import java.awt.event.ActionListener;
 
 import core.GameProcess;
 
-public class CenterBlock extends GUIBlock implements ActionListener{
+public class CenterBlock extends GUIBlock implements ActionListener {
+	private static final long serialVersionUID = 1L;
 
 	public CenterBlock(GameProcess gameProcess, int playerNum, int index) {
 		super(gameProcess, playerNum, index);

@@ -14,7 +14,7 @@ abstract public class Network {
 	protected GameProcess gameProcess; // 해당 네트워크에서 진행중인 게임 프로세스.
 	protected String playerNickname; // 해당 네트워크를 연 player 의 이름
 	protected int portNum = 10000; // 해당 네트워크가 접속되어있는 서버의 포트.
-	
+
 	private ArrayList<ChatListener> chatListeners = new ArrayList<ChatListener>();
 
 	public void setGameProcess(GameProcess game) {
@@ -57,7 +57,7 @@ abstract public class Network {
 	}
 
 	public void onChat(String message) {
-		for(ChatListener element : chatListeners){
+		for (ChatListener element : chatListeners) {
 			element.onChatMessage(message);
 		}
 	}
@@ -67,6 +67,7 @@ abstract public class Network {
 		if (gameProcess.getPlayOrder() == order)
 			gameProcess.turn();
 	}
+
 	public void onMyOrder(int order) {
 		gameProcess.setPlayOrder(order);
 	}
@@ -84,9 +85,9 @@ abstract public class Network {
 			onChat((String) data.getData());
 			break;
 		case DataHeader.GAMEDATA:
-			onGameData((GameData)data.getData());
+			onGameData((GameData) data.getData());
 			break;
-		case DataHeader.PASS: 
+		case DataHeader.PASS:
 			onPass((Integer) data.getData());
 			break;
 		case DataHeader.MYORDER: // 해당 client 의 순서를 전달받으면 그 순서로 세팅.
@@ -97,10 +98,12 @@ abstract public class Network {
 			break;
 		}
 	}
-	public void registerChatListener(ChatListener chatListener){
+
+	public void registerChatListener(ChatListener chatListener) {
 		chatListeners.add(chatListener);
 	}
-	public void removeChatListener(ChatListener chatListener){
+
+	public void removeChatListener(ChatListener chatListener) {
 		chatListeners.remove(chatListener);
 	}
 }

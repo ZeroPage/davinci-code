@@ -1,9 +1,12 @@
 package gui;
+
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 public class JStyleButton extends JButton {
+	private static final long serialVersionUID = -8013732016204159139L;
+
 	public JStyleButton() {
 		super();
 		initialButton();
@@ -17,10 +20,10 @@ public class JStyleButton extends JButton {
 	}
 
 	private void initialButton() {
-		this.setBorderPainted(false); 
-		this.setContentAreaFilled(false); 
-		this.setDefaultCapable(false); 
-		this.setFocusPainted(false); 
+		this.setBorderPainted(false);
+		this.setContentAreaFilled(false);
+		this.setDefaultCapable(false);
+		this.setFocusPainted(false);
 		this.setOpaque(false);
 
 		this.setEnabled(false);

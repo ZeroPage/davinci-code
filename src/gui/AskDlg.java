@@ -14,6 +14,7 @@ import javax.swing.JFrame;
 import core.Block;
 
 public class AskDlg extends JDialog implements ActionListener {
+	private static final long serialVersionUID = 1L;
 	// 추측할 숫자를 생성하는 대화상자
 	JButton[] JB_Num = new JButton[13];
 	int Num;
